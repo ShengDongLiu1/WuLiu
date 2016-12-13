@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht.dao.ReceiptMapper">
+  <resultMap id="BaseResultMap" type="com.ht.entity.Receipt">
+    <id column="rid" jdbcType="INTEGER" property="rid" />
+    <result column="rcid" jdbcType="INTEGER" property="rcid" />
+    <result column="rgid" jdbcType="INTEGER" property="rgid" />
+    <result column="rreceivecount" jdbcType="INTEGER" property="rreceivecount" />
+    <result column="rdamagedcount" jdbcType="INTEGER" property="rdamagedcount" />
+    <result column="rshelvecount" jdbcType="INTEGER" property="rshelvecount" />
+    <result column="rtdgoodstime" jdbcType="TIMESTAMP" property="rtdgoodstime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    rid, rcid, rgid, rreceivecount, rdamagedcount, rshelvecount, rtdgoodstime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from receipt
+    where rid = #{rid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from receipt
+    where rid = #{rid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ht.entity.Receipt">
+    insert into receipt (rid, rcid, rgid, 
+      rreceivecount, rdamagedcount, rshelvecount, 
+      rtdgoodstime)
+    values (#{rid,jdbcType=INTEGER}, #{rcid,jdbcType=INTEGER}, #{rgid,jdbcType=INTEGER}, 
+      #{rreceivecount,jdbcType=INTEGER}, #{rdamagedcount,jdbcType=INTEGER}, #{rshelvecount,jdbcType=INTEGER}, 
+      #{rtdgoodstime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ht.entity.Receipt">
+    insert into receipt
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        rid,
+      </if>
+      <if test="rcid != null">
+        rcid,
+      </if>
+      <if test="rgid != null">
+        rgid,
+      </if>
+      <if test="rreceivecount != null">
+        rreceivecount,
+      </if>
+      <if test="rdamagedcount != null">
+        rdamagedcount,
+      </if>
+      <if test="rshelvecount != null">
+        rshelvecount,
+      </if>
+      <if test="rtdgoodstime != null">
+        rtdgoodstime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="rcid != null">
+        #{rcid,jdbcType=INTEGER},
+      </if>
+      <if test="rgid != null">
+        #{rgid,jdbcType=INTEGER},
+      </if>
+      <if test="rreceivecount != null">
+        #{rreceivecount,jdbcType=INTEGER},
+      </if>
+      <if test="rdamagedcount != null">
+        #{rdamagedcount,jdbcType=INTEGER},
+      </if>
+      <if test="rshelvecount != null">
+        #{rshelvecount,jdbcType=INTEGER},
+      </if>
+      <if test="rtdgoodstime != null">
+        #{rtdgoodstime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Receipt">
+    update receipt
+    <set>
+      <if test="rcid != null">
+        rcid = #{rcid,jdbcType=INTEGER},
+      </if>
+      <if test="rgid != null">
+        rgid = #{rgid,jdbcType=INTEGER},
+      </if>
+      <if test="rreceivecount != null">
+        rreceivecount = #{rreceivecount,jdbcType=INTEGER},
+      </if>
+      <if test="rdamagedcount != null">
+        rdamagedcount = #{rdamagedcount,jdbcType=INTEGER},
+      </if>
+      <if test="rshelvecount != null">
+        rshelvecount = #{rshelvecount,jdbcType=INTEGER},
+      </if>
+      <if test="rtdgoodstime != null">
+        rtdgoodstime = #{rtdgoodstime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ht.entity.Receipt">
+    update receipt
+    set rcid = #{rcid,jdbcType=INTEGER},
+      rgid = #{rgid,jdbcType=INTEGER},
+      rreceivecount = #{rreceivecount,jdbcType=INTEGER},
+      rdamagedcount = #{rdamagedcount,jdbcType=INTEGER},
+      rshelvecount = #{rshelvecount,jdbcType=INTEGER},
+      rtdgoodstime = #{rtdgoodstime,jdbcType=TIMESTAMP}
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+</mapper>

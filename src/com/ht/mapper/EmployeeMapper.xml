@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht.dao.EmployeeMapper">
+  <resultMap id="BaseResultMap" type="com.ht.entity.Employee">
+    <id column="eid" jdbcType="INTEGER" property="eid" />
+    <result column="ejobnumber" jdbcType="VARCHAR" property="ejobnumber" />
+    <result column="ename" jdbcType="VARCHAR" property="ename" />
+    <result column="esex" jdbcType="VARCHAR" property="esex" />
+    <result column="eage" jdbcType="INTEGER" property="eage" />
+    <result column="eposition" jdbcType="VARCHAR" property="eposition" />
+    <result column="ephone" jdbcType="VARCHAR" property="ephone" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    eid, ejobnumber, ename, esex, eage, eposition, ephone
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from employee
+    where eid = #{eid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from employee
+    where eid = #{eid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ht.entity.Employee">
+    insert into employee (eid, ejobnumber, ename, 
+      esex, eage, eposition, 
+      ephone)
+    values (#{eid,jdbcType=INTEGER}, #{ejobnumber,jdbcType=VARCHAR}, #{ename,jdbcType=VARCHAR}, 
+      #{esex,jdbcType=VARCHAR}, #{eage,jdbcType=INTEGER}, #{eposition,jdbcType=VARCHAR}, 
+      #{ephone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ht.entity.Employee">
+    insert into employee
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="eid != null">
+        eid,
+      </if>
+      <if test="ejobnumber != null">
+        ejobnumber,
+      </if>
+      <if test="ename != null">
+        ename,
+      </if>
+      <if test="esex != null">
+        esex,
+      </if>
+      <if test="eage != null">
+        eage,
+      </if>
+      <if test="eposition != null">
+        eposition,
+      </if>
+      <if test="ephone != null">
+        ephone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="eid != null">
+        #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="ejobnumber != null">
+        #{ejobnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="ename != null">
+        #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="esex != null">
+        #{esex,jdbcType=VARCHAR},
+      </if>
+      <if test="eage != null">
+        #{eage,jdbcType=INTEGER},
+      </if>
+      <if test="eposition != null">
+        #{eposition,jdbcType=VARCHAR},
+      </if>
+      <if test="ephone != null">
+        #{ephone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Employee">
+    update employee
+    <set>
+      <if test="ejobnumber != null">
+        ejobnumber = #{ejobnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="ename != null">
+        ename = #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="esex != null">
+        esex = #{esex,jdbcType=VARCHAR},
+      </if>
+      <if test="eage != null">
+        eage = #{eage,jdbcType=INTEGER},
+      </if>
+      <if test="eposition != null">
+        eposition = #{eposition,jdbcType=VARCHAR},
+      </if>
+      <if test="ephone != null">
+        ephone = #{ephone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where eid = #{eid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ht.entity.Employee">
+    update employee
+    set ejobnumber = #{ejobnumber,jdbcType=VARCHAR},
+      ename = #{ename,jdbcType=VARCHAR},
+      esex = #{esex,jdbcType=VARCHAR},
+      eage = #{eage,jdbcType=INTEGER},
+      eposition = #{eposition,jdbcType=VARCHAR},
+      ephone = #{ephone,jdbcType=VARCHAR}
+    where eid = #{eid,jdbcType=INTEGER}
+  </update>
+</mapper>

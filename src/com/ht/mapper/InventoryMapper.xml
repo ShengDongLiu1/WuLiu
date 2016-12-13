@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht.dao.InventoryMapper">
+  <resultMap id="BaseResultMap" type="com.ht.entity.Inventory">
+    <id column="loid" jdbcType="INTEGER" property="loid" />
+    <result column="logid" jdbcType="INTEGER" property="logid" />
+    <result column="loname" jdbcType="VARCHAR" property="loname" />
+    <result column="losize" jdbcType="DOUBLE" property="losize" />
+    <result column="lovolume" jdbcType="DOUBLE" property="lovolume" />
+    <result column="loweight" jdbcType="DOUBLE" property="loweight" />
+    <result column="lolevel" jdbcType="INTEGER" property="lolevel" />
+    <result column="lostate" jdbcType="INTEGER" property="lostate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    loid, logid, loname, losize, lovolume, loweight, lolevel, lostate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from inventory
+    where loid = #{loid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from inventory
+    where loid = #{loid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ht.entity.Inventory">
+    insert into inventory (loid, logid, loname, 
+      losize, lovolume, loweight, 
+      lolevel, lostate)
+    values (#{loid,jdbcType=INTEGER}, #{logid,jdbcType=INTEGER}, #{loname,jdbcType=VARCHAR}, 
+      #{losize,jdbcType=DOUBLE}, #{lovolume,jdbcType=DOUBLE}, #{loweight,jdbcType=DOUBLE}, 
+      #{lolevel,jdbcType=INTEGER}, #{lostate,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ht.entity.Inventory">
+    insert into inventory
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="loid != null">
+        loid,
+      </if>
+      <if test="logid != null">
+        logid,
+      </if>
+      <if test="loname != null">
+        loname,
+      </if>
+      <if test="losize != null">
+        losize,
+      </if>
+      <if test="lovolume != null">
+        lovolume,
+      </if>
+      <if test="loweight != null">
+        loweight,
+      </if>
+      <if test="lolevel != null">
+        lolevel,
+      </if>
+      <if test="lostate != null">
+        lostate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="loid != null">
+        #{loid,jdbcType=INTEGER},
+      </if>
+      <if test="logid != null">
+        #{logid,jdbcType=INTEGER},
+      </if>
+      <if test="loname != null">
+        #{loname,jdbcType=VARCHAR},
+      </if>
+      <if test="losize != null">
+        #{losize,jdbcType=DOUBLE},
+      </if>
+      <if test="lovolume != null">
+        #{lovolume,jdbcType=DOUBLE},
+      </if>
+      <if test="loweight != null">
+        #{loweight,jdbcType=DOUBLE},
+      </if>
+      <if test="lolevel != null">
+        #{lolevel,jdbcType=INTEGER},
+      </if>
+      <if test="lostate != null">
+        #{lostate,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Inventory">
+    update inventory
+    <set>
+      <if test="logid != null">
+        logid = #{logid,jdbcType=INTEGER},
+      </if>
+      <if test="loname != null">
+        loname = #{loname,jdbcType=VARCHAR},
+      </if>
+      <if test="losize != null">
+        losize = #{losize,jdbcType=DOUBLE},
+      </if>
+      <if test="lovolume != null">
+        lovolume = #{lovolume,jdbcType=DOUBLE},
+      </if>
+      <if test="loweight != null">
+        loweight = #{loweight,jdbcType=DOUBLE},
+      </if>
+      <if test="lolevel != null">
+        lolevel = #{lolevel,jdbcType=INTEGER},
+      </if>
+      <if test="lostate != null">
+        lostate = #{lostate,jdbcType=INTEGER},
+      </if>
+    </set>
+    where loid = #{loid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ht.entity.Inventory">
+    update inventory
+    set logid = #{logid,jdbcType=INTEGER},
+      loname = #{loname,jdbcType=VARCHAR},
+      losize = #{losize,jdbcType=DOUBLE},
+      lovolume = #{lovolume,jdbcType=DOUBLE},
+      loweight = #{loweight,jdbcType=DOUBLE},
+      lolevel = #{lolevel,jdbcType=INTEGER},
+      lostate = #{lostate,jdbcType=INTEGER}
+    where loid = #{loid,jdbcType=INTEGER}
+  </update>
+</mapper>

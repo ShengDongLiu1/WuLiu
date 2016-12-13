@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht.dao.TransportMapper">
+  <resultMap id="BaseResultMap" type="com.ht.entity.Transport">
+    <id column="tid" jdbcType="INTEGER" property="tid" />
+    <result column="tdrivername" jdbcType="VARCHAR" property="tdrivername" />
+    <result column="tdriverphone" jdbcType="VARCHAR" property="tdriverphone" />
+    <result column="tvehicleid" jdbcType="INTEGER" property="tvehicleid" />
+    <result column="tvehicletype" jdbcType="VARCHAR" property="tvehicletype" />
+    <result column="tvehiclecapacity" jdbcType="INTEGER" property="tvehiclecapacity" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tid, tdrivername, tdriverphone, tvehicleid, tvehicletype, tvehiclecapacity
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from transport
+    where tid = #{tid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from transport
+    where tid = #{tid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ht.entity.Transport">
+    insert into transport (tid, tdrivername, tdriverphone, 
+      tvehicleid, tvehicletype, tvehiclecapacity
+      )
+    values (#{tid,jdbcType=INTEGER}, #{tdrivername,jdbcType=VARCHAR}, #{tdriverphone,jdbcType=VARCHAR}, 
+      #{tvehicleid,jdbcType=INTEGER}, #{tvehicletype,jdbcType=VARCHAR}, #{tvehiclecapacity,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ht.entity.Transport">
+    insert into transport
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        tid,
+      </if>
+      <if test="tdrivername != null">
+        tdrivername,
+      </if>
+      <if test="tdriverphone != null">
+        tdriverphone,
+      </if>
+      <if test="tvehicleid != null">
+        tvehicleid,
+      </if>
+      <if test="tvehicletype != null">
+        tvehicletype,
+      </if>
+      <if test="tvehiclecapacity != null">
+        tvehiclecapacity,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="tdrivername != null">
+        #{tdrivername,jdbcType=VARCHAR},
+      </if>
+      <if test="tdriverphone != null">
+        #{tdriverphone,jdbcType=VARCHAR},
+      </if>
+      <if test="tvehicleid != null">
+        #{tvehicleid,jdbcType=INTEGER},
+      </if>
+      <if test="tvehicletype != null">
+        #{tvehicletype,jdbcType=VARCHAR},
+      </if>
+      <if test="tvehiclecapacity != null">
+        #{tvehiclecapacity,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Transport">
+    update transport
+    <set>
+      <if test="tdrivername != null">
+        tdrivername = #{tdrivername,jdbcType=VARCHAR},
+      </if>
+      <if test="tdriverphone != null">
+        tdriverphone = #{tdriverphone,jdbcType=VARCHAR},
+      </if>
+      <if test="tvehicleid != null">
+        tvehicleid = #{tvehicleid,jdbcType=INTEGER},
+      </if>
+      <if test="tvehicletype != null">
+        tvehicletype = #{tvehicletype,jdbcType=VARCHAR},
+      </if>
+      <if test="tvehiclecapacity != null">
+        tvehiclecapacity = #{tvehiclecapacity,jdbcType=INTEGER},
+      </if>
+    </set>
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ht.entity.Transport">
+    update transport
+    set tdrivername = #{tdrivername,jdbcType=VARCHAR},
+      tdriverphone = #{tdriverphone,jdbcType=VARCHAR},
+      tvehicleid = #{tvehicleid,jdbcType=INTEGER},
+      tvehicletype = #{tvehicletype,jdbcType=VARCHAR},
+      tvehiclecapacity = #{tvehiclecapacity,jdbcType=INTEGER}
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+</mapper>

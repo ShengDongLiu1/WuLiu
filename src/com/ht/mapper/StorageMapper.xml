@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht.dao.StorageMapper">
+  <resultMap id="BaseResultMap" type="com.ht.entity.Storage">
+    <id column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="srid" jdbcType="INTEGER" property="srid" />
+    <result column="scid" jdbcType="INTEGER" property="scid" />
+    <result column="sgid" jdbcType="INTEGER" property="sgid" />
+    <result column="ssbid" jdbcType="INTEGER" property="ssbid" />
+    <result column="storagecount" jdbcType="INTEGER" property="storagecount" />
+    <result column="storagemode" jdbcType="VARCHAR" property="storagemode" />
+    <result column="storagebarcode" jdbcType="VARCHAR" property="storagebarcode" />
+    <result column="sbarcadeid" jdbcType="VARCHAR" property="sbarcadeid" />
+    <result column="storagetime" jdbcType="TIMESTAMP" property="storagetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sid, srid, scid, sgid, ssbid, storagecount, storagemode, storagebarcode, sbarcadeid, 
+    storagetime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from storage
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from storage
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ht.entity.Storage">
+    insert into storage (sid, srid, scid, 
+      sgid, ssbid, storagecount, 
+      storagemode, storagebarcode, sbarcadeid, 
+      storagetime)
+    values (#{sid,jdbcType=INTEGER}, #{srid,jdbcType=INTEGER}, #{scid,jdbcType=INTEGER}, 
+      #{sgid,jdbcType=INTEGER}, #{ssbid,jdbcType=INTEGER}, #{storagecount,jdbcType=INTEGER}, 
+      #{storagemode,jdbcType=VARCHAR}, #{storagebarcode,jdbcType=VARCHAR}, #{sbarcadeid,jdbcType=VARCHAR}, 
+      #{storagetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ht.entity.Storage">
+    insert into storage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="srid != null">
+        srid,
+      </if>
+      <if test="scid != null">
+        scid,
+      </if>
+      <if test="sgid != null">
+        sgid,
+      </if>
+      <if test="ssbid != null">
+        ssbid,
+      </if>
+      <if test="storagecount != null">
+        storagecount,
+      </if>
+      <if test="storagemode != null">
+        storagemode,
+      </if>
+      <if test="storagebarcode != null">
+        storagebarcode,
+      </if>
+      <if test="sbarcadeid != null">
+        sbarcadeid,
+      </if>
+      <if test="storagetime != null">
+        storagetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="srid != null">
+        #{srid,jdbcType=INTEGER},
+      </if>
+      <if test="scid != null">
+        #{scid,jdbcType=INTEGER},
+      </if>
+      <if test="sgid != null">
+        #{sgid,jdbcType=INTEGER},
+      </if>
+      <if test="ssbid != null">
+        #{ssbid,jdbcType=INTEGER},
+      </if>
+      <if test="storagecount != null">
+        #{storagecount,jdbcType=INTEGER},
+      </if>
+      <if test="storagemode != null">
+        #{storagemode,jdbcType=VARCHAR},
+      </if>
+      <if test="storagebarcode != null">
+        #{storagebarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="sbarcadeid != null">
+        #{sbarcadeid,jdbcType=VARCHAR},
+      </if>
+      <if test="storagetime != null">
+        #{storagetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Storage">
+    update storage
+    <set>
+      <if test="srid != null">
+        srid = #{srid,jdbcType=INTEGER},
+      </if>
+      <if test="scid != null">
+        scid = #{scid,jdbcType=INTEGER},
+      </if>
+      <if test="sgid != null">
+        sgid = #{sgid,jdbcType=INTEGER},
+      </if>
+      <if test="ssbid != null">
+        ssbid = #{ssbid,jdbcType=INTEGER},
+      </if>
+      <if test="storagecount != null">
+        storagecount = #{storagecount,jdbcType=INTEGER},
+      </if>
+      <if test="storagemode != null">
+        storagemode = #{storagemode,jdbcType=VARCHAR},
+      </if>
+      <if test="storagebarcode != null">
+        storagebarcode = #{storagebarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="sbarcadeid != null">
+        sbarcadeid = #{sbarcadeid,jdbcType=VARCHAR},
+      </if>
+      <if test="storagetime != null">
+        storagetime = #{storagetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ht.entity.Storage">
+    update storage
+    set srid = #{srid,jdbcType=INTEGER},
+      scid = #{scid,jdbcType=INTEGER},
+      sgid = #{sgid,jdbcType=INTEGER},
+      ssbid = #{ssbid,jdbcType=INTEGER},
+      storagecount = #{storagecount,jdbcType=INTEGER},
+      storagemode = #{storagemode,jdbcType=VARCHAR},
+      storagebarcode = #{storagebarcode,jdbcType=VARCHAR},
+      sbarcadeid = #{sbarcadeid,jdbcType=VARCHAR},
+      storagetime = #{storagetime,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>

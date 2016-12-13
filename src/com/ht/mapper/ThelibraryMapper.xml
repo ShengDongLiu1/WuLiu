@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht.dao.ThelibraryMapper">
+  <resultMap id="BaseResultMap" type="com.ht.entity.Thelibrary">
+    <id column="tid" jdbcType="INTEGER" property="tid" />
+    <result column="tsid" jdbcType="INTEGER" property="tsid" />
+    <result column="tloid" jdbcType="INTEGER" property="tloid" />
+    <result column="ttid" jdbcType="INTEGER" property="ttid" />
+    <result column="tcount" jdbcType="INTEGER" property="tcount" />
+    <result column="ttype" jdbcType="VARCHAR" property="ttype" />
+    <result column="ttime" jdbcType="TIMESTAMP" property="ttime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tid, tsid, tloid, ttid, tcount, ttype, ttime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from thelibrary
+    where tid = #{tid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from thelibrary
+    where tid = #{tid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ht.entity.Thelibrary">
+    insert into thelibrary (tid, tsid, tloid, 
+      ttid, tcount, ttype, 
+      ttime)
+    values (#{tid,jdbcType=INTEGER}, #{tsid,jdbcType=INTEGER}, #{tloid,jdbcType=INTEGER}, 
+      #{ttid,jdbcType=INTEGER}, #{tcount,jdbcType=INTEGER}, #{ttype,jdbcType=VARCHAR}, 
+      #{ttime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ht.entity.Thelibrary">
+    insert into thelibrary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        tid,
+      </if>
+      <if test="tsid != null">
+        tsid,
+      </if>
+      <if test="tloid != null">
+        tloid,
+      </if>
+      <if test="ttid != null">
+        ttid,
+      </if>
+      <if test="tcount != null">
+        tcount,
+      </if>
+      <if test="ttype != null">
+        ttype,
+      </if>
+      <if test="ttime != null">
+        ttime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="tsid != null">
+        #{tsid,jdbcType=INTEGER},
+      </if>
+      <if test="tloid != null">
+        #{tloid,jdbcType=INTEGER},
+      </if>
+      <if test="ttid != null">
+        #{ttid,jdbcType=INTEGER},
+      </if>
+      <if test="tcount != null">
+        #{tcount,jdbcType=INTEGER},
+      </if>
+      <if test="ttype != null">
+        #{ttype,jdbcType=VARCHAR},
+      </if>
+      <if test="ttime != null">
+        #{ttime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Thelibrary">
+    update thelibrary
+    <set>
+      <if test="tsid != null">
+        tsid = #{tsid,jdbcType=INTEGER},
+      </if>
+      <if test="tloid != null">
+        tloid = #{tloid,jdbcType=INTEGER},
+      </if>
+      <if test="ttid != null">
+        ttid = #{ttid,jdbcType=INTEGER},
+      </if>
+      <if test="tcount != null">
+        tcount = #{tcount,jdbcType=INTEGER},
+      </if>
+      <if test="ttype != null">
+        ttype = #{ttype,jdbcType=VARCHAR},
+      </if>
+      <if test="ttime != null">
+        ttime = #{ttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ht.entity.Thelibrary">
+    update thelibrary
+    set tsid = #{tsid,jdbcType=INTEGER},
+      tloid = #{tloid,jdbcType=INTEGER},
+      ttid = #{ttid,jdbcType=INTEGER},
+      tcount = #{tcount,jdbcType=INTEGER},
+      ttype = #{ttype,jdbcType=VARCHAR},
+      ttime = #{ttime,jdbcType=TIMESTAMP}
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+</mapper>

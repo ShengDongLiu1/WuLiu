@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht.dao.CustomerMapper">
+  <resultMap id="BaseResultMap" type="com.ht.entity.Customer">
+    <id column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="cname" jdbcType="VARCHAR" property="cname" />
+    <result column="ccompany" jdbcType="VARCHAR" property="ccompany" />
+    <result column="cphone" jdbcType="VARCHAR" property="cphone" />
+    <result column="cemail" jdbcType="VARCHAR" property="cemail" />
+    <result column="ccredit" jdbcType="VARCHAR" property="ccredit" />
+    <result column="caddress" jdbcType="VARCHAR" property="caddress" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    cid, cname, ccompany, cphone, cemail, ccredit, caddress
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from customer
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ht.entity.Customer">
+    insert into customer (cid, cname, ccompany, 
+      cphone, cemail, ccredit, 
+      caddress)
+    values (#{cid,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR}, #{ccompany,jdbcType=VARCHAR}, 
+      #{cphone,jdbcType=VARCHAR}, #{cemail,jdbcType=VARCHAR}, #{ccredit,jdbcType=VARCHAR}, 
+      #{caddress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ht.entity.Customer">
+    insert into customer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="cname != null">
+        cname,
+      </if>
+      <if test="ccompany != null">
+        ccompany,
+      </if>
+      <if test="cphone != null">
+        cphone,
+      </if>
+      <if test="cemail != null">
+        cemail,
+      </if>
+      <if test="ccredit != null">
+        ccredit,
+      </if>
+      <if test="caddress != null">
+        caddress,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="cname != null">
+        #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="ccompany != null">
+        #{ccompany,jdbcType=VARCHAR},
+      </if>
+      <if test="cphone != null">
+        #{cphone,jdbcType=VARCHAR},
+      </if>
+      <if test="cemail != null">
+        #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="ccredit != null">
+        #{ccredit,jdbcType=VARCHAR},
+      </if>
+      <if test="caddress != null">
+        #{caddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Customer">
+    update customer
+    <set>
+      <if test="cname != null">
+        cname = #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="ccompany != null">
+        ccompany = #{ccompany,jdbcType=VARCHAR},
+      </if>
+      <if test="cphone != null">
+        cphone = #{cphone,jdbcType=VARCHAR},
+      </if>
+      <if test="cemail != null">
+        cemail = #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="ccredit != null">
+        ccredit = #{ccredit,jdbcType=VARCHAR},
+      </if>
+      <if test="caddress != null">
+        caddress = #{caddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ht.entity.Customer">
+    update customer
+    set cname = #{cname,jdbcType=VARCHAR},
+      ccompany = #{ccompany,jdbcType=VARCHAR},
+      cphone = #{cphone,jdbcType=VARCHAR},
+      cemail = #{cemail,jdbcType=VARCHAR},
+      ccredit = #{ccredit,jdbcType=VARCHAR},
+      caddress = #{caddress,jdbcType=VARCHAR}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>

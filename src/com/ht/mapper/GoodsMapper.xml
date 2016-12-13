@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht.dao.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.ht.entity.Goods">
+    <id column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="sgoodsname" jdbcType="VARCHAR" property="sgoodsname" />
+    <result column="sgoodstype" jdbcType="VARCHAR" property="sgoodstype" />
+    <result column="sgoodsweight" jdbcType="REAL" property="sgoodsweight" />
+    <result column="sgoodsacreage" jdbcType="REAL" property="sgoodsacreage" />
+    <result column="sgoodsstate" jdbcType="VARCHAR" property="sgoodsstate" />
+    <result column="sgoodsregion" jdbcType="VARCHAR" property="sgoodsregion" />
+    <result column="sgoodstime" jdbcType="TIMESTAMP" property="sgoodstime" />
+    <result column="eid" jdbcType="INTEGER" property="eid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sid, sgoodsname, sgoodstype, sgoodsweight, sgoodsacreage, sgoodsstate, sgoodsregion, 
+    sgoodstime, eid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from goods
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ht.entity.Goods">
+    insert into goods (sid, sgoodsname, sgoodstype, 
+      sgoodsweight, sgoodsacreage, sgoodsstate, 
+      sgoodsregion, sgoodstime, eid
+      )
+    values (#{sid,jdbcType=INTEGER}, #{sgoodsname,jdbcType=VARCHAR}, #{sgoodstype,jdbcType=VARCHAR}, 
+      #{sgoodsweight,jdbcType=REAL}, #{sgoodsacreage,jdbcType=REAL}, #{sgoodsstate,jdbcType=VARCHAR}, 
+      #{sgoodsregion,jdbcType=VARCHAR}, #{sgoodstime,jdbcType=TIMESTAMP}, #{eid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ht.entity.Goods">
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="sgoodsname != null">
+        sgoodsname,
+      </if>
+      <if test="sgoodstype != null">
+        sgoodstype,
+      </if>
+      <if test="sgoodsweight != null">
+        sgoodsweight,
+      </if>
+      <if test="sgoodsacreage != null">
+        sgoodsacreage,
+      </if>
+      <if test="sgoodsstate != null">
+        sgoodsstate,
+      </if>
+      <if test="sgoodsregion != null">
+        sgoodsregion,
+      </if>
+      <if test="sgoodstime != null">
+        sgoodstime,
+      </if>
+      <if test="eid != null">
+        eid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="sgoodsname != null">
+        #{sgoodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="sgoodstype != null">
+        #{sgoodstype,jdbcType=VARCHAR},
+      </if>
+      <if test="sgoodsweight != null">
+        #{sgoodsweight,jdbcType=REAL},
+      </if>
+      <if test="sgoodsacreage != null">
+        #{sgoodsacreage,jdbcType=REAL},
+      </if>
+      <if test="sgoodsstate != null">
+        #{sgoodsstate,jdbcType=VARCHAR},
+      </if>
+      <if test="sgoodsregion != null">
+        #{sgoodsregion,jdbcType=VARCHAR},
+      </if>
+      <if test="sgoodstime != null">
+        #{sgoodstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eid != null">
+        #{eid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Goods">
+    update goods
+    <set>
+      <if test="sgoodsname != null">
+        sgoodsname = #{sgoodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="sgoodstype != null">
+        sgoodstype = #{sgoodstype,jdbcType=VARCHAR},
+      </if>
+      <if test="sgoodsweight != null">
+        sgoodsweight = #{sgoodsweight,jdbcType=REAL},
+      </if>
+      <if test="sgoodsacreage != null">
+        sgoodsacreage = #{sgoodsacreage,jdbcType=REAL},
+      </if>
+      <if test="sgoodsstate != null">
+        sgoodsstate = #{sgoodsstate,jdbcType=VARCHAR},
+      </if>
+      <if test="sgoodsregion != null">
+        sgoodsregion = #{sgoodsregion,jdbcType=VARCHAR},
+      </if>
+      <if test="sgoodstime != null">
+        sgoodstime = #{sgoodstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eid != null">
+        eid = #{eid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ht.entity.Goods">
+    update goods
+    set sgoodsname = #{sgoodsname,jdbcType=VARCHAR},
+      sgoodstype = #{sgoodstype,jdbcType=VARCHAR},
+      sgoodsweight = #{sgoodsweight,jdbcType=REAL},
+      sgoodsacreage = #{sgoodsacreage,jdbcType=REAL},
+      sgoodsstate = #{sgoodsstate,jdbcType=VARCHAR},
+      sgoodsregion = #{sgoodsregion,jdbcType=VARCHAR},
+      sgoodstime = #{sgoodstime,jdbcType=TIMESTAMP},
+      eid = #{eid,jdbcType=INTEGER}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>
