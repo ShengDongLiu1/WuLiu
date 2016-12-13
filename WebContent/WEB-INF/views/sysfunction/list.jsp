@@ -101,12 +101,14 @@
 									<td>
 										<a href="<%=basePath%>function/update?id=${item.funid}">编辑</a>
 										&ensp;
-										<a href="<%=basePath%>function/delete?id=${item.funid}">删除</a>
+											<c:if test="${item.funpname!=\"系统管理\" && item.funname!=\"系统管理\"}">
+												<a href="<%=basePath%>function/delete?id=${item.funid}">删除</a>	
+											</c:if>
 										&ensp;
 									
 									</td>
 									<td>
-									<c:if test="${empty item.funurl}">
+									<c:if test="${empty item.funurl && item.funname!=\"系统管理\"}">
 											<a  href="<%=basePath%>function/addsub?funid=${item.funid}&pfunname=${item.funname}">增加子功能</a>
 									</c:if>
 									</td>
