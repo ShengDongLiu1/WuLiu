@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht.dao.SysroleMapper">
+  <resultMap id="BaseResultMap" type="com.ht.entity.Sysrole">
+    <id column="ROLEID" jdbcType="INTEGER" property="roleid" />
+    <result column="ROLENAME" jdbcType="VARCHAR" property="rolename" />
+    <result column="ROLESTATE" jdbcType="INTEGER" property="rolestate" />
+    <result column="ROLEDESC" jdbcType="VARCHAR" property="roledesc" />
+  </resultMap>
+  
+   <resultMap id="BaseMap" type="com.ht.entity.Sysfunction">
+    <id column="FUNID" jdbcType="INTEGER" property="funid" />
+    <result column="FUNNAME" jdbcType="VARCHAR" property="funname" />
+    <result column="FUNURL" jdbcType="VARCHAR" property="funurl" />
+    <result column="FUNPID" jdbcType="INTEGER" property="funpid" />
+    <result column="FUNSTATE" jdbcType="INTEGER" property="funstate" />
+	 <result column="RR" jdbcType="INTEGER" property="rr" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    ROLEID, ROLENAME, ROLESTATE, ROLEDESC
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sysrole
+    where ROLEID = #{roleid,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 查询出所有的role，提供给用户选择  -->
+   <select id="listAll"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sysrole
+    where roleid>0
+  </select>
+  
+   <!-- 查询出所有的role，提供给用户选择  -->
+   <select id="searchbyrolename"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sysrole
+    where roleid>0 and rolename like concat("%",#{value},"%");
+  </select>
+  
+   <!-- 初始化权限 -->
+  <select id="initfunlist" parameterType="java.lang.Integer" resultMap="BaseMap">
+    select A.funid,A.funname,A.funurl,A.funpid,A.funstate,
+    	(CASE WHEN B.RRID IS NULL THEN '0' ELSE '1' END) AS RR from sysfunction A 
+    	LEFT JOIN ROLERIGHT B ON A.FUNID=B.FUNID AND 
+    	B.ROLEID = #{roleid,jdbcType=INTEGER} 
+    	WHERE A.FUNSTATE=1    
+   
+  </select>
+   <!--  按roleid删除权限 -->
+  <delete id="deleteright" parameterType="java.lang.Integer" >
+    delete from roleright
+    where ROLEID = #{roleid,jdbcType=INTEGER}
+  </delete>
+  
+   <!-- 按roleid，funid增加权限 -->
+  <insert id="saveright" parameterType="java.lang.Integer">  
+    	insert into roleright (ROLEID,FUNID) values 
+    		<foreach item="item" collection="funids" separator=",">
+	  			(#{roleid,jdbcType=INTEGER}, #{item})
+			</foreach>
+  </insert>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sysrole
+    where ROLEID = #{roleid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ht.entity.Sysrole">
+    insert into sysrole (ROLEID, ROLENAME, ROLESTATE, 
+      ROLEDESC)
+    values (#{roleid,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR}, #{rolestate,jdbcType=INTEGER}, 
+      #{roledesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ht.entity.Sysrole">
+    insert into sysrole
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleid != null">
+        ROLEID,
+      </if>
+      <if test="rolename != null">
+        ROLENAME,
+      </if>
+      <if test="rolestate != null">
+        ROLESTATE,
+      </if>
+      <if test="roledesc != null">
+        ROLEDESC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleid != null">
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="rolename != null">
+        #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="rolestate != null">
+        #{rolestate,jdbcType=INTEGER},
+      </if>
+      <if test="roledesc != null">
+        #{roledesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Sysrole">
+    update sysrole
+    <set>
+      <if test="rolename != null">
+        ROLENAME = #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="rolestate != null">
+        ROLESTATE = #{rolestate,jdbcType=INTEGER},
+      </if>
+      <if test="roledesc != null">
+        ROLEDESC = #{roledesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ROLEID = #{roleid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ht.entity.Sysrole">
+    update sysrole
+    set ROLENAME = #{rolename,jdbcType=VARCHAR},
+      ROLESTATE = #{rolestate,jdbcType=INTEGER},
+      ROLEDESC = #{roledesc,jdbcType=VARCHAR}
+    where ROLEID = #{roleid,jdbcType=INTEGER}
+  </update>
+</mapper>

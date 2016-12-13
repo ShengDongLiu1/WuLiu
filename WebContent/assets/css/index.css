@@ -1,0 +1,79 @@
+.mF_YSlider_wrap {
+    float: left;
+}
+
+.impotent {
+    width:448px;
+    border:1px solid #E8E8E8;
+}
+
+.impotent {
+    height:310px;
+    float:right;
+}
+
+.impotent  .title{
+    height:35px;
+    border-bottom:2px solid #E8E8E8;
+    font-family: "???í????";
+    font-weight: bold;
+    color: #786F66;
+}
+.impotent  .title_left{
+    float:left;
+    line-height: 35px;
+    padding-left:10px;
+    width:70%;
+
+}
+.impotent  .title_right{
+    float:right;
+    line-height: 35px;
+    width:13%;/*这是不能是30%，padding占用元素的大小*/
+}
+.impotent .title_right a {
+    color: #999;
+    text-decoration: none;
+    font-family: "????";
+    font-size: 10px;
+    font-weight: normal;
+    padding-right: 10px;
+}
+.impotent .pic_news{
+    height:80px;
+    margin-top:10px;
+    line-height:22px;
+}
+.impotent .pic_news img{
+    float:left;
+    margin:0 5px;
+
+}
+.impotent .pic_news a{
+    color: #C00;
+    text-decoration: none;
+}
+.impotent .news_list{
+    margin-top:20px;
+}
+.impotent .news_list li{
+    background: url(../image/list.jpg) no-repeat;
+    list-style-type: none;
+    padding-left:10px;
+    border-bottom:1px dotted #cccccc;
+    margin:8px;
+    height:17px;
+    line-height:17px;
+
+}
+.impotent .news_list a:link, .news_list a:visited {
+    text-decoration: none;
+    color: #000;
+}
+.impotent .news_list a:hover, .news_list a:active {
+    color: #F00;
+    text-decoration: none;
+}
+.impotent .news_list span{
+    float:right;
+}
