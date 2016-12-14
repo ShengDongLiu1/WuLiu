@@ -6,11 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>入库列表</title>
-<link rel="stylesheet" type="text/css" href="<%=path %>/jquery-easyui-1.5/themes/default/easyui.css">
-<link rel="stylesheet" type="text/css" href="<%=path %>/jquery-easyui-1.5/themes/icon.css">
-<script src="<%=path %>/jquery-easyui-1.5/jquery.min.js"></script>
-<script src="<%=path %>/jquery-easyui-1.5/jquery.easyui.min.js"></script>
-<script src="<%=path %>/jquery-easyui-1.5/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" href="<%=path %>/js/jquery-easyui/themes/default/easyui.css"/>
+<link rel="stylesheet" href="<%=path %>/js/site_main.css"/>
+<link rel="stylesheet" type="text/css" href="<%=path %>/js/jquery-easyui/themes/icon.css">
+<script type="text/javascript" src="<%=path %>/js/jquery.min.js"></script>
+<script type="text/javascript" src="<%=path %>/js/jquery-easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="<%=path %>/js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="<%=path %>/js/site_easyui.js"></script>
 <script>
 $(function(){
 	//setPagination("list");

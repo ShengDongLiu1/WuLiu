@@ -59,7 +59,6 @@ public class StorageController {
 		map.put("size", pageBean.getPageSize());
 		List<Storage> list=storageService.queryAll(map);//查询所有数据
 		Long total=storageService.queryAllCount(map);	//查询总条数
-		pageBean.setTotal(Integer.parseInt(String.valueOf(total)));
 		JSONObject result = new JSONObject();
 		JSONArray jsonArray = JSONArray.fromObject(list);
 		result.put("rows", jsonArray);
