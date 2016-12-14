@@ -68,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td><a href="<%=basePath%>message.jsp" class="nav" >客户留言</a></td>
 					<td>&nbsp;</td>
 		
-					<td><a href="<%=basePath%>showall.do" class="nav" >联系我们</a></td>
+					<td><a href="<%=basePath%>warehouse.jsp" class="nav" >我的仓储</a></td>
 					<td>&nbsp;</td>
 		
 
