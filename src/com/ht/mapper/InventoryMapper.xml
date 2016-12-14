@@ -11,6 +11,23 @@
     <result column="lolevel" jdbcType="INTEGER" property="lolevel" />
     <result column="lostate" jdbcType="INTEGER" property="lostate" />
   </resultMap>
+  
+  <resultMap id="SelectBaseResultMap" type="com.ht.entity.Inventory">
+    <id column="loid" jdbcType="INTEGER" property="loid" />
+    <result column="logid" jdbcType="INTEGER" property="logid" />
+    <result column="loname" jdbcType="VARCHAR" property="loname" />
+    <result column="losize" jdbcType="DOUBLE" property="losize" />
+    <result column="lovolume" jdbcType="DOUBLE" property="lovolume" />
+    <result column="loweight" jdbcType="DOUBLE" property="loweight" />
+    <result column="lolevel" jdbcType="INTEGER" property="lolevel" />
+    <result column="lostate" jdbcType="INTEGER" property="lostate" />
+    
+    <association property="goods" javaType="com.ht.entity.Goods">
+	    <result property="gid" column="gid"/>
+		<result property="gname" column="gname"/>
+	</association>
+  </resultMap>
+  
   <sql id="Base_Column_List">
     loid, logid, loname, losize, lovolume, loweight, lolevel, lostate
   </sql>
@@ -125,10 +142,52 @@
       lostate = #{lostate,jdbcType=INTEGER}
     where loid = #{loid,jdbcType=INTEGER}
   </update>
-  
-  <select id="select" resultMap="BaseResultMap">
+   <!-- 查询所有库位列表 -->
+  <select id="select" parameterType="java.util.Map" resultMap="SelectBaseResultMap">
     select 
-    <include refid="Base_Column_List" />
-    from inventory
+  	 lo.loid, lo.logid, lo.loname, lo.losize, lo.lovolume, lo.loweight, lo.lolevel, lo.lostate,go.gid,go.gname
+    from inventory lo,goods go
+    <where>
+    	lo.logid=go.gid
+    	<if test="gname!=null and gname!='' ">
+			and go.gname like #{gname}
+		</if>
+		<if test="loname!=null and loname!='' ">
+			and lo.loname like #{loname}
+		</if>
+		<if test="lolevel!=null and lolevel!='' ">
+			and lo.lolevel like #{lolevel}
+		</if>
+		<if test="lostate!=null and lostate!='' ">
+			and lo.lostate like #{lostate}
+		</if>
+    </where>
+  	 order by lo.loid desc
+  	 <if test="start!=null and size!=null">
+		limit #{start},#{size}
+	</if>
   </select>
+  
+  <!-- 查询库位条数 -->
+ <select id="queryAllCount" parameterType="java.util.Map" resultType="Long">
+ 	select count(*) from inventory lo,goods go
+		<where>
+			lo.logid=go.gid
+			<if test="gname!=null and gname!='' ">
+			and go.gname like #{gname}
+		</if>
+		<if test="loname!=null and loname!='' ">
+			and lo.loname like #{loname}
+		</if>
+		<if test="lolevel!=null and lolevel!='' ">
+			and lo.lolevel like #{lolevel}
+		</if>
+		<if test="lostate!=null and lostate!='' ">
+			and lo.lostate like #{lostate}
+		</if>
+		</where>
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+ </select>
 </mapper>

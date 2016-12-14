@@ -17,7 +17,17 @@ public class Inventory {
 
     private Integer lostate;
 
-    public Integer getLoid() {
+    private Goods goods;	//货物
+    
+    public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+
+	public Integer getLoid() {
         return loid;
     }
 

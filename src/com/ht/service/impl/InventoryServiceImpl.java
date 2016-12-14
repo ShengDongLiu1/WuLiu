@@ -1,6 +1,7 @@
 package com.ht.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,14 @@ public class InventoryServiceImpl implements InventoryService{
 	
 	
 	@Override
-	public List<Inventory> select() {
-		return inventoryMapper.select();
+	public List<Inventory> select(Map<String, Object> map) {
+		return inventoryMapper.select(map);
+	}
+
+	@Override
+	public Long queryAllCount(Map<String, Object> map) {
+		
+		return inventoryMapper.queryAllCount(map);
 	}
 	
 }

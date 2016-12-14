@@ -1,8 +1,7 @@
 package com.ht.dao;
 
 import java.util.List;
-
-import org.springframework.stereotype.Service;
+import java.util.Map;
 
 import com.ht.entity.Inventory;
 public interface InventoryMapper {
@@ -18,5 +17,7 @@ public interface InventoryMapper {
 
     int updateByPrimaryKey(Inventory record);
 
-	List<Inventory> select();
+	List<Inventory> select(Map<String, Object> map);
+
+	Long queryAllCount(Map<String, Object> map);
 }
