@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ht.dto.Barcode;
 import com.ht.dto.PageBean;
 import com.ht.dto.StringUtil;
 import com.ht.entity.Storage;
@@ -64,6 +66,13 @@ public class StorageController {
 		result.put("total", total);
 		ResponseUtil.write(response, result);
 		System.out.println("list:"+jsonArray);
+		return null;
+	}
+	
+	@RequestMapping(value="/add")
+	public String add(Barcode barcode,HttpServletRequest request){
+		String string=barcode.createCode(request);
+		System.out.println("str:"+string);
 		return null;
 	}
 }
