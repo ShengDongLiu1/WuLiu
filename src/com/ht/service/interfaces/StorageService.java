@@ -1,11 +1,11 @@
-package com.ht.dao;
+package com.ht.service.interfaces;
 
 import java.util.List;
 import java.util.Map;
 
 import com.ht.entity.Storage;
 
-public interface StorageMapper {
+public interface StorageService {
 	/**
 	 * 根据id删除
 	 * @param sid

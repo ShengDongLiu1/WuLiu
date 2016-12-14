@@ -2,141 +2,244 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ht.dao.GoodsMapper">
   <resultMap id="BaseResultMap" type="com.ht.entity.Goods">
-    <id column="sid" jdbcType="INTEGER" property="sid" />
-    <result column="sgoodsname" jdbcType="VARCHAR" property="sgoodsname" />
-    <result column="sgoodstype" jdbcType="VARCHAR" property="sgoodstype" />
-    <result column="sgoodsweight" jdbcType="REAL" property="sgoodsweight" />
-    <result column="sgoodsacreage" jdbcType="REAL" property="sgoodsacreage" />
-    <result column="sgoodsstate" jdbcType="VARCHAR" property="sgoodsstate" />
-    <result column="sgoodsregion" jdbcType="VARCHAR" property="sgoodsregion" />
-    <result column="sgoodstime" jdbcType="TIMESTAMP" property="sgoodstime" />
-    <result column="eid" jdbcType="INTEGER" property="eid" />
+    <id column="gid" jdbcType="INTEGER" property="gid" />
+    <result column="gcid" jdbcType="INTEGER" property="gcid" />
+    <result column="gordernumber" jdbcType="VARCHAR" property="gordernumber" />
+    <result column="gname" jdbcType="VARCHAR" property="gname" />
+    <result column="gcount" jdbcType="INTEGER" property="gcount" />
+    <result column="gunit" jdbcType="VARCHAR" property="gunit" />
+    <result column="gweight" jdbcType="REAL" property="gweight" />
+    <result column="gvolume" jdbcType="REAL" property="gvolume" />
+    <result column="gsize" jdbcType="REAL" property="gsize" />
+    <result column="ggrade" jdbcType="INTEGER" property="ggrade" />
+    <result column="gdescribe" jdbcType="VARCHAR" property="gdescribe" />
+    <result column="gconsignee" jdbcType="VARCHAR" property="gconsignee" />
+    <result column="greaddress" jdbcType="VARCHAR" property="greaddress" />
+    <result column="grephone" jdbcType="VARCHAR" property="grephone" />
+    <result column="gorigin" jdbcType="VARCHAR" property="gorigin" />
+    <result column="gendpoint" jdbcType="VARCHAR" property="gendpoint" />
+    <result column="gstate" jdbcType="VARCHAR" property="gstate" />
+    <result column="gorderstime" jdbcType="TIMESTAMP" property="gorderstime" />
   </resultMap>
   <sql id="Base_Column_List">
-    sid, sgoodsname, sgoodstype, sgoodsweight, sgoodsacreage, sgoodsstate, sgoodsregion, 
-    sgoodstime, eid
+    gid, gcid, gordernumber, gname, gcount, gunit, gweight, gvolume, gsize, ggrade, gdescribe, 
+    gconsignee, greaddress, grephone, gorigin, gendpoint, gstate, gorderstime
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from goods
-    where sid = #{sid,jdbcType=INTEGER}
+    where gid = #{gid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from goods
-    where sid = #{sid,jdbcType=INTEGER}
+    where gid = #{gid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.ht.entity.Goods">
-    insert into goods (sid, sgoodsname, sgoodstype, 
-      sgoodsweight, sgoodsacreage, sgoodsstate, 
-      sgoodsregion, sgoodstime, eid
-      )
-    values (#{sid,jdbcType=INTEGER}, #{sgoodsname,jdbcType=VARCHAR}, #{sgoodstype,jdbcType=VARCHAR}, 
-      #{sgoodsweight,jdbcType=REAL}, #{sgoodsacreage,jdbcType=REAL}, #{sgoodsstate,jdbcType=VARCHAR}, 
-      #{sgoodsregion,jdbcType=VARCHAR}, #{sgoodstime,jdbcType=TIMESTAMP}, #{eid,jdbcType=INTEGER}
-      )
+    insert into goods (gid, gcid, gordernumber, 
+      gname, gcount, gunit, 
+      gweight, gvolume, gsize, ggrade, 
+      gdescribe, gconsignee, greaddress, 
+      grephone, gorigin, gendpoint, 
+      gstate, gorderstime)
+    values (#{gid,jdbcType=INTEGER}, #{gcid,jdbcType=INTEGER}, #{gordernumber,jdbcType=VARCHAR}, 
+      #{gname,jdbcType=VARCHAR}, #{gcount,jdbcType=INTEGER}, #{gunit,jdbcType=VARCHAR}, 
+      #{gweight,jdbcType=REAL}, #{gvolume,jdbcType=REAL}, #{gsize,jdbcType=REAL}, #{ggrade,jdbcType=INTEGER}, 
+      #{gdescribe,jdbcType=VARCHAR}, #{gconsignee,jdbcType=VARCHAR}, #{greaddress,jdbcType=VARCHAR}, 
+      #{grephone,jdbcType=VARCHAR}, #{gorigin,jdbcType=VARCHAR}, #{gendpoint,jdbcType=VARCHAR}, 
+      #{gstate,jdbcType=VARCHAR}, #{gorderstime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ht.entity.Goods">
     insert into goods
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="sid != null">
-        sid,
+      <if test="gid != null">
+        gid,
       </if>
-      <if test="sgoodsname != null">
-        sgoodsname,
+      <if test="gcid != null">
+        gcid,
       </if>
-      <if test="sgoodstype != null">
-        sgoodstype,
+      <if test="gordernumber != null">
+        gordernumber,
       </if>
-      <if test="sgoodsweight != null">
-        sgoodsweight,
+      <if test="gname != null">
+        gname,
       </if>
-      <if test="sgoodsacreage != null">
-        sgoodsacreage,
+      <if test="gcount != null">
+        gcount,
       </if>
-      <if test="sgoodsstate != null">
-        sgoodsstate,
+      <if test="gunit != null">
+        gunit,
       </if>
-      <if test="sgoodsregion != null">
-        sgoodsregion,
+      <if test="gweight != null">
+        gweight,
       </if>
-      <if test="sgoodstime != null">
-        sgoodstime,
+      <if test="gvolume != null">
+        gvolume,
       </if>
-      <if test="eid != null">
-        eid,
+      <if test="gsize != null">
+        gsize,
+      </if>
+      <if test="ggrade != null">
+        ggrade,
+      </if>
+      <if test="gdescribe != null">
+        gdescribe,
+      </if>
+      <if test="gconsignee != null">
+        gconsignee,
+      </if>
+      <if test="greaddress != null">
+        greaddress,
+      </if>
+      <if test="grephone != null">
+        grephone,
+      </if>
+      <if test="gorigin != null">
+        gorigin,
+      </if>
+      <if test="gendpoint != null">
+        gendpoint,
+      </if>
+      <if test="gstate != null">
+        gstate,
+      </if>
+      <if test="gorderstime != null">
+        gorderstime,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="sid != null">
-        #{sid,jdbcType=INTEGER},
+      <if test="gid != null">
+        #{gid,jdbcType=INTEGER},
       </if>
-      <if test="sgoodsname != null">
-        #{sgoodsname,jdbcType=VARCHAR},
+      <if test="gcid != null">
+        #{gcid,jdbcType=INTEGER},
       </if>
-      <if test="sgoodstype != null">
-        #{sgoodstype,jdbcType=VARCHAR},
+      <if test="gordernumber != null">
+        #{gordernumber,jdbcType=VARCHAR},
       </if>
-      <if test="sgoodsweight != null">
-        #{sgoodsweight,jdbcType=REAL},
+      <if test="gname != null">
+        #{gname,jdbcType=VARCHAR},
       </if>
-      <if test="sgoodsacreage != null">
-        #{sgoodsacreage,jdbcType=REAL},
+      <if test="gcount != null">
+        #{gcount,jdbcType=INTEGER},
       </if>
-      <if test="sgoodsstate != null">
-        #{sgoodsstate,jdbcType=VARCHAR},
+      <if test="gunit != null">
+        #{gunit,jdbcType=VARCHAR},
       </if>
-      <if test="sgoodsregion != null">
-        #{sgoodsregion,jdbcType=VARCHAR},
+      <if test="gweight != null">
+        #{gweight,jdbcType=REAL},
       </if>
-      <if test="sgoodstime != null">
-        #{sgoodstime,jdbcType=TIMESTAMP},
+      <if test="gvolume != null">
+        #{gvolume,jdbcType=REAL},
       </if>
-      <if test="eid != null">
-        #{eid,jdbcType=INTEGER},
+      <if test="gsize != null">
+        #{gsize,jdbcType=REAL},
+      </if>
+      <if test="ggrade != null">
+        #{ggrade,jdbcType=INTEGER},
+      </if>
+      <if test="gdescribe != null">
+        #{gdescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="gconsignee != null">
+        #{gconsignee,jdbcType=VARCHAR},
+      </if>
+      <if test="greaddress != null">
+        #{greaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="grephone != null">
+        #{grephone,jdbcType=VARCHAR},
+      </if>
+      <if test="gorigin != null">
+        #{gorigin,jdbcType=VARCHAR},
+      </if>
+      <if test="gendpoint != null">
+        #{gendpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="gstate != null">
+        #{gstate,jdbcType=VARCHAR},
+      </if>
+      <if test="gorderstime != null">
+        #{gorderstime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Goods">
     update goods
     <set>
-      <if test="sgoodsname != null">
-        sgoodsname = #{sgoodsname,jdbcType=VARCHAR},
+      <if test="gcid != null">
+        gcid = #{gcid,jdbcType=INTEGER},
       </if>
-      <if test="sgoodstype != null">
-        sgoodstype = #{sgoodstype,jdbcType=VARCHAR},
+      <if test="gordernumber != null">
+        gordernumber = #{gordernumber,jdbcType=VARCHAR},
       </if>
-      <if test="sgoodsweight != null">
-        sgoodsweight = #{sgoodsweight,jdbcType=REAL},
+      <if test="gname != null">
+        gname = #{gname,jdbcType=VARCHAR},
       </if>
-      <if test="sgoodsacreage != null">
-        sgoodsacreage = #{sgoodsacreage,jdbcType=REAL},
+      <if test="gcount != null">
+        gcount = #{gcount,jdbcType=INTEGER},
       </if>
-      <if test="sgoodsstate != null">
-        sgoodsstate = #{sgoodsstate,jdbcType=VARCHAR},
+      <if test="gunit != null">
+        gunit = #{gunit,jdbcType=VARCHAR},
       </if>
-      <if test="sgoodsregion != null">
-        sgoodsregion = #{sgoodsregion,jdbcType=VARCHAR},
+      <if test="gweight != null">
+        gweight = #{gweight,jdbcType=REAL},
       </if>
-      <if test="sgoodstime != null">
-        sgoodstime = #{sgoodstime,jdbcType=TIMESTAMP},
+      <if test="gvolume != null">
+        gvolume = #{gvolume,jdbcType=REAL},
       </if>
-      <if test="eid != null">
-        eid = #{eid,jdbcType=INTEGER},
+      <if test="gsize != null">
+        gsize = #{gsize,jdbcType=REAL},
+      </if>
+      <if test="ggrade != null">
+        ggrade = #{ggrade,jdbcType=INTEGER},
+      </if>
+      <if test="gdescribe != null">
+        gdescribe = #{gdescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="gconsignee != null">
+        gconsignee = #{gconsignee,jdbcType=VARCHAR},
+      </if>
+      <if test="greaddress != null">
+        greaddress = #{greaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="grephone != null">
+        grephone = #{grephone,jdbcType=VARCHAR},
+      </if>
+      <if test="gorigin != null">
+        gorigin = #{gorigin,jdbcType=VARCHAR},
+      </if>
+      <if test="gendpoint != null">
+        gendpoint = #{gendpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="gstate != null">
+        gstate = #{gstate,jdbcType=VARCHAR},
+      </if>
+      <if test="gorderstime != null">
+        gorderstime = #{gorderstime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where sid = #{sid,jdbcType=INTEGER}
+    where gid = #{gid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ht.entity.Goods">
     update goods
-    set sgoodsname = #{sgoodsname,jdbcType=VARCHAR},
-      sgoodstype = #{sgoodstype,jdbcType=VARCHAR},
-      sgoodsweight = #{sgoodsweight,jdbcType=REAL},
-      sgoodsacreage = #{sgoodsacreage,jdbcType=REAL},
-      sgoodsstate = #{sgoodsstate,jdbcType=VARCHAR},
-      sgoodsregion = #{sgoodsregion,jdbcType=VARCHAR},
-      sgoodstime = #{sgoodstime,jdbcType=TIMESTAMP},
-      eid = #{eid,jdbcType=INTEGER}
-    where sid = #{sid,jdbcType=INTEGER}
+    set gcid = #{gcid,jdbcType=INTEGER},
+      gordernumber = #{gordernumber,jdbcType=VARCHAR},
+      gname = #{gname,jdbcType=VARCHAR},
+      gcount = #{gcount,jdbcType=INTEGER},
+      gunit = #{gunit,jdbcType=VARCHAR},
+      gweight = #{gweight,jdbcType=REAL},
+      gvolume = #{gvolume,jdbcType=REAL},
+      gsize = #{gsize,jdbcType=REAL},
+      ggrade = #{ggrade,jdbcType=INTEGER},
+      gdescribe = #{gdescribe,jdbcType=VARCHAR},
+      gconsignee = #{gconsignee,jdbcType=VARCHAR},
+      greaddress = #{greaddress,jdbcType=VARCHAR},
+      grephone = #{grephone,jdbcType=VARCHAR},
+      gorigin = #{gorigin,jdbcType=VARCHAR},
+      gendpoint = #{gendpoint,jdbcType=VARCHAR},
+      gstate = #{gstate,jdbcType=VARCHAR},
+      gorderstime = #{gorderstime,jdbcType=TIMESTAMP}
+    where gid = #{gid,jdbcType=INTEGER}
   </update>
 </mapper>

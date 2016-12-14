@@ -22,6 +22,12 @@ public class Storage {
     private String sbarcadeid;
 
     private Date storagetime;
+    
+    private Customer customer;	//客户
+    
+    private Goods goods;	//货物
+    
+    private Inventory inventory;	//库位
 
     public Integer getSid() {
         return sid;
@@ -102,4 +108,36 @@ public class Storage {
     public void setStoragetime(Date storagetime) {
         this.storagetime = storagetime;
     }
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
+	}
+
+	@Override
+	public String toString() {
+		return "Storage [sid=" + sid + ", srid=" + srid + ", scid=" + scid + ", sgid=" + sgid + ", ssbid=" + ssbid
+				+ ", storagecount=" + storagecount + ", storagemode=" + storagemode + ", storagebarcode="
+				+ storagebarcode + ", sbarcadeid=" + sbarcadeid + ", storagetime=" + storagetime + "]";
+	}
+    
 }

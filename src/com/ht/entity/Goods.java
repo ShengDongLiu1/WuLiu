@@ -3,93 +3,183 @@ package com.ht.entity;
 import java.util.Date;
 
 public class Goods {
-    private Integer sid;
+    private Integer gid;
 
-    private String sgoodsname;
+    private Integer gcid;
 
-    private String sgoodstype;
+    private String gordernumber;
 
-    private Float sgoodsweight;
+    private String gname;
 
-    private Float sgoodsacreage;
+    private Integer gcount;
 
-    private String sgoodsstate;
+    private String gunit;
 
-    private String sgoodsregion;
+    private Float gweight;
 
-    private Date sgoodstime;
+    private Float gvolume;
 
-    private Integer eid;
+    private Float gsize;
 
-    public Integer getSid() {
-        return sid;
+    private Integer ggrade;
+
+    private String gdescribe;
+
+    private String gconsignee;
+
+    private String greaddress;
+
+    private String grephone;
+
+    private String gorigin;
+
+    private String gendpoint;
+
+    private String gstate;
+
+    private Date gorderstime;
+
+    public Integer getGid() {
+        return gid;
     }
 
-    public void setSid(Integer sid) {
-        this.sid = sid;
+    public void setGid(Integer gid) {
+        this.gid = gid;
     }
 
-    public String getSgoodsname() {
-        return sgoodsname;
+    public Integer getGcid() {
+        return gcid;
     }
 
-    public void setSgoodsname(String sgoodsname) {
-        this.sgoodsname = sgoodsname == null ? null : sgoodsname.trim();
+    public void setGcid(Integer gcid) {
+        this.gcid = gcid;
     }
 
-    public String getSgoodstype() {
-        return sgoodstype;
+    public String getGordernumber() {
+        return gordernumber;
     }
 
-    public void setSgoodstype(String sgoodstype) {
-        this.sgoodstype = sgoodstype == null ? null : sgoodstype.trim();
+    public void setGordernumber(String gordernumber) {
+        this.gordernumber = gordernumber == null ? null : gordernumber.trim();
     }
 
-    public Float getSgoodsweight() {
-        return sgoodsweight;
+    public String getGname() {
+        return gname;
     }
 
-    public void setSgoodsweight(Float sgoodsweight) {
-        this.sgoodsweight = sgoodsweight;
+    public void setGname(String gname) {
+        this.gname = gname == null ? null : gname.trim();
     }
 
-    public Float getSgoodsacreage() {
-        return sgoodsacreage;
+    public Integer getGcount() {
+        return gcount;
     }
 
-    public void setSgoodsacreage(Float sgoodsacreage) {
-        this.sgoodsacreage = sgoodsacreage;
+    public void setGcount(Integer gcount) {
+        this.gcount = gcount;
     }
 
-    public String getSgoodsstate() {
-        return sgoodsstate;
+    public String getGunit() {
+        return gunit;
     }
 
-    public void setSgoodsstate(String sgoodsstate) {
-        this.sgoodsstate = sgoodsstate == null ? null : sgoodsstate.trim();
+    public void setGunit(String gunit) {
+        this.gunit = gunit == null ? null : gunit.trim();
     }
 
-    public String getSgoodsregion() {
-        return sgoodsregion;
+    public Float getGweight() {
+        return gweight;
     }
 
-    public void setSgoodsregion(String sgoodsregion) {
-        this.sgoodsregion = sgoodsregion == null ? null : sgoodsregion.trim();
+    public void setGweight(Float gweight) {
+        this.gweight = gweight;
     }
 
-    public Date getSgoodstime() {
-        return sgoodstime;
+    public Float getGvolume() {
+        return gvolume;
     }
 
-    public void setSgoodstime(Date sgoodstime) {
-        this.sgoodstime = sgoodstime;
+    public void setGvolume(Float gvolume) {
+        this.gvolume = gvolume;
     }
 
-    public Integer getEid() {
-        return eid;
+    public Float getGsize() {
+        return gsize;
     }
 
-    public void setEid(Integer eid) {
-        this.eid = eid;
+    public void setGsize(Float gsize) {
+        this.gsize = gsize;
+    }
+
+    public Integer getGgrade() {
+        return ggrade;
+    }
+
+    public void setGgrade(Integer ggrade) {
+        this.ggrade = ggrade;
+    }
+
+    public String getGdescribe() {
+        return gdescribe;
+    }
+
+    public void setGdescribe(String gdescribe) {
+        this.gdescribe = gdescribe == null ? null : gdescribe.trim();
+    }
+
+    public String getGconsignee() {
+        return gconsignee;
+    }
+
+    public void setGconsignee(String gconsignee) {
+        this.gconsignee = gconsignee == null ? null : gconsignee.trim();
+    }
+
+    public String getGreaddress() {
+        return greaddress;
+    }
+
+    public void setGreaddress(String greaddress) {
+        this.greaddress = greaddress == null ? null : greaddress.trim();
+    }
+
+    public String getGrephone() {
+        return grephone;
+    }
+
+    public void setGrephone(String grephone) {
+        this.grephone = grephone == null ? null : grephone.trim();
+    }
+
+    public String getGorigin() {
+        return gorigin;
+    }
+
+    public void setGorigin(String gorigin) {
+        this.gorigin = gorigin == null ? null : gorigin.trim();
+    }
+
+    public String getGendpoint() {
+        return gendpoint;
+    }
+
+    public void setGendpoint(String gendpoint) {
+        this.gendpoint = gendpoint == null ? null : gendpoint.trim();
+    }
+
+    public String getGstate() {
+        return gstate;
+    }
+
+    public void setGstate(String gstate) {
+        this.gstate = gstate == null ? null : gstate.trim();
+    }
+
+    public Date getGorderstime() {
+        return gorderstime;
+    }
+
+    public void setGorderstime(Date gorderstime) {
+        this.gorderstime = gorderstime;
     }
 }

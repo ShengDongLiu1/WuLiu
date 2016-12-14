@@ -3,13 +3,13 @@ package com.ht.dao;
 import com.ht.entity.Goods;
 
 public interface GoodsMapper {
-    int deleteByPrimaryKey(Integer sid);
+    int deleteByPrimaryKey(Integer gid);
 
     int insert(Goods record);
 
     int insertSelective(Goods record);
 
-    Goods selectByPrimaryKey(Integer sid);
+    Goods selectByPrimaryKey(Integer gid);
 
     int updateByPrimaryKeySelective(Goods record);
 
