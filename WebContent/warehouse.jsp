@@ -15,24 +15,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <title>宏图物流有限公司</title>
 <link href="style/css.css" rel="stylesheet" type="text/css" />
-<script language="javascript">
-	function check(form)
-	{
-		if (form.name.value == "")
-		{
-			alert("请输入您的姓名！");
-			form.name.focus();
-			return false;
-		}
-		if (form.content.value == "")
-		{
-			alert("请输入留言内容！");
-			form.content.focus();
-			return false;
-		}
-
-		return true;
-	}
+<script type="text/javascript" src="warehouse/js/jquery-1.8.3.min.js"></script>
+<link rel="stylesheet" type="text/css" href="warehouse/css/index.css"/>
+<link rel="stylesheet" type="text/css"
+	href="<%=basePath%>assets/css/theme.css">
+<link rel="stylesheet"
+	href="<%=basePath%>assets/jslib/font-awesome/css/font-awesome.css"></script>
+<script type="text/javascript">
+$(function(){
+	$(".tabBox .tabNav li").click(function(){
+		$(this).siblings("li").removeClass("now");
+		$(this).addClass("now");
+		$(this).parents(".tabBox").find(".tabCont").css("display","none");
+		var i=$(this).index();
+		$(this).parents(".tabBox").find(".tabCont:eq("+i+")").css("display","block");
+		//console.log(i);
+	});
+})
 </script>
 </head>
 <body>
@@ -58,7 +57,7 @@
 </table>
 
 
-<table width="920" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+<table width="920" height="500" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
 	<tr>
 		<td width="10">&nbsp;</td>
 		<td align="center" valign="top">
@@ -66,8 +65,104 @@
 				<tr height="35">
 					<td align="center" class="title1">我的仓储</td>
 				</tr>
-			</table>
+			</table><br></br>
 			<!-- jsp代码写在这里 -->
+		<div class="box_2" style="height: 430px;">
+		   	<div class="tabBox_t" >
+		           <div class="tabBox">
+		             <ul class="tabNav">
+		               <li>我的仓储</li>
+		               <li class="now">添加仓储</li>
+		             </ul>
+		             <div class="tabCont">
+		               <div class="ctn">
+							<table class="table table-hover" style="width: 760px;">
+								<tr>
+									<th>货物编号</th>
+									<th>货物订单号</th>
+									<th>货物名称</th>
+									<th>货物数量</th>
+									<th>货物单位</th>
+									<th>货物重量</th>
+									<th>货物体积</th>
+									<th>货物尺寸</th>
+									<th>货物等级</th>
+									<th>货物描述</th>
+									<th>货物状态</th>
+								</tr>
+								<tr>
+									<td>1111</td>
+									<td>1111</td>
+									<td>1111</td>
+									<td>1111</td>
+									<td>1111</td>
+									<td>1111</td>
+									<td>1111</td>
+									<td>1111</td>
+									<td>1111</td>
+									<td>1111</td>
+									<td>1111</td>
+								</tr>
+							</table>
+		               </div>
+		             </div>
+		             <div class="tabCont" style="display:block;">
+		               <div class="ctn">
+		               		<form action="" method="post">
+			               		<table style="width: 760px;">
+									<tr height="60">
+										<td align="right">货物名称：</td>
+										<td align="left"><input name="gname" type="text" size="30" placeholder="请输入货物名称"></td>
+										<td align="right">货物数量：</td>
+										<td align="left"><input name="gcount" type="text" size="30" placeholder="请输入货物数量"></td>
+									</tr>
+									<tr height="60">
+										<td align="right">货物单位：</td>
+										<td align="left">
+											<select name="gunit">
+												<option>- 请选择货物单位 -</option>
+											</select>
+										</td>
+										<td align="right">货物重量：</td>
+										<td align="left"><input name="gweight" type="text" size="30" placeholder="请输入货物重量"></td>
+									</tr>
+									<tr height="60">
+										<td align="right">货物体积：</td>
+										<td align="left"><input name="gvolume" type="text" size="20" placeholder="请输入货物体积"></td>
+										<td align="right">货物尺寸：</td>
+										<td align="left"><input name="gsize" type="text" size="30" placeholder="请输入货物尺寸"></td>
+									</tr>
+									<tr height="60">
+										<td align="right">货物等级：</td>
+										<td align="left">
+											<select name="ggrade">
+												<option>- 请选择货物等级 -</option>
+											</select>
+										</td>
+										<td align="right">货物描述：</td>
+										<td align="left"><input name="gdescribe" type="text" size="30" placeholder="请输入货物描述"></td>
+									</tr>
+									<tr height="60">
+										<td align="right">货物状态：</td>
+										<td align="left">
+											<select name="gstate">
+												<option>- 请选择货物状态 -</option>
+											</select>
+										</td>
+									</tr>
+									<tr align="center">
+										<td colspan=4 align="center"><a href="#">添加</a></td>
+									</tr>
+			               		</table>
+		               		</form>
+		               </div>
+		             </div>
+		           </div>
+		       </div>
+		   </div>
+		</td>
+	</tr>
+</table>
 <jsp:include flush="true" page="bottom.jsp"></jsp:include>
 </body>
 </html>
