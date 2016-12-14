@@ -16,6 +16,10 @@ public class Receipt {
     private Integer rshelvecount;
 
     private Date rtdgoodstime;
+    
+    private Customer customer;	//客户
+    
+    private Goods goods;	//货物
 
     public Integer getRid() {
         return rid;
@@ -72,4 +76,28 @@ public class Receipt {
     public void setRtdgoodstime(Date rtdgoodstime) {
         this.rtdgoodstime = rtdgoodstime;
     }
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+
+	@Override
+	public String toString() {
+		return "Receipt [rid=" + rid + ", rcid=" + rcid + ", rgid=" + rgid + ", rreceivecount=" + rreceivecount
+				+ ", rdamagedcount=" + rdamagedcount + ", rshelvecount=" + rshelvecount + ", rtdgoodstime="
+				+ rtdgoodstime + "]";
+	}
+    
 }

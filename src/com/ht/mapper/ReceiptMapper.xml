@@ -10,6 +10,28 @@
     <result column="rshelvecount" jdbcType="INTEGER" property="rshelvecount" />
     <result column="rtdgoodstime" jdbcType="TIMESTAMP" property="rtdgoodstime" />
   </resultMap>
+  
+  <resultMap id="AllResultMap" type="com.ht.entity.Receipt">
+    <id column="rid" jdbcType="INTEGER" property="rid" />
+    <result column="rcid" jdbcType="INTEGER" property="rcid" />
+    <result column="rgid" jdbcType="INTEGER" property="rgid" />
+    <result column="rreceivecount" jdbcType="INTEGER" property="rreceivecount" />
+    <result column="rdamagedcount" jdbcType="INTEGER" property="rdamagedcount" />
+    <result column="rshelvecount" jdbcType="INTEGER" property="rshelvecount" />
+    <result column="rtdgoodstime" jdbcType="TIMESTAMP" property="rtdgoodstime" />
+  	
+  	<association property="customer" javaType="com.ht.entity.Customer">
+	    <result property="cid" column="cid"/>
+		<result property="cname" column="cname"/>
+		<result property="gordernumber" column="gordernumber"/>
+	</association>
+	
+	<association property="goods" javaType="com.ht.entity.Goods">
+	    <result property="gid" column="gid"/>
+		<result property="gname" column="gname"/>
+	</association>
+  </resultMap>
+  
   <sql id="Base_Column_List">
     rid, rcid, rgid, rreceivecount, rdamagedcount, rshelvecount, rtdgoodstime
   </sql>
@@ -19,18 +41,13 @@
     from receipt
     where rid = #{rid,jdbcType=INTEGER}
   </select>
+  
+  <!-- 删除收货单 -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from receipt
     where rid = #{rid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.ht.entity.Receipt">
-    insert into receipt (rid, rcid, rgid, 
-      rreceivecount, rdamagedcount, rshelvecount, 
-      rtdgoodstime)
-    values (#{rid,jdbcType=INTEGER}, #{rcid,jdbcType=INTEGER}, #{rgid,jdbcType=INTEGER}, 
-      #{rreceivecount,jdbcType=INTEGER}, #{rdamagedcount,jdbcType=INTEGER}, #{rshelvecount,jdbcType=INTEGER}, 
-      #{rtdgoodstime,jdbcType=TIMESTAMP})
-  </insert>
+  <!-- 添加收货单 -->
   <insert id="insertSelective" parameterType="com.ht.entity.Receipt">
     insert into receipt
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -80,6 +97,8 @@
       </if>
     </trim>
   </insert>
+  
+  <!--  修改收货单-->
   <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Receipt">
     update receipt
     <set>
@@ -104,14 +123,38 @@
     </set>
     where rid = #{rid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ht.entity.Receipt">
-    update receipt
-    set rcid = #{rcid,jdbcType=INTEGER},
-      rgid = #{rgid,jdbcType=INTEGER},
-      rreceivecount = #{rreceivecount,jdbcType=INTEGER},
-      rdamagedcount = #{rdamagedcount,jdbcType=INTEGER},
-      rshelvecount = #{rshelvecount,jdbcType=INTEGER},
-      rtdgoodstime = #{rtdgoodstime,jdbcType=TIMESTAMP}
-    where rid = #{rid,jdbcType=INTEGER}
-  </update>
+  
+  <!-- 分页查询所有收货单 -->
+   <select id="queryAll" parameterType="java.util.Map" resultMap="AllResultMap">
+   		select cu.cid,cu.cname,go.gid,go.gname,go.gcount,go.gordernumber,
+   		re.rid,re.rreceivecount,re.rdamagedcount,re.rshelvecount,
+		re.rtdgoodstime from receipt re,customer cu,goods go
+		<where>
+			re.rcid=cu.cid and re.rgid=go.gid
+			<if test="cname!=null and cname!='' ">
+				and cu.cname like #{cname}
+			</if>
+			<if test="gname!=null and gname!='' ">
+				and go.gname like #{gname}
+			</if>
+		</where>
+		order by re.rtdgoodstime desc
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+   </select>
+   
+   <!-- 查询收货单条数 -->
+ 	<select id="queryAllCount" parameterType="java.util.Map" resultType="Long">
+ 		select count(*) from receipt re,customer cu,goods go
+		<where>
+			re.rcid=cu.cid and re.rgid=go.gid
+			<if test="cname!=null and cname!='' ">
+				and cu.cname like #{cname}
+			</if>
+			<if test="gname!=null and gname!='' ">
+				and go.gname like #{gname}
+			</if>
+		</where>
+ 	</select>
 </mapper>

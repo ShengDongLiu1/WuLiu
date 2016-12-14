@@ -99,6 +99,11 @@ function toDate(obj){
 	return formatDateTime(date);
 }
 
+function toSub(){
+	var btn="<a href='javascript:void(0)' onclick=''>出库</a>";
+	return btn;
+}
+
 </script>
 <style>
 	body{margin:0px;padding:0px;}
@@ -119,14 +124,15 @@ function toDate(obj){
 		<thead data-options="frozen:true">
 			<tr>
 				<th field="sid" checkbox="true">编号</th>
-				<th field="customer" width="10%" formatter="customerName">客户</th>
-				<th field="goods" width="10%" formatter="goodsName">货物名称</th>
+				<th field="customer" width="7%" formatter="customerName">客户</th>
+				<th field="goods" width="7%" formatter="goodsName">货物名称</th>
 				<th field="inventory" width="7%" formatter="inventoryName">库位名称</th>
-				<th field="storagemode" width="10%">入库类型</th>
-				<th field="storagecount" width="7%">入库数量</th>
+				<th field="storagemode" width="7%">入库类型</th>
+				<th field="storagecount" width="5%">入库数量</th>
 				<th field="storagebarcode" width="28%" align="center" formatter="toImage">条形码</th>
-				<th field="sbarcadeid" width="15%">条形码编号</th>
+				<th field="sbarcadeid" width="12%" align="center">条形码编号</th>
 				<th field="storagetime" width="10%" align="center" formatter="toDate">入库时间</th>
+				<th field="null" width="12%" align="center" formatter="toSub">操作</th>
 			</tr>
 		</thead>
 	</table>

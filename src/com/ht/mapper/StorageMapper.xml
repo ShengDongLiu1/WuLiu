@@ -219,9 +219,6 @@
 				and sbarcadeid like #{sbarcadeid}
 			</if>
 		</where>
-		<if test="start!=null and size!=null">
-			limit #{start},#{size}
-		</if>
  </select>
  
  
