@@ -125,4 +125,10 @@
       lostate = #{lostate,jdbcType=INTEGER}
     where loid = #{loid,jdbcType=INTEGER}
   </update>
+  
+  <select id="select" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from inventory
+  </select>
 </mapper>

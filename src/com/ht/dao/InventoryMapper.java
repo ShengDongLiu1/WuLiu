@@ -1,7 +1,10 @@
 package com.ht.dao;
 
-import com.ht.entity.Inventory;
+import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import com.ht.entity.Inventory;
 public interface InventoryMapper {
     int deleteByPrimaryKey(Integer loid);
 
@@ -14,4 +17,6 @@ public interface InventoryMapper {
     int updateByPrimaryKeySelective(Inventory record);
 
     int updateByPrimaryKey(Inventory record);
+
+	List<Inventory> select();
 }
