@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-<title>极速物流服务有限公司</title>
+<title>宏图物流有限公司</title>
 <link href="<%=basePath %>style/css.css" rel="stylesheet" type="text/css" />
 </head>
 <body>

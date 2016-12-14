@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-<title>极速物流服务有限公司</title>
+<title>宏图物流有限公司</title>
 <link href="<%=basePath %>style/css.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -89,10 +89,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<td></td>
 	</tr>
 	<tr style="line-height:22px;font-family:Arial;">
-		<td><P>公司名称：<FONT face=Verdana>极速物流服务有限公司<BR>
-		  联系电话：0732-8888888&nbsp; 6666666 &nbsp;&nbsp;2222222<BR>总部地址：<FONT face=Verdana>车站路100-200号</P>
-<P>传&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;真：0732-666666</P>
-<P>手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 机：13888888888</P></td>
+		<td><P>公司名称：<FONT face=Verdana>宏图物流有限公司<BR>
+		  联系电话：110&nbsp; 119 &nbsp;120<BR>总部地址：<FONT face=Verdana>赣州技师学院小红楼2单元302-1</P>
+<P>Q&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Q：3838438</P>
+<P>手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 机：13838384384</P></td>
 	</tr>
 	<tr height="20">
 		<td></td>

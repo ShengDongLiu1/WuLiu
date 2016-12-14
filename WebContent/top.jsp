@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>极速物流服务有限公司</title>
+<title>宏图物流有限公司</title>
 <link href="style/css.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -28,9 +28,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<td align="right" valign="bottom">
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr height="16">
-					<td width="70" align="center" class="td1"><a href="#" onClick="this.style.behavior='url(#default#homepage)';this.setHomePage(window.location.href);return(false);" style="BEHAVIOR: url(#default#homepage)"><img src="<%=basePath %>image/bt_top1.gif" width="59" height="11" border="0"></a></td>
+					<td width="70" align="center" class="td1"><a href="#" onClick="this.style.behavior='url(#default#homepage)';this.setHomePage(window.location.href);return(false);" style="BEHAVIOR: url(#default#homepage)"><img src="<%=basePath %>image/bt_top2.gif" width="70" height="22" border="0"></a></td>
 					<td width="8">&nbsp;</td>
-					<td width="70" align="center" class="td2"><a href="javascript:window.external.AddFavorite(window.location.href, document.title)"><img src="<%=basePath %>image/bt_top2.gif" width="59" height="11" border="0"></a></td>
+					<td width="70" align="center" class="td2"><a href="javascript:window.external.AddFavorite(window.location.href, document.title)"><img src="<%=basePath %>image/bt_top1.gif" width="70" height="22" border="0"></a></td>
 				</tr>
 			</table>
 		</td>

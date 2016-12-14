@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>极速物流服务有限公司</title>
+<title>宏图物流有限公司</title>
 <link href="style/css.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<table width="93%" border="0" cellpadding="0" cellspacing="0" style="margin:20px 0 30px 0;">
 							<tr>
 								<td class="content1" style="padding-left:15px;">
-									　　极速物流服务有限公司是一家集国内、公路、铁路、水路、航空运输、仓储、包装、配送、信息处理于一身的专业化物流公司。
+									　　宏图物流有限公司是一家集国内、公路、铁路、水路、航空运输、仓储、包装、配送、信息处理于一身的专业化物流公司。
 　　目前，公司已在济南、天津、北京、上海、沈阳、内蒙、西安和广州、设立了办事处，并在济南、哈尔滨、昆明、兰州、深圳等各大城市都拥有物流服务合作伙伴，已经形成了以安徽为中心，覆盖全国各大城市的完善的物流服务网络。公司一直致力于物流网络的建...								</td>
 							</tr>
 						</table>
@@ -80,11 +80,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<td></td>
 							</tr>
 							<tr style="line-height:22px;font-family:Arial;">
-								<td><P>公司名称：<FONT face=Verdana>极速物流服务有限公司</FONT> <BR>
-								    联系电话：0732-8888888&nbsp; 6666666 &nbsp;&nbsp;9999999<BR>
-								    总部地址：车站路100-200号</P>
-                                  <P>传&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;真：0732-88888888</P>
-                                  <P>手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 机：13888888888</P></td>
+								<td><P>公司名称：<FONT face=Verdana>宏图物流有限公司</FONT> <BR>
+								    联系电话：110&nbsp; 119 &nbsp;120<BR>
+								    总部地址：赣州技师学院小红楼2单元302-1</P>
+                                  <P>Q&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Q：3838438</P>
+                                  <P>手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 机：13838384384</P></td>
 							</tr>
 							<tr height="10">
 								<td></td>

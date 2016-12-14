@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>极速物流服务有限公司</title>
+<title>宏图物流有限公司</title>
 <link href="style/css.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -69,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				
 			</select>
 		</td>
-		<td align="right" style="color:#000;"><span style="font-family:Arial;font-size:10px;">COPYRIGHTS 2016&nbsp;&nbsp;ALL RIGHTS RESERVED</span>&nbsp;&nbsp;版权所有:极速物流服务有限公司&nbsp;&nbsp;<a href="http://www.miibeian.gov.cn/" target="_blank" class="footer2">备案号申请中</a>&nbsp;&nbsp;设计制作:<a href="http://hujin619.blog.163.com/" target="_blank" class="footer2">xxxx</a></td>
+		<td align="right" style="color:#000;"><span style="font-family:Arial;font-size:10px;">COPYRIGHTS 2016&nbsp;&nbsp;ALL RIGHTS RESERVED</span>&nbsp;&nbsp;版权所有:宏图物流有限公司&nbsp;&nbsp;<a href="http://www.miibeian.gov.cn/" target="_blank" class="footer2">备案号申请中</a>&nbsp;&nbsp;设计制作:<a href="http://hujin619.blog.163.com/" target="_blank" class="footer2">宏图x</a></td>
 		<td width="10">&nbsp;</td>
 	</tr>
 </table>
