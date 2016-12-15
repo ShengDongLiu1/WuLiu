@@ -38,6 +38,8 @@ public class Goods {
     private String gstate;
 
     private Date gorderstime;
+    
+    private Customer customer;	//	客户
 
     public Integer getGid() {
         return gid;
@@ -182,4 +184,12 @@ public class Goods {
     public void setGorderstime(Date gorderstime) {
         this.gorderstime = gorderstime;
     }
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 }

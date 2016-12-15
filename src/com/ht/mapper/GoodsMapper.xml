@@ -21,34 +21,53 @@
     <result column="gstate" jdbcType="VARCHAR" property="gstate" />
     <result column="gorderstime" jdbcType="TIMESTAMP" property="gorderstime" />
   </resultMap>
+  
+  <resultMap id="AllResultMap" type="com.ht.entity.Goods">
+    <id column="gid" jdbcType="INTEGER" property="gid" />
+    <result column="gcid" jdbcType="INTEGER" property="gcid" />
+    <result column="gordernumber" jdbcType="VARCHAR" property="gordernumber" />
+    <result column="gname" jdbcType="VARCHAR" property="gname" />
+    <result column="gcount" jdbcType="INTEGER" property="gcount" />
+    <result column="gunit" jdbcType="VARCHAR" property="gunit" />
+    <result column="gweight" jdbcType="REAL" property="gweight" />
+    <result column="gvolume" jdbcType="REAL" property="gvolume" />
+    <result column="gsize" jdbcType="REAL" property="gsize" />
+    <result column="ggrade" jdbcType="INTEGER" property="ggrade" />
+    <result column="gdescribe" jdbcType="VARCHAR" property="gdescribe" />
+    <result column="gconsignee" jdbcType="VARCHAR" property="gconsignee" />
+    <result column="greaddress" jdbcType="VARCHAR" property="greaddress" />
+    <result column="grephone" jdbcType="VARCHAR" property="grephone" />
+    <result column="gorigin" jdbcType="VARCHAR" property="gorigin" />
+    <result column="gendpoint" jdbcType="VARCHAR" property="gendpoint" />
+    <result column="gstate" jdbcType="VARCHAR" property="gstate" />
+    <result column="gorderstime" jdbcType="TIMESTAMP" property="gorderstime" />
+  	
+  	<association property="customer" javaType="com.ht.entity.Customer">
+	    <result property="cid" column="cid"/>
+		<result property="cname" column="cname"/>
+	</association>
+  </resultMap>
+  
   <sql id="Base_Column_List">
     gid, gcid, gordernumber, gname, gcount, gunit, gweight, gvolume, gsize, ggrade, gdescribe, 
     gconsignee, greaddress, grephone, gorigin, gendpoint, gstate, gorderstime
   </sql>
+  
+  <!-- 根据id查询货物信息 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from goods
     where gid = #{gid,jdbcType=INTEGER}
   </select>
+  
+  <!-- 根据id删除订单 -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from goods
     where gid = #{gid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.ht.entity.Goods">
-    insert into goods (gid, gcid, gordernumber, 
-      gname, gcount, gunit, 
-      gweight, gvolume, gsize, ggrade, 
-      gdescribe, gconsignee, greaddress, 
-      grephone, gorigin, gendpoint, 
-      gstate, gorderstime)
-    values (#{gid,jdbcType=INTEGER}, #{gcid,jdbcType=INTEGER}, #{gordernumber,jdbcType=VARCHAR}, 
-      #{gname,jdbcType=VARCHAR}, #{gcount,jdbcType=INTEGER}, #{gunit,jdbcType=VARCHAR}, 
-      #{gweight,jdbcType=REAL}, #{gvolume,jdbcType=REAL}, #{gsize,jdbcType=REAL}, #{ggrade,jdbcType=INTEGER}, 
-      #{gdescribe,jdbcType=VARCHAR}, #{gconsignee,jdbcType=VARCHAR}, #{greaddress,jdbcType=VARCHAR}, 
-      #{grephone,jdbcType=VARCHAR}, #{gorigin,jdbcType=VARCHAR}, #{gendpoint,jdbcType=VARCHAR}, 
-      #{gstate,jdbcType=VARCHAR}, #{gorderstime,jdbcType=TIMESTAMP})
-  </insert>
+  
+  <!-- 添加订单 -->
   <insert id="insertSelective" parameterType="com.ht.entity.Goods">
     insert into goods
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -164,6 +183,8 @@
       </if>
     </trim>
   </insert>
+  
+  <!-- 根据id修改订单 -->
   <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Goods">
     update goods
     <set>
@@ -221,25 +242,48 @@
     </set>
     where gid = #{gid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ht.entity.Goods">
-    update goods
-    set gcid = #{gcid,jdbcType=INTEGER},
-      gordernumber = #{gordernumber,jdbcType=VARCHAR},
-      gname = #{gname,jdbcType=VARCHAR},
-      gcount = #{gcount,jdbcType=INTEGER},
-      gunit = #{gunit,jdbcType=VARCHAR},
-      gweight = #{gweight,jdbcType=REAL},
-      gvolume = #{gvolume,jdbcType=REAL},
-      gsize = #{gsize,jdbcType=REAL},
-      ggrade = #{ggrade,jdbcType=INTEGER},
-      gdescribe = #{gdescribe,jdbcType=VARCHAR},
-      gconsignee = #{gconsignee,jdbcType=VARCHAR},
-      greaddress = #{greaddress,jdbcType=VARCHAR},
-      grephone = #{grephone,jdbcType=VARCHAR},
-      gorigin = #{gorigin,jdbcType=VARCHAR},
-      gendpoint = #{gendpoint,jdbcType=VARCHAR},
-      gstate = #{gstate,jdbcType=VARCHAR},
-      gorderstime = #{gorderstime,jdbcType=TIMESTAMP}
-    where gid = #{gid,jdbcType=INTEGER}
-  </update>
+  
+  <!-- 分页查询所有订单 -->
+   <select id="queryAll" parameterType="java.util.Map" resultMap="AllResultMap">
+   		select * from customer cu,goods go 
+		<where>
+			go.gcid=cu.cid
+			<if test="cname!=null and cname!='' ">
+				and cu.cname like #{cname}
+			</if>
+			<if test="gname!=null and gname!='' ">
+				and go.gname like #{gname}
+			</if>
+			<if test="gordernumber!=null and gordernumber!='' ">
+				and go.gordernumber like #{gordernumber}
+			</if>
+			<if test="gstate!=null and gstate!='' ">
+				and go.gstate like #{gstate}
+			</if>
+		</where>
+		order by go.gorderstime asc
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+   </select>
+   
+   <!-- 查询订单条数 -->
+ 	<select id="queryAllCount" parameterType="java.util.Map" resultType="Long">
+ 		select count(*) from customer cu,goods go 
+		<where>
+			go.gcid=cu.cid
+			<if test="cname!=null and cname!='' ">
+				and cu.cname like #{cname}
+			</if>
+			<if test="gname!=null and gname!='' ">
+				and go.gname like #{gname}
+			</if>
+			<if test="gordernumber!=null and gordernumber!='' ">
+				and go.gordernumber like #{gordernumber}
+			</if>
+			<if test="gstate!=null and gstate!='' ">
+				and go.gstate like #{gstate}
+			</if>
+		</where>
+ 	</select>
 </mapper>

@@ -1,11 +1,11 @@
-package com.ht.dao;
+package com.ht.service.interfaces;
 
 import java.util.List;
 import java.util.Map;
 
 import com.ht.entity.Goods;
 
-public interface GoodsMapper {
+public interface GoodsService {
 	/**
 	 * 根据id删除订单
 	 * @param gid
