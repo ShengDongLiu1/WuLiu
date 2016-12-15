@@ -69,6 +69,10 @@ function goodsCount(value,rec){
 	return rec.goods.gcount;
 }
 
+function toUserName(value){
+	return value.usertruename;
+}
+
 /* 将Thu Mar 19 2015 12:00:00 GMT+0800 (中国标准时间)转换为2015-3-19 12:00:00 */
 var formatDateTime = function (date) {  
     var y = date.getFullYear();  
@@ -122,6 +126,7 @@ function toSub(){
 				<th field="rdamagedcount" width="7%" align="center" >破损数量</th>
 				<th field="rshelvecount" width="7%" align="center">搁置数量</th>
 				<th field="rtdgoodstime" width="12%" align="center" formatter="toDate">收货时间</th>
+				<th field="user" width="10%" align="center" formatter="toUserName">收货员</th>
 				<th field="null" width="12%" align="center" formatter="toSub">操作</th>
 			</tr>
 		</thead>

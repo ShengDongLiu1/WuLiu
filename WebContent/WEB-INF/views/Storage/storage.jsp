@@ -66,6 +66,10 @@ function inventoryName(value){
 	return value.loname;
 }
 
+function toUserName(value){
+	return value.usertruename;
+}
+
 //显示图片
 function toImage(value,rec){
 	var btn="<img src='<%=path%>/storagebarcode/"+rec.storagebarcode+"' alt='条形码'>";
@@ -127,8 +131,9 @@ function toSub(){
 				<th field="storagecount" width="5%" align="center">入库数量</th>
 				<th field="storagebarcode" width="28%" align="center" formatter="toImage">条形码</th>
 				<th field="sbarcadeid" width="12%" align="center">条形码编号</th>
-				<th field="storagetime" width="10%" align="center" formatter="toDate">入库时间</th>
-				<th field="null" width="12%" align="center" formatter="toSub">操作</th>
+				<th field="storagetime" width="9%" align="center" formatter="toDate">入库时间</th>
+				<th field="user" width="7%" align="center" formatter="toUserName">操作员</th>
+				<th field="null" width="8%" align="center" formatter="toSub">操作</th>
 			</tr>
 		</thead>
 	</table>

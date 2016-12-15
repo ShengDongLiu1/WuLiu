@@ -8,6 +8,8 @@ public class Receipt {
     private Integer rcid;
 
     private Integer rgid;
+    
+    private Integer reid;
 
     private Integer rreceivecount;
 
@@ -20,6 +22,8 @@ public class Receipt {
     private Customer customer;	//客户
     
     private Goods goods;	//货物
+    
+    private sysuser user;	//员工
 
     public Integer getRid() {
         return rid;
@@ -45,7 +49,15 @@ public class Receipt {
         this.rgid = rgid;
     }
 
-    public Integer getRreceivecount() {
+    public Integer getReid() {
+		return reid;
+	}
+
+	public void setReid(Integer reid) {
+		this.reid = reid;
+	}
+
+	public Integer getRreceivecount() {
         return rreceivecount;
     }
 
@@ -91,6 +103,14 @@ public class Receipt {
 
 	public void setGoods(Goods goods) {
 		this.goods = goods;
+	}
+
+	public sysuser getUser() {
+		return user;
+	}
+
+	public void setUser(sysuser user) {
+		this.user = user;
 	}
 
 	@Override

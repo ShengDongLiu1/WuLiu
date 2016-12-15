@@ -12,6 +12,8 @@ public class Storage {
     private Integer sgid;
 
     private Integer ssbid;
+    
+    private Integer seid;
 
     private Integer storagecount;
 
@@ -28,6 +30,8 @@ public class Storage {
     private Goods goods;	//货物
     
     private Inventory inventory;	//库位
+    
+    private sysuser user;	//员工
 
     public Integer getSid() {
         return sid;
@@ -69,7 +73,15 @@ public class Storage {
         this.ssbid = ssbid;
     }
 
-    public Integer getStoragecount() {
+    public Integer getSeid() {
+		return seid;
+	}
+
+	public void setSeid(Integer seid) {
+		this.seid = seid;
+	}
+
+	public Integer getStoragecount() {
         return storagecount;
     }
 
@@ -131,6 +143,14 @@ public class Storage {
 
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
+	}
+
+	public sysuser getUser() {
+		return user;
+	}
+
+	public void setUser(sysuser user) {
+		this.user = user;
 	}
 
 	@Override

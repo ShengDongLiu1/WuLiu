@@ -32,6 +32,12 @@
 		<result property="gordernumber" column="gordernumber"/>
 		<result property="gstate" column="gstate"/>
 	</association>
+	
+	<association property="user" javaType="com.ht.entity.sysuser">
+	   <id column="USERID" jdbcType="INTEGER" property="userid" />
+	   <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+	   <result column="USERTRUENAME" jdbcType="VARCHAR" property="usertruename" />
+	</association>
   </resultMap>
   
   <sql id="Base_Column_List">
@@ -131,14 +137,19 @@
    <select id="queryAll" parameterType="java.util.Map" resultMap="AllResultMap">
    		select cu.cid,cu.cname,go.gid,go.gname,go.gcount,go.gordernumber,go.gstate,
    		re.rid,re.rreceivecount,re.rdamagedcount,re.rshelvecount,
-		re.rtdgoodstime from receipt re,customer cu,goods go
+		re.rtdgoodstime,sy.userid,sy.usertruename from receipt re,customer cu,goods go,sysuser sy
 		<where>
-			re.rcid=cu.cid and re.rgid=go.gid
+			re.rcid=cu.cid and 
+			re.rgid=go.gid and 
+			re.reid=sy.userid
 			<if test="cname!=null and cname!='' ">
 				and cu.cname like #{cname}
 			</if>
 			<if test="gname!=null and gname!='' ">
 				and go.gname like #{gname}
+			</if>
+			<if test="usertruename!=null and usertruename!='' ">
+				and sy.usertruename like #{usertruename}
 			</if>
 			<if test="gordernumber!=null and gordernumber!='' ">
 				and go.gordernumber like #{gordernumber}
@@ -155,14 +166,19 @@
    
    <!-- 查询收货单条数 -->
  	<select id="queryAllCount" parameterType="java.util.Map" resultType="Long">
- 		select count(*) from receipt re,customer cu,goods go
+ 		select count(*) from receipt re,customer cu,goods go,sysuser sy
 		<where>
-			re.rcid=cu.cid and re.rgid=go.gid
+			re.rcid=cu.cid and 
+			re.rgid=go.gid and 
+			re.reid=sy.userid
 			<if test="cname!=null and cname!='' ">
 				and cu.cname like #{cname}
 			</if>
 			<if test="gname!=null and gname!='' ">
 				and go.gname like #{gname}
+			</if>
+			<if test="usertruename!=null and usertruename!='' ">
+				and sy.usertruename like #{usertruename}
 			</if>
 			<if test="gordernumber!=null and gordernumber!='' ">
 				and go.gordernumber like #{gordernumber}
