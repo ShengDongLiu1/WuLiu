@@ -2,15 +2,28 @@ package com.ht.interceptors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import com.ht.entity.sysuser;
 
 public class BackInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		HttpSession session = request.getSession();
+		
+		sysuser sysuser = (sysuser) session.getAttribute("user");
+		
+		if(sysuser==null){
+			
+			request.setAttribute("msg", "请登录");
+			request.getRequestDispatcher("/user/login").forward(request, response);
+			
+			return false;
+		}
 		return true;
 	}
 
