@@ -6,10 +6,16 @@ public class sysuser {
     private Integer roleid;
     
     private Sysrole sysrole;
-
-  
-
+    
+    private String ujobnumber;
+    
 	private String username;
+	
+	private String usersex;
+	
+	private String userphone;
+	
+	private String uposition;
 
     private String userpwd;
 
@@ -85,6 +91,39 @@ public class sysuser {
     public void setUserstate(Integer userstate) {
         this.userstate = userstate;
     }
+
+    
+	public String getUjobnumber() {
+		return ujobnumber;
+	}
+
+	public void setUjobnumber(String ujobnumber) {
+		this.ujobnumber = ujobnumber;
+	}
+
+	public String getUsersex() {
+		return usersex;
+	}
+
+	public void setUsersex(String usersex) {
+		this.usersex = usersex;
+	}
+
+	public String getUserphone() {
+		return userphone;
+	}
+
+	public void setUserphone(String userphone) {
+		this.userphone = userphone;
+	}
+
+	public String getUposition() {
+		return uposition;
+	}
+
+	public void setUposition(String uposition) {
+		this.uposition = uposition;
+	}
 
 	@Override
 	public String toString() {

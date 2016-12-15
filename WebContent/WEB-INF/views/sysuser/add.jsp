@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			href="<%=basePath%>assets/css/theme.css">
 		<link rel="stylesheet"
 			href="<%=basePath%>assets/jslib/font-awesome/css/font-awesome.css">
-		<script src="<%=basePath%>assets/jslib/jquery-1.7.2.min.js"
+		<script src="<%=basePath%>assets/jslib/jquery-1.8.2.min.js"
 			type="text/javascript"></script>
            <script type="text/javascript">
         
@@ -34,18 +34,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    });
 					}
 			    });
-				
 			
 					var usernameflag = false;
 					var usertruenameflag = false;
 					var userpwdflag = false;
+					var userphoneflag = false;
 				
 				
 					$("#username").blur(function(e){					
 						if($("#username").val()==null || $("#username").val()==""){						
 							$("#msg").text("用户名不能为空");
 							$("#msg").css("color","red");
-							usernameflag = true;
+							usernameflag = false;
 						}else{						
 							$.ajax({
 								url:"<%=basePath%>user/checkusername",
@@ -53,7 +53,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								type:'post',
 								success: function(msg){																								
 									if(msg.code==500){
-										
 										$("#msg").text(msg.msg);
 										usernameflag = false;
 									}else if(msg.code==200){
@@ -66,8 +65,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							});
 						}																	
 				});	
-				
-			
 					
 					$("#usertruename").blur(function(e){
 						
@@ -81,6 +78,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							
 							$("#usertruenamemsg").text("");	
 							usertruenameflag = true;
+						}
+																					
+					});	
+					
+					
+					
+					$("#userphone").blur(function(e){
+						
+						if($("#userphone").val()==null || $("#userphone").val()==""){
+							
+							$("#userphonemsg").text("用户电话不能为空");	
+							$("#userphonemsg").css("color","red");
+							userphoneflag = false;					
+							
+						}else{
+							
+							$("#userphonemsg").text("");	
+							userphoneflag = true;
 						}
 																					
 					});	
@@ -101,11 +116,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 																					
 					});	
 					
-					
-				
-					
-					
-					
 					$("#button").click(function(e){
 						
 						if(usernameflag && usertruenameflag && userpwdflag){
@@ -114,15 +124,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						}
 						
 					});
-					
-					
-				
-				
 			});
         </script>    
-            
-        
-
   </head>
   <body class="content1">
 		<div class="header">
@@ -152,8 +155,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 					<div class="well">
 						<div class="tab-pane active in">
-						
-						
 						<input type="hidden" name="userid" value="${item.userid}"/>
 							<label>
 								用户名：
@@ -165,6 +166,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</label>
 							<input type="text" id="usertruename" name="usertruename" value="${item.usertruename}"/>
 							<span id="usertruenamemsg"></span>
+							<div style="margin-bottom: 10px">
+								<label>
+									用户性别：
+								</label>
+								<input id="usersex" name="usersex"   type="radio" name="sex" value="男" checked="checked" /> 男 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<input id="usersex" name="usersex"  type="radio" name="sex" value="女" /> 女
+							</div>
+							<div>
+								<label>
+									用户电话：
+								</label>
+							</div>
+							<input type="text" id="userphone" name="userphone" value="${item.userphone}"/>
+							<span id="userphonemsg"></span>
+							<label>
+								用户职位：
+							</label>
+							<select name="uposition">
+									<option value="成品库库长" selected="selected">成品库库长</option>
+									<option value="总帐组长">总帐组长</option>	
+									<option value="仓管组长	" selected="selected">仓管组长</option>
+									<option value="仓管员">仓管员</option>	
+									<option value="辅工组长">仓管员</option>	
+									<option value="辅工组长">辅助工</option>
+							</select>
 							<label>
 								用户密码：
 							</label>
@@ -174,19 +200,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								用户状态：
 							</label>
 							<select name="userstate">
-								
-									<option value="1" selected="selected">正常</option>
-									<option value="0">锁定</option>		
-									
-								
+								<option value="1" selected="selected">正常</option>
+								<option value="0">锁定</option>		
 							</select>
                             
                             <label>
 								选择角色：
 							</label>
 							<select name="roleid" id="role">
-                            	
-                            
                             </select>
 							<div style="color: red">
 								${msg}

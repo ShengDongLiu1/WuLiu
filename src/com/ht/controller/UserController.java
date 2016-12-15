@@ -201,7 +201,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(sysuser sysuser){
-		
+		sysuser.setUjobnumber(CurrentTime.getCurrentTime());
 		int count = userService.saveuser(sysuser);
 		
 		if(count<0){

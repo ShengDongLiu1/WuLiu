@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<thead>
 							<tr>
 								<th>
-									用户ID
+									工号
 								</th>
 								<th>
 									角色名
@@ -64,7 +64,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<th>
 									用户姓名
 								</th>
-								
+								<th>
+									性别
+								</th>
+								<th>
+									电话
+								</th>
+								<th>
+									职位
+								</th>
 								<th>
 									用户密码
 								</th>
@@ -82,7 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<c:forEach items="${listuser}" var="item">
 								<tr>
 									<td>
-										${item.userid}
+										${item.ujobnumber}
 									</td>
 									<td>
 										${item.rolename}
@@ -92,6 +100,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									</td>
 									<td>
 										${item.usertruename}
+									</td>
+									<td>
+										${item.usersex}
+									</td>
+									<td>
+										${item.userphone}
+									</td>
+									<td>
+										${item.uposition}
 									</td>
 									<td>
 										${item.userpwd}
