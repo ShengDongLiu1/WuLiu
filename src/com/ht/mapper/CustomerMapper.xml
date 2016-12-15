@@ -7,17 +7,16 @@
     <result column="ccompany" jdbcType="VARCHAR" property="ccompany" />
     <result column="cphone" jdbcType="VARCHAR" property="cphone" />
     <result column="cemail" jdbcType="VARCHAR" property="cemail" />
+    <result column="cpassword" jdbcType="VARCHAR" property="cpassword" />
     <result column="ccredit" jdbcType="VARCHAR" property="ccredit" />
     <result column="caddress" jdbcType="VARCHAR" property="caddress" />
   </resultMap>
   <sql id="Base_Column_List">
-    cid, cname, ccompany, cphone, cemail, ccredit, caddress
+    cid, cname, ccompany, cphone, cemail,cpassword, ccredit, caddress
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from customer
-    where cid = #{cid,jdbcType=INTEGER}
+  <select id="klogin1"  resultMap="BaseResultMap" parameterType="Map">
+    select * from customer
+    where cemail = #{cemail,jdbcType=VARCHAR} and cpassword =#{cpasswprd,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from customer
@@ -114,4 +113,5 @@
       caddress = #{caddress,jdbcType=VARCHAR}
     where cid = #{cid,jdbcType=INTEGER}
   </update>
+  
 </mapper>

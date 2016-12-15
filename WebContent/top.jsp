@@ -20,7 +20,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<td height="28"></td>
 	</tr>
 </table>
-
 <table width="920" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
 	<tr height="74">
 		<td width="10">&nbsp;</td>
@@ -28,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<td align="right" valign="bottom">
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr height="16">
-					<td width="70" align="center" class="td1"><a href="#" onClick="this.style.behavior='url(#default#homepage)';this.setHomePage(window.location.href);return(false);" style="BEHAVIOR: url(#default#homepage)"><img src="<%=basePath %>image/bt_top2.gif" width="70" height="22" border="0"></a></td>
+					<td width="70" align="center" class="td1"><a href="<%=basePath %>customer/login" onClick="this.style.behavior='url(#default#homepage)';this.setHomePage(window.location.href);return(false);" style="BEHAVIOR: url(#default#homepage)"><img src="<%=basePath %>image/bt_top2.gif" width="70" height="22" border="0"></a></td>
 					<td width="8">&nbsp;</td>
 					<td width="70" align="center" class="td2"><a href="javascript:window.external.AddFavorite(window.location.href, document.title)"><img src="<%=basePath %>image/bt_top1.gif" width="70" height="22" border="0"></a></td>
 				</tr>

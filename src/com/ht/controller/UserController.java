@@ -75,12 +75,12 @@ public class UserController {
 		
 		session.setAttribute("user", existsysuser);
 		
-		if(existsysuser==null){
+		/*if(existsysuser==null){
 			
 			model.addAttribute("msg", "用户名密码错误");
 			
 			return "login";
-		}
+		}*/
 		
 		return "redirect:/user/index";
 	}
@@ -106,6 +106,11 @@ public class UserController {
 	public String index(Model model,HttpSession session){
 		
 		sysuser sysuser = (sysuser) session.getAttribute("user");
+		
+		if(sysuser.getRoleid() == -2){
+			System.out.println("客户登入");
+			return "redirect:/index.jsp";
+		}
 		
 		List<Sysfunction> funlist=sysfunctionService.initfunction(sysuser);
 		

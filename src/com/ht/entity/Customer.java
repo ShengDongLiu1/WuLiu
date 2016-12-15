@@ -10,6 +10,8 @@ public class Customer {
     private String cphone;
 
     private String cemail;
+    
+    private String cpassword;
 
     private String ccredit;
 
@@ -52,10 +54,18 @@ public class Customer {
     }
 
     public void setCemail(String cemail) {
-        this.cemail = cemail == null ? null : cemail.trim();
+        this.cemail = cemail;
     }
+    
+    public String getCpassword() {
+		return cpassword;
+	}
 
-    public String getCcredit() {
+	public void setCpassword(String cpassword) {
+		this.cpassword = cpassword;
+	}
+
+	public String getCcredit() {
         return ccredit;
     }
 
