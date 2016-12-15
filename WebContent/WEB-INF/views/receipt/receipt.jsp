@@ -13,6 +13,23 @@
 <script type="text/javascript" src="<%=path %>/js/jquery-easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=path %>/js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="<%=path %>/js/site_easyui.js"></script>
+<style type="text/css">
+.tdwidth{
+	width:18%;text-align:right;font-size:15px;
+}
+.gxiangq{
+	text-align:left;font-size:15px;
+	border-bottom:1px dashed #FFE48D; 
+}
+.gxiangq span{
+	font-size:16px;
+	color:blue;
+}
+a:link {color:blue}
+a:visited{color:#54287C}
+a:active{color:yellow}
+a:hover {color:#54287C} 
+</style>
 <script type="text/javascript">
 $(function(){
 	//setPagination("list");
@@ -57,8 +74,10 @@ function customerName(value){
 	return value.cname;
 }
 
+/* 货物名称 */
 function goodsName(value){
-	return value.gname;
+	var btn="<a href='javascript:openGoodWin("+value.gid+")'>"+value.gname+"</a>";
+	return btn;
 }
 
 function goodsNum(value,rec){
@@ -101,6 +120,39 @@ function toSub(){
 	return btn;
 }
 
+/* 打开详情窗口 */
+function openGoodWin(gid) {
+	$.post("<%=path%>/goods/goodByid",{'gid':gid},function(index){
+		fuzhi(index);
+	},"json");
+    
+}
+
+/* 给弹出的窗口赋值 */
+function fuzhi(index){
+	$("#gname").html(index.goods.gname);
+	$("#gordernumber").html(index.goods.gordernumber);
+	$("#gcount").html(index.goods.gcount + " "+index.goods.gunit);
+	$("#gweight").html(index.goods.gweight + " 吨");
+	$("#gvolume").html(index.goods.gvolume + " m<sup>3</sup>");
+	$("#gsize").html(index.goods.gsize + " m");
+	$("#ggrade").html(index.goods.ggrade);
+	$("#gconsignee").html(index.goods.gconsignee);
+	$("#greaddress").html(index.goods.greaddress);
+	$("#grephone").html(index.goods.grephone);
+	$("#gorigin").html(index.goods.gorigin);
+	$("#gendpoint").html(index.goods.gendpoint);
+	$("#gstate").html(index.goods.gstate);
+	$("#gorderstime").html(index.goods.gorderstime);
+	$("#gdescribe").html(index.goods.gdescribe);
+	$("#goodbyWin").dialog("open").dialog("setTitle", "客户订单详情");
+}
+
+/* 关闭窗口 */
+function closeGoodWin(){
+	$("#goodbyWin").dialog("close");
+}
+
 </script>
 
 </head>
@@ -134,8 +186,68 @@ function toSub(){
 	<div id="kj">
 		<!-- 链接按钮控件 -->
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="applygoods_add();">添加</a>
-		
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="applygoods_edit();">修改</a>
+	</div>
+	
+	<!-- 自定义窗口按钮 -->
+	<div id="dlg-buttons">
+	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
+	<div id="goodbyWin" class="easyui-dialog"  buttons="#dlg-buttons" data-options="closable:true, closed:true"  style="width:70%;height:420px;padding:5px;text-align:center;">
+		<table style="width:100%;height:100%;">
+			<tr>
+				<td class="tdwidth">货物名称:</td>
+				<td class="gxiangq"><span id="gname"></span></td>
+				<td class="tdwidth">货物订单号:</td>
+				<td class="gxiangq"><span id="gordernumber"></span></td>
+			</tr>
+			<tr align="center">
+				<td class="tdwidth">货物数量:</td>
+				<td class="gxiangq"><span id="gcount"></span></td>
+				<td class="tdwidth">货物重量:</td>
+				<td class="gxiangq"><span id="gweight"></span></td>
+			</tr>
+			
+			<tr align="center">
+				<td class="tdwidth">货物体积:</td>
+				<td class="gxiangq"><span id="gvolume"></span></td>
+				<td class="tdwidth">货物尺寸:</td>
+				<td class="gxiangq"><span id="gsize"></span></td>
+			</tr>
+			
+			<tr align="center">
+				<td class="tdwidth">货物等级:</td>
+				<td class="gxiangq"><span id="ggrade"></span></td>
+				<td class="tdwidth">收货人:</td>
+				<td class="gxiangq"><span id="gconsignee"></span></td>
+			</tr>
+			
+			<tr align="center">
+				<td class="tdwidth">收货地址:</td>
+				<td class="gxiangq"><span id="greaddress"></span></td>
+				<td class="tdwidth">收货电话:</td>
+				<td class="gxiangq"><span id="grephone"></span></td>
+			</tr>
+			
+			<tr align="center">
+				<td class="tdwidth">起始地点:</td>
+				<td class="gxiangq"><span id="gorigin"></span></td>
+				<td class="tdwidth">到达地址:</td>
+				<td class="gxiangq"><span id="gendpoint"></span></td>
+			</tr>
+			
+			<tr align="center">
+				<td class="tdwidth">货物状态:</td>
+				<td class="gxiangq"><span id="gstate"></span></td>
+				<td class="tdwidth">下单时间:</td>
+				<td class="gxiangq"><span id="gorderstime"></span></td>
+			</tr>
+			
+			<tr align="center">
+				<td class="tdwidth">货物描述:</td>
+				<td class="gxiangq" colspan="3"><span id="gdescribe"></span></td>
+			</tr>
+		</table>
 	</div>
 </body>
 </html>
