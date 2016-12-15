@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht.dao.QualityMapper">
+	<resultMap type="com.ht.entity.Quality" id="QualityResultMap">
+		<id column="eid" property="eid" jdbcType="INTEGER"/>
+		<result column="egid" property="egid" jdbcType="INTEGER"/>
+		<result column="eeid" property="eeid" jdbcType="INTEGER"/>
+		<result column="eresult" property="eresult" jdbcType="VARCHAR"/>
+		<result column="edate" property="edate" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<sql id="Quality_list_id">
+		eid, egid, eeid, eresult, edate
+	</sql>
+	
+	<select id="qualitySelect" parameterType="java.lang.Integer" resultMap="QualityResultMap">
+		select
+		<include refid="Quality_list_id" />
+		from examine where eid = #{eid, jdbcType=INTEGER}
+	</select>
+	
+	<select id="qualitySelectAll" parameterType="Map" resultMap="QualityResultMap">
+		select * from examine
+	  	<if test="start!=null and size!=null">
+	            limit #{start},#{size}
+		</if>
+	</select>
+	
+	<select id="getTotal" resultType="Long" parameterType="Map">
+		select count(*) from examine
+	</select>
+	
+	<delete id="qualityDelete" parameterType="java.lang.Integer">
+		delete from examine
+		where eid = #{eid, jdbcType=INTEGER}
+	</delete>
+	
+	<insert id="qualityAdd" parameterType="com.ht.entity.Quality">
+		insert into examine (eid, egid, eeid, errsult, edate)
+		values ( #{eid, jdbcType=INTEGER},  
+		#{egid, jdbcType=INTEGER},  
+		#{eeid, jdbcType=INTEGER},  
+		#{eresult, jdbcType=VARCHAR},  
+		#{edate, jdbcType=TIMESTAMP})
+	</insert>
+	
+	<update id="qualityUpdate" parameterType="com.ht.entity.Quality">
+		update examine 
+		<set>
+			<if test="tname != null">
+				egid = #{egid,jdbcType=INTEGER},
+			</if>
+			<if test="tname != null">
+				eeid = #{eeid,jdbcType=INTEGER},
+			</if>
+			<if test="tsex != null">
+				eresult = #{eresult,jdbcType=VARCHAR},
+			</if>
+			<if test="tmes != null">
+				edate = #{edate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+			where eid = #{eid,jdbcType=INTEGER}
+ 	</update>
+</mapper>
