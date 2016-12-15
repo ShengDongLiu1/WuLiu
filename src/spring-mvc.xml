@@ -44,6 +44,8 @@
     		<mvc:exclude-mapping path="/front/list"/>
     		<mvc:exclude-mapping path="/customer/khlogin"/>
     		<mvc:exclude-mapping path="/customer/login"/>
+    		<mvc:exclude-mapping path="/index.jsp"/>
+    		<mvc:exclude-mapping path="/top.jsp"/>
     		<bean class="com.ht.interceptors.BackInterceptor"/>
     	</mvc:interceptor>
     

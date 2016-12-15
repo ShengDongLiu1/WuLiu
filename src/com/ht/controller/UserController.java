@@ -49,7 +49,7 @@ public class UserController {
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String tologin(){
 		
-		return "login";
+		return "index2";
 	}
 	
 	/**
@@ -95,7 +95,7 @@ public class UserController {
 		session.removeAttribute("user");
 		session.removeAttribute("initfun");
 		
-		return "login";
+		return "index2";
 	}
 	
 	/**

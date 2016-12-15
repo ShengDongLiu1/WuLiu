@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
-    <%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
 <title>宏图物流有限公司</title>
 <link href="style/css.css" rel="stylesheet" type="text/css" />
 </head>
-
 <body>
 <!-- Copyright ?2005. Spidersoft Ltd --><!-- /Copyright ?2005. Spidersoft Ltd -->
 <table width="920" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -23,13 +23,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <table width="920" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
 	<tr height="74">
 		<td width="10">&nbsp;</td>
-		<td valign="bottom"><img src="<%=basePath %>image/logo.jpg" width="483" height="65"></td>
+		<td valign="bottom"><img src="<%=basePath %>/image/logo.jpg" width="483" height="65"></td>
 		<td align="right" valign="bottom">
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr height="16">
-					<td width="70" align="center" class="td1"><a href="<%=basePath %>customer/login" onClick="this.style.behavior='url(#default#homepage)';this.setHomePage(window.location.href);return(false);" style="BEHAVIOR: url(#default#homepage)"><img src="<%=basePath %>image/bt_top2.gif" width="70" height="22" border="0"></a></td>
-					<td width="8">&nbsp;</td>
-					<td width="70" align="center" class="td2"><a href="javascript:window.external.AddFavorite(window.location.href, document.title)"><img src="<%=basePath %>image/bt_top1.gif" width="70" height="22" border="0"></a></td>
+					<c:choose>
+						<c:when test="${empty user}">
+							<td width="70" align="center" class="td1"><a href="<%=basePath %>customer/login" onClick="this.style.behavior='url(#default#homepage)';this.setHomePage(window.location.href);return(false);" style="BEHAVIOR: url(#default#homepage)"><img src="<%=basePath %>image/bt_top2.gif" width="70" height="22" border="0"></a></td>
+							<td width="8">&nbsp;</td>
+							<td width="70" align="center" class="td2"><a href="javascript:window.external.AddFavorite(window.location.href, document.title)"><img src="<%=basePath %>/image/bt_top1.gif" width="70" height="22" border="0"></a></td>
+						</c:when>
+						<c:otherwise>
+							<td width="300" height="20" align="center" ><font size="6">欢迎<font color="red">${user.usertruename }</font>登录</font></td>
+							<td width="160" height="20" align="center" ><font size="6"><a tabindex="-1" href="<%=basePath%>customer/klogout" target="_top">Logout</a></font></td>
+						</c:otherwise>
+					</c:choose>
 				</tr>
 			</table>
 		</td>
@@ -47,8 +55,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<tr height="32" align="center">
 		<td width="10" bgcolor="#FFFFFF">&nbsp;</td>
 		<td>&nbsp;</td>
-
-		
 					<td><a href="<%=basePath%>index.jsp" class="nav2" >网站首页</a></td>
 					<td>&nbsp;</td>
 		
@@ -69,8 +75,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 					<td><a href="<%=basePath%>warehouse.jsp" class="nav" >我的仓储</a></td>
 					<td>&nbsp;</td>
-		
-
 		<td width="10" bgcolor="#FFFFFF">&nbsp;</td>
 	</tr>
 </table>

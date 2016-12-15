@@ -74,7 +74,7 @@ public class Customerller {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value="/logout",method=RequestMethod.GET)
+	@RequestMapping(value="/klogout",method=RequestMethod.GET)
 	public String logout(HttpSession session){
 		
 		session.removeAttribute("user");

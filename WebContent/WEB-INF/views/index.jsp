@@ -90,7 +90,6 @@
 		<div class="sidebar-nav">
 		
 		
-		
 			<c:forEach items="${initfun}" var="top">
 				<c:if test="${top.funpid==\"-1\"}">
 					<a href="#error-menu${top.funid}" class="nav-header collapsed"
