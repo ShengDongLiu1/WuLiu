@@ -14,6 +14,7 @@
 <script type="text/javascript" src="<%=path %>/js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="<%=path %>/js/site_easyui.js"></script>
 <style type="text/css">
+body{margin:0px;padding:0px;}
 .tdwidth{
 	width:18%;text-align:right;font-size:15px;
 }
@@ -29,6 +30,8 @@ a:link {color:blue}
 a:visited{color:#54287C}
 a:active{color:yellow}
 a:hover {color:#54287C} 
+
+.easyui-textbox{width:10%;}
 </style>
 <script>
 $(function(){
@@ -146,7 +149,7 @@ function fuzhi(index){
 	$("#gorigin").html(index.goods.gorigin);
 	$("#gendpoint").html(index.goods.gendpoint);
 	$("#gstate").html(index.goods.gstate);
-	$("#gorderstime").html(index.goods.gorderstime);
+	$("#gorderstime").html(formatDateTime(new Date(index.goods.gorderstime)));
 	$("#gdescribe").html(index.goods.gdescribe);
 	$("#goodbyWin").dialog("open").dialog("setTitle", "客户订单详情");
 }
@@ -156,10 +159,23 @@ function closeGoodWin(){
 	$("#goodbyWin").dialog("close");
 }
 
+/* 搜索 */
+function seachs(){
+	var cname = $('#scname').textbox('getValue');
+	var gname = $('#sgname').textbox('getValue');
+	var loname = $('#sloname').textbox('getValue');
+	var sbarcadeid = $('#ssbarcadeid').textbox('getValue');
+	var username = $('#username').textbox('getValue');
+	$('#list').datagrid('load',{  
+		cname:cname,
+		gname:gname,
+		loname:loname,
+		sbarcadeid:sbarcadeid,
+		username:username
+	}); 
+}
+
 </script>
-<style>
-	body{margin:0px;padding:0px;}
-</style>
 </head>
 <body>
 	<div>当前位置：</div>
@@ -189,6 +205,15 @@ function closeGoodWin(){
 			</tr>
 		</thead>
 	</table>
+	<div id="kj" style="padding: 2px;">
+		客户：<input id="scname" class="easyui-validatebox easyui-textbox" name="cname" data-options="required:false" />&nbsp;
+		货物：<input id="sgname" class="easyui-validatebox easyui-textbox" name="gname" data-options="required:false" />&nbsp;
+		库位：<input id="sloname" class="easyui-validatebox easyui-textbox" name="loname" data-options="required:false" />&nbsp;
+		条形码编号：<input id="ssbarcadeid" class="easyui-validatebox easyui-textbox" name="sbarcadeid" data-options="required:false" />&nbsp;
+		操作员：<input id="username" class="easyui-validatebox easyui-textbox" name="username" data-options="required:false" />
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
+	</div>
+	
 	<!-- 自定义窗口按钮 -->
 	<div id="dlg-buttons">
 	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>

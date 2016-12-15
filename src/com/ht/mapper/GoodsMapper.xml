@@ -276,13 +276,13 @@
 				and cu.cname like #{cname}
 			</if>
 			<if test="gname!=null and gname!='' ">
-				and go.gname like #{gname}
+				and gname like #{gname}
 			</if>
 			<if test="gordernumber!=null and gordernumber!='' ">
-				and go.gordernumber like #{gordernumber}
+				and gordernumber like #{gordernumber}
 			</if>
 			<if test="gstate!=null and gstate!='' ">
-				and go.gstate like #{gstate}
+				and gstate like #{gstate}
 			</if>
 		</where>
  	</select>

@@ -27,13 +27,17 @@ public class ReceiptController {
 	@Autowired
 	private ReceiptService receiptService;
 	
+	/**
+	 * 跳转到收货单
+	 * @return
+	 */
 	@RequestMapping(value="/allRece")
 	public String topagerReceipt(){
 		return "receipt/receipt";
 	}
 	
 	@RequestMapping(value="/all")
-	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response) throws Exception{
+	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,String cname,String gname,String gstate,String gordernumber,String username) throws Exception{
 		PageBean pageBean=null;
 		if(page == null && rows == null){
 			pageBean=new PageBean(1,10);
@@ -41,10 +45,11 @@ public class ReceiptController {
 			pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
 		}
 		Map<String, Object> map= new HashMap<>();
-		map.put("cname", StringUtil.formatLike(""));
-		map.put("gname", StringUtil.formatLike(""));
-		map.put("gstate", StringUtil.formatLike(""));	//货物状态
-		map.put("gordernumber", StringUtil.formatLike(""));//订单号
+		map.put("cname", StringUtil.formatLike(cname));
+		map.put("gname", StringUtil.formatLike(gname));
+		map.put("usertruename", StringUtil.formatLike(username));
+		map.put("gstate", StringUtil.formatLike(gstate));	//货物状态
+		map.put("gordernumber", StringUtil.formatLike(gordernumber));//订单号
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
 		List<Receipt> list=receiptService.queryAll(map);

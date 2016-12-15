@@ -43,7 +43,7 @@ public class StorageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/all",method=RequestMethod.GET)
-	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response) throws Exception{
+	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,String cname,String gname,String loname,String sbarcadeid,String username) throws Exception{
 		PageBean pageBean=null;
 		if(page == null && rows == null){
 			pageBean=new PageBean(1,10);
@@ -51,11 +51,12 @@ public class StorageController {
 			pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
 		}
 		Map<String, Object> map= new HashMap<>();
-		map.put("cname", StringUtil.formatLike(""));
-		map.put("gname", StringUtil.formatLike(""));
-		map.put("loname", StringUtil.formatLike(""));
+		map.put("cname", StringUtil.formatLike(cname));
+		map.put("gname", StringUtil.formatLike(gname));
+		map.put("loname", StringUtil.formatLike(loname));
+		map.put("usertruename", StringUtil.formatLike(username));
 		map.put("storagemode", StringUtil.formatLike(""));
-		map.put("sbarcadeid", StringUtil.formatLike(""));
+		map.put("sbarcadeid", StringUtil.formatLike(sbarcadeid));
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
 		List<Storage> list=storageService.queryAll(map);//查询所有数据

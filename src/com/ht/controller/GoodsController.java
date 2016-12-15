@@ -43,7 +43,8 @@ public class GoodsController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/all",method=RequestMethod.GET)
-	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response) throws Exception{
+	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,String cname,String gname,String gstate,String gordernumber) throws Exception{
+		System.out.println("gname:"+gname);
 		PageBean pageBean=null;
 		if(page == null && rows == null){
 			pageBean=new PageBean(1,10);
@@ -51,10 +52,10 @@ public class GoodsController {
 			pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
 		}
 		Map<String, Object> map= new HashMap<>();
-		map.put("cname", StringUtil.formatLike(""));
-		map.put("gname", StringUtil.formatLike(""));
-		map.put("gstate", StringUtil.formatLike(""));	//货物状态
-		map.put("gordernumber", StringUtil.formatLike(""));//订单号
+		map.put("cname", StringUtil.formatLike(cname));
+		map.put("gname", StringUtil.formatLike(gname));
+		map.put("gstate", StringUtil.formatLike(gstate));	//货物状态
+		map.put("gordernumber", StringUtil.formatLike(gordernumber));//订单号
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
 		List<Goods> list=goodsService.queryAll(map);
