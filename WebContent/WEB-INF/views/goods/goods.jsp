@@ -170,7 +170,6 @@ function seachs(){
 </script>
 </head>
 <body>
-	<div>当前位置：</div>
 	<table id="list" class="easyui-datagrid" toolbar="#kj" style="width:100%" data-options="
 		url:'<%=path %>/goods/all',
 		method:'get',
@@ -179,7 +178,8 @@ function seachs(){
 		autoRowHeight:true,
 		pagination:true,
 		border:false,
-		pageSize:10
+		pageSize:10,
+		fit:true
 	">
 		<thead data-options="frozen:true">
 			<tr>

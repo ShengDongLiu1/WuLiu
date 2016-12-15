@@ -184,7 +184,8 @@ function seachs(){
 		autoRowHeight:true,
 		pagination:true,
 		border:false,
-		pageSize:10
+		pageSize:10,
+		fit:true
 	">
 		<thead data-options="frozen:true">
 			<tr>
