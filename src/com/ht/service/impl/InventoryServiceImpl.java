@@ -26,5 +26,20 @@ public class InventoryServiceImpl implements InventoryService{
 		
 		return inventoryMapper.queryAllCount(map);
 	}
+
+	@Override
+	public int inventoryAdd(Inventory inventory) {
+		return inventoryMapper.inventoryAdd(inventory);
+	}
+
+	@Override
+	public int inventoryupdate(Inventory inventory) {
+		return inventoryMapper.inventoryupdate(inventory);
+	}
+
+	@Override
+	public void inventorydelete(int parseInt) {
+		inventoryMapper.inventorydelete(parseInt);
+	}
 	
 }

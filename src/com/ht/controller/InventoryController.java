@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.ht.dto.PageBean;
 import com.ht.dto.StringUtil;
 import com.ht.entity.Inventory;
+import com.ht.entity.Test;
 import com.ht.service.interfaces.InventoryService;
 import com.ht.ssm.util.ResponseUtil;
 
@@ -59,5 +60,36 @@ public class InventoryController {
 		ResponseUtil.write(response, result);
 		System.out.println("list:"+jsonArray);
 		return null;
+	}
+	
+	
+	@RequestMapping("/save")
+	public String save(Inventory inventory,HttpServletResponse res) throws Exception{
+		int resultTotal = 0;
+        if (inventory.getLoid() == null) {
+            resultTotal = inventoryService.inventoryAdd(inventory);
+        }else{
+            resultTotal = inventoryService.inventoryupdate(inventory);
+        }
+        JSONObject jsonObject = new JSONObject();
+        if(resultTotal > 0){   //说明修改或添加成功
+            jsonObject.put("success", true);
+        }else{
+            jsonObject.put("success", false);
+        }
+        ResponseUtil.write(res, jsonObject);
+        return null;
+	}
+	
+	@RequestMapping("/delete")
+	public String delete(@RequestParam(value="ids") String ids,HttpServletResponse res) throws Exception{
+		String[] idStr = ids.split(",");
+        JSONObject jsonObject = new JSONObject();
+        for (String id : idStr) {
+        	inventoryService.inventorydelete(Integer.parseInt(id));
+        }
+        jsonObject.put("success", true);
+        ResponseUtil.write(res, jsonObject);
+        return null;
 	}
 }

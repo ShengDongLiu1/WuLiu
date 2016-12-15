@@ -8,5 +8,11 @@ public interface InventoryService {
 	List<Inventory> select(Map<String, Object> map);
 
 	Long queryAllCount(Map<String, Object> map);
+
+	int inventoryAdd(Inventory inventory);
+
+	int inventoryupdate(Inventory inventory);
+
+	void inventorydelete(int parseInt);
 	
 }

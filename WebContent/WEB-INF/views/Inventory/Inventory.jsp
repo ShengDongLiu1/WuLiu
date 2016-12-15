@@ -24,6 +24,10 @@ $(function(){
 		});
 	});
 */
+var url;
+$(function() {
+	setPagination("list");
+});
 	function setPagination(tableid){
 		var op=$("#"+tableid).datagrid("getPager");	//分页组件
 		$(op).pagination({
@@ -57,6 +61,76 @@ $(function(){
 	
 });
 
+function saveInventory() {
+    $("#fm").form("submit", {
+        url : url,
+        success : function(result) {
+            var result = eval('(' + result + ')');
+            if (result.success) {
+                $.messager.alert("系统提示", "保存成功！");
+                $("#dlg").dialog("close");
+                $("#dg").datagrid("load");
+                resetValue();
+                
+            } else {
+                $.messager.alert("系统提示", "保存失败！");
+                return;
+            }
+        }
+    });
+}
+
+function deleteInventory() {
+    var selectedRows = $("#dg").datagrid("getSelections");
+    if (selectedRows.length == 0) {
+        $.messager.alert("系统提示", "请选择要删除的数据！");
+        return;
+    }
+    var strIds = [];
+    for ( var i = 0; i < selectedRows.length; i++) {
+        strIds.push(selectedRows[i].loid);
+    }
+    var ids = strIds.join(",");
+    $.messager.confirm("系统提示", "您确定要删除这<font color=red>"
+            + selectedRows.length + "</font>条数据吗？", function(r) {
+        if (r) {
+            $.post("${pageContext.request.contextPath}/inventory/delete.do", {
+                ids : ids
+            }, function(result) {
+                if (result.success) {
+                    $.messager.alert("系统提示", "数据已成功删除！");
+                    $("#dg").datagrid("load");
+                } else {
+                    $.messager.alert("系统提示", "数据删除失败，请联系系统管理员！");
+                }
+            }, "json");
+        }
+    });
+}
+
+function openInventoryModifyDialog() {
+    var selectedRows = $("#dg").datagrid("getSelections");
+    if (selectedRows.length != 1) {
+        $.messager.alert("系统提示", "请选择一条要编辑的数据！");
+        return;
+    }
+    var row = selectedRows[0];
+    $("#dlg").dialog("open").dialog("setTitle", "编辑用户信息");
+    $("#fm").form("load", row);
+    url = "${pageContext.request.contextPath}/inventory/save.do?loid=" + row.loid;
+}
+
+function openInventoryAddDialog() {
+    $("#dlg").dialog("open").dialog("setTitle", "添加用户");
+    $("#fm").form("clear");
+    url = "${pageContext.request.contextPath}/inventory/save.do";
+}
+
+function closeInventoryDialog() {
+    $("#dlg").dialog("close");
+    resetValue();
+}
+
 function goodsName(value){
 	return value.gname;
 }
@@ -68,7 +142,7 @@ function goodsName(value){
 </head>
 <body>
 	<div>当前位置：</div>
-	<table id="list" class="easyui-datagrid" toolbar="#kj" style="width:100%" data-options="
+	<table id="dg" class="easyui-datagrid" toolbar="#tb" style="width:100%" data-options="
 		url:'<%=path %>/inventory/allInve',
 		method:'get',
 		rownumbers:true,	
@@ -91,6 +165,59 @@ function goodsName(value){
 			</tr>
 		</thead>
 	</table>
+	<!-- 菜单 -->
+	<div id="tb" style="padding: 2px;">
+		<a href="javascript:openInventoryAddDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >添加</a>
+		<a href="javascript:openInventoryModifyDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" >编辑</a>
+		<a href="javascript:deleteInventory()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
+	</div>
 	
+	<div id="dlg-buttons">
+	    <a href="javascript:saveInventory()" class="easyui-linkbutton"
+	        iconCls="icon-ok">保存</a> <a href="javascript:closeInventoryDialog()"
+	        class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
+	
+	<div id="dlg" class="easyui-dialog"
+            style="width: 730px;height:280px;padding:10px 10px;" closed="true"
+            buttons="#dlg-buttons">
+            <form method="post" id="fm">
+                <table cellspacing="8px;">
+                    <tr>
+                        <td>库位名称：</td>
+                        <td><input type="text" id="loname" name="loname"
+                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            style="color: red">*</span>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>库位尺寸 ：</td>
+                        <td><input type="text" id="losize" name="losize"
+                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            style="color: red">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>库位体积 ：</td>
+                        <td><input type="text" id="lovolume" name="lovolume"
+                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            style="color: red">*</span>
+                        </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>承受重量：</td>
+                        <td><input type="text" id="loweight" name="loweight"
+                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            style="color: red">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>库位等级：</td>
+                        <td><input type="text" id="lolevel" name="lolevel"
+                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            style="color: red">*</span>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
 </body>
 </html>

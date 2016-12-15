@@ -37,7 +37,7 @@
     from inventory
     where loid = #{loid,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="inventorydelete" parameterType="java.lang.Integer">
     delete from inventory
     where loid = #{loid,jdbcType=INTEGER}
   </delete>
@@ -49,7 +49,7 @@
       #{losize,jdbcType=DOUBLE}, #{lovolume,jdbcType=DOUBLE}, #{loweight,jdbcType=DOUBLE}, 
       #{lolevel,jdbcType=INTEGER}, #{lostate,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.ht.entity.Inventory">
+  <insert id="inventoryAdd" parameterType="com.ht.entity.Inventory">
     insert into inventory
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="loid != null">
@@ -104,7 +104,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Inventory">
+  <update id="inventoryupdate" parameterType="com.ht.entity.Inventory">
     update inventory
     <set>
       <if test="logid != null">
@@ -144,8 +144,8 @@
   </update>
    <!-- 查询所有库位列表 -->
   <select id="select" parameterType="java.util.Map" resultMap="SelectBaseResultMap">
-    select 
-  	 lo.loid, lo.logid, lo.loname, lo.losize, lo.lovolume, lo.loweight, lo.lolevel, lo.lostate,go.gid,go.gname
+    select lo.loid, lo.logid, lo.loname, lo.losize, lo.lovolume, 
+  	 lo.loweight, lo.lolevel, lo.lostate,go.gid,go.gname
     from inventory lo,goods go
     <where>
     	lo.logid=go.gid
@@ -161,7 +161,9 @@
 		<if test="lostate!=null and lostate!='' ">
 			and lo.lostate like #{lostate}
 		</if>
+		
     </where>
+    
   	 order by lo.loid desc
   	 <if test="start!=null and size!=null">
 		limit #{start},#{size}
