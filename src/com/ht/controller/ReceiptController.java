@@ -4,45 +4,35 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ht.dto.Barcode;
 import com.ht.dto.PageBean;
 import com.ht.dto.StringUtil;
-import com.ht.entity.Storage;
-import com.ht.service.interfaces.StorageService;
+import com.ht.entity.Receipt;
+import com.ht.service.interfaces.ReceiptService;
 import com.ht.ssm.util.ResponseUtil;
 
 import net.sf.json.JSONArray;
 
 @Controller
-@RequestMapping("/storage")
-public class StorageController {
+@RequestMapping("/receipt")
+public class ReceiptController {
 	
 	@Autowired
-	private StorageService storageService;
+	private ReceiptService receiptService;
 	
-	@RequestMapping(value="/allStor")
-	public String topageStorage(){
-		return "Storage/storage";
+	@RequestMapping(value="/allRece")
+	public String topagerReceipt(){
+		return "receipt/receipt";
 	}
-	/**
-	 * 入库列表
-	 * @param page
-	 * @param rows
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value="/all",method=RequestMethod.GET)
+	
+	@RequestMapping(value="/all")
 	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response) throws Exception{
 		PageBean pageBean=null;
 		if(page == null && rows == null){
@@ -53,13 +43,13 @@ public class StorageController {
 		Map<String, Object> map= new HashMap<>();
 		map.put("cname", StringUtil.formatLike(""));
 		map.put("gname", StringUtil.formatLike(""));
-		map.put("loname", StringUtil.formatLike(""));
-		map.put("storagemode", StringUtil.formatLike(""));
-		map.put("sbarcadeid", StringUtil.formatLike(""));
+		map.put("gstate", StringUtil.formatLike(""));	//货物状态
+		map.put("gordernumber", StringUtil.formatLike(""));//订单号
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
-		List<Storage> list=storageService.queryAll(map);//查询所有数据
-		Long total=storageService.queryAllCount(map);	//查询总条数
+		List<Receipt> list=receiptService.queryAll(map);
+		Long total=receiptService.queryAllCount(map);	//查询总条数
+		
 		JSONObject result = new JSONObject();
 		JSONArray jsonArray = JSONArray.fromObject(list);
 		result.put("rows", jsonArray);
@@ -68,11 +58,5 @@ public class StorageController {
 		System.out.println("list:"+jsonArray);
 		return null;
 	}
-	
-	@RequestMapping(value="/add")
-	public String add(Barcode barcode,HttpServletRequest request){
-		String string=barcode.createCode(request);
-		System.out.println("str:"+string);
-		return null;
-	}
+
 }

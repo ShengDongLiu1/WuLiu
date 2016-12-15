@@ -23,12 +23,14 @@
   	<association property="customer" javaType="com.ht.entity.Customer">
 	    <result property="cid" column="cid"/>
 		<result property="cname" column="cname"/>
-		<result property="gordernumber" column="gordernumber"/>
 	</association>
 	
 	<association property="goods" javaType="com.ht.entity.Goods">
 	    <result property="gid" column="gid"/>
 		<result property="gname" column="gname"/>
+		<result property="gcount" column="gcount"/>
+		<result property="gordernumber" column="gordernumber"/>
+		<result property="gstate" column="gstate"/>
 	</association>
   </resultMap>
   
@@ -47,6 +49,7 @@
     delete from receipt
     where rid = #{rid,jdbcType=INTEGER}
   </delete>
+  
   <!-- 添加收货单 -->
   <insert id="insertSelective" parameterType="com.ht.entity.Receipt">
     insert into receipt
@@ -126,7 +129,7 @@
   
   <!-- 分页查询所有收货单 -->
    <select id="queryAll" parameterType="java.util.Map" resultMap="AllResultMap">
-   		select cu.cid,cu.cname,go.gid,go.gname,go.gcount,go.gordernumber,
+   		select cu.cid,cu.cname,go.gid,go.gname,go.gcount,go.gordernumber,go.gstate,
    		re.rid,re.rreceivecount,re.rdamagedcount,re.rshelvecount,
 		re.rtdgoodstime from receipt re,customer cu,goods go
 		<where>
@@ -136,6 +139,12 @@
 			</if>
 			<if test="gname!=null and gname!='' ">
 				and go.gname like #{gname}
+			</if>
+			<if test="gordernumber!=null and gordernumber!='' ">
+				and go.gordernumber like #{gordernumber}
+			</if>
+			<if test="gstate!=null and gstate!='' ">
+				and go.gstate like #{gstate}
 			</if>
 		</where>
 		order by re.rtdgoodstime desc
@@ -154,6 +163,12 @@
 			</if>
 			<if test="gname!=null and gname!='' ">
 				and go.gname like #{gname}
+			</if>
+			<if test="gordernumber!=null and gordernumber!='' ">
+				and go.gordernumber like #{gordernumber}
+			</if>
+			<if test="gstate!=null and gstate!='' ">
+				and go.gstate like #{gstate}
 			</if>
 		</where>
  	</select>

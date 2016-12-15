@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>入库列表</title>
+<title>收货单列表</title>
 <link rel="stylesheet" href="<%=path %>/js/jquery-easyui/themes/default/easyui.css"/>
 <link rel="stylesheet" href="<%=path %>/js/site_main.css"/>
 <link rel="stylesheet" type="text/css" href="<%=path %>/js/jquery-easyui/themes/icon.css">
@@ -13,7 +13,7 @@
 <script type="text/javascript" src="<%=path %>/js/jquery-easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=path %>/js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="<%=path %>/js/site_easyui.js"></script>
-<script>
+<script type="text/javascript">
 $(function(){
 	//setPagination("list");
 /**	$(document).bind('contextmenu',function(e){	//给网页绑定右键菜单
@@ -53,7 +53,6 @@ $(function(){
 	
 });
 
-
 function customerName(value){
 	return value.cname;
 }
@@ -62,14 +61,12 @@ function goodsName(value){
 	return value.gname;
 }
 
-function inventoryName(value){
-	return value.loname;
+function goodsNum(value,rec){
+	return rec.goods.gordernumber;
 }
 
-//显示图片
-function toImage(value,rec){
-	var btn="<img src='<%=path%>/storagebarcode/"+rec.storagebarcode+"' alt='条形码'>";
-    return btn;
+function goodsCount(value,rec){
+	return rec.goods.gcount;
 }
 
 /* 将Thu Mar 19 2015 12:00:00 GMT+0800 (中国标准时间)转换为2015-3-19 12:00:00 */
@@ -96,19 +93,16 @@ function toDate(obj){
 }
 
 function toSub(){
-	var btn="<a href='javascript:void(0)' onclick=''>出库</a>";
+	var btn="<a href='javascript:void(0)' onclick=''>入库</a>";
 	return btn;
 }
 
 </script>
-<style>
-	body{margin:0px;padding:0px;}
-</style>
+
 </head>
 <body>
-	<div>当前位置：</div>
 	<table id="list" class="easyui-datagrid" toolbar="#kj" style="width:100%" data-options="
-		url:'<%=path %>/storage/all',
+		url:'<%=path %>/receipt/all',
 		method:'get',
 		rownumbers:true,	
 		singleSelect:false,
@@ -119,19 +113,24 @@ function toSub(){
 	">
 		<thead data-options="frozen:true">
 			<tr>
-				<th field="sid" checkbox="true">编号</th>
-				<th field="customer" width="7%" align="center" formatter="customerName">客户</th>
-				<th field="goods" width="7%" align="center" formatter="goodsName">货物名称</th>
-				<th field="inventory" width="7%" align="center" formatter="inventoryName">库位名称</th>
-				<th field="storagemode" width="7%" align="center">入库类型</th>
-				<th field="storagecount" width="5%" align="center">入库数量</th>
-				<th field="storagebarcode" width="28%" align="center" formatter="toImage">条形码</th>
-				<th field="sbarcadeid" width="12%" align="center">条形码编号</th>
-				<th field="storagetime" width="10%" align="center" formatter="toDate">入库时间</th>
+				<th field="rid" checkbox="true">编号</th>
+				<th field="customer" width="10%" align="center" formatter="customerName">客户</th>
+				<th field="goods" width="10%" align="center" formatter="goodsName">货物名称</th>
+				<th field="goods1" width="12%" align="center" formatter="goodsNum">货物订单号</th>
+				<th field="goods2" width="7%" align="center" formatter="goodsCount">货物总数量</th>
+				<th field="rreceivecount" width="7%" align="center">实际收货数量</th>
+				<th field="rdamagedcount" width="7%" align="center" >破损数量</th>
+				<th field="rshelvecount" width="7%" align="center">搁置数量</th>
+				<th field="rtdgoodstime" width="12%" align="center" formatter="toDate">收货时间</th>
 				<th field="null" width="12%" align="center" formatter="toSub">操作</th>
 			</tr>
 		</thead>
 	</table>
-	
+	<div id="kj">
+		<!-- 链接按钮控件 -->
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="applygoods_add();">添加</a>
+		
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="applygoods_edit();">修改</a>
+	</div>
 </body>
 </html>

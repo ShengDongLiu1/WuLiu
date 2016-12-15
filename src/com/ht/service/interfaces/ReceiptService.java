@@ -1,11 +1,11 @@
-package com.ht.dao;
+package com.ht.service.interfaces;
 
 import java.util.List;
 import java.util.Map;
 
 import com.ht.entity.Receipt;
 
-public interface ReceiptMapper {
+public interface ReceiptService {
 	
 	/**
 	 * 根据id删除收货单
