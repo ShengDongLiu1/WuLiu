@@ -36,6 +36,8 @@ a:hover {color:#54287C}
 .dai{color:green;}
 
 .yi{color:orange;}
+
+.ju{color:red;}
 </style>
 <script>
 $(function(){
@@ -99,16 +101,28 @@ function goState(value,obj){
 		state="<span class='dai'>待揽收</span>"
 	}else if(obj.gstate=='2'){
 		state="<span class='yi'>已揽收</span>"
+	}else if(obj.gstate=='3'){
+		state="<span class='ju'>已拒收</span>"
 	}
 	return state;
 }
 
 function lanshou(state){
-	var sta="";
+	var sta='';
 	if(state=='1'){
-		sta="待揽收"
+		sta='待揽收'
+		$("#becase").remove();
 	}else if(state=='2'){
-		sta="已揽收"
+		sta='已揽收'
+		$("#becase").remove();
+	}else if(state=='3'){
+		sta='已拒收'
+		$("#gooded").append(
+		"<tr align='center' id='becase'>"+
+			"<td class='tdwidth'>拒收原因:</td>"+
+			"<td class='gxiangq' colspan='3'><span id='gocause'></span></td>"+
+		"</tr>"
+		);
 	}
 	return sta;
 }
@@ -140,9 +154,16 @@ function toDate(obj){
 function toSub(value,obj){
 	var btn="<a href='javascript:openGoodWin("+obj.gid+")'>详情</a>";
 	if(obj.gstate=='1'){
-		btn+="&nbsp;&nbsp;<a href='javascript:openLSWin("+obj.gid+","+obj.gcid+","+obj.gcount+")'>揽收</a>";
+		btn+="&nbsp;<a href='javascript:openLSWin("+obj.gid+","+obj.gcid+","+obj.gcount+")'>揽收</a>";
+		btn+="&nbsp;<a href='javascript:openJSWin("+obj.gid+")'>拒收</a>";
 	}
 	return btn;
+}
+
+/* 打开拒收窗口 */
+function openJSWin(gid){
+	$("#jgid").val(gid);
+	$("#goodJSWin").dialog("open").dialog("setTitle", "拒收原因");
 }
 
 /* 打开揽收窗口 */
@@ -151,7 +172,6 @@ function toSub(value,obj){
 	$("#lgcid").val(gcid);
 	$("#lgcount").val(gcount);
 	$("#goodLSWin").dialog("open").dialog("setTitle", "揽收货物");
-	 
 }
 
 /* 提交收货单数据 */
@@ -170,6 +190,21 @@ function subRece(){
 			lrshelvecount=0
 		}
 		$.post("<%=path%>/receipt/addRece",{'rgid':gid,'rcid':gcid,'rreceivecount':gcount,'rdamagedcount':lrdamagedcount,'rshelvecount':lrshelvecount},function(index){
+			$.messager.alert("系统提示", index.result,'info');
+			closeGoodWin();
+			$("#list").datagrid("reload");	//刷新表格
+		},"json");
+	}
+}
+
+/* 提交拒收原因 */
+function subGocause(){
+	var gid=$("#jgid").val();
+	var gocause = $('#jgocause').textbox('getValue');
+	if(gocause==''){
+		$.messager.alert("系统提示", '请填写拒收原因！','info');
+	}else{
+		$.post("<%=path%>/goods/goodCause",{'gid':gid,'gocause':gocause},function(index){
 			$.messager.alert("系统提示", index.result,'info');
 			closeGoodWin();
 			$("#list").datagrid("reload");	//刷新表格
@@ -202,6 +237,7 @@ function fuzhi(index){
 	$("#gstate").html(lanshou(index.goods.gstate));
 	$("#gorderstime").html(formatDateTime(new Date(index.goods.gorderstime)));
 	$("#gdescribe").html(index.goods.gdescribe);
+	$("#gocause").html(index.goods.gocause);
 	$("#goodbyWin").dialog("open").dialog("setTitle", "客户订单详情");
 }
 
@@ -210,6 +246,7 @@ function fuzhi(index){
 function closeGoodWin(){
 	$("#goodbyWin").dialog("close");
 	$("#goodLSWin").dialog("close");
+	$("#goodJSWin").dialog("close");
 }
 
 /* 搜索 */
@@ -275,6 +312,7 @@ function seachs(){
 	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
 	
+	<!-- 揽收窗口 -->
 	<div id="goodLSWin" class="easyui-dialog"  buttons="#ls-buttons" data-options="closable:true, closed:true"  style="width:25%;height:180px;padding:5px;text-align:center;">
 			<input type="hidden" id="lgid">
 			<input type="hidden" id="lgcid">
@@ -285,11 +323,25 @@ function seachs(){
 	</div>
 	
 	<!-- 自定义窗口按钮 -->
+	<div id="js-buttons">
+		<a href="javascript:subGocause()" class="easyui-linkbutton" iconCls="icon-ok">确认</a>
+	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
+	
+	<!-- 拒收窗口 -->
+	<div id="goodJSWin" class="easyui-dialog"  buttons="#js-buttons" data-options="closable:true, closed:true"  style="width:32%;height:230px;padding:5px;text-align:left;">
+			<input type="hidden" id="jgid">
+		<br />
+		拒收原因：
+		<input id="jgocause" class="easyui-textbox" data-options="multiline:true" style="width:100%;height:70%">
+	</div>
+	
+	<!-- 自定义窗口按钮 -->
 	<div id="dlg-buttons">
 	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
 	<div id="goodbyWin" class="easyui-dialog"  buttons="#dlg-buttons" data-options="closable:true, closed:true"  style="width:70%;height:420px;padding:5px;text-align:center;">
-		<table style="width:100%;height:100%;">
+		<table style="width:100%;height:100%;" id="gooded">
 			<tr>
 				<td class="tdwidth">货物名称:</td>
 				<td class="gxiangq"><span id="gname"></span></td>

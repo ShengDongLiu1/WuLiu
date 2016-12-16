@@ -20,6 +20,7 @@
     <result column="gendpoint" jdbcType="VARCHAR" property="gendpoint" />
     <result column="gstate" jdbcType="VARCHAR" property="gstate" />
     <result column="gorderstime" jdbcType="TIMESTAMP" property="gorderstime" />
+    <result column="gocause" jdbcType="VARCHAR" property="gocause" />
   </resultMap>
   
   <resultMap id="AllResultMap" type="com.ht.entity.Goods">
@@ -41,6 +42,7 @@
     <result column="gendpoint" jdbcType="VARCHAR" property="gendpoint" />
     <result column="gstate" jdbcType="VARCHAR" property="gstate" />
     <result column="gorderstime" jdbcType="TIMESTAMP" property="gorderstime" />
+  	<result column="gocause" jdbcType="VARCHAR" property="gocause" />
   	
   	<association property="customer" javaType="com.ht.entity.Customer">
 	    <result property="cid" column="cid"/>
@@ -50,7 +52,7 @@
   
   <sql id="Base_Column_List">
     gid, gcid, gordernumber, gname, gcount, gunit, gweight, gvolume, gsize, ggrade, gdescribe, 
-    gconsignee, greaddress, grephone, gorigin, gendpoint, gstate, gorderstime
+    gconsignee, greaddress, grephone, gorigin, gendpoint, gstate, gorderstime,gocause
   </sql>
   
   <!-- 根据id查询货物信息 -->
@@ -238,6 +240,9 @@
       </if>
       <if test="gorderstime != null">
         gorderstime = #{gorderstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gocause != null">
+        gocause = #{gocause,jdbcType=VARCHAR},
       </if>
     </set>
     where gid = #{gid,jdbcType=INTEGER}

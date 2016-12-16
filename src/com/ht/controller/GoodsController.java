@@ -44,7 +44,6 @@ public class GoodsController {
 	 */
 	@RequestMapping(value="/all",method=RequestMethod.GET)
 	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,String cname,String gname,String gstate,String gordernumber) throws Exception{
-		System.out.println("gname:"+gname);
 		PageBean pageBean=null;
 		if(page == null && rows == null){
 			pageBean=new PageBean(1,10);
@@ -84,4 +83,20 @@ public class GoodsController {
 		map.put("goods", goods);
 		return map;
 	}
+	
+	@RequestMapping(value="/goodCause",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> upGood(Goods goods,HttpServletResponse response){
+		Map<String, Object> map=new HashMap<>();
+		goods.setGstate("3");
+		System.out.println("goods:"+goods);
+		int resultcount=goodsService.updateByPrimaryKeySelective(goods);
+		if(resultcount>0){
+			map.put("result", "拒收成功！");
+		}else{
+			map.put("result", "拒收失败，请稍后再试！");
+		}
+		return map;
+	}
+	
 }

@@ -39,6 +39,8 @@ public class Goods {
 
     private Date gorderstime;
     
+    private String gocause;
+    
     private Customer customer;	//	客户
 
     public Integer getGid() {
@@ -185,11 +187,29 @@ public class Goods {
         this.gorderstime = gorderstime;
     }
 
+	public String getGocause() {
+		return gocause;
+	}
+
+	public void setGocause(String gocause) {
+		this.gocause = gocause;
+	}
+
 	public Customer getCustomer() {
 		return customer;
 	}
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+	@Override
+	public String toString() {
+		return "Goods [gid=" + gid + ", gcid=" + gcid + ", gordernumber=" + gordernumber + ", gname=" + gname
+				+ ", gcount=" + gcount + ", gunit=" + gunit + ", gweight=" + gweight + ", gvolume=" + gvolume
+				+ ", gsize=" + gsize + ", ggrade=" + ggrade + ", gdescribe=" + gdescribe + ", gconsignee=" + gconsignee
+				+ ", greaddress=" + greaddress + ", grephone=" + grephone + ", gorigin=" + gorigin + ", gendpoint="
+				+ gendpoint + ", gstate=" + gstate + ", gorderstime=" + gorderstime + ", gocause=" + gocause
+				+ ", customer=" + customer + "]";
 	}
 }
