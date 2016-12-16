@@ -265,6 +265,7 @@
 			<if test="gstate!=null and gstate!='' ">
 				and go.gstate like #{gstate}
 			</if>
+			and go.gid !=-1
 		</where>
 		order by go.gorderstime asc
 		<if test="start!=null and size!=null">
@@ -289,6 +290,7 @@
 			<if test="gstate!=null and gstate!='' ">
 				and gstate like #{gstate}
 			</if>
+			and go.gid !=-1
 		</where>
  	</select>
 </mapper>

@@ -118,9 +118,15 @@ function toDate(obj){
 	return formatDateTime(date);
 }
 
-function toSub(){
-	var btn="<a href='javascript:void(0)' onclick=''>入库</a>";
+function toSub(value,obj){
+	var btn="<a href='javascript:openKuWeiWin("+obj.goods.gid+")'>入库</a>";
 	return btn;
+}
+
+/* 打开库位列表窗口 */
+function openKuWeiWin(gid){
+	$.post("<%=path%>/receipt/byGood",{'gid':gid},function(index){},"json");
+	$("#receKuWin").dialog("open").dialog("setTitle", "库位列表");
 }
 
 /* 打开详情窗口 */
@@ -128,7 +134,6 @@ function openGoodWin(gid) {
 	$.post("<%=path%>/goods/goodByid",{'gid':gid},function(index){
 		fuzhi(index);
 	},"json");
-    
 }
 
 /* 给弹出的窗口赋值 */
@@ -154,6 +159,7 @@ function fuzhi(index){
 /* 关闭窗口 */
 function closeGoodWin(){
 	$("#goodbyWin").dialog("close");
+	$("#receKuWin").dialog("close");
 }
 
 /* 搜索 */
@@ -224,6 +230,18 @@ function lanshou(state){
 		订单号：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />&nbsp;
 		收货员：<input id="username" class="easyui-validatebox easyui-textbox" name="username" data-options="required:false" />
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
+	</div>
+	
+	<!-- 自定义窗口按钮 -->
+	<div id="ruku-buttons">
+		<a href="javascript:subRece()" class="easyui-linkbutton" iconCls="icon-ok">确认</a>
+	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
+	
+	<!-- 揽收窗口 -->
+	<div id="receKuWin" class="easyui-dialog" buttons="#ruku-buttons" data-options="closable:true, closed:true"  style="width:25%;height:180px;padding:5px;text-align:center;">
+	库位列表
+	
 	</div>
 	
 	<!-- 自定义窗口按钮 -->

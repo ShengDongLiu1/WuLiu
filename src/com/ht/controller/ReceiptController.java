@@ -118,5 +118,31 @@ public class ReceiptController {
 		}
 		return map;
 	}
+	
+	/**
+	 * 根据货物条件查询库位
+	 * @param gid
+	 * @param session
+	 */
+	@RequestMapping(value="/byGood")
+	public void selectGoods(Integer gid,HttpSession session){
+		Goods goods=goodsService.selectByPrimaryKey(gid);
+		System.out.println("goods:"+goods);
+		session.setAttribute("queryGoods", goods);
+	}
+	
+	@RequestMapping(value="/kuweiList")
+	public void kuweiList(Integer gid,@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,HttpSession session){
+		Map<String, Object> map= new HashMap<>();
+		PageBean pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
+		Goods goods=(Goods) session.getAttribute("queryGoods");
+		map.put("losize", goods.getGsize());
+		map.put("lovolume", goods.getGvolume());
+		map.put("loweight", goods.getGweight());
+		map.put("lolevel", goods.getGgrade());
+		map.put("lostate", 1);
+		map.put("start", pageBean.getStart());
+		map.put("size", pageBean.getPageSize());
+	}
 
 }
