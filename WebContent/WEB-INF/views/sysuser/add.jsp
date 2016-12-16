@@ -122,7 +122,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							$("#userpwdmsg").css("color","red");
 							userpwdflag = false;					
 							
-						}else if(($("#userpwd").val()).length<=3){
+						}else if(($("#userpwd").val()).length<3){
 							$("#userpwdmsg").text("密码长度至少为3");
 							$("#userpwdmsg").css("color","red");
 							userpwdflag = false;
