@@ -35,15 +35,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					}
 			    });
 			
-					var usernameflag = false;
-					var usertruenameflag = false;
-					var userpwdflag = false;
-					var userphoneflag = false;
+					var usernameflag = false;//用户名
+					var usertruenameflag = false;//用户姓名
+					var userpwdflag = false;//用户密码
+					var userphoneflag = false;//用户电话
 				
 				
 					$("#username").blur(function(e){					
 						if($("#username").val()==null || $("#username").val()==""){						
 							$("#msg").text("用户名不能为空");
+							$("#msg").css("color","red");
+							usernameflag = false;
+						}else if(($("#username").val()).length<2){
+							$("#msg").text("用户名长度至少为2");
 							$("#msg").css("color","red");
 							usernameflag = false;
 						}else{						
@@ -56,7 +60,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										$("#msg").text(msg.msg);
 										usernameflag = false;
 									}else if(msg.code==200){
-										
 										$("#msg").text(msg.msg);
 										$("#msg").css("color","green");
 										usernameflag = true;
@@ -67,17 +70,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				});	
 					
 					$("#usertruename").blur(function(e){
-						
 						if($("#usertruename").val()==null || $("#usertruename").val()==""){
-							
 							$("#usertruenamemsg").text("用户姓名不能为空");	
 							$("#usertruenamemsg").css("color","red");
 							usertruenameflag = false;					
-							
+						}
+						else if(($("#usertruename").val().length<2)){
+							$("#usertruenamemsg").text("用户姓名长度至少为2");
+							$("#usertruenamemsg").css("color","red");
+							usertruenameflag = false;
 						}else{
-							
-							$("#usertruenamemsg").text("");	
 							usertruenameflag = true;
+							$("#usertruenamemsg").text("");	
+							
 						}
 																					
 					});	
@@ -85,17 +90,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 					
 					$("#userphone").blur(function(e){
-						
+						RegularExp=/^[0-9]{11}$/
 						if($("#userphone").val()==null || $("#userphone").val()==""){
 							
 							$("#userphonemsg").text("用户电话不能为空");	
 							$("#userphonemsg").css("color","red");
 							userphoneflag = false;					
 							
-						}else{
-							
+						}else if(isNaN($("#userphone").val())){
+							$("#userphonemsg").text("用户电话必须为数字");	
+							$("#userphonemsg").css("color","red");
+							userphoneflag = false;
+						}else if(!RegularExp.test($("#userphone").val())){
+							$("#userphonemsg").text("用户电话格式不正确");	
+							$("#userphonemsg").css("color","red");
+							userphoneflag = false;
+						}
+						else{
+							 userphoneflag = true;
 							$("#userphonemsg").text("");	
-							userphoneflag = true;
+						
 						}
 																					
 					});	
@@ -108,8 +122,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							$("#userpwdmsg").css("color","red");
 							userpwdflag = false;					
 							
-						}else{
-							
+						}else if(($("#userpwd").val()).length<=3){
+							$("#userpwdmsg").text("密码长度至少为3");
+							$("#userpwdmsg").css("color","red");
+							userpwdflag = false;
+						}
+						else{
 							$("#userpwdmsg").text("");	
 							userpwdflag = true;
 						}

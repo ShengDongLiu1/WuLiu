@@ -19,6 +19,8 @@ import com.ht.entity.sysuser;
 import com.ht.service.interfaces.RoleService;
 import com.ht.service.interfaces.SysfunctionService;
 import com.ht.service.interfaces.UserService;
+import com.ht.ssm.util.Createstring;
+import com.ht.ssm.util.CurrentTime;
 import com.ht.vo.Reg;
 
 /**
@@ -201,7 +203,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(sysuser sysuser){
-		sysuser.setUjobnumber(CurrentTime.getCurrentTime());
+		sysuser.setUjobnumber("HTWL-"+Createstring.random());
 		int count = userService.saveuser(sysuser);
 		
 		if(count<0){
