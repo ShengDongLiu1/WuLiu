@@ -188,7 +188,6 @@ function lanshou(state){
 </script>
 </head>
 <body>
-	<div>当前位置：</div>
 	<table id="list" class="easyui-datagrid" toolbar="#kj" style="width:100%" data-options="
 		url:'<%=path %>/storage/all',
 		method:'get',
