@@ -14,6 +14,10 @@ public class Quality {
 	private int eeid;
 	private String eresult;
 	private Date edate;
+	
+	private Employee employee;
+	
+	private Goods goods;
 
 	public int getEid() {
 		return eid;
@@ -55,12 +59,20 @@ public class Quality {
 		this.edate = edate;
 	}
 
-	@Override
-	public String toString() {
-		return "Quality [eid=" + eid + ", egid=" + egid + ", eeid=" + eeid + ", eresult=" + eresult + ", edate=" + edate
-				+ "]";
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
 	}
 	
-	
-
 }

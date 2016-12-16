@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ import net.sf.json.JSONObject;
 
 import com.ht.dto.StringUtil;
 import com.ht.dto.PageBean;
+import com.ht.entity.Goods;
 import com.ht.entity.Quality;
 
 /**
@@ -30,6 +32,7 @@ import com.ht.entity.Quality;
 @RequestMapping("/quality")
 public class QualityController {
 	
+	@Autowired
 	private QualityService qualityService;
 	
 	/**
@@ -50,29 +53,41 @@ public class QualityController {
 		return "Quality/stockRemoval";
 	}
 	
-	@RequestMapping(value="/godownEntryQueryAll", method=RequestMethod.POST)
-	public String godownEntryQueryAll(@RequestParam(value="page", required=false) String page,@RequestParam(value="rows",required=false) String rows,Quality quality,HttpServletResponse resp) throws Exception{
+	/**
+	 * 分页
+	 * @param page
+	 * @param rows
+	 * @param response
+	 * @param ename
+	 * @param egid
+	 * @param eresult
+	 * @param edate
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/queryAll",method=RequestMethod.GET)
+	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,String ename,String gordernumber,String eresult,String edate) throws Exception{
 		PageBean pageBean=null;
 		if(page == null && rows == null){
 			pageBean=new PageBean(1,10);
 		}else{
 			pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
 		}
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("eid", StringUtil.formatLike(""));
-		map.put("egid", StringUtil.formatLike(""));
-		map.put("eeid", StringUtil.formatLike(""));
-		map.put("eresult", StringUtil.formatLike(""));
-		map.put("edate", StringUtil.formatLike(""));
-		map.put("start", pageBean.getPage());
+		Map<String, Object> map= new HashMap<>();
+		map.put("ename", StringUtil.formatLike(ename));
+		map.put("gordernumber", StringUtil.formatLike(gordernumber));
+		map.put("eresult", StringUtil.formatLike(eresult));
+		map.put("edate", StringUtil.formatLike(edate));
+		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
-		List<Quality> qualityList = qualityService.qualitySelectAll(map);
-		Long total = qualityService.getTotal(map);
+		List<Quality> list=qualityService.qualitySelectAll(map);
+		Long total=qualityService.getTotal(map);	//查询总条数
+		System.out.println("************="+total);
 		JSONObject result = new JSONObject();
-		JSONArray jsonArray = JSONArray.fromObject(qualityList);
+		JSONArray jsonArray = JSONArray.fromObject(list);
 		result.put("rows", jsonArray);
 		result.put("total", total);
-		ResponseUtil.write(resp, result);
+		ResponseUtil.write(response, result);
 		System.out.println("list:"+jsonArray);
 		return null;
 	}

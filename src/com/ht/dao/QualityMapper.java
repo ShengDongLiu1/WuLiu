@@ -11,15 +11,21 @@ import com.ht.entity.Quality;
  */
 public interface QualityMapper {
 
+	//新增质检记录
 	int qualityAdd(Quality quality);
 	
+	//根据id查询质检记录
 	Quality qualitySelect(int id);
 	
+	//查询所有质检记录
 	List<Quality> qualitySelectAll(Map<String, Object> map);
 	
+	//根据id删除质检记录
 	int qualityDelete(int id);
 	
+	//根据id修改质检记录
 	int qualityUpdate(Quality quality);
 	
+	//总质检记录条数
 	Long getTotal(Map<String, Object> map);
 }

@@ -13,8 +13,17 @@
 		<script src="<%=path %>/js/jquery-easyui/jquery.easyui.min.js"></script>
 		<script src="<%=path %>/js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
 		<script src="<%=path %>/js/hh/punish-Interaction.js"></script>
-		<script type="text/javascript">
+		<script>
 		$(function(){
+			//setPagination("list");
+		/**	$(document).bind('contextmenu',function(e){	//给网页绑定右键菜单
+				e.preventDefault();		//阻止浏览器的默认右键菜单
+				$("#mm").menu('show',{
+					left:e.pageX,	//鼠标右键的x坐标
+					top:e.pageY		//鼠标右键的y坐标
+				});
+			});
+		*/
 			function setPagination(tableid){
 				var op=$("#"+tableid).datagrid("getPager");	//分页组件
 				$(op).pagination({
@@ -32,10 +41,6 @@
 				setPagination("list");
 			});
 			
-			$("#news").click(function(){
-				$.messager.alert("提示","新建菜单","info");
-			});
-			
 			$("#list").datagrid({
 				onRowContextMenu:function(e,rowIndex,rowData){
 					e.preventDefault();
@@ -46,35 +51,92 @@
 				}
 			});
 			
+			//双击
+			$("#list").datagrid({   
+				//rowIndex 是序号 row是json数据
+			 	onDblClickRow:function(rowIndex,row){
+			 		$.post("<%=path%>/goods/goodByid",{'gid':row.gid},function(index){
+			 			fuzhi(index);
+					},"json");
+			    }
+			})
+			
 		});
+		
+		/* 将Thu Mar 19 2015 12:00:00 GMT+0800 (中国标准时间)转换为2015-3-19 12:00:00 */
+		var formatDateTime = function (date) {  
+		    var y = date.getFullYear();  
+		    var m = date.getMonth() + 1;  
+		    m = m < 10 ? ('0' + m) : m;  
+		    var d = date.getDate();  
+		    d = d < 10 ? ('0' + d) : d;  
+		    var h = date.getHours();  
+		    var minute = date.getMinutes();  
+		    minute = minute < 10 ? ('0' + minute) : minute;  
+		    return y + '-' + m + '-' + d+' '+h+':'+minute;  
+		};
+
+		/* 将{"date":14,"day":3,"hours":19,"minutes"……}转换为Thu Mar 19 2015 12:00:00 GMT+0800 (中国标准时间) */
+		function toDate(obj){
+			var date = new Date();
+			 date.setTime(obj.time);
+			 date.setHours(obj.hours);
+			 date.setMinutes(obj.minutes);
+			 date.setSeconds(obj.seconds);
+			return formatDateTime(date);
+		}
+		
+		/* 表格按钮 */
+		function toSub(value,rec){
+			var btn="<a href='javascript:openGoodWin("+rec.gid+")' onclick=''>详情</a>";
+			btn+="&nbsp;&nbsp;<a href='javascript:void(0)' onclick=''>批准</a>";
+			return btn;
+		}
+		
+		/* 员工姓名 */
+		function employeeName(value){
+			return value.ename;
+		}
+		
+		/* 订单号 */
+		function goodsNumber(value){
+			return value.gordernumber;
+		}
 		</script>
 	</head>
 	<body>
-		<table id="punish_list" class="easyui-datagrid" width="100%" toolbar="#kj" data-options="
-			url:'<%=path %>/quality',
-			method:'post',
-			rownumbers:true,	
-			singleSelect:true,
-			autoRowHeight:true,
-			pagination:true,
-			border:false,
-			pageSize:10
-		">
-			<thead data-options="frozen:true">
-				<tr>
-					<th field="eid" checkbox="true"></th>
-					<th field="egid" width="20%">货物名称</th>
-					<th field="eeid" width="20%">员工姓名</th>
-					<th field="eresult" width="35%">检验结果</th>
-					<th field="edate" width="25%">检验时间</th>
-				</tr>
-			</thead>
-		</table>
-		<div id="kj">
-			<a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="add();">添加</a>
-			<!-- 链接按钮控件 -->
-			<a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" onclick="edit();">修改</a>
-			<a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="removeRow();">移除</a>
-		</div>
+		<table id="list" class="easyui-datagrid" toolbar="#kj" style="width:100%" data-options="
+		url:'<%=path %>/quality/queryAll',
+		method:'get',
+		rownumbers:true,	
+		singleSelect:false,
+		autoRowHeight:true,
+		pagination:true,
+		border:false,
+		pageSize:10,
+		fit:true
+	">
+		<thead data-options="frozen:true">
+			<tr>
+				<th field="eid" checkbox="true"></th>
+				<th field="goods" width="15%" align="center" formatter="goodsNumber">货物订单号</th>
+				<th field="employee" width="15%" align="center" formatter="employeeName">员工姓名</th>
+				<th field="eresult" width="35%" align="center">检验结果</th>
+				<th field="edate" width="15%" align="center" formatter="toDate">检验时间</th>
+				<th field="null" width="17%" align="center" formatter="toSub">操作</th>
+			</tr>
+		</thead>
+	</table>
+	<!-- 菜单 -->
+	<div id="kj" style="padding: 2px;">
+		订单号：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />
+		员工：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
+		<br />
+		<a href="javascript:openUserAddDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >添加</a>
+		<a href="javascript:openUserModifyDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" >编辑</a>
+		<a href="javascript:deleteTest()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
+	</div>
+	
 	</body>
 </html>
