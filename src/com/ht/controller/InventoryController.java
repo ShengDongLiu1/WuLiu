@@ -34,21 +34,13 @@ public class InventoryController {
 	}
 	
 	@RequestMapping(value="/allInve",method=RequestMethod.GET)
-	public String select(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response) throws Exception{
-		PageBean pageBean=null;
-		if(page == null && rows == null){
-			pageBean=new PageBean(1,10);
-		}else{
-			pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
-		}
+	public String select(@RequestParam(value="gname",required=false)String gname,@RequestParam(value="loname",required=false)String loname,@RequestParam(value="lolevel",required=false)String lolevel,@RequestParam(value="lostate",required=false)String lostate,@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response) throws Exception{
+		PageBean pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
 		Map<String, Object> map= new HashMap<>();
-		map.put("logid", StringUtil.formatLike(""));
-		map.put("loname", StringUtil.formatLike(""));
-		map.put("losize", StringUtil.formatLike(""));
-		map.put("lovolume", StringUtil.formatLike(""));
-		map.put("loweight", StringUtil.formatLike(""));
-		map.put("lolevel", StringUtil.formatLike(""));
-		map.put("lostate", StringUtil.formatLike(""));
+		map.put("gname", StringUtil.formatLike(gname));
+		map.put("loname", StringUtil.formatLike(loname));
+		map.put("lolevel", StringUtil.formatLike(lolevel));
+		map.put("lostate", StringUtil.formatLike(lostate));
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
 		List<Inventory> list=inventoryService.select(map);//查询所有数据

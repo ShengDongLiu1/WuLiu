@@ -13,54 +13,118 @@
 <script type="text/javascript" src="<%=path %>/js/jquery-easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=path %>/js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="<%=path %>/js/site_easyui.js"></script>
-<script>
-$(function(){
-	//setPagination("list");
-/**	$(document).bind('contextmenu',function(e){	//给网页绑定右键菜单
-		e.preventDefault();		//阻止浏览器的默认右键菜单
-		$("#mm").menu('show',{
-			left:e.pageX,	//鼠标右键的x坐标
-			top:e.pageY		//鼠标右键的y坐标
-		});
-	});
-*/
+
+<style>
+	body{margin:0px;padding:0px;}
+</style>
+</head>
+<body>
+
+	<table id="dg" class="easyui-datagrid" toolbar="#tb" style="width:100%" data-options="
+		url:'<%=path %>/inventory/allInve',
+		method:'get', 
+		rownumbers:true,
+		autoRowHeight: true,
+		pagination:true,
+		border:false,
+		pageSize:10,
+		fit:true
+	">
+		<thead data-options="frozen:true">
+			<tr>
+				<th field="loid" checkbox="true">编号</th>
+				<th field="goods" width="10%" formatter="goodsName">货物名称</th>
+				<th field="loname" width="10%">库位名称</th>
+				<th field="losize" width="15%">库位尺寸(cm)</th>
+				<th field="lovolume" width="15%">库位体积(cm³)</th>
+				<th field="loweight" width="15%">承受重量(kg)</th>
+				<th field="lolevel" width="15%">库位等级(数字越大等级越高)</th>
+				<th field="lostate" width="15%">库位状态(0/开启,1关闭)</th>
+			</tr>
+		</thead>
+	</table>
+	<!-- 菜单 -->
+	<div id="tb" style="padding: 2px;">
+		<a href="javascript:openInventoryAddDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >添加</a>
+		<a href="javascript:openInventoryModifyDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" >编辑</a>
+		<a href="javascript:deleteInventory()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
+		
+		<!-- 筛选 -->
+		货物名称：<input id="gname" class="easyui-validatebox easyui-textbox" style="width:100px;" data-options="iconCls:'icon-search'" />
+		库位名称：<input id="loname" class="easyui-validatebox easyui-textbox" style="width:100px;" data-options="iconCls:'icon-search'" />
+		库位等级：<input id="lolevel" class="easyui-validatebox easyui-textbox" style="width:100px;" data-options="iconCls:'icon-search'" />
+		库位状态：<input id="lostate" class="easyui-validatebox easyui-textbox" style="width:100px;" data-options="iconCls:'icon-search'" />
+		<a href="javascript:selectfiltrate()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">筛选</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</div>
+	
+	<div id="dlg-buttons">
+	    <a href="javascript:saveInventory()" class="easyui-linkbutton"
+	        iconCls="icon-ok">保存</a> <a href="javascript:closeInventoryDialog()"
+	        class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
+	
+	<div id="dlg" class="easyui-dialog"
+            style="width: 730px;height:280px;padding:10px 10px;" closed="true"
+            buttons="#dlg-buttons">
+            <form method="post" id="fm">
+                <table cellspacing="8px;">
+                    <tr>
+                        <td>库位名称：</td>
+                        <td><input type="text" id="loname" name="loname"
+                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            style="color: red">*</span>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>库位尺寸 ：</td>
+                        <td><input type="text" id="losize" name="losize"
+                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            style="color: red">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>库位体积 ：</td>
+                        <td><input type="text" id="lovolume" name="lovolume"
+                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            style="color: red">*</span>
+                        </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>承受重量：</td>
+                        <td><input type="text" id="loweight" name="loweight"
+                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            style="color: red">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>库位等级：</td>
+                        <td><input type="text" id="lolevel" name="lolevel"
+                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            style="color: red">*</span>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        
+<script type="text/javascript">
 var url;
 $(function() {
-	setPagination("list");
+	setPagination("dg");
 });
-	function setPagination(tableid){
-		var op=$("#"+tableid).datagrid("getPager");	//分页组件
-		$(op).pagination({
-			pageList:[10,15,20,25,30],
-			beforePageText:"第",
-			afterPageText:"页	共{pages}页",
-			displayMsg:"当前显示{from}-{to}条记录 	共{total}条记录",
-			onBeforRefresh:function(){
-				$(this).pagination("loading");
-				$(this).pagination("loaded");
-			}
-		});
-	}
-	$(function(){
-		setPagination("list");
-	});
-	
-	$("#news").click(function(){
-		$.messager.alert("提示","新建菜单","info");
-	});
-	
-	$("#list").datagrid({
-		onRowContextMenu:function(e,rowIndex,rowData){
-			e.preventDefault();
-			$("#mm").menu('show',{
-				left:e.pageX,
-				top:e.pageY	
-			});
+// 显示数据
+function setPagination(tableId) {
+	var p = $("#"+tableId).datagrid("getPager"); // 获取由tableId指定的datagrid控件的分页组件
+	$(p).pagination({
+		pageList:[10,15,20,25,30],
+		beforePageText:"第",
+		afterPageText:"页     共{pages}页",
+		displayMsg:"当前显示{from} - {to} 条记录    共{total}条记录",
+		onBeforeRefresh:function() {
+			$(this).pagination("loading");
+			$(this).pagination("loaded");
 		}
 	});
+}
 	
-});
-
 function saveInventory() {
     $("#fm").form("submit", {
         url : url,
@@ -69,9 +133,9 @@ function saveInventory() {
             if (result.success) {
                 $.messager.alert("系统提示", "保存成功！");
                 $("#dlg").dialog("close");
-                $("#dg").datagrid("load");
-                resetValue();
                 
+                resetValue();
+                $("#dg").datagrid("load");
             } else {
                 $.messager.alert("系统提示", "保存失败！");
                 return;
@@ -126,7 +190,16 @@ function openInventoryAddDialog() {
     url = "${pageContext.request.contextPath}/inventory/save.do";
 }
 
-function closeInventoryDialog() {
+function selectfiltrate(){
+	var names=$('#gname').textbox('getValue');
+	var loname=$('#loname').textbox('getValue');
+	var lolevel=$('#lolevel').textbox('getValue');
+	var lostate=$('#lostate').textbox('getValue');
+	 $("#dg").datagrid("load",{gname:names,loname:loname,lolevel:lolevel,lostate:lostate});
+	
+}
+
+function closeInventoryDialog() {	
     $("#dlg").dialog("close");
     resetValue();
 }
@@ -136,88 +209,6 @@ function goodsName(value){
 }
 
 </script>
-<style>
-	body{margin:0px;padding:0px;}
-</style>
-</head>
-<body>
-	<div>当前位置：</div>
-	<table id="dg" class="easyui-datagrid" toolbar="#tb" style="width:100%" data-options="
-		url:'<%=path %>/inventory/allInve',
-		method:'get',
-		rownumbers:true,	
-		singleSelect:false,
-		autoRowHeight:true,
-		pagination:true,
-		border:false,
-		pageSize:10
-	">
-		<thead data-options="frozen:true">
-			<tr>
-				<th field="loid" checkbox="true">编号</th>
-				<th field="goods" width="10%" formatter="goodsName">货物名称</th>
-				<th field="loname" width="10%">库位名称</th>
-				<th field="losize" width="15%">库位尺寸</th>
-				<th field="lovolume" width="15%">库位体积</th>
-				<th field="loweight" width="15%">承受重量</th>
-				<th field="lolevel" width="15%">库位等级</th>
-				<th field="lostate" width="15%">库位状态</th>
-			</tr>
-		</thead>
-	</table>
-	<!-- 菜单 -->
-	<div id="tb" style="padding: 2px;">
-		<a href="javascript:openInventoryAddDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >添加</a>
-		<a href="javascript:openInventoryModifyDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" >编辑</a>
-		<a href="javascript:deleteInventory()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
-	</div>
-	
-	<div id="dlg-buttons">
-	    <a href="javascript:saveInventory()" class="easyui-linkbutton"
-	        iconCls="icon-ok">保存</a> <a href="javascript:closeInventoryDialog()"
-	        class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
-	</div>
-	
-	<div id="dlg" class="easyui-dialog"
-            style="width: 730px;height:280px;padding:10px 10px;" closed="true"
-            buttons="#dlg-buttons">
-            <form method="post" id="fm">
-                <table cellspacing="8px;">
-                    <tr>
-                        <td>库位名称：</td>
-                        <td><input type="text" id="loname" name="loname"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
-                            style="color: red">*</span>
-                        </td>
-                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td>库位尺寸 ：</td>
-                        <td><input type="text" id="losize" name="losize"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
-                            style="color: red">*</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>库位体积 ：</td>
-                        <td><input type="text" id="lovolume" name="lovolume"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
-                            style="color: red">*</span>
-                        </td>
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td>承受重量：</td>
-                        <td><input type="text" id="loweight" name="loweight"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
-                            style="color: red">*</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>库位等级：</td>
-                        <td><input type="text" id="lolevel" name="lolevel"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
-                            style="color: red">*</span>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </div>
+        
 </body>
 </html>

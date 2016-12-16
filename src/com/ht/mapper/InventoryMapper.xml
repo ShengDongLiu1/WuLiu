@@ -161,9 +161,7 @@
 		<if test="lostate!=null and lostate!='' ">
 			and lo.lostate like #{lostate}
 		</if>
-		
     </where>
-    
   	 order by lo.loid desc
   	 <if test="start!=null and size!=null">
 		limit #{start},#{size}
@@ -188,8 +186,5 @@
 			and lo.lostate like #{lostate}
 		</if>
 		</where>
-		<if test="start!=null and size!=null">
-			limit #{start},#{size}
-		</if>
  </select>
 </mapper>
