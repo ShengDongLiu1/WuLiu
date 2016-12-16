@@ -85,6 +85,9 @@
       <if test="ssbid != null">
         ssbid,
       </if>
+      <if test="seid != null">
+        seid,
+      </if>
       <if test="storagecount != null">
         storagecount,
       </if>
@@ -116,6 +119,9 @@
       </if>
       <if test="ssbid != null">
         #{ssbid,jdbcType=INTEGER},
+      </if>
+      <if test="seid != null">
+        #{seid,jdbcType=INTEGER},
       </if>
       <if test="storagecount != null">
         #{storagecount,jdbcType=INTEGER},

@@ -70,10 +70,15 @@ public class GoodsController {
 		return null;
 	}
 	
+	/**
+	 * 根据货物id查询货物
+	 * @param gid
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value="/goodByid",method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> selectByd(Integer gid,HttpServletResponse response){
-		System.out.println("gid:"+gid);
+	public Map<String, Object> selectByid(Integer gid,HttpServletResponse response){
 		Map<String, Object> map=new HashMap<>();
 		Goods goods=goodsService.selectByPrimaryKey(gid);
 		map.put("goods", goods);

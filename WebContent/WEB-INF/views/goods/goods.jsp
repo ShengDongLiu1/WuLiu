@@ -32,6 +32,10 @@ a:visited{color:#54287C}
 a:active{color:yellow}
 a:hover {color:#54287C} 
 .easyui-textbox{width:10%;}
+
+.dai{color:green;}
+
+.yi{color:orange;}
 </style>
 <script>
 $(function(){
@@ -89,6 +93,26 @@ function customerName(value){
 	return value.cname;
 }
 
+function goState(value,obj){
+	var state='';
+	if(obj.gstate=='1'){
+		state="<span class='dai'>待揽收</span>"
+	}else if(obj.gstate=='2'){
+		state="<span class='yi'>已揽收</span>"
+	}
+	return state;
+}
+
+function lanshou(state){
+	var sta="";
+	if(state=='1'){
+		sta="待揽收"
+	}else if(state=='2'){
+		sta="已揽收"
+	}
+	return sta;
+}
+
 /* 将Thu Mar 19 2015 12:00:00 GMT+0800 (中国标准时间)转换为2015-3-19 12:00:00 */
 var formatDateTime = function (date) {  
     var y = date.getFullYear();  
@@ -113,10 +137,44 @@ function toDate(obj){
 }
 
 /* 表格按钮 */
-function toSub(value,rec){
-	var btn="<a href='javascript:openGoodWin("+rec.gid+")' onclick=''>详情</a>";
-	btn+="&nbsp;&nbsp;<a href='javascript:void(0)' onclick=''>揽收</a>";
+function toSub(value,obj){
+	var btn="<a href='javascript:openGoodWin("+obj.gid+")'>详情</a>";
+	if(obj.gstate=='1'){
+		btn+="&nbsp;&nbsp;<a href='javascript:openLSWin("+obj.gid+","+obj.gcid+","+obj.gcount+")'>揽收</a>";
+	}
 	return btn;
+}
+
+/* 打开揽收窗口 */
+ function openLSWin(gid,gcid,gcount){
+	$("#lgid").val(gid);
+	$("#lgcid").val(gcid);
+	$("#lgcount").val(gcount);
+	$("#goodLSWin").dialog("open").dialog("setTitle", "揽收货物");
+	 
+}
+
+/* 提交收货单数据 */
+function subRece(){
+	var gid=$("#lgid").val();
+	var gcid=$("#lgcid").val();
+	var gcount=$("#lgcount").val();
+	var lrdamagedcount = $('#lrdamagedcount').textbox('getValue');
+	var lrshelvecount = $('#lrshelvecount').textbox('getValue');
+	if(gcount<(parseInt(lrdamagedcount)+parseInt(lrshelvecount))){
+		$.messager.alert('系统提示','破损和搁置数量超过了货物数量！','info');
+	}else{
+		if(lrdamagedcount==''){
+			lrdamagedcount=0
+		}if(lrshelvecount==''){
+			lrshelvecount=0
+		}
+		$.post("<%=path%>/receipt/addRece",{'rgid':gid,'rcid':gcid,'rreceivecount':gcount,'rdamagedcount':lrdamagedcount,'rshelvecount':lrshelvecount},function(index){
+			$.messager.alert("系统提示", index.result,'info');
+			closeGoodWin();
+			$("#list").datagrid("reload");	//刷新表格
+		},"json");
+	}
 }
 
 /* 打开详情窗口 */
@@ -141,7 +199,7 @@ function fuzhi(index){
 	$("#grephone").html(index.goods.grephone);
 	$("#gorigin").html(index.goods.gorigin);
 	$("#gendpoint").html(index.goods.gendpoint);
-	$("#gstate").html(index.goods.gstate);
+	$("#gstate").html(lanshou(index.goods.gstate));
 	$("#gorderstime").html(formatDateTime(new Date(index.goods.gorderstime)));
 	$("#gdescribe").html(index.goods.gdescribe);
 	$("#goodbyWin").dialog("open").dialog("setTitle", "客户订单详情");
@@ -151,6 +209,7 @@ function fuzhi(index){
 /* 关闭窗口 */
 function closeGoodWin(){
 	$("#goodbyWin").dialog("close");
+	$("#goodLSWin").dialog("close");
 }
 
 /* 搜索 */
@@ -190,7 +249,7 @@ function seachs(){
 				<th field="gcount" width="10%" align="center">货物数量</th>
 				<th field="gunit" width="8%" align="center">单位</th>
 				<th field="ggrade" width="8%" align="center">货物等级</th>
-				<th field="gstate" width="12%" align="center">货物状态</th>
+				<th field="gstate" width="12%" align="center" formatter="goState">货物状态</th>
 				<th field="gorderstime" width="12%" align="center" formatter="toDate">入库时间</th>
 				<th field="null" width="13%" align="center" formatter="toSub">操作</th>
 			</tr>
@@ -208,6 +267,21 @@ function seachs(){
 		状态：<input id="sgstate" class="easyui-validatebox easyui-textbox" name="gstate" data-options="required:false" />&nbsp;
 		订单号：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
+	</div>
+	
+	<!-- 自定义窗口按钮 -->
+	<div id="ls-buttons">
+		<a href="javascript:subRece()" class="easyui-linkbutton" iconCls="icon-ok">确认</a>
+	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
+	
+	<div id="goodLSWin" class="easyui-dialog"  buttons="#ls-buttons" data-options="closable:true, closed:true"  style="width:25%;height:180px;padding:5px;text-align:center;">
+			<input type="hidden" id="lgid">
+			<input type="hidden" id="lgcid">
+			<input type="hidden" id="lgcount">
+		<br />
+		破损数量：<input id="lrdamagedcount" class="easyui-validatebox easyui-textbox" name="lrdamagedcount" data-options="required:false" /><br /><br />
+		搁置数量：<input id="lrshelvecount" class="easyui-validatebox easyui-textbox" name="lrshelvecount" data-options="required:false" />
 	</div>
 	
 	<!-- 自定义窗口按钮 -->

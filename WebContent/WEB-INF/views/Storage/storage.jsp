@@ -148,7 +148,7 @@ function fuzhi(index){
 	$("#grephone").html(index.goods.grephone);
 	$("#gorigin").html(index.goods.gorigin);
 	$("#gendpoint").html(index.goods.gendpoint);
-	$("#gstate").html(index.goods.gstate);
+	$("#gstate").html(lanshou(index.goods.gstate));
 	$("#gorderstime").html(formatDateTime(new Date(index.goods.gorderstime)));
 	$("#gdescribe").html(index.goods.gdescribe);
 	$("#goodbyWin").dialog("open").dialog("setTitle", "客户订单详情");
@@ -173,6 +173,16 @@ function seachs(){
 		sbarcadeid:sbarcadeid,
 		username:username
 	}); 
+}
+
+function lanshou(state){
+	var sta="";
+	if(state=='1'){
+		sta="待揽收"
+	}else if(state=='2'){
+		sta="已揽收"
+	}
+	return sta;
 }
 
 </script>

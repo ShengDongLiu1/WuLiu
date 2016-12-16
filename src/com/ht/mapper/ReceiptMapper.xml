@@ -69,6 +69,9 @@
       <if test="rgid != null">
         rgid,
       </if>
+      <if test="reid != null">
+        reid,
+      </if>
       <if test="rreceivecount != null">
         rreceivecount,
       </if>
@@ -91,6 +94,9 @@
       </if>
       <if test="rgid != null">
         #{rgid,jdbcType=INTEGER},
+      </if>
+      <if test="reid != null">
+        #{reid,jdbcType=INTEGER},
       </if>
       <if test="rreceivecount != null">
         #{rreceivecount,jdbcType=INTEGER},
