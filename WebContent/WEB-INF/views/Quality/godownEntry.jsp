@@ -55,7 +55,7 @@
 			$("#list").datagrid({   
 				//rowIndex 是序号 row是json数据
 			 	onDblClickRow:function(rowIndex,row){
-			 		$.post("<%=path%>/goods/goodByid",{'gid':row.gid},function(index){
+			 		$.post("<%=path%>/quality/qualityByid",{'eid':row.eid},function(index){
 			 			fuzhi(index);
 					},"json");
 			    }
@@ -88,10 +88,25 @@
 		
 		/* 表格按钮 */
 		function toSub(value,rec){
-			var btn="<a href='javascript:openGoodWin("+rec.gid+")' onclick=''>详情</a>";
-			btn+="&nbsp;&nbsp;<a href='javascript:void(0)' onclick=''>批准</a>";
+			var btn="<a href='javascript:openQualityWin("+rec.eid+")'>详情</a>";
+			btn+="&nbsp;&nbsp;<a href='#' onclick=''>批准</a>";
 			return btn;
 		}
+		
+		/* 打开详情窗口 */
+		function openQualityWin(eid) {
+			alert(eid);
+			$.post("<%=path%>/quality/qualityByid",{'eid':eid},function(index){
+				fuzhi(index);
+			},"json");
+		    
+		}
+
+		/* 给弹出的窗口赋值 */
+		function fuzhi(index){
+			$("#qualityByWin").dialog("open").dialog("setTitle", "入库质检详情");
+		}
+
 		
 		/* 员工姓名 */
 		function employeeName(value){
@@ -137,6 +152,8 @@
 		<a href="javascript:openUserModifyDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" >编辑</a>
 		<a href="javascript:deleteTest()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
 	</div>
-	
+	<div id="qualityByWin" class="easyui-dialog"  buttons="#dlg-buttons" data-options="closable:true, closed:true"  style="width:50%;height:580px;padding:5px;text-align:center;">
+	</div>
+		
 	</body>
 </html>

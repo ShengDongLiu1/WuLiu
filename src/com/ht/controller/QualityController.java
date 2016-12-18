@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ht.service.interfaces.QualityService;
 import com.ht.ssm.util.ResponseUtil;
@@ -90,5 +91,14 @@ public class QualityController {
 		ResponseUtil.write(response, result);
 		System.out.println("list:"+jsonArray);
 		return null;
+	}
+	
+	@RequestMapping(value="/qualityByid",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> selectByid(Integer eid,HttpServletResponse response){
+		Map<String, Object> map=new HashMap<>();
+		Quality quality=qualityService.qualitySelect(eid);
+		map.put("quality", quality);
+		return map;
 	}
 }

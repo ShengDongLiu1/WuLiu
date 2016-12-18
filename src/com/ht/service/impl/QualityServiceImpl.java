@@ -29,9 +29,9 @@ public class QualityServiceImpl implements QualityService {
 	}
 
 	@Override
-	public Quality qualitySelect(int id) {
+	public Quality qualitySelect(int eid) {
 		// TODO Auto-generated method stub
-		return qualityMapper.qualitySelect(id);
+		return qualityMapper.qualitySelect(eid);
 	}
 
 	@Override
@@ -41,9 +41,9 @@ public class QualityServiceImpl implements QualityService {
 	}
 
 	@Override
-	public int qualityDelete(int id) {
+	public int qualityDelete(int eid) {
 		// TODO Auto-generated method stub
-		return qualityMapper.qualityDelete(id);
+		return qualityMapper.qualityDelete(eid);
 	}
 
 	@Override

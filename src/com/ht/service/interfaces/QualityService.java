@@ -9,11 +9,11 @@ public interface QualityService {
 
 	int qualityAdd(Quality quality);
 	
-	Quality qualitySelect(int id);
+	Quality qualitySelect(int eid);
 	
 	List<Quality> qualitySelectAll(Map<String, Object> map);
 	
-	int qualityDelete(int id);
+	int qualityDelete(int eid);
 	
 	int qualityUpdate(Quality quality);
 	
