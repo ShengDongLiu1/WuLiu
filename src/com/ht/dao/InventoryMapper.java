@@ -26,4 +26,10 @@ public interface InventoryMapper {
 	int inventoryupdate(Inventory inventory);
 
 	void inventorydelete(int parseInt);
+
+	List<Inventory> selectInveGoods(Integer loid);
+
+	void updataInveState2(Integer loid);
+
+	void updataInveState1(Integer loid);
 }

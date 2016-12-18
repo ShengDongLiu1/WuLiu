@@ -25,6 +25,8 @@
     <association property="goods" javaType="com.ht.entity.Goods">
 	    <result property="gid" column="gid"/>
 		<result property="gname" column="gname"/>
+		<result property="gweight" column="gweight"/>
+		<result property="gordernumber" column="gordernumber"/>
 	</association>
   </resultMap>
   
@@ -187,4 +189,28 @@
 		</if>
 		</where>
  </select>
+ 
+    <!-- 查询库位货物 -->
+  <select id="selectInveGoods" parameterType="java.util.Map" resultMap="SelectBaseResultMap">
+    select lo.loid,lo.logid, lo.loname,go.gname,go.gordernumber ,go.gweight
+    from inventory lo,goods go
+   where
+    	lo.logid=go.gid
+    	and
+    		loid = #{loid,jdbcType=INTEGER}
+  </select>
+   <!-- 更改货物状1 -->
+   <update id="updataInveState1" parameterType="com.ht.entity.Inventory">
+    update inventory
+    set
+      lostate = 1
+    where loid = #{loid,jdbcType=INTEGER}
+  </update>
+  <!-- 更改货物状2 -->
+   <update id="updataInveState2" parameterType="com.ht.entity.Inventory">
+    update inventory
+    set
+      lostate = 0
+    where loid = #{loid,jdbcType=INTEGER}
+  </update>
 </mapper>

@@ -41,5 +41,28 @@ public class InventoryServiceImpl implements InventoryService{
 	public void inventorydelete(int parseInt) {
 		inventoryMapper.inventorydelete(parseInt);
 	}
+
+	@Override
+	public List<Inventory> selectInveGoods(Integer loid) {
+		return inventoryMapper.selectInveGoods(loid);
+	}
+
+	@Override
+	public Inventory selectByPrimaryKey(Integer loid) {
+		return inventoryMapper.selectByPrimaryKey(loid);
+	}
+
+	@Override
+	public void updataInveState1(Integer loid) {
+		inventoryMapper.updataInveState1(loid);
+		
+	}
+
+	@Override
+	public void updataInveState2(Integer loid) {
+		inventoryMapper.updataInveState2(loid);
+		
+	}
+
 	
 }

@@ -16,6 +16,22 @@
 
 <style>
 	body{margin:0px;padding:0px;}
+.tdwidth{
+	width:18%;text-align:right;font-size:15px;
+}
+.gxiangq{
+	text-align:left;font-size:15px;
+	border-bottom:1px dashed #FFE48D; 
+}
+.gxiangq span{
+	font-size:16px;
+	color:blue;
+}
+a:link {color:blue}
+a:visited{color:#54287C}
+a:active{color:yellow}
+a:hover {color:#54287C} 
+.easyui-textbox{width:10%;}
 </style>
 </head>
 <body>
@@ -35,11 +51,12 @@
 				<th field="loid" checkbox="true">编号</th>
 				<th field="goods" width="10%" formatter="goodsName">货物名称</th>
 				<th field="loname" width="10%">库位名称</th>
-				<th field="losize" width="15%">库位尺寸(cm)</th>
-				<th field="lovolume" width="15%">库位体积(cm³)</th>
-				<th field="loweight" width="15%">承受重量(kg)</th>
+				<th field="losize" width="10%">库位尺寸(m)</th>
+				<th field="lovolume" width="10%">库位体积(m³)</th>
+				<th field="loweight" width="10%">承受重量(t)</th>
 				<th field="lolevel" width="15%">库位等级(数字越大等级越高)</th>
 				<th field="lostate" width="15%">库位状态(0/开启,1关闭)</th>
+				<th field="null" width="18%" align="center" formatter="toSub">操作</th>
 			</tr>
 		</thead>
 	</table>
@@ -62,7 +79,9 @@
 	        iconCls="icon-ok">保存</a> <a href="javascript:closeInventoryDialog()"
 	        class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
-	
+	<div id="dlg-buttons2">
+	    <a href="javascript:closeInventoryDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
 	<div id="dlg" class="easyui-dialog"
             style="width: 730px;height:280px;padding:10px 10px;" closed="true"
             buttons="#dlg-buttons">
@@ -104,7 +123,23 @@
                 </table>
             </form>
         </div>
-        
+        <!-- 查看库位货物窗口-->
+        <div id="InvebyWin" class="easyui-dialog"  buttons="#dlg-buttons2" data-options="closable:true, closed:true"  style="width:70%;height:420px;padding:5px;text-align:center;">
+		<table style="width:100%;height:100%;">
+			<tr>
+				<td class="tdwidth">库位名称:</td>
+				<td class="gxiangq"><input type="text" id="loname1" style="border: 0px;" readonly="readonly" /></td>
+			</tr>
+			<tr>
+				<td class="tdwidth">货物名称:</td>
+				<td class="gxiangq"><input id="gname1" type="text" style="border: 0px;" readonly="readonly" ></input></td>
+				<td class="tdwidth">货物订单号:</td>
+				<td class="gxiangq"><input id="gordernumber1" type="text" style="border: 0px;" readonly="readonly"></input></td>
+				<td class="tdwidth">货物重量:</td>
+				<td class="gxiangq"><input id="gweight1" type="text" style="border: 0px;" readonly="readonly"></input ></td>
+			</tr>
+		</table>
+		</div>
 <script type="text/javascript">
 var url;
 $(function() {
@@ -199,8 +234,41 @@ function selectfiltrate(){
 	
 }
 
+/* 表格按钮 */
+function toSub(value,rec){
+	var btn="<a href='javascript:openInveWin("+rec.loid+")' onclick=''>库位存放情况</a>";
+	btn+="&nbsp;&nbsp;<a href='javascript:NOInveWin("+rec.loid+")' onclick=''>开启/关闭</a>";
+	return btn;
+}
+
+/* 打开详情窗口 */
+function openInveWin(loid) {
+	$.post("<%=path%>/inventory/invenOpen",{'loid':loid},function(index){
+		fuzhi(index);
+	},"json");
+    
+}
+/* 给库位关闭开启 */
+function NOInveWin(loid){
+	$.post("<%=path%>/inventory/NOInveWin",{'loid':loid},function(index){
+		alert(index);
+		 $("#dg").datagrid("load");
+	},"json");
+}
+/* 给弹出的窗口赋值 */
+function fuzhi(index){
+	
+	for(var i=0;i<index.inventory.length;i++){ 
+		$("#loname1").val(index.inventory[i].loname);
+		$("#gname1").val(a2+index.inventory[i].goods.gname);
+		$("#gordernumber1").val(index.inventory[i].goods.gordernumber);
+		$("#gweight1").val(index.inventory[i].goods.gweight);
+	}
+	$("#InvebyWin").dialog("open").dialog("setTitle", "库位货物详情");
+	
+}
 function closeInventoryDialog() {	
-    $("#dlg").dialog("close");
+    $("#InvebyWin").dialog("close");
     resetValue();
 }
 

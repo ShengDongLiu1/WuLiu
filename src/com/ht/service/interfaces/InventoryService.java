@@ -14,5 +14,13 @@ public interface InventoryService {
 	int inventoryupdate(Inventory inventory);
 
 	void inventorydelete(int parseInt);
+
+	List<Inventory> selectInveGoods(Integer loid);
+
+	Inventory selectByPrimaryKey(Integer loid);
+
+	void updataInveState1(Integer loid);
+
+	void updataInveState2(Integer loid);
 	
 }

@@ -11,10 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ht.dto.PageBean;
 import com.ht.dto.StringUtil;
+import com.ht.entity.Goods;
 import com.ht.entity.Inventory;
 import com.ht.entity.Test;
 import com.ht.service.interfaces.InventoryService;
@@ -83,5 +85,33 @@ public class InventoryController {
         jsonObject.put("success", true);
         ResponseUtil.write(res, jsonObject);
         return null;
+	}
+	//打开详细页面
+	@RequestMapping(value="/invenOpen",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> selectByd(Integer loid,HttpServletResponse response){
+		System.out.println("loid:"+loid);
+		Map<String, Object> map=new HashMap<>();
+		List<Inventory> list=inventoryService.selectInveGoods(loid);
+		map.put("inventory",list);
+		for(Inventory i:list){
+			System.out.println(i.getLogid()+i.getGoods().getGname());
+		}
+		return map;
+	}
+	@RequestMapping(value="/NOInveWin",method=RequestMethod.POST)
+	@ResponseBody
+	public String NOInveWin(Integer loid,HttpServletResponse response){
+		Inventory l=inventoryService.selectByPrimaryKey(loid);
+		System.out.println("状态"+l.getLostate());
+		if(l.getLostate()==0 && l.getLogid()==-1){
+			inventoryService.updataInveState1(loid);
+			return "关闭成功";
+		}else if(l.getLostate()==1){
+			inventoryService.updataInveState2(loid);
+			return "开启成功";
+		}else{
+			return "关闭失败，库位有货物";
+		}
 	}
 }
