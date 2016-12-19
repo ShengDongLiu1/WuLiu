@@ -179,8 +179,8 @@ function subRece(){
 	var gid=$("#lgid").val();
 	var gcid=$("#lgcid").val();
 	var gcount=$("#lgcount").val();
-	var lrdamagedcount = $('#lrdamagedcount').textbox('getValue');
-	var lrshelvecount = $('#lrshelvecount').textbox('getValue');
+	var lrdamagedcount = $('#lrdamagedcount').numberbox('getValue');
+	var lrshelvecount = $('#lrshelvecount').numberbox('getValue');
 	if(gcount<(parseInt(lrdamagedcount)+parseInt(lrshelvecount))){
 		$.messager.alert('系统提示','破损和搁置数量超过了货物数量！','info');
 	}else{
@@ -318,8 +318,8 @@ function seachs(){
 			<input type="hidden" id="lgcid">
 			<input type="hidden" id="lgcount">
 		<br />
-		破损数量：<input id="lrdamagedcount" class="easyui-validatebox easyui-textbox" name="lrdamagedcount" data-options="required:false" /><br /><br />
-		搁置数量：<input id="lrshelvecount" class="easyui-validatebox easyui-textbox" name="lrshelvecount" data-options="required:false" />
+		破损数量：<input id="lrdamagedcount" class="easyui-validatebox easyui-numberbox" name="lrdamagedcount" data-options="required:false" /><br /><br />
+		搁置数量：<input id="lrshelvecount" class="easyui-validatebox easyui-numberbox" name="lrshelvecount" data-options="required:false" />
 	</div>
 	
 	<!-- 自定义窗口按钮 -->

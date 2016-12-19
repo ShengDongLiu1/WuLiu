@@ -31,7 +31,7 @@ a:visited{color:#54287C}
 a:active{color:yellow}
 a:hover {color:#54287C} 
 
-.easyui-textbox{width:10%;}
+.easyui-textbox,.easyui-numberbox{width:10%;}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -119,14 +119,16 @@ function toDate(obj){
 }
 
 function toSub(value,obj){
-	var btn="<a href='javascript:openKuWeiWin("+obj.goods.gid+")'>入库</a>";
+	var btn="<a href='javascript:openKuWeiWin("+obj.goods.gid+","+obj.rreceivecount+")'>入库</a>";
 	return btn;
 }
 
 /* 打开库位列表窗口 */
-function openKuWeiWin(gid){
+function openKuWeiWin(gid,count){
+	$('#rreceivecount').val(count);
+	$('#storagecount').numberbox('setValue',count);
 	$.post("<%=path%>/receipt/byGood",{'gid':gid},function(index){},"json");
-	$("#receKuWin").dialog("open").dialog("setTitle", "库位列表");
+	$("#receKuWin").dialog("open").dialog("setTitle", "库位选择");
 }
 
 /* 打开详情窗口 */
@@ -160,6 +162,7 @@ function fuzhi(index){
 function closeGoodWin(){
 	$("#goodbyWin").dialog("close");
 	$("#receKuWin").dialog("close");
+	$("#rkTypeWin").dialog("close");
 }
 
 /* 搜索 */
@@ -186,6 +189,64 @@ function lanshou(state){
 		sta="已揽收"
 	}
 	return sta;
+}
+
+/* 选择库位 */
+function subRece(){
+	var row=$("#kuwei").datagrid("getSelected");	//获取datagrid中选中的行
+	if(row){
+		$("#receKuWin").dialog("close");
+		$("#rkTypeWin").dialog("open").dialog("setTitle", "入库方式");
+		$('#ssbid').val(row.loid);
+		getCheckVal();
+	}else{
+		$.messager.alert('提示','请选择需要库位','info');	//messager消息控件
+	}
+}
+
+/* 单选按钮选中的值 */
+function getCheckVal(){
+	var stor=document.getElementsByName("storagemode");
+     for(var i=0;i<stor.length;i++)
+     {
+         if(stor[i].checked==true)
+         {
+             if(stor[i].value == '一次性入库'){
+            	 var count=$('#rreceivecount').val();
+            	 $('#storagecount').numberbox('setValue',count);
+            	 $('#storagecount').numberbox('disable');
+             }else{
+            	 $('#storagecount').numberbox('enable');
+             }
+             return stor[i].value;
+         }
+     }
+}
+
+/* 提交入库方式 */
+function subrukuType(){
+	var count=$('#rreceivecount').val();
+	var ssbid=$('#ssbid').val();
+	var stor=getCheckVal();
+	var storagecount=count;
+	if(stor == '一次性入库'){
+		$.post("<%=path%>/storage/add",{'storagecount':storagecount,'storagemode':stor,'ssbid':ssbid},function(index){
+			$.messager.alert('系统提示',index.result,'info');
+			$("#rkTypeWin").dialog("close");
+		},"json");
+    }else{
+    	storagecount = $('#storagecount').numberbox('getValue');
+    	if(parseInt(storagecount)>parseInt(count)){
+    		$.messager.alert('系统提示','入库数量超过货物数量！','info');
+    	}else if(parseInt(storagecount)<= 0){
+    		$.messager.alert('系统提示','请输入正确的入库数量！','info');
+    	}else{
+    		$.post("<%=path%>/storage/add",{'storagecount':storagecount,'storagemode':stor,'ssbid':ssbid},function(index){
+    			$.messager.alert('系统提示',index.result,'info');
+    			$("#rkTypeWin").dialog("close");
+    		},"json");
+    	}
+    }
 }
 
 </script>
@@ -230,18 +291,6 @@ function lanshou(state){
 		订单号：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />&nbsp;
 		收货员：<input id="username" class="easyui-validatebox easyui-textbox" name="username" data-options="required:false" />
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
-	</div>
-	
-	<!-- 自定义窗口按钮 -->
-	<div id="ruku-buttons">
-		<a href="javascript:subRece()" class="easyui-linkbutton" iconCls="icon-ok">确认</a>
-	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
-	</div>
-	
-	<!-- 揽收窗口 -->
-	<div id="receKuWin" class="easyui-dialog" buttons="#ruku-buttons" data-options="closable:true, closed:true"  style="width:25%;height:180px;padding:5px;text-align:center;">
-	库位列表
-	
 	</div>
 	
 	<!-- 自定义窗口按钮 -->
@@ -303,6 +352,53 @@ function lanshou(state){
 				<td class="gxiangq" colspan="3"><span id="gdescribe"></span></td>
 			</tr>
 		</table>
+	</div>
+	
+	<!-- 自定义窗口按钮 -->
+	<div id="ruku-buttons">
+		<a href="javascript:subRece()" class="easyui-linkbutton" iconCls="icon-ok">确认</a>
+	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
+	
+	<!-- 揽收窗口 -->
+	<div id="receKuWin" class="easyui-dialog" buttons="#ruku-buttons" data-options="closable:true, closed:true"  style="width:45%;height:380px;padding:5px;text-align:center;">
+		<table id="kuwei" class="easyui-datagrid" style="width:100%" data-options="
+			url:'<%=path %>/inventory/allInve',
+			method:'get', 
+			rownumbers:true,
+			autoRowHeight: true,
+			pagination:true,
+			border:false,
+			pageSize:10,
+			fit:true
+		">
+			<thead data-options="frozen:true">
+				<tr>
+					<th field="loid" checkbox="true">编号</th>
+					<th field="loname" width="20%">库位名称</th>
+					<th field="losize" width="18%">库位尺寸(m)</th>
+					<th field="lovolume" width="18%">库位体积(m³)</th>
+					<th field="loweight" width="18%">承受重量(t)</th>
+					<th field="lolevel" width="18%">库位等级</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	
+	<!-- 自定义窗口按钮 -->
+	<div id="subruku-buttons">
+		<a href="javascript:subrukuType()" class="easyui-linkbutton" iconCls="icon-ok">确认</a>
+	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
+	
+	<!-- 选择入库数量 -->
+	<div id="rkTypeWin" class="easyui-dialog"  buttons="#subruku-buttons" data-options="closable:true, closed:true"  style="width:25%;height:180px;padding:5px;text-align:center;">
+		<input type="hidden" id="rreceivecount">
+		<input type="hidden" id="ssbid">
+		<br />
+		入库方式：<input type="radio" id="" name="storagemode" checked="checked" value="一次性入库" onclick="getCheckVal()"/>一次性
+               <input type="radio" id="" name="storagemode" value="分批入库" onclick="getCheckVal()"/>分批<br /><br />
+		入库数量：<input id="storagecount" class="easyui-validatebox easyui-numberbox" name="storagecount" data-options="required:false" />
 	</div>
 </body>
 </html>

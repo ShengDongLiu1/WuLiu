@@ -36,7 +36,7 @@ public class Barcode {
 		BufferedImage localBufferedImage;
 		try {
 			localBufferedImage = localJBarcode.createBarcode(str);
-			saveToFile(localBufferedImage, in+time+".png","png",request);
+			saveToFile(localBufferedImage, "WP"+in+time+".png","png",request);
 		} catch (InvalidAtributeException e) {
 			e.printStackTrace();
 		} 
