@@ -77,6 +77,7 @@
 							<li class="divider visible-phone"></li>
 							<li>
 								<a tabindex="-1" href="<%=basePath%>user/logout" target="_top">Logout</a>
+								<a tabindex="-1" href="<%=basePath%>QRcode.jsp?user=${user.usertruename}">生成二维码</a>
 							</li>
 						</ul>
 					</li>
