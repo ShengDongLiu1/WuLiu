@@ -16,7 +16,7 @@
   </sql>
   <select id="klogin1"  resultMap="BaseResultMap" parameterType="Map">
     select * from customer
-    where cemail = #{cemail,jdbcType=VARCHAR} and cpassword =#{cpasswprd,jdbcType=VARCHAR}
+    where cemail = #{cemail,jdbcType=VARCHAR} and cpassword =#{cpassword,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from customer

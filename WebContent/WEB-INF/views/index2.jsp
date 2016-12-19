@@ -8,9 +8,7 @@
 %>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<meta name="keywords" content="网站模板,登录页面模板,登陆页面模板,登录界面模板,登录页面表单验证">
-<meta name="description" content="登录宏图物流网提供大量的登录页面模板的学习和下载">
+<title>宏图物流网</title>
 <link type="text/css" href="<%=path %>/themes/css/v3/reset.css" rel="stylesheet">
 <link type="text/css" href="<%=path %>/themes/css/v3/public.css" rel="stylesheet">
 <link type="text/css" href="<%=path %>/themes/css/v3/register.css" rel="stylesheet">
@@ -87,13 +85,15 @@
 				<h2>登录宏图物流网</h2>
 				<div class="div_user"><span></span><input  name="cemail" class="username" type="text" placeholder="客户名" /></div>
 				<div class="div_pw"><span></span><input class="pw" name="cpassword" type="password" placeholder="密码" /></div>
+				<div class="div_user"><span></span><input  name="code" class="checkcode" type="text" placeholder="请输入验证码" />
+					<img id="codeimg" src="<%=path%>/yzm/code" onclick="changeImg()" />
+				</div>
 				<div class="div_box">
 					<a class="forgetPw" href="forget">忘记密码？</a>
 				</div>
-				<div><input class="login_btn"  type="submit" value="登录" /></div>
+				<div><input class="login_btn" id="loginBtn" type="submit" value="登录" /></div>
                 <div style="line-height:30px; text-indent:5px;color:#F30" id="loginTips">&nbsp;</div>
 				<h4>可以使用下面方式登录<a class="#" href="register">立即注册</a></h4>
-				<a href="#"><img src="<%=path %>/themes/images/oauth/csdn.png" alt="" /></a>
 			</form>
 		</div>
 	</div>
@@ -125,21 +125,21 @@
 	var refer='';
 	$(document).ready(function(){
 		$("#loginBtn").click(function(){
-			$("#loginBtn").val('登录中...').attr("disabled","disabled");
+			$("#loginBtn").val('登录中...');
 			var username = $(".username").val();
-			var userpass = $(".pw").val();
+			var cpassword = $(".pw").val();
 			username = $.trim(username);
-				userpass = $.trim(userpass);
+			cpassword = $.trim(cpassword);
 			$("#loginTips").css({display:"none"});	
 			
-			if(username.length <5){
+			if(username.length <3){
 				//$("#username_tips").html("请输入正确的用户名!").css({display:"block"});
 				$("#loginTips").html("请输入正确的用户名!").fadeIn();
 				$("#loginBtn").val('登录').removeAttr('disabled');
 				return false;
 			}
-			if(userpass == ''){
-				$("#loginTips").html("请输入正确的密码!").fadeIn();
+			if(cpassword == ''){
+				$("#loginTips").html("密码不能为空!").fadeIn();
 				$("#loginBtn").val('登录').removeAttr('disabled');
 				return false;
 			}
@@ -196,6 +196,27 @@
 		     }
 		}
 	}); 
+	$(function(){
+		if('${LoginError}'!=''){
+			show_err_msg('${LoginError}');
+		}
+	});
+	
+	 /*验证码*/
+	 function chgUrl(url) { 
+            var timestamp = (new Date()).valueOf();   
+            if ((url.indexOf("&") >= 0)) {   
+                url = url + "×tamp=" + timestamp;   
+            } else {   
+                url = url + "?timestamp=" + timestamp;   
+            }   
+            return url;   
+        }   
+	
+	 function changeImg() {   
+            var imgSrc = $("#codeimg");  
+            imgSrc.attr("src", chgUrl("<%=path%>/yzm/code"));   
+        }   
 </script>
 </body>
 </html>

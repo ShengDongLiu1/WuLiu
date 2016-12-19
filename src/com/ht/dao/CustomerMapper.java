@@ -14,6 +14,8 @@ public interface CustomerMapper {
     
     int insertSelective(Customer record);
 
+    public Customer klogin1(String cemail, String cpassword);
+
     int updateByPrimaryKeySelective(Customer record);
 
     int updateByPrimaryKey(Customer record);
@@ -25,5 +27,5 @@ public interface CustomerMapper {
 	 */
 	sysuser klogin(@Param("cemail")String cemail,@Param("cpassword") String cpassword);
 
-    Customer klogin1(Map<String, Object> map);
+	Customer klogin1(Map<String, Object> map);
 }
