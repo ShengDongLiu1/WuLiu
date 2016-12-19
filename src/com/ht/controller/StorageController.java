@@ -22,9 +22,11 @@ import com.ht.dto.PageBean;
 import com.ht.dto.StringUtil;
 import com.ht.entity.Goods;
 import com.ht.entity.Inventory;
+import com.ht.entity.Receipt;
 import com.ht.entity.Storage;
 import com.ht.entity.sysuser;
 import com.ht.service.interfaces.InventoryService;
+import com.ht.service.interfaces.ReceiptService;
 import com.ht.service.interfaces.StorageService;
 import com.ht.ssm.util.ResponseUtil;
 
@@ -39,6 +41,9 @@ public class StorageController {
 	
 	@Autowired
 	public InventoryService inventoryService;
+	
+	@Autowired
+	private ReceiptService receiptService;
 	
 	@RequestMapping(value="/allStor")
 	public String topageStorage(){
@@ -95,17 +100,29 @@ public class StorageController {
 		String string=barcode.createCode(request);//条形码生成
 		sysuser user=(sysuser) session.getAttribute("user");
 		Goods goods=(Goods)session.getAttribute("queryGoods");
+		Receipt receipt=(Receipt) session.getAttribute("receipt");
+		storage.setSrid(receipt.getRid());//收货单id
 		storage.setScid(goods.getGcid());//客户id
 		storage.setSgid(goods.getGid());//货物id
 		storage.setSeid(user.getUserid());//员工id
 		storage.setStoragebarcode(string+".png");//条形码
 		storage.setSbarcadeid(string);
 		storage.setStoragetime(new Date());
-		inventory.setLoid(storage.getSsbid());//库位编号
-		inventory.setLogid(goods.getGid());//货物编号
 		int resultcount=storageService.insertSelective(storage);
 		if(resultcount>0){
+			inventory.setLoid(storage.getSsbid());//库位编号
+			inventory.setLogid(goods.getGid());//货物编号
 			inventoryService.inventoryupdate(inventory);//给库位添加一个货物id
+			//一次性入库修改状态
+			if(receipt.getRreceivecount()==storage.getStoragecount()){
+				receipt.setRstart(3);
+				receipt.setRreceivecount(receipt.getRreceivecount()-storage.getStoragecount());
+				receiptService.updateByPrimaryKeySelective(receipt);
+			}else{//分批入库减去已入库数量
+				receipt.setRstart(2);
+				receipt.setRreceivecount(receipt.getRreceivecount()-storage.getStoragecount());
+				receiptService.updateByPrimaryKeySelective(receipt);
+			}
 			map.put("result", "入库成功！");
 		}else{
 			map.put("result", "入库失败，请稍后再试！");

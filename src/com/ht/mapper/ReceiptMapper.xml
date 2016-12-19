@@ -9,6 +9,7 @@
     <result column="rdamagedcount" jdbcType="INTEGER" property="rdamagedcount" />
     <result column="rshelvecount" jdbcType="INTEGER" property="rshelvecount" />
     <result column="rtdgoodstime" jdbcType="TIMESTAMP" property="rtdgoodstime" />
+    <result column="rstart" jdbcType="INTEGER" property="rstart" />
   </resultMap>
   
   <resultMap id="AllResultMap" type="com.ht.entity.Receipt">
@@ -19,6 +20,7 @@
     <result column="rdamagedcount" jdbcType="INTEGER" property="rdamagedcount" />
     <result column="rshelvecount" jdbcType="INTEGER" property="rshelvecount" />
     <result column="rtdgoodstime" jdbcType="TIMESTAMP" property="rtdgoodstime" />
+    <result column="rstart" jdbcType="INTEGER" property="rstart" />
   	
   	<association property="customer" javaType="com.ht.entity.Customer">
 	    <result property="cid" column="cid"/>
@@ -84,6 +86,9 @@
       <if test="rtdgoodstime != null">
         rtdgoodstime,
       </if>
+      <if test="rstart != null">
+        rstart,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="rid != null">
@@ -110,6 +115,9 @@
       <if test="rtdgoodstime != null">
         #{rtdgoodstime,jdbcType=TIMESTAMP},
       </if>
+      <if test="rstart != null">
+        #{rstart,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   
@@ -135,6 +143,9 @@
       <if test="rtdgoodstime != null">
         rtdgoodstime = #{rtdgoodstime,jdbcType=TIMESTAMP},
       </if>
+       <if test="rstart != null">
+        rstart = #{rstart,jdbcType=INTEGER},
+      </if>
     </set>
     where rid = #{rid,jdbcType=INTEGER}
   </update>
@@ -142,7 +153,7 @@
   <!-- 分页查询所有收货单 -->
    <select id="queryAll" parameterType="java.util.Map" resultMap="AllResultMap">
    		select cu.cid,cu.cname,go.gid,go.gname,go.gcount,go.gordernumber,go.gstate,
-   		re.rid,re.rreceivecount,re.rdamagedcount,re.rshelvecount,
+   		re.rid,re.rreceivecount,re.rdamagedcount,re.rshelvecount,re.rstart,
 		re.rtdgoodstime,sy.userid,sy.usertruename from receipt re,customer cu,goods go,sysuser sy
 		<where>
 			re.rcid=cu.cid and 
@@ -160,8 +171,8 @@
 			<if test="gordernumber!=null and gordernumber!='' ">
 				and go.gordernumber like #{gordernumber}
 			</if>
-			<if test="gstate!=null and gstate!='' ">
-				and go.gstate like #{gstate}
+			<if test="rstart!=null and rstart!='' ">
+				and re.rstart = #{rstart}
 			</if>
 		</where>
 		order by re.rtdgoodstime desc
@@ -189,8 +200,8 @@
 			<if test="gordernumber!=null and gordernumber!='' ">
 				and go.gordernumber like #{gordernumber}
 			</if>
-			<if test="gstate!=null and gstate!='' ">
-				and go.gstate like #{gstate}
+			<if test="rstart!=null and rstart!='' ">
+				and re.rstart = #{rstart}
 			</if>
 		</where>
  	</select>

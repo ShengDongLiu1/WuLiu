@@ -253,7 +253,7 @@ function closeGoodWin(){
 function seachs(){
 	var cname = $('#scname').textbox('getValue');
 	var gname = $('#sgname').textbox('getValue');
-	var gstate = $('#sgstate').textbox('getValue');
+	var gstate = $('#sgstate').combobox('getValue');
 	var gordernumber = $('#sgordernumber').textbox('getValue');
 	$('#list').datagrid('load',{  
 		cname:cname,
@@ -301,7 +301,11 @@ function seachs(){
 		<br />
 		客户：<input id="scname" class="easyui-validatebox easyui-textbox" name="cname" data-options="required:false" />&nbsp;
 		货物：<input id="sgname" class="easyui-validatebox easyui-textbox" name="gname" data-options="required:false" />&nbsp;
-		状态：<input id="sgstate" class="easyui-validatebox easyui-textbox" name="gstate" data-options="required:false" />&nbsp;
+		状态：<select id="sgstate" class="easyui-combobox" name="sgstate" data-options="editable:false" style="width:10%">
+			<option value=""></option>
+			<option value="1">未揽收</option>
+			<option value="2">已揽收</option>
+		</select>&nbsp;
 		订单号：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
 	</div>

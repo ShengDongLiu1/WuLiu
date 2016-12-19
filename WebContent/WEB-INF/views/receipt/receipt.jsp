@@ -119,15 +119,22 @@ function toDate(obj){
 }
 
 function toSub(value,obj){
-	var btn="<a href='javascript:openKuWeiWin("+obj.goods.gid+","+obj.rreceivecount+")'>入库</a>";
+	var btn='';
+	if(obj.rstart == 1){
+		btn="<a href='javascript:openKuWeiWin("+obj.rid+","+obj.goods.gid+","+obj.rreceivecount+")'>入库</a>";
+	}else if(obj.rstart == 2){
+		btn="<a href='javascript:openKuWeiWin("+obj.rid+","+obj.goods.gid+","+obj.rreceivecount+")' style='color:orange'>继续入库</a>";
+	}else if(obj.rstart == 3){
+		btn="<span style='color:red'>已入库</span>"
+	}
 	return btn;
 }
 
 /* 打开库位列表窗口 */
-function openKuWeiWin(gid,count){
+function openKuWeiWin(rid,gid,count){
 	$('#rreceivecount').val(count);
 	$('#storagecount').numberbox('setValue',count);
-	$.post("<%=path%>/receipt/byGood",{'gid':gid},function(index){},"json");
+	$.post("<%=path%>/receipt/byGood",{'gid':gid,'rid':rid},function(index){},"json");
 	$("#receKuWin").dialog("open").dialog("setTitle", "库位选择");
 	$('#kuwei').datagrid('load'); 
 }
@@ -170,13 +177,13 @@ function closeGoodWin(){
 function seachs(){
 	var cname = $('#scname').textbox('getValue');
 	var gname = $('#sgname').textbox('getValue');
-	var gstate = $('#sgstate').textbox('getValue');
+	var rstart = $('#srstart').combobox('getValue');
 	var username = $('#username').textbox('getValue');
 	var gordernumber = $('#sgordernumber').textbox('getValue');
 	$('#list').datagrid('load',{  
 		cname:cname,
 		gname:gname,
-		gstate:gstate,
+		rstart:rstart,
 		username:username,
 		gordernumber:gordernumber
 	}); 
@@ -244,6 +251,7 @@ function subrukuType(){
     	}else{
     		$.post("<%=path%>/storage/add",{'storagecount':storagecount,'storagemode':stor,'ssbid':ssbid},function(index){
     			$.messager.alert('系统提示',index.result,'info');
+    			$('#list').datagrid('load');
     			$("#rkTypeWin").dialog("close");
     		},"json");
     	}
@@ -272,7 +280,7 @@ function subrukuType(){
 				<th field="goods" width="10%" align="center" formatter="goodsName">货物名称</th>
 				<th field="goods1" width="12%" align="center" formatter="goodsNum">货物订单号</th>
 				<th field="goods2" width="7%" align="center" formatter="goodsCount">货物总数量</th>
-				<th field="rreceivecount" width="7%" align="center">实际收货数量</th>
+				<th field="rreceivecount" width="7%" align="center">剩余货物数量</th>
 				<th field="rdamagedcount" width="7%" align="center" >破损数量</th>
 				<th field="rshelvecount" width="7%" align="center">搁置数量</th>
 				<th field="rtdgoodstime" width="12%" align="center" formatter="toDate">收货时间</th>
@@ -288,7 +296,12 @@ function subrukuType(){
 		<br />
 		客户：<input id="scname" class="easyui-validatebox easyui-textbox" name="cname" data-options="required:false" />&nbsp;
 		货物：<input id="sgname" class="easyui-validatebox easyui-textbox" name="gname" data-options="required:false" />&nbsp;
-		状态：<input id="sgstate" class="easyui-validatebox easyui-textbox" name="gstate" data-options="required:false" />&nbsp;
+		状态：<select id="srstart" class="easyui-combobox" name="rstart" data-options="editable:false" style="width:10%">
+			<option value=""></option>
+			<option value="1">未入库</option>
+			<option value="2">部分入库</option>
+			<option value="3">已入库</option>
+		</select>&nbsp;
 		订单号：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />&nbsp;
 		收货员：<input id="username" class="easyui-validatebox easyui-textbox" name="username" data-options="required:false" />
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>

@@ -64,7 +64,7 @@ public class ReceiptController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/all")
-	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,String cname,String gname,String gstate,String gordernumber,String username) throws Exception{
+	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,String cname,String gname,String rstart,String gordernumber,String username) throws Exception{
 		PageBean pageBean=null;
 		if(page == null && rows == null){
 			pageBean=new PageBean(1,10);
@@ -75,7 +75,7 @@ public class ReceiptController {
 		map.put("cname", StringUtil.formatLike(cname));
 		map.put("gname", StringUtil.formatLike(gname));
 		map.put("usertruename", StringUtil.formatLike(username));
-		map.put("gstate", StringUtil.formatLike(gstate));	//货物状态
+		map.put("rstart", rstart);	//订单入库状态
 		map.put("gordernumber", StringUtil.formatLike(gordernumber));//订单号
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
@@ -108,7 +108,7 @@ public class ReceiptController {
 		receipt.setRreceivecount(allcount-poshun-geshi);//实际揽收数量
 		receipt.setReid(user.getUserid());//员工id
 		receipt.setRtdgoodstime(new Date());
-		System.out.println("receipt:"+receipt);
+		receipt.setRstart(1);	//清单状态1表示未入库
 		int resultcount=receiptService.insertSelective(receipt);
 		if(resultcount>0){
 			Goods goods=new Goods();
@@ -127,13 +127,15 @@ public class ReceiptController {
 	/**
 	 * 根据货物条件查询库位
 	 * @param gid
+	 * @param rid
 	 * @param session
 	 */
 	@RequestMapping(value="/byGood")
-	public void selectGoods(Integer gid,HttpSession session){
+	public void selectGoods(Integer gid,Integer rid,HttpSession session){
 		Goods goods=goodsService.selectByPrimaryKey(gid);
-		System.out.println("goods:"+goods);
 		session.setAttribute("queryGoods", goods);
+		Receipt receipt=receiptService.selectByPrimaryKey(rid);
+		session.setAttribute("receipt", receipt);
 	}
 	
 	/**

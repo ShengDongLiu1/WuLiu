@@ -19,6 +19,8 @@ public class Receipt {
 
     private Date rtdgoodstime;
     
+    private Integer rstart;
+    
     private Customer customer;	//客户
     
     private Goods goods;	//货物
@@ -88,6 +90,14 @@ public class Receipt {
     public void setRtdgoodstime(Date rtdgoodstime) {
         this.rtdgoodstime = rtdgoodstime;
     }
+
+	public Integer getRstart() {
+		return rstart;
+	}
+
+	public void setRstart(Integer rstart) {
+		this.rstart = rstart;
+	}
 
 	public Customer getCustomer() {
 		return customer;
