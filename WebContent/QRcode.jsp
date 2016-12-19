@@ -20,11 +20,5 @@ jQuery(function(){
 	jQuery('#output').qrcode("${user.usertruename}");
 
 })
-</script>
-</head>
-<body >
-	
-	<div id="output"></div>
-	<div>请扫描二维码</div>
 </body>
 </html>
