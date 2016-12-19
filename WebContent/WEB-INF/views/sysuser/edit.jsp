@@ -174,7 +174,7 @@ awesome.css">
 	</div>
 
 	<ul class="breadcrumb">
-		<li><a href="index.html">用户管理</a> <span class="divider">/</span>
+		<li><a href="user/listuser">用户管理</a> <span class="divider">/</span>
 		</li>
 		<li class="active">编辑用户功能</li>
 	</ul>

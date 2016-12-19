@@ -28,10 +28,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</h1>
 		</div>
 		<ul class="breadcrumb">
-			<li>
-				<a href="index.html">Home</a>
-				<span class="divider">/</span>
-			</li>
 			<li class="active">
 				用户列表
 			</li>

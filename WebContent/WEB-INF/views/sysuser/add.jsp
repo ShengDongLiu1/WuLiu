@@ -154,7 +154,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		<ul class="breadcrumb">
 			<li>
-				<a href="index.html">用户管理</a>
+				<a href="user/listuser">用户管理</a>
 				<span class="divider">/</span>
 			</li>
 			<li class="active">

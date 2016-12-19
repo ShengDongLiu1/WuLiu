@@ -2,6 +2,9 @@
 	 pageEncoding="UTF-8"%>
 <% 
 	String path = request.getContextPath(); 
+	String basePath = request.getScheme() + "://"
+		+ request.getServerName() + ":" + request.getServerPort()
+		+ path + "/";
 %>
 <!DOCTYPE html>
 <html>
@@ -15,8 +18,13 @@
 <script type="text/javascript" src="<%=path %>/js/jquery-easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=path %>/js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="<%=path %>/js/site_easyui.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="<%=basePath%>assets/jslib/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css"
+	href="<%=basePath%>assets/css/theme.css">
 </head>
 <body>
+	
 	<table id="dg" class="easyui-datagrid" toolbar="#tb" data-options="
 		url:'<%=path %>/test/queryAll', 
 		method:'get', 
@@ -24,7 +32,6 @@
 		autoRowHeight: true,
 		pagination:true,
 		border:false,
-		pageSize:20,
 		fit:true">
 		<thead>
 			<tr>
@@ -37,6 +44,11 @@
 	</table>
 	<!-- 菜单 -->
 	<div id="tb" style="padding: 2px;">
+		<div class="header">
+			<h1 class="page-title">
+				测试
+			</h1>
+		</div>
 		<a href="javascript:openUserAddDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >添加</a>
 		<a href="javascript:openUserModifyDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" >编辑</a>
 		<a href="javascript:deleteTest()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
@@ -87,8 +99,8 @@
 		function setPagination(tableId) {
 			var p = $("#" + tableId).datagrid("getPager"); // 获取由tableId指定的datagrid控件的分页组件
 			$(p).pagination({
-				pageSize:20,
-				pageList:[20,30,40],
+				pageSize:10,
+				pageList:[10,20,30],
 				beforePageText:"第",
 				afterPageText:"页    共{pages}页",
 				displayMsg:"当前显示{from} - {to} 条记录    共{total}条记录",

@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		<ul class="breadcrumb">
 			<li>
-				<a href="index.html">角色管理</a>
+				<a href="role/list">角色管理</a>
 				<span class="divider">/</span>
 			</li>
 			<li class="active">

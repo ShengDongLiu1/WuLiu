@@ -32,7 +32,7 @@
 
 		<ul class="breadcrumb">
 			<li>
-				<a href="index.html">系统功能管理</a>
+				<a href="function/list">系统功能管理</a>
 				<span class="divider">/</span>
 			</li>
 			<li class="active">

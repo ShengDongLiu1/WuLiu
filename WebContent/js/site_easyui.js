@@ -140,7 +140,7 @@ $(function() {
 function setPagination(tableId) {
 	var p = $(tableId).datagrid('getPager');
 	$(p).pagination({
-		pageSize : 20,
+		pageSize : 15,
 		pageList : [ 10, 15, 20, 25 ],
 		beforePageText : '第',
 		afterPageText : '页    共 {pages} 页',
