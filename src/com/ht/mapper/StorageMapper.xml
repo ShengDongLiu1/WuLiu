@@ -181,7 +181,7 @@
  	select cu.cid,cu.cname,go.gid,go.gname,i.loid,i.loname,st.sid,st.storagecount,st.storagemode,st.storagebarcode,
 	st.sbarcadeid,st.storagetime,sy.userid,sy.usertruename from storage st,customer cu,goods go,inventory i,sysuser sy
 		<where>
-			st.sid=cu.cid and 
+			st.scid=cu.cid and 
 			st.sgid=go.gid and 
 			st.ssbid=i.loid and 
 			st.seid=sy.userid
@@ -214,7 +214,7 @@
  <select id="queryAllCount" parameterType="java.util.Map" resultType="Long">
  	select count(*) from storage st,customer cu,goods go,inventory i,sysuser sy
 		<where>
-			st.sid=cu.cid and 
+			st.scid=cu.cid and 
 			st.sgid=go.gid and 
 			st.ssbid=i.loid and 
 			st.seid=sy.userid
