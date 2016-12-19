@@ -124,15 +124,15 @@ a:hover {color:#54287C}
             </form>
         </div>
         <!-- 查看库位货物窗口-->
-        <div id="InvebyWin" class="easyui-dialog"  buttons="#dlg-buttons2" data-options="closable:true, closed:true"  style="width:70%;height:420px;padding:5px;text-align:center;">
+        <div id="InvebyWin" class="easyui-dialog"  buttons="#dlg-buttons2" data-options="closable:true, closed:true"  style="width:60%;height:320px;padding:5px;text-align:center;">
 		<table style="width:100%;height:100%;">
 			<tr>
 				<td class="tdwidth">库位名称:</td>
 				<td class="gxiangq"><input type="text" id="loname1" style="border: 0px;" readonly="readonly" /></td>
-			</tr>
-			<tr>
 				<td class="tdwidth">货物名称:</td>
 				<td class="gxiangq"><input id="gname1" type="text" style="border: 0px;" readonly="readonly" ></input></td>
+			</tr>	
+			<tr>
 				<td class="tdwidth">货物订单号:</td>
 				<td class="gxiangq"><input id="gordernumber1" type="text" style="border: 0px;" readonly="readonly"></input></td>
 				<td class="tdwidth">货物重量:</td>
@@ -257,10 +257,9 @@ function NOInveWin(loid){
 }
 /* 给弹出的窗口赋值 */
 function fuzhi(index){
-	
 	for(var i=0;i<index.inventory.length;i++){ 
 		$("#loname1").val(index.inventory[i].loname);
-		$("#gname1").val(a2+index.inventory[i].goods.gname);
+		$("#gname1").val(index.inventory[i].goods.gname);
 		$("#gordernumber1").val(index.inventory[i].goods.gordernumber);
 		$("#gweight1").val(index.inventory[i].goods.gweight);
 	}

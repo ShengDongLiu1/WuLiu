@@ -150,7 +150,7 @@
   	 lo.loweight, lo.lolevel, lo.lostate,go.gid,go.gname
     from inventory lo,goods go
     <where>
-    	lo.logid=go.gid
+    		lo.logid=go.gid
     	<if test="gname!=null and gname!='' ">
 			and go.gname like #{gname}
 		</if>
