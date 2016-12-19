@@ -213,4 +213,55 @@
       lostate = 0
     where loid = #{loid,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectKwGoods" parameterType="java.util.Map" resultMap="SelectBaseResultMap">
+  	select * from inventory 
+  	<where>
+  		<if test="logid != null">
+	        logid = #{logid}
+	      </if>
+  		 <if test="losize != null">
+	        and losize >= #{losize}
+	      </if>
+	      <if test="lovolume != null">
+	        and lovolume >= #{lovolume}
+	      </if>
+	      <if test="loweight != null">
+	        and loweight >= #{loweight}
+	      </if>
+	      <if test="lolevel != null">
+	        and lolevel >= #{lolevel}
+	      </if>
+	      <if test="lostate != null">
+	        and lostate = #{lostate}
+	      </if>
+  	</where>
+  	order by loid desc
+  	 <if test="start!=null and size!=null">
+		limit #{start},#{size}
+	</if>
+  </select>
+  <select  id="selectKwGoodsCount" parameterType="java.util.Map" resultType="Long">
+  	select count(*) from inventory
+  	<where>
+  		<if test="logid != null">
+	        logid = #{logid}
+	      </if>
+  		 <if test="losize != null">
+	        and losize >= #{losize}
+	      </if>
+	      <if test="lovolume != null">
+	        and lovolume >= #{lovolume}
+	      </if>
+	      <if test="loweight != null">
+	        and loweight >= #{loweight}
+	      </if>
+	      <if test="lolevel != null">
+	        and lolevel >= #{lolevel}
+	      </if>
+	      <if test="lostate != null">
+	        and lostate = #{lostate}
+	      </if>
+  	</where>
+  </select>
 </mapper>

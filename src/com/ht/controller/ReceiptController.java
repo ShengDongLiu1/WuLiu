@@ -18,9 +18,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.ht.dto.PageBean;
 import com.ht.dto.StringUtil;
 import com.ht.entity.Goods;
+import com.ht.entity.Inventory;
 import com.ht.entity.Receipt;
 import com.ht.entity.sysuser;
 import com.ht.service.interfaces.GoodsService;
+import com.ht.service.interfaces.InventoryService;
 import com.ht.service.interfaces.ReceiptService;
 import com.ht.ssm.util.ResponseUtil;
 
@@ -32,6 +34,9 @@ public class ReceiptController {
 	
 	@Autowired
 	private ReceiptService receiptService;
+	
+	@Autowired
+	public InventoryService inventoryService;
 	
 	@Autowired
 	private GoodsService goodsService;
@@ -131,18 +136,40 @@ public class ReceiptController {
 		session.setAttribute("queryGoods", goods);
 	}
 	
+	/**
+	 * 库位列表
+	 * @param gid
+	 * @param page
+	 * @param rows
+	 * @param response
+	 * @param session
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/kuweiList")
-	public void kuweiList(Integer gid,@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,HttpSession session){
+	public String kuweiList(Integer gid,@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,HttpSession session) throws Exception{
 		Map<String, Object> map= new HashMap<>();
 		PageBean pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
 		Goods goods=(Goods) session.getAttribute("queryGoods");
+		if(goods == null){
+			return null;
+		}
+		map.put("logid", -1);
 		map.put("losize", goods.getGsize());
 		map.put("lovolume", goods.getGvolume());
 		map.put("loweight", goods.getGweight());
 		map.put("lolevel", goods.getGgrade());
-		map.put("lostate", 1);
+		map.put("lostate", 0);
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
+		List<Inventory> invenList=inventoryService.selectKwGoods(map);
+		Long total=inventoryService.selectKwGoodsCount(map);
+		
+		JSONObject result = new JSONObject();
+		JSONArray jsonArray = JSONArray.fromObject(invenList);
+		result.put("rows", jsonArray);
+		result.put("total", total);
+		ResponseUtil.write(response, result);
+		return null;
 	}
 
 }

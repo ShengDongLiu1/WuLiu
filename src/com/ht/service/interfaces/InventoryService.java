@@ -23,4 +23,18 @@ public interface InventoryService {
 
 	void updataInveState2(Integer loid);
 	
+	/**
+	 * 库位列表
+	 * @param map
+	 * @return
+	 */
+	List<Inventory> selectKwGoods(Map<String, Object> map);
+
+	/**
+	 * 库位个数
+	 * @param map
+	 * @return
+	 */
+	Long selectKwGoodsCount(Map<String, Object> map);
+	
 }

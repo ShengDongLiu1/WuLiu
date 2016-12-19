@@ -64,5 +64,15 @@ public class InventoryServiceImpl implements InventoryService{
 		
 	}
 
+	@Override
+	public List<Inventory> selectKwGoods(Map<String, Object> map) {
+		return inventoryMapper.selectKwGoods(map);
+	}
+
+	@Override
+	public Long selectKwGoodsCount(Map<String, Object> map) {
+		return inventoryMapper.selectKwGoodsCount(map);
+	}
+
 	
 }

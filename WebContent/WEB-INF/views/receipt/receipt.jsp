@@ -129,6 +129,7 @@ function openKuWeiWin(gid,count){
 	$('#storagecount').numberbox('setValue',count);
 	$.post("<%=path%>/receipt/byGood",{'gid':gid},function(index){},"json");
 	$("#receKuWin").dialog("open").dialog("setTitle", "库位选择");
+	$('#kuwei').datagrid('load'); 
 }
 
 /* 打开详情窗口 */
@@ -363,9 +364,9 @@ function subrukuType(){
 	<!-- 揽收窗口 -->
 	<div id="receKuWin" class="easyui-dialog" buttons="#ruku-buttons" data-options="closable:true, closed:true"  style="width:45%;height:380px;padding:5px;text-align:center;">
 		<table id="kuwei" class="easyui-datagrid" style="width:100%" data-options="
-			url:'<%=path %>/inventory/allInve',
+			url:'<%=path %>/receipt/kuweiList',
 			method:'get', 
-			rownumbers:true,
+			rownumbers:false,
 			autoRowHeight: true,
 			pagination:true,
 			border:false,
