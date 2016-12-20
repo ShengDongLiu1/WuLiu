@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ht.entity.Quality;
+import com.ht.entity.Receipt;
 /**
  * 质检管理Dao
  * @author 黄豪
@@ -28,4 +29,7 @@ public interface QualityMapper {
 	
 	//总质检记录条数
 	Long getTotal(Map<String, Object> map);
+	
+	//查询收货表的状态
+	Receipt receiptStatus(Integer rid);
 }

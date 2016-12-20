@@ -4,25 +4,27 @@
 	<resultMap type="com.ht.entity.Quality" id="QualityResultMap">
 		<id column="eid" property="eid" jdbcType="INTEGER"/>
 		<result column="egid" property="egid" jdbcType="INTEGER"/>
-		<result column="eeid" property="eeid" jdbcType="INTEGER"/>
+		<result column="euserid" property="euserid" jdbcType="INTEGER"/>
 		<result column="eresult" property="eresult" jdbcType="VARCHAR"/>
 		<result column="edate" property="edate" jdbcType="TIMESTAMP"/>
 	</resultMap>
 	<resultMap type="com.ht.entity.Quality" id="QualityResultMaps">
 		<id column="eid" property="eid" jdbcType="INTEGER"/>
 		<result column="egid" property="egid" jdbcType="INTEGER"/>
-		<result column="eeid" property="eeid" jdbcType="INTEGER"/>
+		<result column="euserid" property="euserid" jdbcType="INTEGER"/>
 		<result column="eresult" property="eresult" jdbcType="VARCHAR"/>
 		<result column="edate" property="edate" jdbcType="TIMESTAMP"/>
 		
-		<association property="employee" javaType="com.ht.entity.Employee">
-			<result property="eid" column="eid"/>
-			<result property="ejobnumber" column="ejobnumber"/>
-			<result property="ename" column="ename"/>
-			<result property="eposition" column="eposition"/>
-			<result property="ephone" column="ephone"/>
+		<!-- 员工 -->
+		<association property="sysusers" javaType="com.ht.entity.sysuser">
+			<result property="userid" column="USERID"/>
+			<result property="username" column="USERNAME"/>
+			<result property="uposition" column="uposition"/>
+			<result property="usertruename" column="usertruename"/>
+			<result property="userstate" column="USERSTATE"/>
 		</association>
 		
+		<!-- 货物 -->
 		<association property="goods" javaType="com.ht.entity.Goods">
 			<result property="gid" column="gid"/>
 			<result property="gordernumber" column="gordernumber"/>
@@ -31,17 +33,25 @@
 			<result property="gdescribe" column="gdescribe"/>
 			<result property="gstate" column="gstate"/>
 		</association>
+		
+		<!-- 收货 -->
+		<association property="receipt" javaType="com.ht.entity.Receipt">
+			<result property="rid" column="rid"/>
+			<result property="sgid" column="sgid"/>
+			<result property="rstart" column="rstart"/>
+		</association>
+		
 	</resultMap>
 	
 	<sql id="Quality_Column_List">
-		eid, egid, eeid, eresult, edate
+		eid, egid, euserid, eresult, edate
 	</sql>
 	
 	<!-- 根据id查询质检记录 -->
 	<select id="qualitySelect" parameterType="java.lang.Integer" resultMap="QualityResultMaps">
 	  select 
 	  *
-	  from examine exa, employee emp, goods go
+	  from examine exa, sysuser sys, goods go
 	  where exa.eid = #{eid,jdbcType=INTEGER}
 	</select>
 	
@@ -61,8 +71,8 @@
 	    	<if test="egid != null">
 	    		egid,
 	    	</if>
-	    	<if test="eeid != null">
-	    		eeid,
+	    	<if test="euserid != null">
+	    		euserid,
 	    	</if>
 	    	<if test="eresult != null">
 	    		eresult,
@@ -78,8 +88,8 @@
 	    	<if test="egid != null">
 	    		#{egid,jdbcType=INTEGER},
 	    	</if>
-	    	<if test="eeid != null">
-	    		#{eeid,jdbcType=INTEGER},
+	    	<if test="euserid != null">
+	    		#{euserid,jdbcType=INTEGER},
 	    	</if>
 	    	<if test="eresult != null">
 	    		#{eresult,jdbcType=VARCHAR},
@@ -97,8 +107,8 @@
 	    	<if test="egid != null">
 	    		egid = #{egid,jdbcType=INTEGER},
 	    	</if>
-	    	<if test="eeid != null">
-	    		eeid = #{eeid,jdbcType=INTEGER},
+	    	<if test="euserid != null">
+	    		euserid = #{euserid,jdbcType=INTEGER},
 	    	</if>
 	    	<if test="eresult != null">
 	    		eresult = #{eresult,jdbcType=VARCHAR},
@@ -112,15 +122,15 @@
 	
 	<!-- 查询所有质检记录并分页 -->
 	<select id="qualitySelectAll" parameterType="java.util.Map" resultMap="QualityResultMaps">
-   		select * from examine exa, employee emp, goods go
+   		select * from examine exa, sysuser sys, goods go
 		<where>
-			exa.eeid = emp.eid and 
+			exa.euserid = sys.USERID and 
 			exa.egid = go.gid
 			<if test="gordernumber!=null and gordernumber!='' ">
 				and go.gordernumber like #{gordernumber}
 			</if>
-			<if test="ename!=null and ename!='' ">
-				and emp.ename like #{ename}
+			<if test="USERTRUENAME!=null and USERTRUENAME!='' ">
+				and sys.USERTRUENAME like #{USERTRUENAME}
 			</if>
 			<if test="eresult!=null and eresult!='' ">
 				and exa.eresult like #{eresult}
@@ -136,15 +146,15 @@
     
     <!-- 查询质检记录条数 -->
  	<select id="getTotal" parameterType="java.util.Map" resultType="Long">
- 		select count(*) from examine exa, employee emp, goods go
+ 		select count(*) from examine exa, sysuser sys, goods go
 		<where>
-			exa.eeid = emp.eid and 
+			exa.euserid = sys.USERID and 
 			exa.egid = go.gid
 			<if test="gordernumber!=null and gordernumber!='' ">
 				and go.gordernumber like #{gordernumber}
 			</if>
-			<if test="ename!=null and ename!='' ">
-				and emp.ename like #{ename}
+			<if test="USERTRUENAME!=null and USERTRUENAME!='' ">
+				and sys.USERTRUENAME like #{USERTRUENAME}
 			</if>
 			<if test="eresult!=null and eresult!='' ">
 				and exa.eresult like #{eresult}
@@ -154,4 +164,8 @@
 			</if>
 		</where>
  	</select>
+ 	
+ 	<!-- <select id="receiptStatus" parameterType="java.lang.Integer" resultMap="QualityResultMaps">
+ 		select rec.sgid, rec.rstart from receipt rec where rec
+ 	</select> -->
 </mapper>

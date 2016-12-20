@@ -13,14 +13,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Quality {
 	private Integer eid;
 	private Integer egid;
-	private Integer eeid;
+	private Integer euserid;
 	private String eresult;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date edate;
 	
-	private Employee employee; //员工
+	private sysuser sysusers; //员工
 	
 	private Goods goods;//货物
+	
+	private Receipt receipt;
 
 	public Integer getEid() {
 		return eid;
@@ -38,12 +40,12 @@ public class Quality {
 		this.egid = egid;
 	}
 
-	public Integer getEeid() {
-		return eeid;
+	public Integer getEuserid() {
+		return euserid;
 	}
 
-	public void setEeid(Integer eeid) {
-		this.eeid = eeid;
+	public void setEuserid(Integer euserid) {
+		this.euserid = euserid;
 	}
 
 	public String getEresult() {
@@ -54,20 +56,20 @@ public class Quality {
 		this.eresult = eresult == null ? null : eresult.trim();
 	}
 	
-	public Date getEdate() {
-		return edate;
-	}
-
 	public void setEdate(Date edate) {
 		this.edate = edate;
 	}
 
-	public Employee getEmployee() {
-		return employee;
+	public Date getEdate() {
+		return edate;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public sysuser getSysusers() {
+		return sysusers;
+	}
+
+	public void setSysusers(sysuser sysusers) {
+		this.sysusers = sysusers;
 	}
 
 	public Goods getGoods() {
@@ -78,4 +80,11 @@ public class Quality {
 		this.goods = goods;
 	}
 
+	public Receipt getReceipt() {
+		return receipt;
+	}
+
+	public void setReceipt(Receipt receipt) {
+		this.receipt = receipt;
+	}
 }

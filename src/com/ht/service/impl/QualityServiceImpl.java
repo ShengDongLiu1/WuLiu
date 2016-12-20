@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ht.dao.QualityMapper;
 import com.ht.entity.Quality;
+import com.ht.entity.Receipt;
 import com.ht.service.interfaces.QualityService;
 
 /**
@@ -56,6 +57,12 @@ public class QualityServiceImpl implements QualityService {
 	public Long getTotal(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return qualityMapper.getTotal(map);
+	}
+
+	@Override
+	public Receipt receiptStatus(Integer rid) {
+		// TODO Auto-generated method stub
+		return qualityMapper.receiptStatus(rid);
 	}
 
 

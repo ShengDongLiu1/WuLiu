@@ -59,7 +59,7 @@ public class QualityController {
 	 * @param page
 	 * @param rows
 	 * @param response
-	 * @param ename
+	 * @param USERTRUENAME
 	 * @param egid
 	 * @param eresult
 	 * @param edate
@@ -67,7 +67,7 @@ public class QualityController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/queryAll",method=RequestMethod.GET)
-	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,String ename,String gordernumber,String eresult,String edate) throws Exception{
+	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,String USERTRUENAME,String gordernumber,String eresult,String edate) throws Exception{
 		PageBean pageBean=null;
 		if(page == null && rows == null){
 			pageBean=new PageBean(1,10);
@@ -75,7 +75,7 @@ public class QualityController {
 			pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
 		}
 		Map<String, Object> map= new HashMap<>();
-		map.put("ename", StringUtil.formatLike(ename));
+		map.put("USERTRUENAME", StringUtil.formatLike(USERTRUENAME));
 		map.put("gordernumber", StringUtil.formatLike(gordernumber));
 		map.put("eresult", StringUtil.formatLike(eresult));
 		map.put("edate", StringUtil.formatLike(edate));

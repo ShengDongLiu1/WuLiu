@@ -14,32 +14,41 @@
 		<script src="<%=path %>/js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
 		<script src="<%=path %>/js/hh/punish-Interaction.js"></script>
 		<style type="text/css">
-
-body{margin:0px;padding:0px;}
-.tdwidth{
-	width:20%;text-align:right;font-size:15px;
-}
-.gxiangq{
-	text-align:left;font-size:15px;
-	border-bottom:1px dashed #FFE48D; 
-}
-.gxiangq span{
-	font-size:16px;
-	color:blue;
-}
-a:link {color:blue}
-a:visited{color:#54287C}
-a:active{color:yellow}
-a:hover {color:#54287C} 
-.easyui-textbox{width:10%;}
-
-.dai{color:green;}
-
-.yi{color:orange;}
-
-.ju{color:red;}
-</style>
-		
+			body{margin:0px;padding:0px;}
+			.tdwidth{
+				width:20%;text-align:right;font-size:15px;
+			}
+			.gxiangq{
+				text-align:left;font-size:15px;
+				border-bottom:1px dashed #FFE48D; 
+			}
+			.gxiangq span{
+				font-size:16px;
+				color:blue;
+			}
+			a:link {color:blue}
+			a:visited{color:#54287C}
+			a:active{color:yellow}
+			a:hover {color:#54287C} 
+			.easyui-textbox{width:10%;}
+			
+			.dai{color:green;}
+			
+			.yi{color:orange;}
+			
+			.ju{color:red;}
+		</style>
+		<script type="text/javascript">
+			/* 员工姓名 */
+			function employeeName(value){
+				return value.ename;
+			}
+			
+			/* 订单号 */
+			function goodsNumber(value){
+				return value.gordernumber;
+			}
+		</script>
 	</head>
 	<body>
 		<table id="dg" class="easyui-datagrid" toolbar="#kj" style="width:100%" data-options="
@@ -57,7 +66,7 @@ a:hover {color:#54287C}
 			<tr>
 				<th field="eid" checkbox="true"></th>
 				<th field="egid" width="15%" align="center">货物编号</th>
-				<th field="eeid" width="15%" align="center">员工编号</th>
+				<th field="euserid" width="15%" align="center">员工编号</th>
 				<th field="eresult" width="35%" align="center">检验结果</th>
 				<th field="edate" width="15%" align="center" formatter="toDate">检验时间</th>
 				<th field="null" width="17%" align="center" formatter="toSub">操作</th>
@@ -76,20 +85,12 @@ a:hover {color:#54287C}
 	<div id="qualityByWin" class="easyui-dialog"  buttons="#dlg-buttons" data-options="closable:true, closed:true"  style="width:50%;height:580px;padding:5px;text-align:center;">
 		<table style="width:90%;height:100%;" id="gooded" align="center">
 			<tr>
-				<td class="tdwidth">员工工号:</td>
-				<td class="gxiangq"><span id="ejobnumber1"></span></td>
-			</tr>
-			<tr>
 				<td class="tdwidth">员工姓名:</td>
-				<td class="gxiangq"><span id="ename1"></span></td>
+				<td class="gxiangq"><span id="USERTRUENAME1"></span></td>
 			</tr>
 			<tr>
 				<td class="tdwidth">员工职位:</td>
-				<td class="gxiangq"><span id="eposition"></span></td>
-			</tr>
-			<tr>
-				<td class="tdwidth">员工联系电话:</td>
-				<td class="gxiangq"><span id="ephone1"></span></td>
+				<td class="gxiangq"><span id="uposition1"></span></td>
 			</tr>
 			<tr>
 				<td class="tdwidth">货物订单号:</td>
@@ -141,7 +142,7 @@ a:hover {color:#54287C}
                     </tr>
                     <tr>
                     	<td>员工编号：</td>
-                        <td><input type="text" id="eeid" name="eeid"
+                        <td><input type="text" id="euserid" name="euserid"
                             class="easyui-validatebox" required="true" />&nbsp;<span
                             style="color: red">*</span>
                         </td>
@@ -209,19 +210,19 @@ a:hover {color:#54287C}
 		
 		function resetValue() {
 	        $("#egid").val("");
-	        $("#eeid").val("");
+	        $("#euserid").val("");
 	        $("#eresult").val("");
 	        $("#edate").val("");
 	    }
 		
 		/* 表格按钮 */
 		function toSub(value,rec){
-			var btn="<a href='javascript:openQualityWin("+rec.eid+")'>详情</a>";
-			btn+="&nbsp;&nbsp;<a href='#' onclick=''>批准入库</a>";
+			var btn="<a href='javascript:openQualityWin("+rec.eid+")'>???</a>";
+			btn+="&nbsp;&nbsp;<a href='#' onclick=''>???</a>";
 			return btn;
 		}
 		
-		/* 打开详情窗口 */
+<%-- 		/* 打开详情窗口 */
 		function openQualityWin(eid) {
 			$.post("<%=path%>/quality/qualityByid",{'eid':eid},function(index){
 				fuzhi(index);
@@ -231,10 +232,8 @@ a:hover {color:#54287C}
 
 		/* 给弹出的详情窗口赋值 */
 		function fuzhi(index){
-			$("#ejobnumber1").html(index.quality.employee.ejobnumber);
-			$("#ename1").html(index.quality.employee.ename);
-			$("#eposition1").html(index.quality.employee.eposition);
-			$("#ephone1").html(index.quality.employee.ephone);
+			$("#USERTRUENAME1").html(index.quality.employee.USERTRUENAME);
+			$("#uposition1").html(index.quality.employee.uposition);
 			$("#gordernumber1").html(index.quality.goods.gordernumber);
 			$("#gname1").html(index.quality.goods.gname);
 			$("#ggrade1").html(index.quality.goods.ggrade);
@@ -243,7 +242,7 @@ a:hover {color:#54287C}
 			$("#eresult1").html(index.quality.eresult);
 			$("#edate1").html(formatDateTime(new Date(index.quality.edate)));
 			$("#qualityByWin").dialog("open").dialog("setTitle", "入库质检详情");
-		}
+		} --%>
 		
 		/* 删除 */
 		function deleteTest() {
@@ -315,16 +314,6 @@ a:hover {color:#54287C}
 		function closeQualityAdd() {	
 		    $("#dlg").dialog("close");
 		    resetValue();
-		}
-		
-		/* 员工姓名 */
-		function employeeName(value){
-			return value.ename;
-		}
-		
-		/* 订单号 */
-		function goodsNumber(value){
-			return value.gordernumber;
 		}
 		</script>
 </html>
