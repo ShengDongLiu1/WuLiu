@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ht.dto.PageBean;
+import com.ht.dto.StringUtil;
 import com.ht.entity.Test;
 import com.ht.service.interfaces.TestService;
 import com.ht.ssm.util.ResponseUtil;
@@ -36,6 +37,7 @@ public class TestController {
 	public String save(Test test,HttpServletResponse res) throws Exception{
 		int resultTotal = 0;
         if (test.getTid() == null) {
+    		System.out.println("时间"+test.getTdate());
             resultTotal = testService.testAdd(test);
         }else{
             resultTotal = testService.testupdate(test);
@@ -63,9 +65,16 @@ public class TestController {
 	}
 	
 	@RequestMapping(value="/queryAll",method=RequestMethod.GET)
-	public String queryAll(@RequestParam(value="page",required=false) String page,@RequestParam(value="rows",required=false) String rows,Test tset,HttpServletResponse res) throws Exception{
+	public String queryAll(@RequestParam(value="page",required=false) String page,
+			@RequestParam(value="rows",required=false) String rows,
+			Test test,HttpServletResponse res) throws Exception{
 		PageBean pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
 		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("tname", StringUtil.formatLike(test.getTname()));
+		map.put("tsex", StringUtil.formatLike(test.getTsex()));
+		map.put("tmes", StringUtil.formatLike(test.getTmes()));
+		map.put("tdate", test.getTdate());
+		map.put("tid", test.getTid());
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
 		List<Test> testList=testService.testSelectAll(map);

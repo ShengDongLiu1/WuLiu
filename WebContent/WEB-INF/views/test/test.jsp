@@ -39,6 +39,7 @@
 				<th data-options="field:'tname',width:100" align="center">姓名</th>
 				<th data-options="field:'tsex',width:100" align="center">性别</th>
 				<th data-options="field:'tmes',width:100" align="center">绰号</th>
+				<th data-options="field:'tdate',width:120" align="center" formatter="toDate">时间</th>
 			</tr>
 		</thead>
 	</table>
@@ -67,21 +68,27 @@
                 <table cellspacing="8px;">
                     <tr>
                         <td>姓名：</td>
-                        <td><input type="text" id="tname" name="tname"
+                        <td><input id="tname" name="tname"
                             class="easyui-validatebox" required="true" />&nbsp;<span
                             style="color: red">*</span>
                         </td>
                         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         <td>性别：</td>
-                        <td><input type="text" id="tsex" name="tsex"
+                        <td><input id="tsex" name="tsex"
                             class="easyui-validatebox" required="true" />&nbsp;<span
                             style="color: red">*</span>
                         </td>
                     </tr>
                     <tr>
                         <td>绰号：</td>
-                        <td><input type="text" id="tmes" name="tmes"
+                        <td><input id="tmes" name="tmes"
                             class="easyui-validatebox" required="true" />&nbsp;<span
+                            style="color: red">*</span>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>时间：</td>
+                        <td><input id="tdate" name="tdate"
+                            class="easyui-datetimebox" required="true" />&nbsp;<span
                             style="color: red">*</span>
                         </td>
                     </tr>
@@ -110,7 +117,28 @@
 				}
 			});
 		}
-		
+		/* 将Thu Mar 19 2015 12:00:00 GMT+0800 (中国标准时间)转换为2015-3-19 12:00:00 */
+		var formatDateTime = function (date) {  
+		    var y = date.getFullYear();  
+		    var m = date.getMonth() + 1;  
+		    m = m < 10 ? ('0' + m) : m;  
+		    var d = date.getDate();  
+		    d = d < 10 ? ('0' + d) : d;  
+		    var h = date.getHours();  
+		    var minute = date.getMinutes();  
+		    minute = minute < 10 ? ('0' + minute) : minute;  
+		    return y + '-' + m + '-' + d+' '+h+':'+minute;  
+		};
+
+		/* 将{"date":14,"day":3,"hours":19,"minutes"……}转换为Thu Mar 19 2015 12:00:00 GMT+0800 (中国标准时间) */
+		function toDate(obj){
+			var date = new Date();
+			 date.setTime(obj.time);
+			 date.setHours(obj.hours);
+			 date.setMinutes(obj.minutes);
+			 date.setSeconds(obj.seconds);
+			return formatDateTime(date);
+		}
 
 	    function openUserAddDialog() {
 	        $("#dlg").dialog("open").dialog("setTitle", "添加用户");
@@ -151,6 +179,7 @@
 	        $("#tname").val("");
 	        $("#tsex").val("");
 	        $("#tmes").val("");
+	        $("#tdate").datetimebox("setValue","");
 	    }
 	    
 	    function closeUserDialog() {

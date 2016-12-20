@@ -1,5 +1,9 @@
 package com.ht.entity;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Test {
 	private Integer tid;
 	
@@ -8,6 +12,9 @@ public class Test {
 	private String tsex;
 	
 	private String tmes;
+	
+	@DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
+	private Date tdate;
 
 	public Integer getTid() {
 		return tid;
@@ -41,6 +48,12 @@ public class Test {
 		this.tmes = tmes;
 	}
 
-	
-	
+	public Date getTdate() {
+		return tdate;
+	}
+
+	public void setTdate(Date tdate) {
+		this.tdate = tdate;
+	}
+
 }
