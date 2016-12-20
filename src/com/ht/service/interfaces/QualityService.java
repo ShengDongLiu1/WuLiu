@@ -9,13 +9,13 @@ public interface QualityService {
 
 	int qualityAdd(Quality quality);
 	
-	Quality qualitySelect(int eid);
+	Quality qualitySelect(Integer eid);
 	
 	List<Quality> qualitySelectAll(Map<String, Object> map);
 	
-	int qualityDelete(int eid);
+	Integer qualityDelete(Integer eid);
 	
-	int qualityUpdate(Quality quality);
+	Integer qualityUpdate(Quality quality);
 	
 	Long getTotal(Map<String, Object> map);
 }

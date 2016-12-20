@@ -83,7 +83,6 @@ public class QualityController {
 		map.put("size", pageBean.getPageSize());
 		List<Quality> list=qualityService.qualitySelectAll(map);
 		Long total=qualityService.getTotal(map);	//查询总条数
-		System.out.println("************="+total);
 		JSONObject result = new JSONObject();
 		JSONArray jsonArray = JSONArray.fromObject(list);
 		result.put("rows", jsonArray);
@@ -98,7 +97,42 @@ public class QualityController {
 	public Map<String, Object> selectByid(Integer eid,HttpServletResponse response){
 		Map<String, Object> map=new HashMap<>();
 		Quality quality=qualityService.qualitySelect(eid);
+		System.out.println("++++++++++++++++="+quality);
 		map.put("quality", quality);
 		return map;
 	}
+	
+	@RequestMapping("/save")
+	public String save(Quality quality, HttpServletResponse resp) throws Exception{
+		System.out.println("*************="+quality.getEid());
+		int resultObj = 0;
+		if(quality.getEid() == null){
+			resultObj = qualityService.qualityAdd(quality);
+		}else{
+			resultObj = qualityService.qualityUpdate(quality);
+		}
+		JSONObject jsonObject = new JSONObject();
+		if(resultObj > 0){
+			jsonObject.put("success", true);
+		}else{
+			jsonObject.put("success", false);
+		}
+		ResponseUtil.write(resp, jsonObject);
+		return null;
+	}
+	
+	@RequestMapping("/delete")
+	public String qualityDalete(@RequestParam(value="ids") String ids,HttpServletResponse res) throws Exception{
+		System.out.println("***************删除");
+		String[] idStr = ids.split(",");
+        JSONObject jsonObject = new JSONObject();
+        for (String id : idStr) {
+        	System.out.println("id="+id);
+        	qualityService.qualityDelete(Integer.parseInt(id));
+        }
+        jsonObject.put("success", true);
+        ResponseUtil.write(res, jsonObject);
+		return null;
+	}
+	
 }

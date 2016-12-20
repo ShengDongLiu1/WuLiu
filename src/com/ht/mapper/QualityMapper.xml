@@ -17,12 +17,19 @@
 		
 		<association property="employee" javaType="com.ht.entity.Employee">
 			<result property="eid" column="eid"/>
+			<result property="ejobnumber" column="ejobnumber"/>
 			<result property="ename" column="ename"/>
+			<result property="eposition" column="eposition"/>
+			<result property="ephone" column="ephone"/>
 		</association>
 		
 		<association property="goods" javaType="com.ht.entity.Goods">
 			<result property="gid" column="gid"/>
 			<result property="gordernumber" column="gordernumber"/>
+			<result property="gname" column="gname"/>
+			<result property="ggrade" column="ggrade"/>
+			<result property="gdescribe" column="gdescribe"/>
+			<result property="gstate" column="gstate"/>
 		</association>
 	</resultMap>
 	
@@ -31,11 +38,11 @@
 	</sql>
 	
 	<!-- 根据id查询质检记录 -->
-	<select id="qualitySelect" parameterType="java.lang.Integer" resultMap="QualityResultMap">
+	<select id="qualitySelect" parameterType="java.lang.Integer" resultMap="QualityResultMaps">
 	  select 
-	  <include refid="Quality_Column_List" />
-	  from examine
-	  where eid = #{eid,jdbcType=INTEGER}
+	  *
+	  from examine exa, employee emp, goods go
+	  where exa.eid = #{eid,jdbcType=INTEGER}
 	</select>
 	
 	<!-- 根据id删除质检记录 -->
