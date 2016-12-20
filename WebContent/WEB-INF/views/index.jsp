@@ -77,7 +77,7 @@
 							<li class="divider visible-phone"></li>
 							<li>
 								<a tabindex="-1" href="<%=basePath%>user/logout" target="_top">Logout</a>
-								<a tabindex="-1" href="<%=basePath%>QRcode.jsp?user=${user.usertruename}">生成二维码</a>
+								<a tabindex="-1" href="<%=basePath%>QRcode.jsp?user=${user.username}">生成二维码</a>
 							</li>
 						</ul>
 					</li>
@@ -107,7 +107,8 @@
 					</ul>
 				</c:if>
 			</c:forEach>
-		
+			<object type="application/x-shockwave-flash" style="outline:none;" data="http://cdn.abowman.com/widgets/hamster/hamster.swf?" width="240" height="240"><param name="movie" value="http://cdn.abowman.com/widgets/hamster/hamster.swf?"></param><param name="AllowScriptAccess" value="always"></param><param name="wmode" value="opaque"></param></object>
+
 		</div>
 		<div class="content">
 			<iframe name="main" height="600px" width="100%" scrolling="auto"
