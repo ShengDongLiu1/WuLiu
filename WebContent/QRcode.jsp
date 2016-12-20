@@ -17,7 +17,7 @@
 <script>
 
 jQuery(function(){
-	jQuery('#output').qrcode("${user.usertruename}");
+	jQuery('#output').qrcode("110");
 
 })
 </script>

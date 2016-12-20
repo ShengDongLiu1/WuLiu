@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.ht.dto.PageBean;
 import com.ht.dto.StringUtil;
-import com.ht.entity.Goods;
 import com.ht.entity.Inventory;
-import com.ht.entity.Test;
 import com.ht.service.interfaces.InventoryService;
 import com.ht.ssm.util.ResponseUtil;
 

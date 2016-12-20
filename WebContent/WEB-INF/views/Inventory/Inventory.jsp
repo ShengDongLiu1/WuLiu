@@ -67,10 +67,10 @@ a:hover {color:#54287C}
 		<a href="javascript:deleteInventory()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
 		
 		<!-- 筛选 -->
-		货物名称：<input id="gname" class="easyui-validatebox easyui-textbox" style="width:100px;" data-options="iconCls:'icon-search'" />
-		库位名称：<input id="loname" class="easyui-validatebox easyui-textbox" style="width:100px;" data-options="iconCls:'icon-search'" />
-		库位等级：<input id="lolevel" class="easyui-validatebox easyui-textbox" style="width:100px;" data-options="iconCls:'icon-search'" />
-		库位状态：<input id="lostate" class="easyui-validatebox easyui-textbox" style="width:100px;" data-options="iconCls:'icon-search'" />
+		货物名称：<input id="gname" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
+		库位名称：<input id="loname" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
+		库位等级：<input id="lolevel" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
+		库位状态：<input id="lostate" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
 		<a href="javascript:selectfiltrate()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">筛选</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	</div>
 	
@@ -80,7 +80,7 @@ a:hover {color:#54287C}
 	        class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
 	<div id="dlg-buttons2">
-	    <a href="javascript:closeInventoryDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	    <a href="javascript:closeInventoryDialog2()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
 	<div id="dlg" class="easyui-dialog"
             style="width: 730px;height:280px;padding:10px 10px;" closed="true"
@@ -168,9 +168,9 @@ function saveInventory() {
             if (result.success) {
                 $.messager.alert("系统提示", "保存成功！");
                 $("#dlg").dialog("close");
-                
-                resetValue();
                 $("#dg").datagrid("load");
+                resetValue();
+               
             } else {
                 $.messager.alert("系统提示", "保存失败！");
                 return;
@@ -251,7 +251,7 @@ function openInveWin(loid) {
 /* 给库位关闭开启 */
 function NOInveWin(loid){
 	$.post("<%=path%>/inventory/NOInveWin",{'loid':loid},function(index){
-		alert(index);
+		$.messager.alert('系统提示',index,'info');
 		 $("#dg").datagrid("load");
 	},"json");
 }
@@ -267,6 +267,10 @@ function fuzhi(index){
 	
 }
 function closeInventoryDialog() {	
+    $("#dlg").dialog("close");
+    resetValue();
+}
+function closeInventoryDialog2() {	
     $("#InvebyWin").dialog("close");
     resetValue();
 }

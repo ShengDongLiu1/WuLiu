@@ -7,13 +7,14 @@ public class Transport {
 
     private String tdriverphone;
 
-    private Integer tvehicleid;
+    private String tvehicleid;
 
     private String tvehicletype;
 
     private Integer tvehiclecapacity;
 
-    public Integer getTid() {
+    private String idcard;
+	public Integer getTid() {
         return tid;
     }
 
@@ -37,11 +38,11 @@ public class Transport {
         this.tdriverphone = tdriverphone == null ? null : tdriverphone.trim();
     }
 
-    public Integer getTvehicleid() {
+    public String getTvehicleid() {
         return tvehicleid;
     }
 
-    public void setTvehicleid(Integer tvehicleid) {
+    public void setTvehicleid(String tvehicleid) {
         this.tvehicleid = tvehicleid;
     }
 
@@ -60,4 +61,12 @@ public class Transport {
     public void setTvehiclecapacity(Integer tvehiclecapacity) {
         this.tvehiclecapacity = tvehiclecapacity;
     }
+    
+    public String getIdcard() {
+		return idcard;
+	}
+
+	public void setIdcard(String idcard) {
+		this.idcard = idcard;
+	}
 }

@@ -5,12 +5,13 @@
     <id column="tid" jdbcType="INTEGER" property="tid" />
     <result column="tdrivername" jdbcType="VARCHAR" property="tdrivername" />
     <result column="tdriverphone" jdbcType="VARCHAR" property="tdriverphone" />
-    <result column="tvehicleid" jdbcType="INTEGER" property="tvehicleid" />
+    <result column="tvehicleid" jdbcType="VARCHAR" property="tvehicleid" />
     <result column="tvehicletype" jdbcType="VARCHAR" property="tvehicletype" />
     <result column="tvehiclecapacity" jdbcType="INTEGER" property="tvehiclecapacity" />
+    <result column="idcard" jdbcType="VARCHAR" property="idcard" />
   </resultMap>
   <sql id="Base_Column_List">
-    tid, tdrivername, tdriverphone, tvehicleid, tvehicletype, tvehiclecapacity
+    tid, tdrivername, tdriverphone, tvehicleid, tvehicletype, tvehiclecapacity,idcard
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -18,19 +19,19 @@
     from transport
     where tid = #{tid,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="transportdelete" parameterType="java.lang.Integer">
     delete from transport
     where tid = #{tid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.ht.entity.Transport">
     insert into transport (tid, tdrivername, tdriverphone, 
-      tvehicleid, tvehicletype, tvehiclecapacity
+      tvehicleid, tvehicletype, tvehiclecapacity,idcard
       )
     values (#{tid,jdbcType=INTEGER}, #{tdrivername,jdbcType=VARCHAR}, #{tdriverphone,jdbcType=VARCHAR}, 
-      #{tvehicleid,jdbcType=INTEGER}, #{tvehicletype,jdbcType=VARCHAR}, #{tvehiclecapacity,jdbcType=INTEGER}
+      #{tvehicleid,jdbcType=INTEGER}, #{tvehicletype,jdbcType=VARCHAR}, #{tvehiclecapacity,jdbcType=INTEGER},#{idcard,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.ht.entity.Transport">
+  <insert id="treansportAdd" parameterType="com.ht.entity.Transport">
     insert into transport
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="tid != null">
@@ -50,6 +51,9 @@
       </if>
       <if test="tvehiclecapacity != null">
         tvehiclecapacity,
+      </if>
+      <if test="idcard != null">
+        idcard,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -71,9 +75,12 @@
       <if test="tvehiclecapacity != null">
         #{tvehiclecapacity,jdbcType=INTEGER},
       </if>
+      <if test="idcard != null">
+        #{idcard,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Transport">
+  <update id="treansportupdate" parameterType="com.ht.entity.Transport">
     update transport
     <set>
       <if test="tdrivername != null">
@@ -91,6 +98,9 @@
       <if test="tvehiclecapacity != null">
         tvehiclecapacity = #{tvehiclecapacity,jdbcType=INTEGER},
       </if>
+      <if test="idcard != null">
+        idcard = #{idcard,jdbcType=VARCHAR},
+      </if>
     </set>
     where tid = #{tid,jdbcType=INTEGER}
   </update>
@@ -103,4 +113,60 @@
       tvehiclecapacity = #{tvehiclecapacity,jdbcType=INTEGER}
     where tid = #{tid,jdbcType=INTEGER}
   </update>
+  
+   <!-- 查询所有承运车辆列表 -->
+  <select id="select" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select 
+     <include refid="Base_Column_List" />
+   	 from Transport
+    <where>
+    	<if test="tdrivername!=null and tdrivername!='' ">
+			tdrivername like #{tdrivername}
+		</if>
+		<if test="tdriverphone!=null and tdriverphone!='' ">
+			and tdriverphone like #{tdriverphone}
+		</if>
+		<if test="tvehicleid!=null and tvehicleid!='' ">
+			and tvehicleid like #{tvehicleid}
+		</if>
+		<if test="tvehicletype!=null and tvehicletype!='' ">
+			and tvehicletype like #{tvehicletype}
+		</if>
+		<if test="tvehiclecapacity!=null and tvehiclecapacity!='' ">
+			and tvehiclecapacity like #{tvehiclecapacity}
+		</if>
+		<if test="idcard!=null and idcard!='' ">
+			and idcard like #{idcard}
+		</if>
+    </where>
+  	 order by tid desc
+  	 <if test="start!=null and size!=null">
+		limit #{start},#{size}
+	</if>
+  </select>
+  
+  <!-- 查询承运车辆数 -->
+ <select id="queryAllCount" parameterType="java.util.Map" resultType="Long">
+ 	select count(*) from Transport
+		<where>
+			<if test="tdrivername!=null and tdrivername!='' ">
+			tdrivername like #{tdrivername}
+		</if>
+		<if test="tdriverphone!=null and tdriverphone!='' ">
+			and tdriverphone like #{tdriverphone}
+		</if>
+		<if test="tvehicleid!=null and tvehicleid!='' ">
+			and tvehicleid like #{tvehicleid}
+		</if>
+		<if test="tvehicletype!=null and tvehicletype!='' ">
+			and tvehicletype like #{tvehicletype}
+		</if>
+		<if test="tvehiclecapacity!=null and tvehiclecapacity!='' ">
+			and tvehiclecapacity like #{tvehiclecapacity}
+		</if>
+		<if test="idcard!=null and idcard!='' ">
+			and idcard like #{idcard}
+		</if>
+		</where>
+ </select>
 </mapper>
