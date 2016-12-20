@@ -40,6 +40,7 @@ a:hover {color:#54287C}
 .ju{color:red;}
 </style>
 <script>
+
 $(function(){
 	//setPagination("list");
 /**	$(document).bind('contextmenu',function(e){	//给网页绑定右键菜单
@@ -85,7 +86,40 @@ $(function(){
 	 			fuzhi(index);
 			},"json");
 	    }
-	})
+	});
+	
+	/* 禁用复选框 */
+	$('#list').datagrid({
+		onLoadSuccess: function(data){//加载完毕后获取所有的checkbox遍历
+            if (data.rows.length > 0) {
+                //循环判断操作为新增的不能选择
+                for (var i = 0; i < data.rows.length; i++) {
+                    //根据operate让某些行不可选
+                    if (data.rows[i].gstate != "1") {
+                        $("input[type='checkbox']")[i + 1].disabled = true;
+                    }
+                }
+            }
+        },
+        onClickRow: function(rowIndex, rowData){
+            //加载完毕后获取所有的checkbox遍历
+            $("input[type='checkbox']").each(function(index, el){
+                //如果当前的复选框不可选，则不让其选中
+                if (el.disabled == true) {
+                    $('#list').datagrid('unselectRow', index - 1);
+                }
+            })
+        },
+        onCheckAll:function(rows){ 
+            //加载完毕后获取所有的checkbox遍历 
+             $("input[type='checkbox']").each(function(index, el){ 
+                 //如果当前的复选框不可选，则不让其选中 
+                 if (el.disabled == true) { 
+                	 $('#list').datagrid('unselectRow', index - 1); 
+                 } 
+             }) 
+         }
+	});
 	
 });
 
@@ -263,6 +297,29 @@ function seachs(){
 	}); 
 }
 
+/* 批量揽收 */
+function bulkGoods(){
+	var row=$("#list").datagrid("getSelections");	//获取datagrid中选中的行
+	if(row.length>0){
+		var rcids = [];//客户id
+		var rgids = [];//货物id
+		var rreceivecounts = [];//货物数量
+        for ( var i = 0; i < row.length; i++) {
+        	rcids.push(row[i].gcid);
+        	rgids.push(row[i].gid);
+        	rreceivecounts.push(row[i].gcount);
+        }
+        var cids = rcids.join(",");
+        var gids = rgids.join(",");
+        var counts = rreceivecounts.join(",");
+        $.post("<%=path%>/receipt/bulkGoods",{'rcids':cids,'rgids':gids,'rreceivecounts':counts},function(index){
+        	$.messager.alert('提示',index.result,'info');
+        	$("#list").datagrid("reload");	//刷新表格
+        },"json");
+	}else{
+		$.messager.alert('提示','请选择需要揽收的货物','info');	//messager消息控件
+	}
+}
 </script>
 </head>
 <body>
@@ -295,7 +352,7 @@ function seachs(){
 	
 	<!-- 菜单 -->
 	<div id="kj" style="padding: 2px;">
-		<a href="javascript:openUserAddDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >添加</a>
+		<a href="javascript:bulkGoods()" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >批量揽收</a>
 		<a href="javascript:openUserModifyDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" >编辑</a>
 		<a href="javascript:deleteTest()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
 		<br />

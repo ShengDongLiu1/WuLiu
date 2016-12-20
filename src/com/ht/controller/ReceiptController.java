@@ -173,5 +173,35 @@ public class ReceiptController {
 		ResponseUtil.write(response, result);
 		return null;
 	}
+	
+	@RequestMapping(value="/bulkGoods")
+	@ResponseBody
+	public Map<String, Object> bulkGoods(String rcids,String rgids,String rreceivecounts,HttpSession session){
+		Map<String, Object> map= new HashMap<>();
+		sysuser user=(sysuser) session.getAttribute("user");
+		Receipt receipt=new Receipt();
+		String[] cidStr = rcids.split(",");
+		String[] gidStr = rgids.split(",");
+		String[] count = rreceivecounts.split(",");
+		for (int i = 0; i < count.length; i++) {
+			receipt.setRcid(Integer.parseInt(cidStr[i]));//客户id
+			receipt.setRgid(Integer.parseInt(gidStr[i]));//货物id
+			receipt.setReid(user.getUserid());//员工id
+			receipt.setRreceivecount(Integer.parseInt(count[i]));//实际揽收数量
+			receipt.setRdamagedcount(0);//破损数量
+			receipt.setRshelvecount(0);//搁置数量
+			receipt.setRtdgoodstime(new Date());
+			receipt.setRstart(1);	//清单状态1表示未入库
+			int resultcount=receiptService.insertSelective(receipt);
+			if(resultcount>0){
+				Goods goods=new Goods();
+				goods.setGid(receipt.getRgid());
+				goods.setGstate("2");//状态设为2已揽收
+				resultcount=goodsService.updateByPrimaryKeySelective(goods);
+			}
+		}
+		map.put("result", "货物揽收成功");
+		return map;
+	}
 
 }

@@ -266,7 +266,7 @@ function subrukuType(){
 		url:'<%=path %>/receipt/all',
 		method:'get',
 		rownumbers:true,	
-		singleSelect:false,
+		singleSelect:true,
 		autoRowHeight:true,
 		pagination:true,
 		border:false,
