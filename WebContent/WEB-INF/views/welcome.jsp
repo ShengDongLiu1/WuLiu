@@ -20,6 +20,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<script src="<%=basePath%>assets/jslib/jquery-1.7.2.min.js"
 			type="text/javascript"></script>
 
+
+<script type="text/javascript" src="<%=basePath%>assets/jslib/jquery-sj.js"></script>
+
+<script type="text/javascript" src="<%=basePath%>assets/jslib/zzsc.js"></script>
   </head>
   
  <body class="content1">
@@ -40,11 +44,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 				
 					<div class="span12">
-							<div class="hero-unit" style="margin-top:200px;">
+							<div class="hero-unit" style="margin-top:10px;">
 							<h1 style="padding-left:100px;">
 								欢迎使用后台管理系统！
 							</h1>
 				
+							</div>
+							<div id="zzsc">
+
+  								<canvas id="canvas" width="920" height="400"></canvas>
+
 							</div>
 					</div>
 				

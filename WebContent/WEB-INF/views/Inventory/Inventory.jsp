@@ -90,33 +90,33 @@ a:hover {color:#54287C}
                     <tr>
                         <td>库位名称：</td>
                         <td><input type="text" id="loname" name="loname"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            class="easyui-validatebox easyui-textbox" required="true" />&nbsp;<span
                             style="color: red">*</span>
                         </td>
                         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         <td>库位尺寸 ：</td>
                         <td><input type="text" id="losize" name="losize"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            class="easyui-validatebox easyui-textbox" required="true" />&nbsp;<span
                             style="color: red">*</span>
                         </td>
                     </tr>
                     <tr>
                         <td>库位体积 ：</td>
                         <td><input type="text" id="lovolume" name="lovolume"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            class="easyui-validatebox easyui-textbox" required="true" />&nbsp;<span
                             style="color: red">*</span>
                         </td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         <td>承受重量：</td>
                         <td><input type="text" id="loweight" name="loweight"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            class="easyui-validatebox easyui-textbox" required="true" />&nbsp;<span
                             style="color: red">*</span>
                         </td>
                     </tr>
                     <tr>
                         <td>库位等级：</td>
                         <td><input type="text" id="lolevel" name="lolevel"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            class="easyui-validatebox easyui-textbox" required="true" />&nbsp;<span
                             style="color: red">*</span>
                         </td>
                     </tr>
@@ -169,7 +169,7 @@ function saveInventory() {
                 $.messager.alert("系统提示", "保存成功！");
                 $("#dlg").dialog("close");
                 $("#dg").datagrid("load");
-                resetValue();
+               
                
             } else {
                 $.messager.alert("系统提示", "保存失败！");
@@ -232,6 +232,11 @@ function selectfiltrate(){
 	var lostate=$('#lostate').textbox('getValue');
 	 $("#dg").datagrid("load",{gname:names,loname:loname,lolevel:lolevel,lostate:lostate});
 	
+	        $("#gname").textbox('setValue',"");
+	        $("#loname").textbox('setValue',"");
+	        $("#lolevel").textbox('setValue',"");
+	        $("#lostate").textbox('setValue',"");
+	    
 }
 
 /* 表格按钮 */
@@ -264,15 +269,13 @@ function fuzhi(index){
 		$("#gweight1").val(index.inventory[i].goods.gweight);
 	}
 	$("#InvebyWin").dialog("open").dialog("setTitle", "库位货物详情");
-	
 }
 function closeInventoryDialog() {	
     $("#dlg").dialog("close");
-    resetValue();
+   
 }
 function closeInventoryDialog2() {	
     $("#InvebyWin").dialog("close");
-    resetValue();
 }
 
 function goodsName(value){
