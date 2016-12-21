@@ -100,7 +100,7 @@ public class AES {
 
     public static void main(String[] args) throws Exception {
         // 需要加密的字串
-        String cSrc = "user";
+        String cSrc = "liu";
 
         // 加密
         long lStart = System.currentTimeMillis();

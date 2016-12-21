@@ -19,5 +19,9 @@ public class CustomerServiceImpl implements CustomerService{
 	public Customer klogin1(Map<String, Object> map) {
 		return customerMapper.klogin1(map);
 	}
+	@Override
+	public int insertSelective(Customer customer) {
+		return customerMapper.insertSelective(customer);
+	}
 
 }

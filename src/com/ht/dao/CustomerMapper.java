@@ -8,17 +8,10 @@ import com.ht.entity.Customer;
 import com.ht.entity.sysuser;
 
 public interface CustomerMapper {
-    int deleteByPrimaryKey(Integer cid);
-    
-    int insert(Customer record);
-    
+	
     int insertSelective(Customer record);
 
     public Customer klogin1(String cemail, String cpassword);
-
-    int updateByPrimaryKeySelective(Customer record);
-
-    int updateByPrimaryKey(Customer record);
      
     /**客户登录
 	 * @param cemail 用户名

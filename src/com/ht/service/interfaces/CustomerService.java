@@ -13,5 +13,12 @@ public interface CustomerService {
 	 */
 
 	public Customer klogin1(Map<String, Object> map);
+	
+	/**
+	 * 注册
+	 * @param record
+	 * @return
+	 */
 
+	public int insertSelective(Customer customer);
 }

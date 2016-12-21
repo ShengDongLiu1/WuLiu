@@ -69,7 +69,6 @@
 	<div id="header">
 		<div class="header">
 			<h1 class="png_bg">登录宏图物流网</h1>
-		<a href="<%=basePath%>index.jsp" class="nav2" ><button type="button" class="btn btn-warning">返回首页</button></a>
 		</div>
 	</div>	
 	
@@ -93,7 +92,7 @@
 				</div>
 				<div><input class="login_btn" id="loginBtn" type="submit" value="登录" /></div>
                 <div style="line-height:30px; text-indent:5px;color:#F30" id="loginTips">&nbsp;</div>
-				<h4>可以使用下面方式登录<a class="#" href="register">立即注册</a></h4>
+				<h4>可以使用下面方式登录<a class="#" href="<%=path%>/customer/zc">立即注册</a></h4>
 			</form>
 		</div>
 	</div>
@@ -149,7 +148,6 @@
 				var code = obj.code;
 				if(code == '1')
 				{
-					//sycSiteLogin();
 					if(refer){
 						window.location.href = refer;
 					}else{
@@ -201,7 +199,6 @@
 			show_err_msg('${LoginError}');
 		}
 	});
-	
 	 /*验证码*/
 	 function chgUrl(url) { 
             var timestamp = (new Date()).valueOf();   
