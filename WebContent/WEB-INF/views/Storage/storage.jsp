@@ -185,6 +185,65 @@ function lanshou(state){
 	return sta;
 }
 
+
+
+function opentransport(){
+	$("#stransport_list").datagrid("reload");
+	$("#studentwin1").window("open");
+}
+
+function openUserModifyDialog() {
+    var selectedRows = $("#list").datagrid("getSelections");
+    if (selectedRows.length != 1) {
+        $.messager.alert("系统提示", "请选择一条要编辑的数据！");
+        return;
+    }
+    var row = selectedRows[0];
+    $("#addChuku").dialog("open").dialog("setTitle", "编辑出库单信息");
+    $("#list").form("load", row);
+    url = "${pageContext.request.contextPath}/thelibrary/add?tid=" + row.tid;
+}
+
+
+function chuku() {
+	 var row = $("#list").datagrid("getSelected");
+	 if(row){
+		$("#sid2").val(row.sid);
+		$("#gid2").val(row.goods.gid);
+		$("#sstock").val(row.sstock);
+		$("#goodsName2").textbox('setValue',row.goods.gname);
+		url = "${pageContext.request.contextPath}/thelibrary/add";
+		$("#addChuku").dialog("open").dialog("setTitle", "添加出库单");
+	 }else {
+        $.messager.alert('提示', '请选中一行需要出库的记录', 'info');
+    }
+}
+function doAdd() {
+	var kucun = $("#sstock").val();
+	var chuku = $("#tcount").val();
+	if(kucun >= chuku){
+        $("#addForm").form("submit", {
+            url :"${pageContext.request.contextPath}/thelibrary/add",
+            success : function(result) {
+                var result = eval('(' + result + ')');
+        		
+	                if (result.success) {
+	                    $.messager.alert("系统提示", "保存成功！");
+	                    $("#addChuku").dialog("close");
+	                    $("#list").datagrid("reload");
+	                } 
+	                else {
+	                    $.messager.alert("系统提示", "保存失败！");
+	                    return;
+	                }
+            	}
+        });
+    }else{
+		$.messager.alert("系统提示", "没有那么多库存可以出！");
+		return;
+	}
+}
+
 </script>
 </head>
 <body>
@@ -209,9 +268,9 @@ function lanshou(state){
 				<th field="storagecount" width="5%" align="center">入库数量</th>
 				<th field="storagebarcode" width="28%" align="center" formatter="toImage">条形码</th>
 				<th field="sbarcadeid" width="12%" align="center">条形码编号</th>
+				<th field="sstock" width="5%" align="center">库存量</th>
 				<th field="storagetime" width="9%" align="center" formatter="toDate">入库时间</th>
 				<th field="user" width="7%" align="center" formatter="toUserName">操作员</th>
-				<th field="null" width="8%" align="center" formatter="toSub">操作</th>
 			</tr>
 		</thead>
 	</table>
@@ -222,6 +281,8 @@ function lanshou(state){
 		条形码编号：<input id="ssbarcadeid" class="easyui-validatebox easyui-textbox" name="sbarcadeid" data-options="required:false" />&nbsp;
 		操作员：<input id="username" class="easyui-validatebox easyui-textbox" name="username" data-options="required:false" />
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
+	
+	  <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" onclick="chuku();">出库</a>
 	</div>
 	
 	<!-- 自定义窗口按钮 -->
@@ -284,5 +345,56 @@ function lanshou(state){
 			</tr>
 		</table>
 	</div>
+	
+	
+	
+	<div id="dlg-buttons">
+	    <a href="javascript:doAdd()" class="easyui-linkbutton"
+	        iconCls="icon-ok">保存</a> <a href="javascript:closeUserDialog()"
+	        class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
+	<div id="addChuku" class="easyui-dialog"
+            style="width: 400px;height:350px;padding:10px 10px;" closed="true"
+            buttons="#dlg-buttons">
+    <form id="addForm"  method="post">
+    	<input type="hidden" name="tgid" id="gid2">
+    	<input type="hidden" name="sstock" id="sstock"/>
+    	<input type="hidden" name="sid" id="sid2"/>
+        <table style="border: 2px;border-color: red; ">
+            <tr>
+                <td>货物名称:</td>
+                <td><input class="easyui-textbox" id="goodsName2" style="width: 150px;"  
+                      data-options="required:true,novalidate:true"  /></td>
+            </tr>
+            <tr>
+                <td><br/>出库数量:</td>
+                <td><br/><input class="easyui-numberbox" id="tcount" style="width: 150px;" name="tcount"
+                               data-options="required:true,validType:'length[1,11]',novalidate:true"
+                                style="width:150px"></td>
+            </tr>
+            <tr>
+                <td><br/>出库类型:</td>
+                <td><br/><select class="easyui-combobox"  style="width: 150px;" name="ttype" data-options="required:true">
+                        <option value="预定出库">预定出库</option>
+                        <option value="销售出库">销售出库</option>
+                        <option value="退货出库">退货出库</option>
+                        <option value="报废出库">报废出库</option>
+                        <option value="调整出库">调整出库</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+            	<td><br/>出库时间:</td>
+                <td><br/><input class="easyui-datebox" name="ttime" /></td>
+            </tr>
+            <tr>
+                <td><br/>备注:</td>
+                <td><br/>
+                   <textarea rows="3" cols="25" name="remarks"></textarea>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 </body>
 </html>

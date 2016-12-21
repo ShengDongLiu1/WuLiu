@@ -56,7 +56,7 @@ public class TransportController {
 	@RequestMapping("/save")
 	public String save(Transport transport,HttpServletResponse res) throws Exception{
 		int resultTotal = 0;
-        if (transport.getTid() == null) {
+        if (transport.getTrid() == null) {
             resultTotal = transportService.treansportAdd(transport);
         }else{
             resultTotal = transportService.treansportupdate(transport);

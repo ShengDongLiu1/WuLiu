@@ -1,7 +1,7 @@
 package com.ht.entity;
 
 public class Transport {
-    private Integer tid;
+    private Integer trid;
 
     private String tdrivername;
 
@@ -14,12 +14,12 @@ public class Transport {
     private Integer tvehiclecapacity;
 
     private String idcard;
-	public Integer getTid() {
-        return tid;
+	public Integer getTrid() {
+        return trid;
     }
 
-    public void setTid(Integer tid) {
-        this.tid = tid;
+    public void setTid(Integer trid) {
+        this.trid = trid;
     }
 
     public String getTdrivername() {

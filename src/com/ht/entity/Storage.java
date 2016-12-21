@@ -14,6 +14,8 @@ public class Storage {
     private Integer ssbid;
     
     private Integer seid;
+    
+    private Integer sstock;
 
     private Integer storagecount;
 
@@ -33,10 +35,21 @@ public class Storage {
     
     private sysuser user;	//员工
 
+    
+    public Integer getSstock() {
+		return sstock;
+	}
+    
+    public void setSstock(Integer sstock) {
+		this.sstock = sstock;
+	}
+    
     public Integer getSid() {
         return sid;
     }
 
+    
+    
     public void setSid(Integer sid) {
         this.sid = sid;
     }

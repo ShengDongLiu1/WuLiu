@@ -28,7 +28,7 @@
 		fit:true">
 		<thead>
 			<tr>
-				<th data-options="field:'tid',checkbox:true,width:100" align="center">承运编号</th>
+				<th data-options="field:'trid',checkbox:true,width:100" align="center">承运编号</th>
 				<th data-options="field:'tdrivername',width:100" align="center">司机姓名</th>
 				<th data-options="field:'tdriverphone',width:100" align="center">电话号码</th>
 				<th data-options="field:'tvehicleid',width:100" align="center">车牌号码</th>
@@ -145,7 +145,7 @@
 	        var row = selectedRows[0];
 	        $("#dlg").dialog("open").dialog("setTitle", "编辑用户信息");
 	        $("#fm").form("load", row);
-	        url = "${pageContext.request.contextPath}/transport/save.do?tid=" + row.tid;
+	        url = "${pageContext.request.contextPath}/transport/save.do?trid=" + row.trid;
 	    }
 	    
 	    function saveTran() {
@@ -175,7 +175,7 @@
 		        
 		        var strIds = [];
 		        for ( var i = 0; i < selectedRows.length; i++) {
-		            strIds.push(selectedRows[i].tid);
+		            strIds.push(selectedRows[i].trid);
 		        }
 		        var ids = strIds.join(",");
 		        $.messager.confirm("系统提示", "您确定要删除这<font color=red>"

@@ -2,20 +2,47 @@ package com.ht.entity;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Thelibrary {
     private Integer tid;
 
-    private Integer tsid;
+    private Integer tgid;//货物编号
 
-    private Integer tloid;
+    private Integer ttid;//承运编号
 
-    private Integer ttid;
+    private Integer tcount;//出库数量
+    
+    private Integer tstate;//出库状态
 
-    private Integer tcount;
+    private String ttype;//出库类型
+   
+    private String remarks;//出库备注
 
-    private String ttype;
-
-    private Date ttime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")  
+    private Date ttime;//出库时间
+    
+    
+    private Goods goods;//货物
+    
+    
+    private Transport transport;
+    
+    
+    public Goods getGoods() {
+		return goods;
+	}
+    
+    public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+    public Transport getTransport() {
+		return transport;
+	}
+    
+    public void setTransport(Transport transport) {
+		this.transport = transport;
+	}
 
     public Integer getTid() {
         return tid;
@@ -25,21 +52,14 @@ public class Thelibrary {
         this.tid = tid;
     }
 
-    public Integer getTsid() {
-        return tsid;
+    public Integer gettgid() {
+        return tgid;
     }
 
-    public void setTsid(Integer tsid) {
-        this.tsid = tsid;
+    public void settgid(Integer tgid) {
+        this.tgid = tgid;
     }
 
-    public Integer getTloid() {
-        return tloid;
-    }
-
-    public void setTloid(Integer tloid) {
-        this.tloid = tloid;
-    }
 
     public Integer getTtid() {
         return ttid;
@@ -72,4 +92,31 @@ public class Thelibrary {
     public void setTtime(Date ttime) {
         this.ttime = ttime;
     }
+    
+    
+    public String getRemarks() {
+		return remarks;
+	}
+    public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+    
+    public Integer getTgid() {
+		return tgid;
+	}
+    
+    
+    public void setTgid(Integer tgid) {
+		this.tgid = tgid;
+	}
+    
+    
+    public Integer getTstate() {
+		return tstate;
+	}
+    
+    
+    public void setTstate(Integer tstate) {
+		this.tstate = tstate;
+	}
 }

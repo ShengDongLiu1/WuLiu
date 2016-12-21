@@ -11,6 +11,7 @@
     <result column="storagemode" jdbcType="VARCHAR" property="storagemode" />
     <result column="storagebarcode" jdbcType="VARCHAR" property="storagebarcode" />
     <result column="sbarcadeid" jdbcType="VARCHAR" property="sbarcadeid" />
+    <result column="sstock" jdbcType="INTEGER" property="sstock" />
     <result column="storagetime" jdbcType="TIMESTAMP" property="storagetime" />
   </resultMap>
   
@@ -24,6 +25,7 @@
     <result column="storagemode" jdbcType="VARCHAR" property="storagemode" />
     <result column="storagebarcode" jdbcType="VARCHAR" property="storagebarcode" />
     <result column="sbarcadeid" jdbcType="VARCHAR" property="sbarcadeid" />
+    <result column="sstock" jdbcType="INTEGER" property="sstock" />
     <result column="storagetime" jdbcType="TIMESTAMP" property="storagetime" />
   	
   	<association property="customer" javaType="com.ht.entity.Customer">
@@ -50,7 +52,7 @@
   
   
   <sql id="Base_Column_List">
-    sid, srid, scid, sgid, ssbid, storagecount, storagemode, storagebarcode, sbarcadeid, 
+    sid, srid, scid, sgid, ssbid, storagecount, storagemode, storagebarcode, sbarcadeid, sstock,
     storagetime
   </sql>
   <!-- 根据id查询入库信息 -->
@@ -100,6 +102,9 @@
       <if test="sbarcadeid != null">
         sbarcadeid,
       </if>
+      <if test="sstock != null">
+        sstock,
+      </if>
       <if test="storagetime != null">
         storagetime,
       </if>
@@ -135,6 +140,9 @@
       <if test="sbarcadeid != null">
         #{sbarcadeid,jdbcType=VARCHAR},
       </if>
+       <if test="sstock != null">
+        #{sstock,jdbcType=INTEGER},
+      </if>
       <if test="storagetime != null">
         #{storagetime,jdbcType=TIMESTAMP},
       </if>
@@ -169,6 +177,9 @@
       <if test="sbarcadeid != null">
         sbarcadeid = #{sbarcadeid,jdbcType=VARCHAR},
       </if>
+        <if test="sstock != null">
+        sstock = #{sstock,jdbcType=INTEGER},
+      </if>
       <if test="storagetime != null">
         storagetime = #{storagetime,jdbcType=TIMESTAMP},
       </if>
@@ -178,7 +189,7 @@
  
  <!-- 查询所有入库列表 -->
  <select id="queryAll" parameterType="java.util.Map" resultMap="AllResultMap">
- 	select cu.cid,cu.cname,go.gid,go.gname,i.loid,i.loname,st.sid,st.storagecount,st.storagemode,st.storagebarcode,
+ 	select cu.cid,cu.cname,go.gid,go.gname,i.loid,i.loname,st.sid,st.storagecount,st.storagemode,st.storagebarcode,st.sstock,
 	st.sbarcadeid,st.storagetime,sy.userid,sy.usertruename from storage st,customer cu,goods go,inventory i,sysuser sy
 		<where>
 			st.scid=cu.cid and 

@@ -3,15 +3,42 @@
 <mapper namespace="com.ht.dao.ThelibraryMapper">
   <resultMap id="BaseResultMap" type="com.ht.entity.Thelibrary">
     <id column="tid" jdbcType="INTEGER" property="tid" />
-    <result column="tsid" jdbcType="INTEGER" property="tsid" />
-    <result column="tloid" jdbcType="INTEGER" property="tloid" />
+    <result column="tgid" jdbcType="INTEGER" property="tgid" />
     <result column="ttid" jdbcType="INTEGER" property="ttid" />
     <result column="tcount" jdbcType="INTEGER" property="tcount" />
     <result column="ttype" jdbcType="VARCHAR" property="ttype" />
+    <result column="tstate" jdbcType="VARCHAR" property="tstate" />
+     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
     <result column="ttime" jdbcType="TIMESTAMP" property="ttime" />
   </resultMap>
+  <resultMap id="BaseResultMap1" type="com.ht.entity.Thelibrary">
+    <id column="tid" jdbcType="INTEGER" property="tid" />
+    <result column="tgid" jdbcType="INTEGER" property="tgid" />
+    <result column="ttid" jdbcType="INTEGER" property="ttid" />
+    <result column="tcount" jdbcType="INTEGER" property="tcount" />
+    <result column="ttype" jdbcType="VARCHAR" property="ttype" />
+     <result column="tstate" jdbcType="VARCHAR" property="tstate" />
+     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="ttime" jdbcType="TIMESTAMP" property="ttime" />
+  
+   <association property="goods" javaType="com.ht.entity.Goods">
+	    <result property="gid" column="gid"/>
+		<result property="gname" column="gname"/>
+  </association>
+  
+   <association property="transport" javaType="com.ht.entity.Transport">
+	    <result property="trid" column="trid"/>
+		<result property="tdrivername" column="tdrivername"/>
+		<result property="tdriverphone" column="tdriverphone"/>
+		<result property="tvehicletype" column="tvehicletype"/>
+		<result property="tvehiclecapacity" column="tvehiclecapacity"/>
+  </association>
+  
+    
+  </resultMap>
+  
   <sql id="Base_Column_List">
-    tid, tsid, tloid, ttid, tcount, ttype, ttime
+    tid, tgid, ttid, tcount,tstate, ttype, remarks, ttime
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,12 +51,13 @@
     where tid = #{tid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.ht.entity.Thelibrary">
-    insert into thelibrary (tid, tsid, tloid, 
-      ttid, tcount, ttype, 
+    insert into thelibrary (tid, tgid, 
+      ttid, tcount,tstate,remarks,ttype, 
       ttime)
-    values (#{tid,jdbcType=INTEGER}, #{tsid,jdbcType=INTEGER}, #{tloid,jdbcType=INTEGER}, 
-      #{ttid,jdbcType=INTEGER}, #{tcount,jdbcType=INTEGER}, #{ttype,jdbcType=VARCHAR}, 
-      #{ttime,jdbcType=TIMESTAMP})
+    values (#{tid,jdbcType=INTEGER}, #{tgid,jdbcType=INTEGER}, 
+      #{ttid,jdbcType=INTEGER}, #{tcount,jdbcType=INTEGER},#{tstate,jdbcType=VARCHAR},
+      #{remarks,jdbcType=VARCHAR},#{ttype,jdbcType=VARCHAR},  
+    #{ttime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ht.entity.Thelibrary">
     insert into thelibrary
@@ -37,11 +65,8 @@
       <if test="tid != null">
         tid,
       </if>
-      <if test="tsid != null">
-        tsid,
-      </if>
-      <if test="tloid != null">
-        tloid,
+      <if test="tgid != null">
+        tgid,
       </if>
       <if test="ttid != null">
         ttid,
@@ -52,6 +77,12 @@
       <if test="ttype != null">
         ttype,
       </if>
+       <if test="tstate != null">
+        sstate,
+      </if>
+        <if test="remarks != null">
+        remarks,
+      </if>
       <if test="ttime != null">
         ttime,
       </if>
@@ -60,11 +91,8 @@
       <if test="tid != null">
         #{tid,jdbcType=INTEGER},
       </if>
-      <if test="tsid != null">
-        #{tsid,jdbcType=INTEGER},
-      </if>
-      <if test="tloid != null">
-        #{tloid,jdbcType=INTEGER},
+      <if test="tgid != null">
+        #{tgid,jdbcType=INTEGER},
       </if>
       <if test="ttid != null">
         #{ttid,jdbcType=INTEGER},
@@ -75,6 +103,12 @@
       <if test="ttype != null">
         #{ttype,jdbcType=VARCHAR},
       </if>
+       <if test="tstate != null">
+        #{tstate,jdbcType=VARCHAR},
+      </if>
+        <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
       <if test="ttime != null">
         #{ttime,jdbcType=TIMESTAMP},
       </if>
@@ -83,11 +117,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Thelibrary">
     update thelibrary
     <set>
-      <if test="tsid != null">
-        tsid = #{tsid,jdbcType=INTEGER},
-      </if>
-      <if test="tloid != null">
-        tloid = #{tloid,jdbcType=INTEGER},
+      <if test="tgid != null">
+        tloid = #{tgid,jdbcType=INTEGER},
       </if>
       <if test="ttid != null">
         ttid = #{ttid,jdbcType=INTEGER},
@@ -98,6 +129,12 @@
       <if test="ttype != null">
         ttype = #{ttype,jdbcType=VARCHAR},
       </if>
+       <if test="tstate != null">
+        tstate = #{tstate,jdbcType=VARCHAR},
+      </if>
+       <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
       <if test="ttime != null">
         ttime = #{ttime,jdbcType=TIMESTAMP},
       </if>
@@ -106,12 +143,103 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ht.entity.Thelibrary">
     update thelibrary
-    set tsid = #{tsid,jdbcType=INTEGER},
-      tloid = #{tloid,jdbcType=INTEGER},
+    set 
+      tgid = #{tgid,jdbcType=INTEGER},
       ttid = #{ttid,jdbcType=INTEGER},
       tcount = #{tcount,jdbcType=INTEGER},
       ttype = #{ttype,jdbcType=VARCHAR},
-      ttime = #{ttime,jdbcType=TIMESTAMP}
+      tstate = #{tstate,jdbcType=VARCHAR},
+      ttype = #{ttype,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=TIMESTAMP}
     where tid = #{tid,jdbcType=INTEGER}
   </update>
+  
+  
+  <!-- 查询所有出库列表 -->
+ <select id="queryAll" parameterType="java.util.Map" resultMap="BaseResultMap1">
+ 	select go.gid,go.gname,t.trid,t.tdrivername, th.tid, th.tgid, th.ttid, th.tcount,th.tstate, th.ttype, th.remarks, th.ttime from goods go,transport t ,thelibrary th 
+		<where>
+			th.tgid=go.gid
+			and th.ttid=t.trid
+			<if test="gname!=null and gname!='' ">
+				and go.gname like #{gname}
+			</if>
+			<if test="tdrivername!=null and tdrivername!='' ">
+				and t.tdrivername like #{tdrivername}
+			</if>
+			<if test="ttype!=null and ttype!='' ">
+				and ttype like #{ttype}
+			</if>
+		 and tstate = 1
+		</where>
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+ </select>
+ 
+ 
+  <select id="queryAll2" parameterType="java.util.Map" resultMap="BaseResultMap1">
+ 	select go.gid,go.gname,t.trid,t.tdrivername, th.tid, th.tgid, th.ttid, th.tcount,th.tstate, th.ttype, th.remarks, th.ttime from goods go,transport t ,thelibrary th 
+		<where>
+			th.tgid=go.gid
+			and th.ttid=t.trid
+			<if test="gname!=null and gname!='' ">
+				and go.gname like #{gname}
+			</if>
+			<if test="tdrivername!=null and tdrivername!='' ">
+				and t.tdrivername like #{tdrivername}
+			</if>
+			<if test="ttype!=null and ttype!='' ">
+				and ttype like #{ttype}
+			</if>
+		 and tstate = 2
+		</where>
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+ </select>
+ 
+ <!-- 查询入库条数 -->
+ <select id="queryAllCount" parameterType="java.util.Map" resultType="Long">
+ 	select count(*) from thelibrary th,goods go,transport t
+		<where>
+			th.tgid=go.gid and 
+			th.ttid=t.trid
+			<if test="gname!=null and gname!='' ">
+				and go.gname like #{gname}
+			</if>
+			<if test="tdrivername!=null and tdrivername!='' ">
+				and t.tdrivername like #{tdrivername}
+			</if>
+			<if test="ttype!=null and ttype!='' ">
+				and ttype like #{ttype}
+			</if>	
+		 	and tstate = 1
+			<if test="tstate!=null and tstate!='' ">
+				and tstate like #{tstate}
+			</if>	
+		</where>
+ </select>
+ 
+ <!-- 查询入库条数 -->
+ <select id="queryAllCount2" parameterType="java.util.Map" resultType="Long">
+ 	select count(*) from thelibrary th,goods go,transport t
+		<where>
+			th.tgid=go.gid and 
+			th.ttid=t.trid
+			<if test="gname!=null and gname!='' ">
+				and go.gname like #{gname}
+			</if>
+			<if test="tdrivername!=null and tdrivername!='' ">
+				and t.tdrivername like #{tdrivername}
+			</if>
+			<if test="ttype!=null and ttype!='' ">
+				and ttype like #{ttype}
+			</if>	
+		 	and tstate = 2
+			<if test="tstate!=null and tstate!='' ">
+				and tstate like #{tstate}
+			</if>	
+		</where>
+ </select>
 </mapper>
