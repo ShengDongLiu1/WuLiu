@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht.dao.TransferMapper">
+  <resultMap id="BaseResultMap" type="com.ht.entity.Transfer">
+    <id column="tid" jdbcType="INTEGER" property="tid" />
+    <result column="tgid" jdbcType="INTEGER" property="tgid" />
+    <result column="teid" jdbcType="INTEGER" property="teid" />
+    <result column="treason" jdbcType="VARCHAR" property="treason" />
+    <result column="tdate" jdbcType="TIMESTAMP" property="tdate" />
+  </resultMap>
+  
+    <resultMap id="SelectBaseResultMap" type="com.ht.entity.Transfer">
+    <id column="tid" jdbcType="INTEGER" property="tid" />
+    <result column="tgid" jdbcType="INTEGER" property="tgid" />
+    <result column="teid" jdbcType="INTEGER" property="teid" />
+    <result column="treason" jdbcType="VARCHAR" property="treason" />
+    <result column="tdate" jdbcType="TIMESTAMP" property="tdate" />
+    
+    <association property="goods" javaType="com.ht.entity.Goods">
+	    <result property="gid" column="gid"/>
+		<result property="gname" column="gname"/>
+	</association>
+	
+	<association property="sys" javaType="com.ht.entity.sysuser">
+	    <result property="userid" column="userid"/>
+		<result property="username" column="username"/>
+	</association>
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    tid, tgid, teid, treason, tdate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from transfer
+    where tid = #{tid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from transfer
+    where tid = #{tid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ht.entity.Transfer">
+    insert into transfer (tid, tgid, teid, 
+      treason, tdate)
+    values (#{tid,jdbcType=INTEGER}, #{tgid,jdbcType=INTEGER}, #{teid,jdbcType=INTEGER}, 
+      #{treason,jdbcType=VARCHAR}, #{tdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ht.entity.Transfer">
+    insert into transfer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        tid,
+      </if>
+      <if test="tgid != null">
+        tgid,
+      </if>
+      <if test="teid != null">
+        teid,
+      </if>
+      <if test="treason != null">
+        treason,
+      </if>
+      <if test="tdate != null">
+        tdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="tgid != null">
+        #{tgid,jdbcType=INTEGER},
+      </if>
+      <if test="teid != null">
+        #{teid,jdbcType=INTEGER},
+      </if>
+      <if test="treason != null">
+        #{treason,jdbcType=VARCHAR},
+      </if>
+      <if test="tdate != null">
+        #{tdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Transfer">
+    update transfer
+    <set>
+      <if test="tgid != null">
+        tgid = #{tgid,jdbcType=INTEGER},
+      </if>
+      <if test="teid != null">
+        teid = #{teid,jdbcType=INTEGER},
+      </if>
+      <if test="treason != null">
+        treason = #{treason,jdbcType=VARCHAR},
+      </if>
+      <if test="tdate != null">
+        tdate = #{tdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ht.entity.Transfer">
+    update transfer
+    set tgid = #{tgid,jdbcType=INTEGER},
+      teid = #{teid,jdbcType=INTEGER},
+      treason = #{treason,jdbcType=VARCHAR},
+      tdate = #{tdate,jdbcType=TIMESTAMP}
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+  
+   <!-- 查询所有移库列表 -->
+  <select id="select" parameterType="java.util.Map" resultMap="SelectBaseResultMap">
+    select tr.tid,tr.tgid,tr.teid,tr.treason,tr.tdate,go.gid,go.gname,sys.userid,sys.username
+    
+   	 from Transfer tr,goods go,sysuser sys
+    <where>
+    	tr.tgid=go.gid and tr.teid=sys.userid
+    	<if test="gname!=null and gname!='' ">
+			and go.gname like #{gname}
+		</if>
+		<if test="username!=null and username!='' ">
+			and sys.username like #{username}
+		</if>
+		<if test="treason!=null and treason!='' ">
+			and tr.treason like #{treason}
+		</if>
+		<if test="tdate!=null and tdate!='' and tdates!=null and tdates!=''">
+			and tr.tdate between #{tdate} and #{tdates}
+		</if>
+    </where>
+  	 order by tr.tid desc
+  	 <if test="start!=null and size!=null">
+		limit #{start},#{size}
+	</if>
+  </select>
+  
+  <!-- 查询移库条数 -->
+ <select id="queryAllCount" parameterType="java.util.Map" resultType="Long">
+ 	select count(*) from Transfer tr,goods go,sysuser sys
+		<where>
+			tr.tgid=go.gid and tr.teid=sys.userid
+    	<if test="gname!=null and gname!='' ">
+			and go.gname like #{gname}
+		</if>
+		<if test="username!=null and username!='' ">
+			and sys.username like #{username}
+		</if>
+		<if test="treason!=null and treason!='' ">
+			and tr.treason like #{treason}
+		</if>
+		<if test="tdate!=null and tdate!='' and tdates!=null and tdates!=''">
+			and tr.tdate between #{tdate} and #{tdates}
+		</if>
+		</where>
+ </select>
+</mapper>
