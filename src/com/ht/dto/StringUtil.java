@@ -1,5 +1,7 @@
 package com.ht.dto;
 
+import java.math.BigDecimal;
+
 /**
  * @author 
  *
@@ -43,5 +45,12 @@ public class StringUtil {
 		}else{
 			return null;
 		}
+	}
+	
+	public static float jiSuan(float bing,Integer in,Integer count){
+		float f1=(bing/in)*count;
+		BigDecimal b = new BigDecimal(f1);
+		float result = b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+		return result;
 	}
 }

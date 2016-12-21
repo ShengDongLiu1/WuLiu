@@ -20,7 +20,7 @@ body{margin:0px;padding:0px;}
 }
 .gxiangq{
 	text-align:left;font-size:15px;
-	border-bottom:1px dashed #FFE48D; 
+	border-bottom:1px dashed #5F6D88; 
 }
 .gxiangq span{
 	font-size:16px;
@@ -30,6 +30,12 @@ a:link {color:blue}
 a:visited{color:#54287C}
 a:active{color:yellow}
 a:hover {color:#54287C} 
+
+.wait{color:black;}
+
+.failure{color:red;}
+
+.success{color:green;}
 
 .easyui-textbox,.easyui-numberbox{width:10%;}
 </style>
@@ -121,22 +127,17 @@ function toDate(obj){
 function toSub(value,obj){
 	var btn='';
 	if(obj.rstart == 1){
-		btn="<a href='javascript:openKuWeiWin("+obj.rid+","+obj.goods.gid+","+obj.rreceivecount+")'>入库</a>";
+		btn="<span class='wait'>待检验</span>";
 	}else if(obj.rstart == 2){
-		btn="<a href='javascript:openKuWeiWin("+obj.rid+","+obj.goods.gid+","+obj.rreceivecount+")' style='color:orange'>继续入库</a>";
+		btn="<a href='javascript:openNumWin("+obj.rid+","+obj.rcid+","+obj.rgid+","+obj.rreceivecount+")'>入库</a>";
 	}else if(obj.rstart == 3){
-		btn="<span style='color:red'>已入库</span>"
+		btn="<span class='failure'>质检失败</span>";
+	}else if(obj.rstart == 4){
+		btn="<a href='javascript:openNumWin("+obj.rid+","+obj.rcid+","+obj.rgid+","+obj.rreceivecount+")' style='color:orange'>继续入库</a>";
+	}else if(obj.rstart == 5){
+		btn="<span class='success'>已入库</span>";
 	}
 	return btn;
-}
-
-/* 打开库位列表窗口 */
-function openKuWeiWin(rid,gid,count){
-	$('#rreceivecount').val(count);
-	$('#storagecount').numberbox('setValue',count);
-	$.post("<%=path%>/receipt/byGood",{'gid':gid,'rid':rid},function(index){},"json");
-	$("#receKuWin").dialog("open").dialog("setTitle", "库位选择");
-	$('#kuwei').datagrid('load'); 
 }
 
 /* 打开详情窗口 */
@@ -199,21 +200,20 @@ function lanshou(state){
 	return sta;
 }
 
-/* 选择库位 */
-function subRece(){
-	var row=$("#kuwei").datagrid("getSelected");	//获取datagrid中选中的行
-	if(row){
-		$("#receKuWin").dialog("close");
-		$("#rkTypeWin").dialog("open").dialog("setTitle", "入库方式");
-		$('#ssbid').val(row.loid);
-		getCheckVal();
-	}else{
-		$.messager.alert('提示','请选择需要库位','info');	//messager消息控件
-	}
+/* 打开选择入库方式窗口 */
+function openNumWin(rid,cid,gid,count){
+	$('#srid').val(rid);
+	$('#srcid').val(cid);
+	$('#srgid').val(gid);
+	$('#rreceivecount').val(count);
+	$('#storagecount').numberbox('setValue',count);
+	getCheckVal();
+	$("#rkTypeWin").dialog("open").dialog("setTitle", "入库类型");
 }
 
 /* 单选按钮选中的值 */
 function getCheckVal(){
+	$("input[name='storagemode']").attr('checked','checked');
 	var stor=document.getElementsByName("storagemode");
      for(var i=0;i<stor.length;i++)
      {
@@ -234,36 +234,54 @@ function getCheckVal(){
 /* 提交入库方式 */
 function subrukuType(){
 	var count=$('#rreceivecount').val();
-	var ssbid=$('#ssbid').val();
+	var srid=$('#srid').val();
+	var sgid=$('#srgid').val();
+	var scid=$('#srcid').val();
 	var stor=getCheckVal();
 	var storagecount=count;
 	if(stor == '一次性入库'){
-		$.post("<%=path%>/storage/add",{'storagecount':storagecount,'storagemode':stor,'ssbid':ssbid},function(index){
-			$.messager.alert('系统提示',index.result,'info');
-			$("#rkTypeWin").dialog("close");
-		},"json");
-    }else{
+		$.post("<%=path%>/receipt/byGood",{'srid':srid,'scid':scid,'sgid':sgid,'storagecount':storagecount,'storagemode':stor},function(index){},"json");
+		$("#rkTypeWin").dialog("close");
+		openKuWeiWin();
+	}else{
     	storagecount = $('#storagecount').numberbox('getValue');
     	if(parseInt(storagecount)>parseInt(count)){
     		$.messager.alert('系统提示','入库数量超过货物数量！','info');
     	}else if(parseInt(storagecount)<= 0){
     		$.messager.alert('系统提示','请输入正确的入库数量！','info');
     	}else{
-    		$.post("<%=path%>/storage/add",{'storagecount':storagecount,'storagemode':stor,'ssbid':ssbid},function(index){
-    			$.messager.alert('系统提示',index.result,'info');
-    			$('#list').datagrid('load');
-    			$("#rkTypeWin").dialog("close");
-    		},"json");
+    		$.post("<%=path%>/receipt/byGood",{'srid':srid,'scid':scid,'sgid':sgid,'storagecount':storagecount,'storagemode':stor},function(index){},"json");
+    		$("#rkTypeWin").dialog("close");
+    		openKuWeiWin();
     	}
     }
 }
 
+/* 打开库位列表窗口 */
+function openKuWeiWin(){
+	$("#receKuWin").dialog("open").dialog("setTitle", "库位选择");
+	$('#kuwei').datagrid('load'); 
+}
+
+function subRece(){
+	var row=$("#kuwei").datagrid("getSelected");	//获取datagrid中选中的行
+	if(row){
+		$.post("<%=path%>/storage/add",{'ssbid':row.loid},function(index){
+			$.messager.alert('提示',index.result,'info');
+			$("#receKuWin").dialog("close");
+			$('#list').datagrid('load'); 
+		},"json");
+		
+	}else{
+		$.messager.alert('提示','请选择需要库位','info');	//messager消息控件
+	}
+}
 </script>
 
 </head>
 <body>
 	<table id="list" class="easyui-datagrid" toolbar="#kj" style="width:100%" data-options="
-		url:'<%=path %>/receipt/all',
+		url:'<%=path%>/receipt/all',
 		method:'get',
 		rownumbers:true,	
 		singleSelect:true,
@@ -290,10 +308,6 @@ function subrukuType(){
 		</thead>
 	</table>
 	<div id="kj">
-		<!-- 链接按钮控件 -->
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="applygoods_add();">添加</a>
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="applygoods_edit();">修改</a>
-		<br />
 		客户：<input id="scname" class="easyui-validatebox easyui-textbox" name="cname" data-options="required:false" />&nbsp;
 		货物：<input id="sgname" class="easyui-validatebox easyui-textbox" name="gname" data-options="required:false" />&nbsp;
 		状态：<select id="srstart" class="easyui-combobox" name="rstart" data-options="editable:false" style="width:10%">
@@ -408,10 +422,12 @@ function subrukuType(){
 	<!-- 选择入库数量 -->
 	<div id="rkTypeWin" class="easyui-dialog"  buttons="#subruku-buttons" data-options="closable:true, closed:true"  style="width:25%;height:180px;padding:5px;text-align:center;">
 		<input type="hidden" id="rreceivecount">
-		<input type="hidden" id="ssbid">
+		<input type="hidden" id="srid">
+		<input type="hidden" id="srgid">
+		<input type="hidden" id="srcid">
 		<br />
-		入库方式：<input type="radio" id="" name="storagemode" checked="checked" value="一次性入库" onclick="getCheckVal()"/>一次性
-               <input type="radio" id="" name="storagemode" value="分批入库" onclick="getCheckVal()"/>分批<br /><br />
+		入库方式：<input type="radio" name="storagemode" checked="checked" value="一次性入库" onclick="getCheckVal()"/>一次性
+               <input type="radio" name="storagemode" value="分批入库" onclick="getCheckVal()"/>分批<br /><br />
 		入库数量：<input id="storagecount" class="easyui-validatebox easyui-numberbox" name="storagecount" data-options="required:false" />
 	</div>
 </body>

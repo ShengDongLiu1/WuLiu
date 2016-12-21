@@ -19,10 +19,13 @@ import com.ht.dto.PageBean;
 import com.ht.dto.StringUtil;
 import com.ht.entity.Goods;
 import com.ht.entity.Inventory;
+import com.ht.entity.Quality;
 import com.ht.entity.Receipt;
+import com.ht.entity.Storage;
 import com.ht.entity.sysuser;
 import com.ht.service.interfaces.GoodsService;
 import com.ht.service.interfaces.InventoryService;
+import com.ht.service.interfaces.QualityService;
 import com.ht.service.interfaces.ReceiptService;
 import com.ht.ssm.util.ResponseUtil;
 
@@ -33,13 +36,16 @@ import net.sf.json.JSONArray;
 public class ReceiptController {
 	
 	@Autowired
-	private ReceiptService receiptService;
+	private ReceiptService receiptService;//收货单
 	
 	@Autowired
-	public InventoryService inventoryService;
+	public InventoryService inventoryService;//库位
 	
 	@Autowired
-	private GoodsService goodsService;
+	private GoodsService goodsService;//货物单
+	
+	@Autowired
+	private QualityService qualityService;//质检
 	
 	/**
 	 * 跳转到收货单
@@ -108,7 +114,7 @@ public class ReceiptController {
 		receipt.setRreceivecount(allcount-poshun-geshi);//实际揽收数量
 		receipt.setReid(user.getUserid());//员工id
 		receipt.setRtdgoodstime(new Date());
-		receipt.setRstart(1);	//清单状态1表示未入库
+		receipt.setRstart(1);	//清单状态1表示待质检
 		int resultcount=receiptService.insertSelective(receipt);
 		if(resultcount>0){
 			Goods goods=new Goods();
@@ -116,6 +122,10 @@ public class ReceiptController {
 			goods.setGstate("2");//状态设为2已揽收
 			resultcount=goodsService.updateByPrimaryKeySelective(goods);
 			if(resultcount>0){
+				Quality quality=new Quality();//添加质检
+				quality.setEgid(receipt.getRgid());//货物id
+				quality.setEresult("待审核");
+				qualityService.qualityAdd(quality);
 				map.put("result", "揽收成功！");
 			}else{
 				map.put("result", "揽收失败请稍后再试！");
@@ -125,17 +135,28 @@ public class ReceiptController {
 	}
 	
 	/**
-	 * 根据货物条件查询库位
+	 * 入库信息
 	 * @param gid
 	 * @param rid
 	 * @param session
 	 */
 	@RequestMapping(value="/byGood")
-	public void selectGoods(Integer gid,Integer rid,HttpSession session){
-		Goods goods=goodsService.selectByPrimaryKey(gid);
+	public void selectGoods(Storage storage,HttpSession session){
+		sysuser user=(sysuser) session.getAttribute("user");
+		storage.setSeid(user.getUserid());
+		session.setAttribute("queryStorage", storage);
+		Receipt receipt=receiptService.selectByPrimaryKey(storage.getSrid());
+		session.setAttribute("queryReceipt", receipt);
+		Goods goods=goodsService.selectByPrimaryKey(storage.getSgid());
+		float size=goods.getGsize();//货物尺寸
+		float weight=goods.getGweight();//货物重量
+		float gvolume=goods.getGvolume();//货物体积
+		Integer count=goods.getGcount();//货物数量
+		Integer storcount=storage.getStoragecount();
+		goods.setGsize(StringUtil.jiSuan(size, count, storcount));
+		goods.setGweight(StringUtil.jiSuan(weight, count, storcount));
+		goods.setGvolume(StringUtil.jiSuan(gvolume, count, storcount));
 		session.setAttribute("queryGoods", goods);
-		Receipt receipt=receiptService.selectByPrimaryKey(rid);
-		session.setAttribute("receipt", receipt);
 	}
 	
 	/**
@@ -174,6 +195,14 @@ public class ReceiptController {
 		return null;
 	}
 	
+	/**
+	 * 批量揽收货物
+	 * @param rcids
+	 * @param rgids
+	 * @param rreceivecounts
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value="/bulkGoods")
 	@ResponseBody
 	public Map<String, Object> bulkGoods(String rcids,String rgids,String rreceivecounts,HttpSession session){
@@ -198,6 +227,10 @@ public class ReceiptController {
 				goods.setGid(receipt.getRgid());
 				goods.setGstate("2");//状态设为2已揽收
 				resultcount=goodsService.updateByPrimaryKeySelective(goods);
+				
+				Quality quality=new Quality();//添加质检
+				quality.setEgid(receipt.getRgid());//货物id
+				quality.setEresult("待审核");
 			}
 		}
 		map.put("result", "货物揽收成功");

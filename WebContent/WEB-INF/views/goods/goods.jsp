@@ -21,7 +21,7 @@ body{margin:0px;padding:0px;}
 }
 .gxiangq{
 	text-align:left;font-size:15px;
-	border-bottom:1px dashed #FFE48D; 
+	border-bottom:1px dashed #5F6D88; 
 }
 .gxiangq span{
 	font-size:16px;
@@ -154,7 +154,7 @@ function lanshou(state){
 		$("#gooded").append(
 		"<tr align='center' id='becase'>"+
 			"<td class='tdwidth'>拒收原因:</td>"+
-			"<td class='gxiangq' colspan='3'><span id='gocause'></span></td>"+
+			"<td class='gxiangq' colspan='3'><span class='gocause'></span></td>"+
 		"</tr>"
 		);
 	}
@@ -256,22 +256,22 @@ function openGoodWin(gid) {
 
 /* 给弹出的窗口赋值 */
 function fuzhi(index){
-	$("#gname").html(index.goods.gname);
-	$("#gordernumber").html(index.goods.gordernumber);
-	$("#gcount").html(index.goods.gcount + " "+index.goods.gunit);
-	$("#gweight").html(index.goods.gweight + " 吨");
-	$("#gvolume").html(index.goods.gvolume + " m<sup>3</sup>");
-	$("#gsize").html(index.goods.gsize + " m");
-	$("#ggrade").html(index.goods.ggrade);
-	$("#gconsignee").html(index.goods.gconsignee);
-	$("#greaddress").html(index.goods.greaddress);
-	$("#grephone").html(index.goods.grephone);
-	$("#gorigin").html(index.goods.gorigin);
-	$("#gendpoint").html(index.goods.gendpoint);
-	$("#gstate").html(lanshou(index.goods.gstate));
-	$("#gorderstime").html(formatDateTime(new Date(index.goods.gorderstime)));
-	$("#gdescribe").html(index.goods.gdescribe);
-	$("#gocause").html(index.goods.gocause);
+	$(".gname").html(index.goods.gname);
+	$(".gordernumber").html(index.goods.gordernumber);
+	$(".gcount").html(index.goods.gcount + " "+index.goods.gunit);
+	$(".gweight").html(index.goods.gweight + " 吨");
+	$(".gvolume").html(index.goods.gvolume + " m<sup>3</sup>");
+	$(".gsize").html(index.goods.gsize + " m");
+	$(".ggrade").html(index.goods.ggrade);
+	$(".gconsignee").html(index.goods.gconsignee);
+	$(".greaddress").html(index.goods.greaddress);
+	$(".grephone").html(index.goods.grephone);
+	$(".gorigin").html(index.goods.gorigin);
+	$(".gendpoint").html(index.goods.gendpoint);
+	$(".gstate").html(lanshou(index.goods.gstate));
+	$(".gorderstime").html(formatDateTime(new Date(index.goods.gorderstime)));
+	$(".gdescribe").html(index.goods.gdescribe);
+	$(".gocause").html(index.goods.gocause);
 	$("#goodbyWin").dialog("open").dialog("setTitle", "客户订单详情");
 }
 
@@ -320,6 +320,7 @@ function bulkGoods(){
 		$.messager.alert('提示','请选择需要揽收的货物','info');	//messager消息控件
 	}
 }
+
 </script>
 </head>
 <body>
@@ -352,10 +353,7 @@ function bulkGoods(){
 	
 	<!-- 菜单 -->
 	<div id="kj" style="padding: 2px;">
-		<a href="javascript:bulkGoods()" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >批量揽收</a>
-		<a href="javascript:openUserModifyDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" >编辑</a>
-		<a href="javascript:deleteTest()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
-		<br />
+		<a href="javascript:bulkGoods()" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >批量揽收</a>&nbsp;
 		客户：<input id="scname" class="easyui-validatebox easyui-textbox" name="cname" data-options="required:false" />&nbsp;
 		货物：<input id="sgname" class="easyui-validatebox easyui-textbox" name="gname" data-options="required:false" />&nbsp;
 		状态：<select id="sgstate" class="easyui-combobox" name="sgstate" data-options="editable:false" style="width:10%">
@@ -405,57 +403,58 @@ function bulkGoods(){
 		<table style="width:100%;height:100%;" id="gooded">
 			<tr>
 				<td class="tdwidth">货物名称:</td>
-				<td class="gxiangq"><span id="gname"></span></td>
+				<td class="gxiangq"><span class="gname"></span></td>
 				<td class="tdwidth">货物订单号:</td>
-				<td class="gxiangq"><span id="gordernumber"></span></td>
+				<td class="gxiangq"><span class="gordernumber"></span></td>
 			</tr>
 			<tr align="center">
 				<td class="tdwidth">货物数量:</td>
-				<td class="gxiangq"><span id="gcount"></span></td>
+				<td class="gxiangq"><span class="gcount"></span></td>
 				<td class="tdwidth">货物重量:</td>
-				<td class="gxiangq"><span id="gweight"></span></td>
+				<td class="gxiangq"><span class="gweight"></span></td>
 			</tr>
 			
 			<tr align="center">
 				<td class="tdwidth">货物体积:</td>
-				<td class="gxiangq"><span id="gvolume"></span></td>
+				<td class="gxiangq"><span class="gvolume"></span></td>
 				<td class="tdwidth">货物尺寸:</td>
-				<td class="gxiangq"><span id="gsize"></span></td>
+				<td class="gxiangq"><span class="gsize"></span></td>
 			</tr>
 			
 			<tr align="center">
 				<td class="tdwidth">货物等级:</td>
-				<td class="gxiangq"><span id="ggrade"></span></td>
+				<td class="gxiangq"><span class="ggrade"></span></td>
 				<td class="tdwidth">收货人:</td>
-				<td class="gxiangq"><span id="gconsignee"></span></td>
+				<td class="gxiangq"><span class="gconsignee"></span></td>
 			</tr>
 			
 			<tr align="center">
 				<td class="tdwidth">收货地址:</td>
-				<td class="gxiangq"><span id="greaddress"></span></td>
+				<td class="gxiangq"><span class="greaddress"></span></td>
 				<td class="tdwidth">收货电话:</td>
-				<td class="gxiangq"><span id="grephone"></span></td>
+				<td class="gxiangq"><span class="grephone"></span></td>
 			</tr>
 			
 			<tr align="center">
 				<td class="tdwidth">起始地点:</td>
-				<td class="gxiangq"><span id="gorigin"></span></td>
+				<td class="gxiangq"><span class="gorigin"></span></td>
 				<td class="tdwidth">到达地址:</td>
-				<td class="gxiangq"><span id="gendpoint"></span></td>
+				<td class="gxiangq"><span class="gendpoint"></span></td>
 			</tr>
 			
 			<tr align="center">
 				<td class="tdwidth">货物状态:</td>
-				<td class="gxiangq"><span id="gstate"></span></td>
+				<td class="gxiangq"><span class="gstate"></span></td>
 				<td class="tdwidth">下单时间:</td>
-				<td class="gxiangq"><span id="gorderstime"></span></td>
+				<td class="gxiangq"><span class="gorderstime"></span></td>
 			</tr>
 			
 			<tr align="center">
 				<td class="tdwidth">货物描述:</td>
-				<td class="gxiangq" colspan="3"><span id="gdescribe"></span></td>
+				<td class="gxiangq" colspan="3"><span class="gdescribe"></span></td>
 			</tr>
 		</table>
 	</div>
+	
 </body>
 </html>

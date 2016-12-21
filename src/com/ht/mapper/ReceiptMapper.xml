@@ -153,7 +153,7 @@
   <!-- 分页查询所有收货单 -->
    <select id="queryAll" parameterType="java.util.Map" resultMap="AllResultMap">
    		select cu.cid,cu.cname,go.gid,go.gname,go.gcount,go.gordernumber,go.gstate,
-   		re.rid,re.rreceivecount,re.rdamagedcount,re.rshelvecount,re.rstart,
+   		re.rid,re.rreceivecount,re.rdamagedcount,re.rshelvecount,re.rstart,re.rcid,re.rgid,
 		re.rtdgoodstime,sy.userid,sy.usertruename from receipt re,customer cu,goods go,sysuser sy
 		<where>
 			re.rcid=cu.cid and 
