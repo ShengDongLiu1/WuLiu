@@ -197,6 +197,7 @@ function toSub(value,obj){
 /* 打开拒收窗口 */
 function openJSWin(gid){
 	$("#jgid").val(gid);
+	$('#jgocause').textbox('setValue','');
 	$("#goodJSWin").dialog("open").dialog("setTitle", "拒收原因");
 }
 
@@ -205,6 +206,8 @@ function openJSWin(gid){
 	$("#lgid").val(gid);
 	$("#lgcid").val(gcid);
 	$("#lgcount").val(gcount);
+	$('#lrdamagedcount').numberbox('setValue','');
+	$('#lrshelvecount').numberbox('setValue','');
 	$("#goodLSWin").dialog("open").dialog("setTitle", "揽收货物");
 }
 
@@ -367,7 +370,7 @@ function getVal(){
 	<!-- 菜单 -->
 	<div id="kj" style="padding: 2px;">
 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="window.print();">打印</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="location.href='<%=path %>/export/goodsExcel'">导出</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-export1'" onclick="location.href='<%=path %>/export/goodsExcel'">导出</a>
 		<a href="javascript:bulkGoods()" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >批量揽收</a>&nbsp;
 		客户：<input id="scname" class="easyui-validatebox easyui-textbox" name="cname" data-options="required:false" />&nbsp;
 		货物：<input id="sgname" class="easyui-validatebox easyui-textbox" name="gname" data-options="required:false" />&nbsp;

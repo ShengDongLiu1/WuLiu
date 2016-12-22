@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,6 @@ import com.ht.dto.StringUtil;
 import com.ht.entity.Storage;
 import com.ht.entity.Thelibrary;
 import com.ht.entity.Transport;
-import com.ht.entity.sysuser;
 import com.ht.service.interfaces.StorageService;
 import com.ht.service.interfaces.ThelibraryService;
 import com.ht.service.interfaces.TransportService;
@@ -95,7 +95,7 @@ public class ThelibraryController {
 	
 	
 	@RequestMapping(value="/all",method=RequestMethod.GET)
-	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,String gname,String tdrivername,String ttype,
+	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,HttpSession session,String gname,String tdrivername,String ttype,
 			@RequestParam(value="query",required=false)String query) throws Exception{
 		PageBean pageBean=null;
 		if(page == null && rows == null){
@@ -116,6 +116,7 @@ public class ThelibraryController {
 			 total=thelibraryService.queryAllCount(map);
 		}else{
 			 list = thelibraryService.queryAll2(map);
+			 session.setAttribute("thelibraryList", list);
 			 total = thelibraryService.queryAllCount2(map);
 		}
 		JSONObject result = new JSONObject();

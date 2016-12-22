@@ -157,7 +157,9 @@ body{margin:0px;padding:0px;}
               	 </select>&nbsp;
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
 		<br/>
-		&nbsp;&nbsp;&nbsp;<a href="javascript:chuhuo()" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" >确认出货</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="window.print();">打印</a>&nbsp;
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-export1'" onclick="location.href='<%=path %>/export/thelibraryExcel'">导出</a>&nbsp;
+		<a href="javascript:chuhuo()" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" >确认出货</a>
 	</div>
 	<div id="transport1" class="easyui-window" title="选择车辆"
 		data-options="iconCls:'icon-edit', closable:true, closed:true"

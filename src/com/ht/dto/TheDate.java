@@ -10,7 +10,7 @@ public class TheDate {
 	 * @return
 	 */
 	public static String datetoString(Date date){
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		String dateTime=null;
 		if(date != null){
 			dateTime = sdf.format(date);
@@ -24,7 +24,7 @@ public class TheDate {
 	 * @return
 	 */
 	public static Date stringtoDate(String time) throws Exception{
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date date = null;
 		if(time != null && !"".equals(time)){
 			sdf.parse(time);
