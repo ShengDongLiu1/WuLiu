@@ -116,7 +116,7 @@ public class StorageController {
 				receipt.setRreceivecount(receipt.getRreceivecount()-storage.getStoragecount());
 				receiptService.updateByPrimaryKeySelective(receipt);
 			}else{//分批入库减去已入库数量
-				receipt.setRstart(4);
+				receipt.setRstart(3);
 				receipt.setRreceivecount(receipt.getRreceivecount()-storage.getStoragecount());
 				receiptService.updateByPrimaryKeySelective(receipt);
 			}

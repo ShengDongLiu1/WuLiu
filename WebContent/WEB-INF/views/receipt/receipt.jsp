@@ -131,9 +131,9 @@ function toSub(value,obj){
 	}else if(obj.rstart == 2){
 		btn="<a href='javascript:openNumWin("+obj.rid+","+obj.rcid+","+obj.rgid+","+obj.rreceivecount+")'>入库</a>";
 	}else if(obj.rstart == 3){
-		btn="<span class='failure'>质检失败</span>";
-	}else if(obj.rstart == 4){
 		btn="<a href='javascript:openNumWin("+obj.rid+","+obj.rcid+","+obj.rgid+","+obj.rreceivecount+")' style='color:orange'>继续入库</a>";
+	}else if(obj.rstart == 4){
+		btn="<span class='failure'>质检失败</span>";
 	}else if(obj.rstart == 5){
 		btn="<span class='success'>已入库</span>";
 	}

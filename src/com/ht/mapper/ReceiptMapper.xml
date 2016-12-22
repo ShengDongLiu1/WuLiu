@@ -175,7 +175,7 @@
 				and re.rstart = #{rstart}
 			</if>
 		</where>
-		order by re.rtdgoodstime desc
+		order by re.rstart asc , re.rtdgoodstime asc
 		<if test="start!=null and size!=null">
 			limit #{start},#{size}
 		</if>
