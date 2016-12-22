@@ -70,7 +70,7 @@ public class ReceiptController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/all")
-	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,String cname,String gname,String rstart,String gordernumber,String username) throws Exception{
+	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,HttpSession session,String cname,String gname,String rstart,String gordernumber,String username) throws Exception{
 		PageBean pageBean=null;
 		if(page == null && rows == null){
 			pageBean=new PageBean(1,10);
@@ -86,6 +86,7 @@ public class ReceiptController {
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
 		List<Receipt> list=receiptService.queryAll(map);
+		session.setAttribute("receiptList", list);
 		Long total=receiptService.queryAllCount(map);	//查询总条数
 		
 		JSONObject result = new JSONObject();

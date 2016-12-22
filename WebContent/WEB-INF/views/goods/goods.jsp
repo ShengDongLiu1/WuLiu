@@ -321,6 +321,19 @@ function bulkGoods(){
 	}
 }
 
+function getVal(){
+	var grid = $('#list');  
+	var options = grid.datagrid('getPager').data("pagination").options;  
+	var pager = options.pageNumber;  
+	var total = options.total;  
+	var count = Math.ceil(total/options.pageSize);
+	var data=$('#list').datagrid('getData');
+	alert('总数据量:'+data.total)//注意你的数据源一定要定义了total，要不会为undefined，datagrid分页就是靠这个total定义
+	alert('当前页数据量:'+data.rows.length)
+	alert("当前页："+pager+"总条数"+total+"总页数："+count+"一页显示的个数"+options.pageSize);
+	
+}
+
 </script>
 </head>
 <body>
@@ -345,7 +358,7 @@ function bulkGoods(){
 				<th field="gunit" width="8%" align="center">单位</th>
 				<th field="ggrade" width="8%" align="center">货物等级</th>
 				<th field="gstate" width="12%" align="center" formatter="goState">货物状态</th>
-				<th field="gorderstime" width="12%" align="center" formatter="toDate">入库时间</th>
+				<th field="gorderstime" width="12%" align="center" formatter="toDate">下单时间</th>
 				<th field="null" width="13%" align="center" formatter="toSub">操作</th>
 			</tr>
 		</thead>
@@ -353,6 +366,7 @@ function bulkGoods(){
 	
 	<!-- 菜单 -->
 	<div id="kj" style="padding: 2px;">
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="location.href='<%=path %>/export/goodsExcel'">导出</a>
 		<a href="javascript:bulkGoods()" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >批量揽收</a>&nbsp;
 		客户：<input id="scname" class="easyui-validatebox easyui-textbox" name="cname" data-options="required:false" />&nbsp;
 		货物：<input id="sgname" class="easyui-validatebox easyui-textbox" name="gname" data-options="required:false" />&nbsp;
