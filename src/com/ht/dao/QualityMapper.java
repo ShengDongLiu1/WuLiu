@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.ht.entity.Quality;
 import com.ht.entity.Receipt;
+import com.ht.entity.sysuser;
 /**
  * 质检管理Dao
  * @author 黄豪
@@ -24,12 +25,14 @@ public interface QualityMapper {
 	//根据id删除质检记录
 	Integer qualityDelete(Integer eid);
 	
-	//根据id修改质检记录
-	Integer qualityUpdate(Quality quality);
-	
 	//总质检记录条数
 	Long getTotal(Map<String, Object> map);
 	
-	//查询收货表的状态
-	Receipt receiptStatus(Integer rid);
+	
+	//根据id修改质检记录
+	Integer qualityUpdate(Quality quality);
+	
+	//根据id修改收货单记录
+	Integer receiptUpdate(Receipt receipt);
+	
 }

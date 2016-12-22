@@ -20,6 +20,6 @@ public interface QualityService {
 	
 	Long getTotal(Map<String, Object> map);
 	
-	//查询收货表的状态
-	Receipt receiptStatus(Integer rid);
+	//根据id修改收货单记录
+	Integer receiptUpdate(Receipt receipt);
 }

@@ -60,10 +60,8 @@ public class QualityServiceImpl implements QualityService {
 	}
 
 	@Override
-	public Receipt receiptStatus(Integer rid) {
-		// TODO Auto-generated method stub
-		return qualityMapper.receiptStatus(rid);
+	public Integer receiptUpdate(Receipt receipt) {
+		return qualityMapper.receiptUpdate(receipt);
 	}
-
 
 }

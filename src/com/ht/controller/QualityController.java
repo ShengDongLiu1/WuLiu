@@ -1,10 +1,14 @@
 package com.ht.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +27,8 @@ import com.ht.dto.StringUtil;
 import com.ht.dto.PageBean;
 import com.ht.entity.Goods;
 import com.ht.entity.Quality;
+import com.ht.entity.Receipt;
+import com.ht.entity.sysuser;
 
 /**
  * 质检管理Controller
@@ -103,13 +109,16 @@ public class QualityController {
 	}
 	
 	@RequestMapping("/save")
-	public String save(Quality quality, HttpServletResponse resp) throws Exception{
-		System.out.println("*************="+quality.getEid());
+	public String save(Quality quality, Receipt receipt, HttpServletResponse resp) throws Exception{
+		Date date=new Date();
+		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		format.format(date);
+		quality.setEdate(date);
+		System.out.println(quality.getEdate());
 		int resultObj = 0;
-		if(quality.getEid() == null){
-			resultObj = qualityService.qualityAdd(quality);
-		}else{
+		if(quality.getEid() != null){
 			resultObj = qualityService.qualityUpdate(quality);
+			resultObj = qualityService.receiptUpdate(receipt);
 		}
 		JSONObject jsonObject = new JSONObject();
 		if(resultObj > 0){

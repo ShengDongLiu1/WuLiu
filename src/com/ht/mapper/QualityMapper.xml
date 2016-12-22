@@ -37,14 +37,13 @@
 		<!-- 收货 -->
 		<association property="receipt" javaType="com.ht.entity.Receipt">
 			<result property="rid" column="rid"/>
-			<result property="sgid" column="sgid"/>
 			<result property="rstart" column="rstart"/>
 		</association>
 		
 	</resultMap>
 	
 	<sql id="Quality_Column_List">
-		eid, egid, euserid, eresult, edate
+		eid, erid, egid, euserid, eresult, edate
 	</sql>
 	
 	<!-- 根据id查询质检记录 -->
@@ -68,6 +67,9 @@
 	    	<if test="eid != null">
 	    		eid,
 	    	</if>
+	    	<if test="erid != null">
+	    		erid,
+	    	</if>
 	    	<if test="egid != null">
 	    		egid,
 	    	</if>
@@ -84,6 +86,9 @@
 	    <trim prefix="values (" suffix=")" suffixOverrides=",">
 	    	<if test="eid != null">
 	    		#{eid,jdbcType=INTEGER},
+	    	</if>
+	    	<if test="erid != null">
+	    		#{erid,jdbcType=INTEGER},
 	    	</if>
 	    	<if test="egid != null">
 	    		#{egid,jdbcType=INTEGER},
@@ -102,38 +107,52 @@
 	
 	<!-- 根据id修改质检记录 -->
 	<update id="qualityUpdate" parameterType="com.ht.entity.Quality">
-	    update examine
+	    update examine exa
 	    <set>
-	    	<if test="egid != null">
-	    		egid = #{egid,jdbcType=INTEGER},
-	    	</if>
 	    	<if test="euserid != null">
-	    		euserid = #{euserid,jdbcType=INTEGER},
+	    		exa.euserid = #{euserid,jdbcType=VARCHAR},
 	    	</if>
 	    	<if test="eresult != null">
-	    		eresult = #{eresult,jdbcType=VARCHAR},
+	    		exa.eresult = #{eresult,jdbcType=VARCHAR},
 	    	</if>
 	    	<if test="edate != null">
-	    		edate = #{edate,jdbcType=TIMESTAMP},
+	    		exa.edate = #{edate,jdbcType=TIMESTAMP},
 	    	</if>
 	    </set>
-	    where eid = #{eid,jdbcType=INTEGER}
+	    where exa.eid = #{eid,jdbcType=INTEGER}<!--  and
+	    sys.USERID = #{euserid,jdbcType=INTEGER} and
+	    rec.rid = #{erid,jdbcType=INTEGER} -->
+	</update>
+	
+	<!-- 根据id修改质检记录 -->
+	<update id="receiptUpdate" parameterType="com.ht.entity.Receipt">
+	    update receipt
+	    <set>
+	    	<if test="rstart != null">
+	    		rstart = #{rstart,jdbcType=VARCHAR},
+	    	</if>
+	    </set>
+	    where rid = #{rid,jdbcType=INTEGER}
 	</update>
 	
 	<!-- 查询所有质检记录并分页 -->
 	<select id="qualitySelectAll" parameterType="java.util.Map" resultMap="QualityResultMaps">
-   		select * from examine exa, sysuser sys, goods go
+   		select * from examine exa, sysuser sys, goods go, receipt rec
 		<where>
+			exa.erid = rec.rid and
 			exa.euserid = sys.USERID and 
 			exa.egid = go.gid
-			<if test="gordernumber!=null and gordernumber!='' ">
-				and go.gordernumber like #{gordernumber}
+			<if test="gname!=null and gname!='' ">
+				and go.gname like #{gname}
 			</if>
 			<if test="USERTRUENAME!=null and USERTRUENAME!='' ">
 				and sys.USERTRUENAME like #{USERTRUENAME}
 			</if>
 			<if test="eresult!=null and eresult!='' ">
 				and exa.eresult like #{eresult}
+			</if>
+			<if test="rstart!=null and rstart!='' ">
+				and rec.rstart like #{rstart}
 			</if>
 			<if test="edate!=null and edate!='' ">
 				and exa.edate like #{edate}
@@ -146,12 +165,13 @@
     
     <!-- 查询质检记录条数 -->
  	<select id="getTotal" parameterType="java.util.Map" resultType="Long">
- 		select count(*) from examine exa, sysuser sys, goods go
+ 		select count(*) from examine exa, sysuser sys, goods go, receipt rec
 		<where>
+			exa.erid = rec.rid and
 			exa.euserid = sys.USERID and 
 			exa.egid = go.gid
-			<if test="gordernumber!=null and gordernumber!='' ">
-				and go.gordernumber like #{gordernumber}
+			<if test="gname!=null and gname!='' ">
+				and go.gname like #{gname}
 			</if>
 			<if test="USERTRUENAME!=null and USERTRUENAME!='' ">
 				and sys.USERTRUENAME like #{USERTRUENAME}
@@ -159,13 +179,12 @@
 			<if test="eresult!=null and eresult!='' ">
 				and exa.eresult like #{eresult}
 			</if>
+			<if test="rstart!=null and rstart!='' ">
+				and rec.rstart like #{rstart}
+			</if>
 			<if test="edate!=null and edate!='' ">
 				and exa.edate like #{edate}
 			</if>
 		</where>
  	</select>
- 	
- 	<!-- <select id="receiptStatus" parameterType="java.lang.Integer" resultMap="QualityResultMaps">
- 		select rec.sgid, rec.rstart from receipt rec where rec
- 	</select> -->
 </mapper>

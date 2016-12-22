@@ -40,13 +40,25 @@
 		</style>
 		<script type="text/javascript">
 			/* 员工姓名 */
-			function employeeName(value){
-				return value.ename;
+			function sysuserName(value){
+				return value.usertruename;
 			}
 			
-			/* 订单号 */
-			function goodsNumber(value){
-				return value.gordernumber;
+			/* 货物名称 */
+			function goodsName(value){
+				return value.gname;
+			}
+			
+			function recStatus(value){
+				var status='';
+				if(value.rstart=='1'){
+					status="<span class='dai'>待检验</span>"
+				}else if(value.rstart=='2'){
+					status="<span class='yi'>检验通过</span>"
+				}else if(value.rstart=='3'){
+					status="<span class='ju'>检验失败</span>"
+				}
+				return status;
 			}
 		</script>
 	</head>
@@ -65,9 +77,10 @@
 		<thead data-options="frozen:true">
 			<tr>
 				<th field="eid" checkbox="true"></th>
-				<th field="egid" width="15%" align="center">货物编号</th>
-				<th field="euserid" width="15%" align="center">员工编号</th>
-				<th field="eresult" width="35%" align="center">检验结果</th>
+				<th field="goods" width="15%" align="center" formatter="goodsName">货物名称</th>
+				<th field="sysusers" width="15%" align="center" formatter="sysuserName">员工姓名</th>
+				<th field="eresult" width="25%" align="center">检验结果</th>
+				<th field="receipt" width="10%" align="center" formatter="recStatus">货物状态</th>
 				<th field="edate" width="15%" align="center" formatter="toDate">检验时间</th>
 				<th field="null" width="17%" align="center" formatter="toSub">操作</th>
 			</tr>
@@ -75,8 +88,6 @@
 	</table>
 	<!-- 菜单 -->
 	<div id="kj" style="padding: 2px;">
-		<a href="javascript:openQualityAdd()" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >添加</a>
-		<a href="javascript:openQualityModifyDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" >编辑</a>
 		<a href="javascript:deleteTest()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
 		订单号：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />
 		员工：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />
@@ -123,46 +134,39 @@
 		</table>
 	</div>
 	<div id="dlg-buttons">
-	    <a href="javascript:QualityAdd()" class="easyui-linkbutton"
-	        iconCls="icon-ok">保存</a> <a href="javascript:closeQualityAdd()"
+	    <a href="javascript:saveQuality()" class="easyui-linkbutton"
+	        iconCls="icon-ok">保存</a> <a href="javascript:closeQualityDialog()"
 	        class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
-	<!-- 添加质检 -->
-	<div id="dlg" class="easyui-dialog"
-            style="width: 600px;height:280px;padding:10px 10px;" closed="true"
-            buttons="#dlg-buttons">
-            <form method="post" id="fm">
+        <!-- 验证通过 -->
+        <div id="openTrueWin" class="easyui-dialog"  buttons="#dlg-buttons" data-options="closable:true, closed:true"  style="width:30%;height:200px;padding:5px;text-align:center;">
+        	<form method="post" id="fm">
                 <table cellspacing="8px;" align="center">
                     <tr>
-                        <td>货物编号：</td>
-                        <td><input type="text" id="egid" name="egid"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
-                            style="color: red">*</span>
-                        </td>
-                    </tr>
-                    <tr>
-                    	<td>员工编号：</td>
-                        <td><input type="text" id="euserid" name="euserid"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
-                            style="color: red">*</span>
+                    	<td>质检员工：</td>
+                        <td>
+                        	<input type="hidden" id="egid" name="egid">
+                        	<input type="hidden" id="erid" name="erid">
+                        	<input type="hidden" id="euserid" value="${user.userid}">
+                        	<input type="text" id="username" value="${user.usertruename}"
+                            class="easyui-validatebox" style="border:0px" readonly="readonly"/>
                         </td>
                     </tr>
                     <tr>
                         <td>检验结果：</td>
-                        <td><input type="text" id="eresult" name="eresult"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
-                            style="color: red">*</span>
+                        <td height="80">
+                            <input id="eresult" name="eresult" class="easyui-textbox" data-options="multiline:true" style="width:100%;height:70%">
                         </td>
                     </tr>
                     <tr>
-                    	<td>检验时间：</td>
-                        <td><input id="edate" name="edate"
-                            class="easyui-datebox" required="true" />&nbsp;<span
-                            style="color: red">*</span>
+                        <td>
+                        	<input type="hidden" id="edate" name="edate" required="true" />
                         </td>
                     </tr>
                 </table>
             </form>
+        </div>
+        <div id="goodQualityWin" class="easyui-dialog"  buttons="#dlg-buttons" data-options="closable:true, closed:true"  style="width:70%;height:420px;padding:5px;text-align:center;">
         </div>
 	</body>
 	<script>
@@ -208,42 +212,6 @@
 			return formatDateTime(date);
 		}
 		
-		function resetValue() {
-	        $("#egid").val("");
-	        $("#euserid").val("");
-	        $("#eresult").val("");
-	        $("#edate").val("");
-	    }
-		
-		/* 表格按钮 */
-		function toSub(value,rec){
-			var btn="<a href='javascript:openQualityWin("+rec.eid+")'>???</a>";
-			btn+="&nbsp;&nbsp;<a href='#' onclick=''>???</a>";
-			return btn;
-		}
-		
-<%-- 		/* 打开详情窗口 */
-		function openQualityWin(eid) {
-			$.post("<%=path%>/quality/qualityByid",{'eid':eid},function(index){
-				fuzhi(index);
-			},"json");
-		    
-		}
-
-		/* 给弹出的详情窗口赋值 */
-		function fuzhi(index){
-			$("#USERTRUENAME1").html(index.quality.employee.USERTRUENAME);
-			$("#uposition1").html(index.quality.employee.uposition);
-			$("#gordernumber1").html(index.quality.goods.gordernumber);
-			$("#gname1").html(index.quality.goods.gname);
-			$("#ggrade1").html(index.quality.goods.ggrade);
-			$("#gdescribe1").html(index.quality.goods.gdescribe);
-			$("#gstate1").html(index.quality.goods.gstate);
-			$("#eresult1").html(index.quality.eresult);
-			$("#edate1").html(formatDateTime(new Date(index.quality.edate)));
-			$("#qualityByWin").dialog("open").dialog("setTitle", "入库质检详情");
-		} --%>
-		
 		/* 删除 */
 		function deleteTest() {
 	        var selectedRows = $("#dg").datagrid("getSelections");
@@ -273,47 +241,102 @@
 	        });
 	    }
 		
-		/* 添加 */
-		function openQualityAdd() {
-		    $("#dlg").dialog("open").dialog("setTitle", "添加质检");
-		    url = "${pageContext.request.contextPath}/quality/save";
+		/* 表格按钮 */
+		function toSub(value,obj){
+			var btn="&nbsp;<a href='javascript:openGoodWin()'>详情</a>"
+			if(obj.receipt.rstart == '1'){
+				btn+="&nbsp;<a href='javascript:openTrueWin()'>通过</a>";
+				btn+="&nbsp;<a href='javascript:openFalseWin()'>失败</a>"
+			}
+			return btn;
 		}
 		
-		function QualityAdd() {
-	        $("#fm").form("submit", {
-	            url : url,
-	            success : function(result) {
-	                var result = eval('(' + result + ')');
-	                if (result.success) {
-	                    $.messager.alert("系统提示", "保存成功！");
-	                    resetValue();
-	                    $("#dlg").dialog("close");
-	                    $("#dg").datagrid("reload");
-	                } else {
-	                    $.messager.alert("系统提示", "保存失败！");
-	                    return;
-	                }
-	            }
-	        });
+		
+		function getNowFormatDate(edate) {
+		    var date = new Date();
+		    var seperator1 = "-";
+		    var seperator2 = ":";
+		    var month = date.getMonth() + 1;
+		    var strDate = date.getDate();
+		    if (month >= 1 && month <= 9) {
+		        month = "0" + month;
+		    }
+		    if (strDate >= 0 && strDate <= 9) {
+		        strDate = "0" + strDate;
+		    }
+		    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+		            + " " + date.getHours() + seperator2 + date.getMinutes()
+		            + seperator2 + date.getSeconds();
+		    return currentdate;
+		} 
+		
+		/* 验证通过 */
+		function openTrueWin(rid, euserid) {
+			var selectedRows = $("#dg").datagrid("getSelections");
+			var row = selectedRows[0];
+			row.edate = getNowFormatDate(row.edate);
+			row.euserid = $("#euserid").val();
+			$("#openTrueWin").dialog("open").dialog("setTitle", "验证通过");
+			$("#fm").form("load", row);
+			url = "${pageContext.request.contextPath}/quality/save.do?eid=" + row.eid +"&rid="+row.receipt.rid +"&rstart="+2+"&euserid="+row.euserid;
 		}
 		
-	    /* 修改 */
-	    function openQualityModifyDialog() {
-	        var selectedRows = $("#dg").datagrid("getSelections");
-	        if (selectedRows.length != 1) {
-	            $.messager.alert("系统提示", "请选择一条要编辑的数据！");
-	            return;
-	        }
-	        var row = selectedRows[0];
-	        row.edate = toDate(row.edate);
-	        $("#dlg").dialog("open").dialog("setTitle", "编辑用户信息");
-	        $("#fm").form("load", row);
-	        url = "${pageContext.request.contextPath}/quality/save.do?eid=" + row.eid;
-	    }
-	    
-		function closeQualityAdd() {	
-		    $("#dlg").dialog("close");
-		    resetValue();
+		/* 验证失败 */
+		function openFalseWin(rid, euserid) {
+			var selectedRows = $("#dg").datagrid("getSelections");
+			var row = selectedRows[0];
+			row.edate = getNowFormatDate(row.edate);
+			alert(row.edate);
+			row.euserid = $("#euserid").val();
+			$("#openTrueWin").dialog("open").dialog("setTitle", "验证失败");
+			$("#fm").form("load", row);
+			url = "${pageContext.request.contextPath}/quality/save.do?eid=" + row.eid +"&rid="+row.receipt.rid +"&rstart="+3+"&euserid="+row.euserid;
 		}
+		
+		function saveQuality() {
+		    $("#fm").form("submit", {
+		        url : url,
+		        success : function(result) {
+		            var result = eval('(' + result + ')');
+		            if (result.success) {
+		                $.messager.alert("系统提示", "保存成功！");
+		                $("#openTrueWin").dialog("close");
+		                $("#dg").datagrid("load");
+		            } else {
+		                $.messager.alert("系统提示", "保存失败！");
+		                return;
+		            }
+		        }
+		    });
+		}
+		
+		/* 打开详情窗口 */
+		function openGoodWin(gid) {
+			$.post("<%=path%>/quality/qualityByid",{'eid':eid},function(index){
+				fuzhi(index);
+			},"json");
+		    
+		}
+
+		/* 给弹出的窗口赋值 */
+		function fuzhi(index){
+			$("#goodQualityWin").dialog("open").dialog("setTitle", "货物质检详情");
+		}
+		
+		function closeQualityDialog() {	
+		    $("#openTrueWin").dialog("close");
+		    cleanQualityDialog();
+		}
+		function closeQualityDialog1() {	
+		    $("#openTrueWin").dialog("close");
+		    cleanQualityDialog();
+		}
+		
+		function cleanQualityDialog(){
+			$("euserid").val("");
+			$("eresult").val("");
+			$("edate").datebox("setValue", "");
+		}
+		
 		</script>
 </html>

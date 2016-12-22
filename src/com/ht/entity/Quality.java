@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 public class Quality {
 	private Integer eid;
+	private Integer erid;
 	private Integer egid;
 	private Integer euserid;
 	private String eresult;
@@ -30,6 +31,14 @@ public class Quality {
 
 	public void setEid(Integer eid) {
 		this.eid = eid;
+	}
+
+	public Integer getErid() {
+		return erid;
+	}
+
+	public void setErid(Integer erid) {
+		this.erid = erid;
 	}
 
 	public Integer getEgid() {
@@ -87,4 +96,12 @@ public class Quality {
 	public void setReceipt(Receipt receipt) {
 		this.receipt = receipt;
 	}
+
+	@Override
+	public String toString() {
+		return "Quality [eid=" + eid + ", erid=" + erid + ", egid=" + egid + ", euserid=" + euserid + ", eresult="
+				+ eresult + ", edate=" + edate + ", sysusers=" + sysusers + ", goods=" + goods + ", receipt=" + receipt
+				+ "]";
+	}
+	
 }
