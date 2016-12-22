@@ -1,9 +1,13 @@
 package com.ht.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +15,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.ht.dto.PageBean;
 import com.ht.dto.StringUtil;
 import com.ht.entity.Storage;
 import com.ht.entity.Thelibrary;
+import com.ht.entity.Transport;
+import com.ht.entity.sysuser;
 import com.ht.service.interfaces.StorageService;
 import com.ht.service.interfaces.ThelibraryService;
+import com.ht.service.interfaces.TransportService;
+import com.ht.ssm.util.Combox;
 import com.ht.ssm.util.ResponseUtil;
 
 import net.sf.json.JSONArray;
@@ -32,6 +42,9 @@ public class ThelibraryController {
 	
 	@Autowired
 	private StorageService StorageService;
+	
+	@Autowired
+	private TransportService transportService;
 
 	
 	@RequestMapping(value="/list",method=RequestMethod.GET)
@@ -47,8 +60,7 @@ public class ThelibraryController {
 
 	@RequestMapping(value = "/add",method=RequestMethod.POST)
 	public String add(Thelibrary thelibrary,HttpServletResponse resp,@RequestParam(value="goodscount2",required=false)String goodscount,Storage storage,
-			@RequestParam(value="tid",required=false)Integer tid,@RequestParam(value="tstate",required=false)Integer tstate	){
-		thelibrary.setTid(tid);
+			@RequestParam(value="tid",required=false)Integer tid,@RequestParam(value="tstate",required=false)Integer tstate,@RequestParam(value="ttid",required=false)Integer ttid){
 		int resultTotal = 0;
 		if (thelibrary.getTid() == null) {
         	thelibrary.setTstate(1);
@@ -61,6 +73,10 @@ public class ThelibraryController {
         }else{
         	thelibrary.setTid(tid);
         	thelibrary.setTstate(tstate);
+        	if(!"".equals(ttid) && ttid!=null){
+        		thelibrary.setTtid(ttid);
+        		thelibrary.setTstate(3);
+        	}
             resultTotal = thelibraryService.updateByPrimaryKeySelective(thelibrary);
         }
         JSONObject jsonObject = new JSONObject();
@@ -79,7 +95,7 @@ public class ThelibraryController {
 	
 	
 	@RequestMapping(value="/all",method=RequestMethod.GET)
-	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,String gname,String sjname,String ttype,
+	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,String gname,String tdrivername,String ttype,
 			@RequestParam(value="query",required=false)String query) throws Exception{
 		PageBean pageBean=null;
 		if(page == null && rows == null){
@@ -88,8 +104,8 @@ public class ThelibraryController {
 			pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
 		}
 		Map<String, Object> map= new HashMap<>();
+		map.put("tdrivername", StringUtil.formatLike(tdrivername));
 		map.put("gname", StringUtil.formatLike(gname));
-		map.put("tdrivername", StringUtil.formatLike(sjname));
 		map.put("ttype", StringUtil.formatLike(ttype));
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
@@ -102,7 +118,6 @@ public class ThelibraryController {
 			 list = thelibraryService.queryAll2(map);
 			 total = thelibraryService.queryAllCount2(map);
 		}
-			//查询总条数
 		JSONObject result = new JSONObject();
 		JSONArray jsonArray = JSONArray.fromObject(list);
 		result.put("rows", jsonArray);
@@ -113,30 +128,38 @@ public class ThelibraryController {
 	}
 	
 	
-	@RequestMapping(value="/all2",method=RequestMethod.GET)
-	public String queryAll2(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,String gname,String tdrivername,String ttype) throws Exception{
-		PageBean pageBean=null;
-		if(page == null && rows == null){
-			pageBean=new PageBean(0,10);
-		}else{
-			pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
-		}
+	@RequestMapping(value="/tjls",method=RequestMethod.GET)
+	@ResponseBody
+	public String tjls(HttpServletRequest req,HttpServletResponse resp ) throws IOException{
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/json");
+		PrintWriter out=resp.getWriter();
 		Map<String, Object> map= new HashMap<>();
-		/*map.put("gname", StringUtil.formatLike(gname));
-		map.put("tdrivername", StringUtil.formatLike(tdrivername));
-		map.put("ttype", StringUtil.formatLike(ttype));*/
-		map.put("start", pageBean.getStart());
-		map.put("size", pageBean.getPageSize());
-		List<Thelibrary> list=thelibraryService.queryAll2(map);//查询所有数据
-		Long total=thelibraryService.queryAllCount(map);	//查询总条数
-		JSONObject result = new JSONObject();
-		JSONArray jsonArray = JSONArray.fromObject(list);
-		result.put("rows", jsonArray);
-		result.put("total", total);
-		ResponseUtil.write(response, result);
-		System.out.println("list:"+jsonArray);
+		List<Transport> transport = transportService.select(map);
+		List<Combox> list  = new ArrayList<>();
+		for (Transport tra : transport) {
+			int sid = tra.getTrid();
+			String sname = tra.getTdrivername();
+			Combox combox = new Combox();
+			combox.setId(String.valueOf(sid));
+			combox.setName(sname);
+			list.add(combox);
+		}
+		out.write(JSON.toJSONString(list));
+		out.close();
 		return null;
 	}
 	
+	
+	
+	@RequestMapping(value="/thelibraryByid",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> selectByid(Integer tid,HttpServletResponse response){
+		Map<String, Object> map=new HashMap<>();
+		Thelibrary thelibrary = thelibraryService.queryById(tid);
+		map.put("thelibrary", thelibrary);
+		return map;
+	}
 	
 }

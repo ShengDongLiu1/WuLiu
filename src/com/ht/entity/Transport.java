@@ -15,13 +15,12 @@ public class Transport {
 
     private String idcard;
 	public Integer getTrid() {
-        return trid;
-    }
+		return trid;
+	}
 
-    public void setTid(Integer trid) {
-        this.trid = trid;
-    }
-
+	 public void setTrid(Integer trid) {
+		this.trid = trid;
+	}
     public String getTdrivername() {
         return tdrivername;
     }

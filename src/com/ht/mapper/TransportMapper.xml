@@ -138,7 +138,9 @@
 		<if test="idcard!=null and idcard!='' ">
 			and idcard like #{idcard}
 		</if>
+		   and trid != -1
     </where>
+ 
   	 order by trid desc
   	 <if test="start!=null and size!=null">
 		limit #{start},#{size}
@@ -167,6 +169,7 @@
 		<if test="idcard!=null and idcard!='' ">
 			and idcard like #{idcard}
 		</if>
+		  and trid != -1
 		</where>
  </select>
 </mapper>

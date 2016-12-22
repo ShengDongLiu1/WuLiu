@@ -32,4 +32,7 @@ public interface ThelibraryMapper {
     
     Long queryAllCount2(Map<String, Object> map);
     
+    
+    Thelibrary queryById(Integer tid);
+    
 }

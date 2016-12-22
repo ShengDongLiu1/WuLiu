@@ -38,8 +38,7 @@ public class ThelibraryServiceimpl implements ThelibraryService{
 
 	@Override
 	public Thelibrary selectByPrimaryKey(Integer tid) {
-		// TODO Auto-generated method stub
-		return null;
+		return thelibraryMapper.selectByPrimaryKey(tid);
 	}
 
 
@@ -76,6 +75,12 @@ public class ThelibraryServiceimpl implements ThelibraryService{
 	@Override
 	public Long queryAllCount2(Map<String, Object> map) {
 		return thelibraryMapper.queryAllCount2(map);
+	}
+
+
+	@Override
+	public Thelibrary queryById(Integer tid) {
+		return thelibraryMapper.queryById(tid);
 	}
 
 	

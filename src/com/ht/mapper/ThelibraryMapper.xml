@@ -24,6 +24,21 @@
    <association property="goods" javaType="com.ht.entity.Goods">
 	    <result property="gid" column="gid"/>
 		<result property="gname" column="gname"/>
+		<result column="gordernumber" jdbcType="VARCHAR" property="gordernumber" />
+	    <result column="gcount" jdbcType="INTEGER" property="gcount" />
+	    <result column="gunit" jdbcType="VARCHAR" property="gunit" />
+	    <result column="gweight" jdbcType="REAL" property="gweight" />
+	    <result column="gvolume" jdbcType="REAL" property="gvolume" />
+	    <result column="gsize" jdbcType="REAL" property="gsize" />
+	    <result column="ggrade" jdbcType="INTEGER" property="ggrade" />
+	    <result column="gdescribe" jdbcType="VARCHAR" property="gdescribe" />
+	    <result column="gconsignee" jdbcType="VARCHAR" property="gconsignee" />
+	    <result column="greaddress" jdbcType="VARCHAR" property="greaddress" />
+	    <result column="grephone" jdbcType="VARCHAR" property="grephone" />
+	    <result column="gorigin" jdbcType="VARCHAR" property="gorigin" />
+	    <result column="gendpoint" jdbcType="VARCHAR" property="gendpoint" />
+	    <result column="gstate" jdbcType="VARCHAR" property="gstate" />
+	    <result column="gorderstime" jdbcType="TIMESTAMP" property="gorderstime" />
   </association>
   
    <association property="transport" javaType="com.ht.entity.Transport">
@@ -34,7 +49,36 @@
 		<result property="tvehiclecapacity" column="tvehiclecapacity"/>
   </association>
   
-    
+     <association property="customer" javaType="com.ht.entity.Customer">
+		<id column="cid" jdbcType="INTEGER" property="cid" />
+	    <result column="cname" jdbcType="VARCHAR" property="cname" />
+	    <result column="ccompany" jdbcType="VARCHAR" property="ccompany" />
+  	</association>
+  	
+  	  <association property="receipt" javaType="com.ht.entity.Receipt">
+		<id column="rid" jdbcType="INTEGER" property="rid" />
+	    <result column="rreceivecount" jdbcType="VARCHAR" property="rreceivecount" />
+	    <result column="rdamagedcount" jdbcType="VARCHAR" property="rdamagedcount" />
+	    <result column="rshelvecount" jdbcType="INTEGER" property="rshelvecount" />
+	    <result column="rtdgoodstime" jdbcType="VARCHAR" property="rtdgoodstime" />
+  	</association>
+  	
+  	
+  	  	
+  	  <association property="storage" javaType="com.ht.entity.Storage">
+		<id column="sid" jdbcType="INTEGER" property="sid" />
+	    <result column="storagecount" jdbcType="VARCHAR" property="storagecount" />
+	    <result column="storagemode" jdbcType="VARCHAR" property="storagemode" />
+	    <result column="storagetime" jdbcType="TIMESTAMP" property="storagetime" />
+  	</association>
+  	
+  	  <association property="inventory" javaType="com.ht.entity.Inventory">
+		<id column="loid" jdbcType="INTEGER" property="loid" />
+	    <result column="loname" jdbcType="VARCHAR" property="loname" />
+	    <result column="losize" jdbcType="INTEGER" property="losize" />
+	    <result column="lolevel" jdbcType="INTEGER" property="lolevel" />
+  	</association>
+
   </resultMap>
   
   <sql id="Base_Column_List">
@@ -178,6 +222,17 @@
  </select>
  
  
+  <select id="queryById" parameterType="java.lang.Integer" resultMap="BaseResultMap1">
+ select go.gid,go.gname,go.gordernumber,go.ggrade,go.gconsignee,go.greaddress,go.grephone,go.gdescribe,
+ 	go.gorigin,go.gendpoint,go.gorderstime,t.trid,t.tdrivername,t.tdriverphone,t.tvehicleid,t.tvehicletype,t.tvehiclecapacity,
+ 	th.tid, th.tgid, th.ttid, th.tcount,th.tstate, th.ttype, th.remarks, th.ttime,re.rid,re.rreceivecount,re.rdamagedcount,re.rshelvecount,re.rtdgoodstime,
+ 	c.cid,c.cname,c.ccompany,st.sid,st.storagecount,st.storagemode,st.storagetime,st.ssbid,inv.loid,inv.logid,inv.loname,inv.losize,inv.lolevel 
+ 	 from goods go,transport t ,thelibrary th ,customer c,receipt re,storage st,inventory inv
+ 	 where 	th.tgid=go.gid
+			and th.ttid=t.trid and st.ssbid = inv.loid and tid = #{tid,jdbcType=INTEGER}
+ </select>
+ 
+ 
   <select id="queryAll2" parameterType="java.util.Map" resultMap="BaseResultMap1">
  	select go.gid,go.gname,t.trid,t.tdrivername, th.tid, th.tgid, th.ttid, th.tcount,th.tstate, th.ttype, th.remarks, th.ttime from goods go,transport t ,thelibrary th 
 		<where>
@@ -192,7 +247,7 @@
 			<if test="ttype!=null and ttype!='' ">
 				and ttype like #{ttype}
 			</if>
-		 and tstate = 2
+		 and tstate != 1 
 		</where>
 		<if test="start!=null and size!=null">
 			limit #{start},#{size}
@@ -236,7 +291,7 @@
 			<if test="ttype!=null and ttype!='' ">
 				and ttype like #{ttype}
 			</if>	
-		 	and tstate = 2
+		 	and tstate !=1
 			<if test="tstate!=null and tstate!='' ">
 				and tstate like #{tstate}
 			</if>	

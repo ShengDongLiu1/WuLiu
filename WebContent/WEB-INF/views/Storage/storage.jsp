@@ -204,7 +204,9 @@ function openUserModifyDialog() {
     url = "${pageContext.request.contextPath}/thelibrary/add?tid=" + row.tid;
 }
 
-
+function closeUserDialog(){
+	$("#addChuku").dialog("close");
+}
 function chuku() {
 	 var row = $("#list").datagrid("getSelected");
 	 if(row){
@@ -387,7 +389,7 @@ function doAdd() {
             </tr>
             <tr>
             	<td><br/>出库时间:</td>
-                <td><br/><input class="easyui-datebox" name="ttime" /></td>
+                <td><br/><input class="easyui-datebox" name="ttime" data-options="required:true"/></td>
             </tr>
             <tr>
                 <td><br/>备注:</td>

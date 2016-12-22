@@ -33,4 +33,7 @@ public interface ThelibraryService {
 	    Long queryAllCount2(Map<String, Object> map);
 	    
 	    
+	    Thelibrary queryById(Integer tid);
+	    
+	    
 }
