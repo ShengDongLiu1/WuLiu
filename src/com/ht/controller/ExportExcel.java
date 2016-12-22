@@ -19,12 +19,12 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ht.dto.PathService;
 import com.ht.dto.TheDate;
 import com.ht.entity.Goods;
 import com.ht.entity.Receipt;
+import com.ht.entity.Storage;
 
 
 @Controller
@@ -33,14 +33,12 @@ public class ExportExcel {
 	
 	/**
 	 * 导出订单表
-	 * @param page
-	 * @param rows
 	 * @param session
 	 * @param request
 	 * @param response
 	 */
 	@RequestMapping(value="/goodsExcel")
-	public void exportGoods(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpSession session,HttpServletRequest request,HttpServletResponse response){
+	public void exportGoods(HttpSession session,HttpServletRequest request,HttpServletResponse response){
 		 // 第一步，创建一个webbook，对应一个Excel文件  
         HSSFWorkbook wb = new HSSFWorkbook();  
         // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet  
@@ -142,8 +140,14 @@ public class ExportExcel {
         }
 	}
 	
+	/**
+	 * 收货单
+	 * @param session
+	 * @param request
+	 * @param response
+	 */
 	@RequestMapping(value="/receiptExcel")
-	public void exportReceipt(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpSession session,HttpServletRequest request,HttpServletResponse response){
+	public void exportReceipt(HttpSession session,HttpServletRequest request,HttpServletResponse response){
 		 // 第一步，创建一个webbook，对应一个Excel文件  
         HSSFWorkbook wb = new HSSFWorkbook();  
         // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet  
@@ -247,6 +251,112 @@ public class ExportExcel {
 		    //将图片使用字节流的形式写给客户机  
 		    @SuppressWarnings("resource")
 			InputStream is = new FileInputStream(PathService.Path(request)+"/"+"receipt.xls"); //从这个路径下读取文件 
+		    OutputStream out = response.getOutputStream();  
+		    byte[] buffer = new byte[1024];  
+		    int len = 0;  
+		    while((len=is.read(buffer))!=-1){  
+		        out.write(buffer, 0, len);  
+		    } 
+        }  
+        catch (Exception e)  
+        {  
+            e.printStackTrace(); 
+        }
+	}
+	
+	/**
+	 * 
+	 * @param session
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value="/storageExcel")
+	public void storageReceipt(HttpSession session,HttpServletRequest request,HttpServletResponse response){
+		 // 第一步，创建一个webbook，对应一个Excel文件  
+        HSSFWorkbook wb = new HSSFWorkbook();  
+        // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet  
+        HSSFSheet sheet = wb.createSheet("入库列表");  
+        // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
+        HSSFRow row = sheet.createRow(0);
+        // 第四步，创建单元格，并设置值表头 设置表头居中  
+        HSSFCellStyle style = wb.createCellStyle();  
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式  
+  
+        HSSFCell cell = row.createCell(0);  
+        cell.setCellValue("编号");  
+        cell.setCellStyle(style);
+        
+        cell = row.createCell(1);  
+        cell.setCellValue("客户");  
+        cell.setCellStyle(style);  
+        
+        cell = row.createCell(2);  
+        cell.setCellValue("货物名称");  
+        cell.setCellStyle(style);  
+        
+        cell = row.createCell(3);  
+        cell.setCellValue("库位名称");  
+        cell.setCellStyle(style);
+        
+        cell = row.createCell(4);  
+        cell.setCellValue("入库类型");  
+        cell.setCellStyle(style);
+        
+        cell = row.createCell(5);  
+        cell.setCellValue("入库数量");  
+        cell.setCellStyle(style);
+        
+        cell = row.createCell(6);  
+        cell.setCellValue("剩余库存");  
+        cell.setCellStyle(style);
+        
+        cell = row.createCell(7);  
+        cell.setCellValue("条形码编号");  
+        cell.setCellStyle(style);
+        
+        cell = row.createCell(8);  
+        cell.setCellValue("入库时间");  
+        cell.setCellStyle(style);
+        
+        cell = row.createCell(9);  
+        cell.setCellValue("操作员");  
+        cell.setCellStyle(style);
+        
+        @SuppressWarnings("unchecked")
+		List<Storage> list=(List<Storage>)session.getAttribute("storageList");
+        
+        for (int i = 0; i < list.size(); i++)  
+        {  
+            row = sheet.createRow((int) i + 1);  
+            // 第四步，创建单元格，并设置值  
+            row.createCell(0).setCellValue(i+1);  
+            row.createCell(1).setCellValue(list.get(i).getCustomer().getCname());  
+            row.createCell(2).setCellValue(list.get(i).getGoods().getGname());
+            row.createCell(3).setCellValue(list.get(i).getInventory().getLoname()); 
+            row.createCell(4).setCellValue(list.get(i).getStoragemode()); 
+            row.createCell(5).setCellValue(list.get(i).getStoragecount()); 
+            row.createCell(6).setCellValue(list.get(i).getSstock());
+            row.createCell(7).setCellValue(list.get(i).getSbarcadeid());
+            row.createCell(8).setCellValue(TheDate.datetoString(list.get(i).getStoragetime()));
+            row.createCell(9).setCellValue(list.get(i).getUser().getUsertruename());
+        }  
+        // 第六步，将文件存到指定位置  
+        try{  
+        	FileOutputStream fout = new FileOutputStream(PathService.Path(request)+"/"+"storage.xls");  
+            wb.write(fout);  
+            fout.close();  
+            ServletContext context = request.getSession().getServletContext();  
+		    //通过context方式直接获取文件的路径  
+		    String path = context.getRealPath("/入库列表.xls");  
+		    //获取文件名  
+		    String filename = path.substring(path.lastIndexOf("\\")+1);  
+		    //将文件名进行URL编码  
+		    filename = URLEncoder.encode(filename,"utf-8");  
+		    //告诉浏览器用下载的方式打开图片  
+		    response.setHeader("content-disposition", "attachment;filename="+filename);  
+		    //将图片使用字节流的形式写给客户机  
+		    @SuppressWarnings("resource")
+			InputStream is = new FileInputStream(PathService.Path(request)+"/"+"storage.xls"); //从这个路径下读取文件 
 		    OutputStream out = response.getOutputStream();  
 		    byte[] buffer = new byte[1024];  
 		    int len = 0;  

@@ -56,7 +56,7 @@ public class StorageController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/all",method=RequestMethod.GET)
-	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,String cname,String gname,String loname,String sbarcadeid,String username) throws Exception{
+	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,HttpSession session,String cname,String gname,String loname,String sbarcadeid,String username) throws Exception{
 		PageBean pageBean=null;
 		if(page == null && rows == null){
 			pageBean=new PageBean(1,10);
@@ -73,7 +73,9 @@ public class StorageController {
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
 		List<Storage> list=storageService.queryAll(map);//查询所有数据
+		session.setAttribute("storageList", list);
 		Long total=storageService.queryAllCount(map);	//查询总条数
+		
 		JSONObject result = new JSONObject();
 		JSONArray jsonArray = JSONArray.fromObject(list);
 		result.put("rows", jsonArray);
