@@ -103,7 +103,6 @@ public class QualityController {
 	public Map<String, Object> selectByid(Integer eid,HttpServletResponse response){
 		Map<String, Object> map=new HashMap<>();
 		Quality quality=qualityService.qualitySelect(eid);
-		System.out.println("++++++++++++++++="+quality);
 		map.put("quality", quality);
 		return map;
 	}

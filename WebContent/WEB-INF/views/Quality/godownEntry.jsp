@@ -16,11 +16,11 @@
 		<style type="text/css">
 			body{margin:0px;padding:0px;}
 			.tdwidth{
-				width:20%;text-align:right;font-size:15px;
+				width:15%;text-align:right;font-size:15px;
 			}
 			.gxiangq{
 				text-align:left;font-size:15px;
-				border-bottom:1px dashed #FFE48D; 
+				border-bottom:1px dashed #5F6D88; 
 			}
 			.gxiangq span{
 				font-size:16px;
@@ -53,9 +53,9 @@
 				var status='';
 				if(value.rstart=='1'){
 					status="<span class='dai'>待检验</span>"
-				}else if(value.rstart=='2' || value.rstart=='4' || value.rstart=='5'){
+				}else if(value.rstart=='2' || value.rstart=='3' || value.rstart=='5'){
 					status="<span class='yi'>检验通过</span>"
-				}else if(value.rstart=='3'){
+				}else if(value.rstart=='4'){
 					status="<span class='ju'>检验失败</span>"
 				}
 				return status;
@@ -93,46 +93,6 @@
 		员工：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
 	</div>
-	<div id="qualityByWin" class="easyui-dialog"  buttons="#dlg-buttons" data-options="closable:true, closed:true"  style="width:50%;height:580px;padding:5px;text-align:center;">
-		<table style="width:90%;height:100%;" id="gooded" align="center">
-			<tr>
-				<td class="tdwidth">员工姓名:</td>
-				<td class="gxiangq"><span id="USERTRUENAME1"></span></td>
-			</tr>
-			<tr>
-				<td class="tdwidth">员工职位:</td>
-				<td class="gxiangq"><span id="uposition1"></span></td>
-			</tr>
-			<tr>
-				<td class="tdwidth">货物订单号:</td>
-				<td class="gxiangq"><span id="gordernumber1"></span></td>
-			</tr>
-			<tr>
-				<td class="tdwidth">货物名称:</td>
-				<td class="gxiangq"><span id="gname1"></span></td>
-			</tr>
-			<tr>
-				<td class="tdwidth">货物等级:</td>
-				<td class="gxiangq"><span id="ggrade"></span></td>
-			</tr>
-			<tr>
-				<td class="tdwidth">货物描述:</td>
-				<td class="gxiangq"><span id="gdescribe1"></span></td>
-			</tr>
-			<tr>
-				<td class="tdwidth">货物状态:</td>
-				<td class="gxiangq"><span id="gstate1"></span></td>
-			</tr>
-			<tr>
-				<td class="tdwidth">检验结果:</td>
-				<td class="gxiangq"><span id="eresult1"></span></td>
-			</tr>
-			<tr>
-				<td class="tdwidth">检验时间:</td>
-				<td class="gxiangq"><span id="edate1"></span></td>
-			</tr>
-		</table>
-	</div>
 	<div id="dlg-buttons1">
 	    <a href="javascript:saveQuality()" class="easyui-linkbutton"
 	        iconCls="icon-ok">保存</a> <a href="javascript:closeQualityDialog()"
@@ -155,7 +115,7 @@
                     <tr>
                         <td>检验结果：</td>
                         <td height="80">
-                            <input id="eresult" name="eresult" class="easyui-textbox" data-options="multiline:true" style="width:100%;height:70%">
+                            <input id="eresult" name="eresult" class="easyui-textbox" data-options="multiline:true" style="width:100%;height:70%" value="请填写检验结果">
                         </td>
                     </tr>
                     <tr>
@@ -167,6 +127,44 @@
             </form>
         </div>
         <div id="goodQualityWin" class="easyui-dialog"  buttons="#dlg-buttons" data-options="closable:true, closed:true"  style="width:70%;height:420px;padding:5px;text-align:center;">
+        	<table style="width:100%;height:100%;" id="gooded">
+        		<tr align="center">
+        			<td class="tdwidth">订单号：</td>
+        			<td class="gxiangq"><span class="gordernumber1"></span></td>
+        			<td class="tdwidth">货物名称：</td>
+        			<td class="gxiangq"><span class="gname1"></span></td>
+        		</tr>
+        		<tr align="center">
+        			<td class="tdwidth">货物等级：</td>
+        			<td class="gxiangq"><span class="ggrade1"></span></td>
+        			<td class="tdwidth">货物描述：</td>
+        			<td class="gxiangq"><span class="gdescribe1"></span></td>
+        		</tr>
+        		<tr align="center">
+        			<td class="tdwidth">货物状态：</td>
+        			<td class="gxiangq"><span class="gstate1"></span></td>
+        			<td class="tdwidth">货物数量：</td>
+        			<td class="gxiangq"><span class="gcount1"></span></td>
+        		</tr>
+        		<tr align="center">
+        			<td class="tdwidth">接收数量：</td>
+        			<td class="gxiangq"><span class="rreceivecount1"></span></td>
+        			<td class="tdwidth">破损数量：</td>
+        			<td class="gxiangq"><span class="rdamagedcount1"></span></td>
+        		</tr>
+        		<tr align="center">
+        			<td class="tdwidth">搁置数量：</td>
+        			<td class="gxiangq"><span class="rshelvecount1"></span></td>
+        			<td class="tdwidth">员工姓名：</td>
+        			<td class="gxiangq"><span class="ename1"></span></td>
+        		</tr>
+        		<tr align="center">
+        			<td class="tdwidth">检验结果：</td>
+        			<td class="gxiangq"><span class="eresult1"></span></td>
+        			<td class="tdwidth">检验时间：</td>
+        			<td class="gxiangq"><span class="edate1"></span></td>
+        		</tr>
+        	</table>
         </div>
 	</body>
 	<script>
@@ -204,6 +202,7 @@
 
 		/* 将{"date":14,"day":3,"hours":19,"minutes"……}转换为Thu Mar 19 2015 12:00:00 GMT+0800 (中国标准时间) */
 		function toDate(obj){
+			if(obj == null){return;}
 			var date = new Date();
 			 date.setTime(obj.time);
 			 date.setHours(obj.hours);
@@ -243,7 +242,7 @@
 		
 		/* 表格按钮 */
 		function toSub(value,obj){
-			var btn="&nbsp;<a href='javascript:openGoodWin()'>详情</a>"
+			var btn="&nbsp;<a href='javascript:openGoodWin("+obj.eid+")'>详情</a>"
 			if(obj.receipt.rstart == '1'){
 				btn+="&nbsp;<a href='javascript:openTrueWin()'>通过</a>";
 				btn+="&nbsp;<a href='javascript:openFalseWin()'>失败</a>"
@@ -275,10 +274,10 @@
 			var selectedRows = $("#dg").datagrid("getSelections");
 			var row = selectedRows[0];
 			row.edate = getNowFormatDate(row.edate);
-			row.euserid = $("#euserid").val();
+			row.eresult = $("#eresult").val()
 			$("#openTrueWin").dialog("open").dialog("setTitle", "验证通过");
 			$("#fm").form("load", row);
-			url = "${pageContext.request.contextPath}/quality/save.do?eid=" + row.eid +"&rid="+row.receipt.rid +"&rstart="+2+"&euserid="+row.euserid;
+			url = "${pageContext.request.contextPath}/quality/save.do?eid=" + row.eid +"&rid="+row.receipt.rid +"&rstart="+2+"&euserid="+row.euserid+"&eresult"+row.eresult;
 		}
 		
 		/* 验证失败 */
@@ -286,11 +285,11 @@
 			var selectedRows = $("#dg").datagrid("getSelections");
 			var row = selectedRows[0];
 			row.edate = getNowFormatDate(row.edate);
-			alert(row.edate);
 			row.euserid = $("#euserid").val();
+			row.eresult = $("#eresult").val()
 			$("#openTrueWin").dialog("open").dialog("setTitle", "验证失败");
 			$("#fm").form("load", row);
-			url = "${pageContext.request.contextPath}/quality/save.do?eid=" + row.eid +"&rid="+row.receipt.rid +"&rstart="+3+"&euserid="+row.euserid;
+			url = "${pageContext.request.contextPath}/quality/save.do?eid=" + row.eid +"&rid="+row.receipt.rid +"&rstart="+4+"&euserid="+row.euserid+"&eresult"+row.eresult;
 		}
 		
 		function saveQuality() {
@@ -320,6 +319,19 @@
 
 		/* 给弹出的窗口赋值 */
 		function fuzhi(index){
+			alert(index.quality.receipt.rshelvecount);
+			$(".gordernumber1").html(index.quality.goods.gordernumber);//订单号
+			$(".gname1").html(index.quality.goods.gname);//货物名称
+			$(".ggrade1").html(index.quality.goods.ggrade);//货物等级
+			$(".gdescribe1").html(index.quality.goods.gdescribe);//货物描述
+			$(".gstate1").html(index.quality.goods.gstate);//货物状态
+			$(".gcount1").html(index.quality.goods.gcount);//货物数量
+			$(".rreceivecount1").html(index.quality.receipt.rreceivecount);//接收数量
+			$(".rdamagedcount1").html(index.quality.receipt.rdamagedcount);//破损数量
+			$(".rshelvecount1").html(index.quality.receipt.rshelvecount);//搁置数量
+			$(".ename1").html(index.quality.sysusers.usertruename);//员工姓名
+			$(".eresult1").html(index.quality.eresult);//检验结果
+			$(".edate1").html(getNowFormatDate(index.quality.edate));//检验时间
 			$("#goodQualityWin").dialog("open").dialog("setTitle", "货物质检详情");
 		}
 		

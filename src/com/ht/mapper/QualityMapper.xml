@@ -29,6 +29,7 @@
 			<result property="gid" column="gid"/>
 			<result property="gordernumber" column="gordernumber"/>
 			<result property="gname" column="gname"/>
+			<result property="gcount" column="gcount"/>
 			<result property="ggrade" column="ggrade"/>
 			<result property="gdescribe" column="gdescribe"/>
 			<result property="gstate" column="gstate"/>
@@ -37,6 +38,9 @@
 		<!-- 收货 -->
 		<association property="receipt" javaType="com.ht.entity.Receipt">
 			<result property="rid" column="rid"/>
+			<result property="rreceivecount" column="rreceivecount"/>
+			<result property="rdamagedcount" column="rdamagedcount"/>
+			<result property="rshelvecount" column="rshelvecount"/>
 			<result property="rstart" column="rstart"/>
 		</association>
 		
@@ -50,7 +54,7 @@
 	<select id="qualitySelect" parameterType="java.lang.Integer" resultMap="QualityResultMaps">
 	  select 
 	  *
-	  from examine exa, sysuser sys, goods go
+	  from examine exa, sysuser sys, goods go, receipt rec
 	  where exa.eid = #{eid,jdbcType=INTEGER}
 	</select>
 	
@@ -119,9 +123,7 @@
 	    		exa.edate = #{edate,jdbcType=TIMESTAMP},
 	    	</if>
 	    </set>
-	    where exa.eid = #{eid,jdbcType=INTEGER}<!--  and
-	    sys.USERID = #{euserid,jdbcType=INTEGER} and
-	    rec.rid = #{erid,jdbcType=INTEGER} -->
+	    where exa.eid = #{eid,jdbcType=INTEGER}
 	</update>
 	
 	<!-- 根据id修改质检记录 -->
