@@ -53,7 +53,7 @@
 				var status='';
 				if(value.rstart=='1'){
 					status="<span class='dai'>待检验</span>"
-				}else if(value.rstart=='2'){
+				}else if(value.rstart=='2' || value.rstart=='4' || value.rstart=='5'){
 					status="<span class='yi'>检验通过</span>"
 				}else if(value.rstart=='3'){
 					status="<span class='ju'>检验失败</span>"
@@ -311,7 +311,7 @@
 		}
 		
 		/* 打开详情窗口 */
-		function openGoodWin(gid) {
+		function openGoodWin(eid) {
 			$.post("<%=path%>/quality/qualityByid",{'eid':eid},function(index){
 				fuzhi(index);
 			},"json");
