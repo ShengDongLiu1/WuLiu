@@ -59,7 +59,7 @@
   </delete>
   
   <!-- 添加收货单 -->
-  <insert id="insertSelective" parameterType="com.ht.entity.Receipt">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="rid" parameterType="com.ht.entity.Receipt">
     insert into receipt
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="rid != null">

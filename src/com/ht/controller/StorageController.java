@@ -98,6 +98,7 @@ public class StorageController {
 		String string=barcode.createCode(request);//条形码生成
 		Receipt receipt=(Receipt) session.getAttribute("queryReceipt");
 		Storage storage=(Storage) session.getAttribute("queryStorage");
+		storage.setSstock(storage.getStoragecount());
 		storage.setSsbid(ssbid);//库位编号
 		storage.setStoragebarcode(string+".png");//条形码
 		storage.setSbarcadeid(string);

@@ -213,7 +213,6 @@ function openNumWin(rid,cid,gid,count){
 
 /* 单选按钮选中的值 */
 function getCheckVal(){
-	$("input[name='storagemode']").attr('checked','checked');
 	var stor=document.getElementsByName("storagemode");
      for(var i=0;i<stor.length;i++)
      {
@@ -312,9 +311,11 @@ function subRece(){
 		货物：<input id="sgname" class="easyui-validatebox easyui-textbox" name="gname" data-options="required:false" />&nbsp;
 		状态：<select id="srstart" class="easyui-combobox" name="rstart" data-options="editable:false" style="width:10%">
 			<option value=""></option>
-			<option value="1">未入库</option>
-			<option value="2">部分入库</option>
-			<option value="3">已入库</option>
+			<option value="1">待检验</option>
+			<option value="2">未入库</option>
+			<option value="3">检验失败</option>
+			<option value="4">部分入库</option>
+			<option value="5">已入库</option>
 		</select>&nbsp;
 		订单号：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />&nbsp;
 		收货员：<input id="username" class="easyui-validatebox easyui-textbox" name="username" data-options="required:false" />
