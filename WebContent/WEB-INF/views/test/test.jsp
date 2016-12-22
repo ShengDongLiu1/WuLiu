@@ -53,6 +53,7 @@
 		<a href="javascript:openUserAddDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >添加</a>
 		<a href="javascript:openUserModifyDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" >编辑</a>
 		<a href="javascript:deleteTest()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
+		<a href="javascript:daochuTest()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >导出</a>
 	</div>
 
 	<div id="dlg-buttons">
@@ -213,6 +214,11 @@
 		                }, "json");
 		            }
 		        });
+		    }
+		    
+		    function daochuTest() {
+		    	window.location.href='<%=path %>/test/daochu.do?page=1&rows=100';
+		    	$.messager.alert('提示', '导出成功', 'info');
 		    }
 	</script>
 </body>
