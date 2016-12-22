@@ -126,4 +126,20 @@ public class StorageController {
 		}
 		return map;
 	}
+	
+	@RequestMapping("/updatekw")
+	public String updatekw(Storage storage,@RequestParam(value="sid",required=false)int sid,@RequestParam(value="loid",required=false)int ssbid,HttpServletResponse res) throws Exception{
+		int resultTotal = 0;
+		storage.setSid(sid);
+		storage.setSsbid(ssbid);
+            resultTotal = storageService.updateByPrimaryKeySelective(storage);
+        JSONObject jsonObject = new JSONObject();
+        if(resultTotal > 0){   //说明修改成功
+            jsonObject.put("success", true);
+        }else{
+            jsonObject.put("success", false);
+        }
+        ResponseUtil.write(res, jsonObject);
+        return null;
+	}
 }

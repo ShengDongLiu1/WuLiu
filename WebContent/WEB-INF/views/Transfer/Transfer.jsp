@@ -38,10 +38,7 @@
 	</table>
 	<!-- 菜单 -->
 	<div id="tb" style="padding: 2px;">
-		<a href="javascript:openTransferAddDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >添加</a>
-		<a href="javascript:openTransferModifyDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" >编辑</a>
-		<a href="javascript:deleteTransfer()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">删除</a>
-		<!-- 筛选 --><br />
+		<!-- 筛选 -->
 		货物名称：<input id="gname" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
 		员工名字：<input id="username" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
 		移库原因：<input id="treason" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
@@ -62,27 +59,31 @@
                 <table cellspacing="8px;">
                     <tr>
                         <td>货物名称：</td>
-                        <td><input type="text" id="tdrivername" name="tdrivername"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
+                        <td><input id="tdrivername" name="tdrivername"
+                            class="easyui-textbox" required="true" readonly/>&nbsp;<span
                             style="color: red">*</span>
+                            <input type="button" onclick="add_goods();" value="点击选择货物" style="width:100px;"/>
                         </td>
-
+					</tr>
+					<tr>
                         <td>员工名字：</td>
-                        <td><input type="text" id="tdriverphone" name="tdriverphone"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
+                        <td><input id="tdriverphone" name="tdriverphone"
+                            class="easyui-textbox" required="true" readonly/>&nbsp;<span
                             style="color: red">*</span>
+                            <input type="button" onclick="add_sysuser();" value="点击选择员工" style="width:100px;"/>
                         </td>
                     </tr>
                     <tr>
                         <td>移库原因：</td>
-                        <td><input type="text" id="tvehicleid" name="tvehicleid"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
+                        <td><input id="tvehicleid" name="tvehicleid"
+                            class="easyui-textbox " required="true" data-options="multiline:true" style="width:100%;height:70px"/>&nbsp;<span
                             style="color: red">*</span>
                         </td>
-                        
+                        </tr>
+                        <tr>
                         <td> 移库时间：</td>
-                        <td><input type="text" id="tvehicletype" name="tvehicletype"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
+                        <td><input id="tvehicletype" name="tvehicletype"
+                            class="easyui-datetimebox" required="true" data-options="multiline:true"/>&nbsp;<span
                             style="color: red">*</span>
                         </td>
                     </tr>
@@ -91,7 +92,37 @@
             </form>
         </div>
 
-
+	<div id="goods_easyui_addWin" class="easyui-window" title="添加货物" data-options="iconCls:'icon-add', closable:true, closed:true"  style="width:100%;height:500px;padding:5px;text-align:center;">
+		<form id="goods_easyui_addform">
+			<table id="list" class="easyui-datagrid" toolbar="#kj" style="width:100%" data-options="
+		url:'<%=path %>/storage/all',
+		method:'get',
+		rownumbers:true,	
+		singleSelect:false,
+		autoRowHeight:true,
+		pagination:true,
+		border:false,
+		pageSize:10,
+		fit:true
+	">
+		<thead data-options="frozen:true">
+			<tr>
+				<th field="sid" checkbox="true">编号</th>
+				<th field="customer" width="7%" align="center" formatter="customerName">客户</th>
+				<th field="goods" width="7%" align="center" formatter="goodsName">货物名称</th>
+				<th field="inventory" width="7%" align="center" formatter="inventoryName">库位名称</th>
+				<th field="storagemode" width="7%" align="center">入库类型</th>
+				<th field="storagecount" width="5%" align="center">入库数量</th>
+				<th field="storagebarcode" width="28%" align="center" formatter="toImage">条形码</th>
+				<th field="sbarcadeid" width="12%" align="center">条形码编号</th>
+				<th field="sstock" width="5%" align="center">库存量</th>
+				<th field="storagetime" width="9%" align="center" formatter="toDate">入库时间</th>
+				<th field="user" width="7%" align="center" formatter="toUserName">操作员</th>
+			</tr>
+		</thead>
+	</table>
+		</form>
+	</div>
 	<script type="text/javascript">
 		var url;
 		$(function() {
@@ -239,6 +270,10 @@
 	    	 date.setSeconds(obj.seconds);
 	    	return formatDateTime(date);
 	    }
+	    
+		function add_goods(){	
+			$("#goods_easyui_addWin").window("open");
+		}
 	</script>
 </body>
 </html>

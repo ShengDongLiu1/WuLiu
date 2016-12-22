@@ -32,11 +32,6 @@ public class StorageServiceImpl implements StorageService{
 	}
 
 	@Override
-	public int updateByPrimaryKeySelective(Storage record) {
-		return storage.updateByPrimaryKeySelective(record);
-	}
-
-	@Override
 	public List<Storage> queryAll(Map<String, Object> map) {
 		return storage.queryAll(map);
 	}
@@ -45,5 +40,11 @@ public class StorageServiceImpl implements StorageService{
 	public Long queryAllCount(Map<String, Object> map) {
 		return storage.queryAllCount(map);
 	}
+
+	@Override
+	public int updateByPrimaryKeySelective(Storage sto) {
+		return storage.updateByPrimaryKeySelective(sto);
+	}
+
 
 }

@@ -47,4 +47,6 @@ public interface StorageMapper {
      * @return
      */
     Long queryAllCount(Map<String, Object> map);
+
+	
 }

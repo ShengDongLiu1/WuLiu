@@ -84,8 +84,9 @@ function goodsName(value){
 	return btn;
 }
 
-function inventoryName(value){
-	return value.loname;
+function inventoryName(value,obj){
+	var btn="<a href=javascript:openInveWin("+value.loid+",'"+value.loname+"',"+obj.sid+")>"+value.loname+"</a>";
+	return btn;
 }
 
 function toUserName(value){
@@ -134,6 +135,13 @@ function openGoodWin(gid) {
     
 }
 
+/* 打开移库窗口 */
+function openInveWin(loid,loname,sid) {
+	$("#lonames").html(loname);
+	$("#sids").val(sid);
+	$("#InvebyWin").dialog("open").dialog("setTitle", "货物移库详情");
+}
+
 /* 给弹出的窗口赋值 */
 function fuzhi(index){
 	$("#gname").html(index.goods.gname);
@@ -157,6 +165,42 @@ function fuzhi(index){
 /* 关闭窗口 */
 function closeGoodWin(){
 	$("#goodbyWin").dialog("close");
+}
+
+function closeInveWin(){
+	$("#InvebyWin").dialog("close");
+}
+
+function okInve(){
+	$("#Inve_easyui_addWin").window("open");
+}
+/* 选中库位提交 */
+function okInvego(){
+	 var selectedRows = $("#dgInve").datagrid("getSelections");
+	 var kw= selectedRows[0];
+	 if(kw.lostate=='0'){
+		 $("#Inve_easyui_addWin").dialog("close");
+		 $("#lonamesok").textbox("setValue",kw.loname);
+		 $("#kwids").val(kw.loid);
+	 }else{
+		 $.messager.alert("系统提示", "库位当前状态为关闭，请联系管理员开启！");
+	 }
+	 
+}
+
+/* 选择库位筛选 */
+function selectfiltrate(){
+	var names=$('#gname').textbox('getValue');
+	var loname=$('#loname').textbox('getValue');
+	var lolevel=$('#lolevel').textbox('getValue');
+	var lostate=$('#lostate').textbox('getValue');
+	 $("#dgInve").datagrid("load",{gname:names,loname:loname,lolevel:lolevel,lostate:lostate});
+	
+	        $("#gname").textbox('setValue',"");
+	        $("#loname").textbox('setValue',"");
+	        $("#lolevel").textbox('setValue',"");
+	        $("#lostate").textbox('setValue',"");
+	    
 }
 
 /* 搜索 */
@@ -246,6 +290,16 @@ function doAdd() {
 	}
 }
 
+function doUpdate() {
+	var sid=$("#sids").val();
+	var loid=$("#kwids").val();
+	 $.post("<%=path%>/storage/updatekw",{'sid':sid,'loid':loid},function(index){
+		 $("#InvebyWin").dialog("close");
+         $("#list").datagrid("reload");
+         $("#lonamesok").textbox('setValue','');
+         $.messager.alert("系统提示", "移库成功！");
+		},"json");
+}
 </script>
 </head>
 <body>
@@ -350,7 +404,27 @@ function doAdd() {
 		</table>
 	</div>
 	
+		<div id="InvebyWin" class="easyui-dialog"  buttons="#dlg-buttonInve" data-options="closable:true, closed:true"  style="width:70%;height:420px;padding:5px;text-align:center;">
+		<table style="width:100%;height:100%;">
+			<tr align="center">
+				<td class="tdwidth">移库位之前:</td>
+				<td class="gxiangq"><span id="lonames"></span><input id="sids" type=text style="display:none"><input id="kwids" type=text style="display:none"></td>
+			</tr>
+			
+			<tr align="center">
+				<td class="tdwidth">移库位之后:</td>
+				<td class="gxiangq"><input class="easyui-validatebox easyui-textbox" id="lonamesok" name="lonames" data-options="required:false" />
+				 <a href="javascript:okInve()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">选择库位</a>
+				</td>
+			</tr>
+		</table>
+	</div>
 	
+		<div id="dlg-buttonInve">
+	    <a href="javascript:doUpdate()" class="easyui-linkbutton"
+	        iconCls="icon-ok">保存</a> <a href="javascript:closeInveWin()"
+	        class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
 	
 	<div id="dlg-buttons">
 	    <a href="javascript:doAdd()" class="easyui-linkbutton"
@@ -400,5 +474,45 @@ function doAdd() {
         </table>
     </form>
 </div>
+
+<div id="Inve_easyui_addWin" class="easyui-window" title="选择库位"
+		data-options="iconCls:'icon-edit', closable:true, closed:true"
+		style="width: 800px; height: 500px; padding: 5px;">
+		<form id="Inve_easyui_addform">
+			<table id="dgInve" class="easyui-datagrid" toolbar="#okInvesx" data-options="
+		url:'<%=path %>/inventory/allInve',
+		method:'get', 
+		rownumbers:true,
+		singleSelect:true,
+		autoRowHeight: true,
+		pagination:true,
+		border:false,
+		pageSize:10
+	">
+				<thead data-options="frozen:true">
+					<tr>
+						<th field="loid" checkbox="true">编号</th>
+						<th field="loname" width="15%">库位名称</th>
+						<th field="losize" width="15%">库位尺寸(m)</th>
+						<th field="lovolume" width="15%">库位体积(m³)</th>
+						<th field="loweight" width="15%">承受重量(t)</th>
+						<th field="lolevel" width="15%">库位等级(数字越大等级越高)</th>
+						<th field="lostate" width="15%">库位状态(0/开启,1关闭)</th>
+					</tr>
+				</thead>
+			</table>
+		</form>
+		 
+		<a href="javascript:okInvego()"  class="easyui-linkbutton" data-options="iconCls:'icon-search'">点击选择库位</a>
+	</div>
+	<!-- 菜单 -->
+	<div id="okInvesx" style="padding: 2px;">
+		<!-- 筛选 -->
+		货物名称：<input id="gname" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
+		库位名称：<input id="loname" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
+		库位等级：<input id="lolevel" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
+		库位状态：<input id="lostate" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
+		<a href="javascript:selectfiltrate()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">筛选</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</div>
 </body>
 </html>

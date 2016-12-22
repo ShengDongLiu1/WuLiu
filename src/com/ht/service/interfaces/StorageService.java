@@ -26,13 +26,6 @@ public interface StorageService {
      * @return
      */
     Storage selectByPrimaryKey(Integer sid);
-
-    /**
-     * 根据id修改信息
-     * @param record
-     * @return
-     */
-    int updateByPrimaryKeySelective(Storage record);
     
     /**
      * 分页查询入库记录
@@ -47,4 +40,13 @@ public interface StorageService {
      * @return
      */
     Long queryAllCount(Map<String, Object> map);
+
+    /**
+     * 修改库位
+     * @param map
+     * @return
+     */
+	int updateByPrimaryKeySelective(Storage storage);
+
+
 }
