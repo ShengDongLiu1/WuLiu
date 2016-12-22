@@ -123,9 +123,9 @@ public class ReceiptController {
 			goods.setGstate("2");//状态设为2已揽收
 			resultcount=goodsService.updateByPrimaryKeySelective(goods);
 			if(resultcount>0){
-				System.out.println("插入数据返回主键:"+receipt.getRid());
 				Quality quality=new Quality();//添加质检
 				quality.setEgid(receipt.getRgid());//货物id
+				quality.setErid(receipt.getRid());//收货单id
 				quality.setEresult("待审核");
 				qualityService.qualityAdd(quality);
 				map.put("result", "揽收成功！");
@@ -232,6 +232,7 @@ public class ReceiptController {
 				
 				Quality quality=new Quality();//添加质检
 				quality.setEgid(receipt.getRgid());//货物id
+				quality.setErid(receipt.getRid());//收货单id
 				quality.setEresult("待审核");
 			}
 		}
