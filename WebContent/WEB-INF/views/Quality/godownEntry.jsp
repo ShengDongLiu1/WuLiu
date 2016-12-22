@@ -133,13 +133,13 @@
 			</tr>
 		</table>
 	</div>
-	<div id="dlg-buttons">
+	<div id="dlg-buttons1">
 	    <a href="javascript:saveQuality()" class="easyui-linkbutton"
 	        iconCls="icon-ok">保存</a> <a href="javascript:closeQualityDialog()"
 	        class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
         <!-- 验证通过 -->
-        <div id="openTrueWin" class="easyui-dialog"  buttons="#dlg-buttons" data-options="closable:true, closed:true"  style="width:30%;height:200px;padding:5px;text-align:center;">
+        <div id="openTrueWin" class="easyui-dialog"  buttons="#dlg-buttons1" data-options="closable:true, closed:true"  style="width:30%;height:200px;padding:5px;text-align:center;">
         	<form method="post" id="fm">
                 <table cellspacing="8px;" align="center">
                     <tr>
