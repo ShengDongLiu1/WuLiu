@@ -48,6 +48,12 @@
     		<mvc:exclude-mapping path="/index.jsp"/>
     		<mvc:exclude-mapping path="/top.jsp"/>
     		<mvc:exclude-mapping path="/yzm/code"/>
+    		<mvc:exclude-mapping path="/image/*.jpg"/>
+    		<mvc:exclude-mapping path="/image/*.gif"/>
+    		<mvc:exclude-mapping path="/image/*.swf"/>
+    		<mvc:exclude-mapping path="/assets/css/*.css"/>
+    		<mvc:exclude-mapping path="/style/*.css"/>
+    		<mvc:exclude-mapping path="/warehouse/css/index.css"/>
     		<bean class="com.ht.interceptors.BackInterceptor"/>
     	</mvc:interceptor>
     
