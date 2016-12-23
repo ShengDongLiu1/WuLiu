@@ -2,7 +2,9 @@ package com.ht.entity;
 
 public class Customer {
     private Integer cid;
-
+    
+    private String ckhno;
+    
     private String cname;
 
     private String ccompany;
@@ -17,15 +19,24 @@ public class Customer {
 
     private String caddress;
 
-    public Integer getCid() {
+    
+	public Integer getCid() {
         return cid;
     }
 
     public void setCid(Integer cid) {
         this.cid = cid;
     }
+    
+    public String getCkhno() {
+		return ckhno;
+	}
 
-    public String getCname() {
+	public void setCkhno(String ckhno) {
+		this.ckhno = ckhno;
+	}
+
+	public String getCname() {
         return cname;
     }
 

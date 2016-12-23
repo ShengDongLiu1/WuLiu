@@ -1,6 +1,7 @@
 package com.ht.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,12 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ht.dto.DateUtil;
+import com.ht.dto.PageBean;
+import com.ht.dto.StringUtil;
 import com.ht.entity.AES;
 import com.ht.entity.Customer;
 import com.ht.entity.sysuser;
 import com.ht.service.interfaces.CustomerService;
 import com.ht.service.interfaces.SysfunctionService;
 import com.ht.service.interfaces.UserService;
+import com.ht.ssm.util.ResponseUtil;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/customer")
@@ -74,6 +82,13 @@ public class Customerller {
 		return "index2";
 	}
 	/**
+	 * 转到子界面
+	 */
+	@RequestMapping(value="/allkh")
+	public String topageStorage(){
+		return "customer/customerManage";
+	}
+	/**
 	 * 注册
 	 */
 	@RequestMapping("/zhuce")
@@ -110,5 +125,76 @@ public class Customerller {
 				session.setAttribute("LoginError", "验证码有误~");
 			 	return "index2";
 		}
-	}	
+	}
+	/**
+	 * 分页条件查询客户
+	 * @param page
+	 * @param rows
+	 * @param s_customer
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/list")
+	public String list(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows, HttpSession session,Customer s_customer,HttpServletResponse response)throws Exception{
+		PageBean pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("ckhno", StringUtil.formatLike(s_customer.getCkhno()));
+		map.put("cname", StringUtil.formatLike(s_customer.getCname()));
+		map.put("start", pageBean.getStart());
+		map.put("size", pageBean.getPageSize());
+		
+		List<Customer> customerList=customerService.find(map);
+		session.setAttribute("customerList", customerList);
+		Long total=customerService.getTotal(map);
+		JSONObject result=new JSONObject();
+		JSONArray jsonArray=JSONArray.fromObject(customerList);
+		result.put("rows", jsonArray);
+		result.put("total", total);
+		ResponseUtil.write(response, result);
+		return null;
+	}
+	/**
+	 * 添加或者修改客户
+	 * @param user
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/save")
+	public String save(Customer customer,HttpServletResponse response)throws Exception{
+		int resultTotal=0; // 操作的记录条数
+		if(customer.getCid()==null){
+			customer.setCkhno("KH"+DateUtil.getCurrentDateStr()); // 动态生成客户编号
+			resultTotal=customerService.add(customer);
+		}else{
+			resultTotal=customerService.update(customer);
+		}
+		JSONObject result=new JSONObject();
+		if(resultTotal>0){
+			result.put("success", true);
+		}else{
+			result.put("success", false);
+		}
+		ResponseUtil.write(response, result);
+		return null;
+	}
+	/**
+	 * 删除客户
+	 * @param ids
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/delete")
+	public String delete(@RequestParam(value="ids")String ids,HttpServletResponse response)throws Exception{
+		String []idsStr=ids.split(",");
+		for(int i=0;i<idsStr.length;i++){
+			customerService.delete(Integer.parseInt(idsStr[i]));
+		}
+		JSONObject result=new JSONObject();
+		result.put("success", true);
+		ResponseUtil.write(response, result);
+		return null;
+	}
 }

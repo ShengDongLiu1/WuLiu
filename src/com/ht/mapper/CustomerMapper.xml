@@ -3,6 +3,7 @@
 <mapper namespace="com.ht.dao.CustomerMapper">
   <resultMap id="BaseResultMap" type="com.ht.entity.Customer">
     <id column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="ckhno" jdbcType="VARCHAR" property="ckhno" />
     <result column="cname" jdbcType="VARCHAR" property="cname" />
     <result column="ccompany" jdbcType="VARCHAR" property="ccompany" />
     <result column="cphone" jdbcType="VARCHAR" property="cphone" />
@@ -12,7 +13,7 @@
     <result column="caddress" jdbcType="VARCHAR" property="caddress" />
   </resultMap>
   <sql id="Base_Column_List">
-    cid, cname, ccompany, cphone, cemail,cpassword, ccredit, caddress
+    cid,ckhno, cname, ccompany, cphone, cemail,cpassword, ccredit, caddress
   </sql>
   <select id="klogin1"  resultMap="BaseResultMap" parameterType="Map">
     select * from customer
@@ -23,11 +24,11 @@
     where cid = #{cid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.ht.entity.Customer">
-    insert into customer (cid, cname, ccompany, 
-      cphone, cemail, ccredit, 
+    insert into customer (cid,ckhno, cname, ccompany, 
+      cphone, cemail,cpassword, ccredit, 
       caddress)
-    values (#{cid,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR}, #{ccompany,jdbcType=VARCHAR}, 
-      #{cphone,jdbcType=VARCHAR}, #{cemail,jdbcType=VARCHAR}, #{ccredit,jdbcType=VARCHAR}, 
+    values (#{cid,jdbcType=INTEGER},#{ckhno,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR}, #{ccompany,jdbcType=VARCHAR}, 
+      #{cphone,jdbcType=VARCHAR}, #{cemail,jdbcType=VARCHAR},#{cpassword,jdbcType=VARCHAR}, #{ccredit,jdbcType=VARCHAR}, 
       #{caddress,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ht.entity.Customer">
@@ -35,6 +36,9 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="cid != null">
         cid,
+      </if>
+      <if test="ckhno != null">
+        ckhno,
       </if>
       <if test="cname != null">
         cname,
@@ -48,6 +52,9 @@
       <if test="cemail != null">
         cemail,
       </if>
+      <if test="cpassword != null">
+        cpassword,
+      </if>
       <if test="ccredit != null">
         ccredit,
       </if>
@@ -58,6 +65,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="cid != null">
         #{cid,jdbcType=INTEGER},
+      </if>
+       <if test="ckhno != null">
+        #{ckhno,jdbcType=INTEGER},
       </if>
       <if test="cname != null">
         #{cname,jdbcType=VARCHAR},
@@ -70,6 +80,9 @@
       </if>
       <if test="cemail != null">
         #{cemail,jdbcType=VARCHAR},
+      </if>
+       <if test="cpassword != null">
+        #{cpassword,jdbcType=VARCHAR},
       </if>
       <if test="ccredit != null">
         #{ccredit,jdbcType=VARCHAR},
@@ -85,6 +98,9 @@
       <if test="cname != null">
         cname = #{cname,jdbcType=VARCHAR},
       </if>
+   	  <if test="ckhno != null">
+        ckhno = #{ckhno,jdbcType=VARCHAR},
+      </if>
       <if test="ccompany != null">
         ccompany = #{ccompany,jdbcType=VARCHAR},
       </if>
@@ -93,6 +109,9 @@
       </if>
       <if test="cemail != null">
         cemail = #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="cpassword != null">
+        cpassword = #{cpassword,jdbcType=VARCHAR},
       </if>
       <if test="ccredit != null">
         ccredit = #{ccredit,jdbcType=VARCHAR},
@@ -103,15 +122,52 @@
     </set>
     where cid = #{cid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ht.entity.Customer">
+  <update id="update" parameterType="com.ht.entity.Customer">
     update customer
     set cname = #{cname,jdbcType=VARCHAR},
       ccompany = #{ccompany,jdbcType=VARCHAR},
       cphone = #{cphone,jdbcType=VARCHAR},
       cemail = #{cemail,jdbcType=VARCHAR},
+      cpassword = #{cpassword,jdbcType=VARCHAR},
       ccredit = #{ccredit,jdbcType=VARCHAR},
       caddress = #{caddress,jdbcType=VARCHAR}
     where cid = #{cid,jdbcType=INTEGER}
   </update>
-  
+  <!-- 条件查询 -->
+  <select id="find" parameterType="Map" resultMap="BaseResultMap">
+		select * from customer
+		<where>
+			<if test="ckhno!=null and ckhno!='' ">
+				and ckhno like #{ckhno}
+			</if>
+			<if test="cname!=null and name!='' ">
+				and cname like #{cname}
+			</if>
+		</where>
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+	</select>
+	<select id="getTotal" parameterType="Map" resultType="Long">
+		select count(*) from customer
+		<where>
+			<if test="ckhno!=null and ckhno!='' ">
+				and ckhno like #{ckhno}
+			</if>
+			<if test="cname!=null and cname!='' ">
+				and cname like #{cname}
+			</if>
+		</where>
+	</select>
+	<delete id="delete" parameterType="Integer">
+		delete from customer where cid=#{cid}
+	</delete>
+	<insert id="add" parameterType="Customer">
+		INSERT INTO customer (cid, ckhno, cname, ccompany,
+					 cphone, cemail, cpassword, ccredit, caddress)
+						VALUES
+					(#{cid},#{ckhno},#{cname},#{ccompany},#{cphone},
+					#{cemail},#{cpassword},#{ccredit},#{caddress});
+	</insert>
+	
 </mapper>
