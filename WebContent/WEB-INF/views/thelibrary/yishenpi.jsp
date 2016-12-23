@@ -149,6 +149,7 @@ body{margin:0px;padding:0px;}
 		司机姓名：<input id="sjname" class="easyui-validatebox easyui-textbox" name="tdrivername" data-options="required:false" />&nbsp;
 		货物名称：<input id="sgname2" class="easyui-validatebox easyui-textbox" name="gname" data-options="required:false" />&nbsp;
 		出货类型：<select class="easyui-combobox"  style="width: 150px;" name="ttype" id="ttype2" data-options="required:true" >
+                     <option draggable="false" value="">请选择类型</option>
                      <option value="预定出库">预定出库</option>
                      <option value="销售出库">销售出库</option>
                      <option value="退货出库">退货出库</option>
@@ -158,8 +159,8 @@ body{margin:0px;padding:0px;}
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
 		<br/>
 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="window.print();">打印</a>&nbsp;
-		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-export1'" onclick="location.href='<%=path %>/export/thelibraryExcel'">导出</a>&nbsp;
-		<a href="javascript:chuhuo()" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" >确认出货</a>
+ 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-export1'" onclick="location.href='<%=path %>/export/thelibraryExcel'">导出</a>&nbsp;
+ 		<a href="javascript:chuhuo()" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" >确认出货</a>
 	</div>
 	<div id="transport1" class="easyui-window" title="选择车辆"
 		data-options="iconCls:'icon-edit', closable:true, closed:true"
@@ -374,8 +375,11 @@ body{margin:0px;padding:0px;}
 			
 			/* 关闭窗口 */
 			function closeGoodWin(){
-
-				 $("#cname").html("");
+				$("#goodbyWin").dialog("close");
+			}
+			
+			function qingkong(){
+				$("#cname").html("");
 				 $("#ccompany").html("");
 				 $("#gname").html("");
 				 $("#gordernumber").html("");
@@ -409,9 +413,7 @@ body{margin:0px;padding:0px;}
 				$("#tdriverphone2").html('');
 				$("#tvehicletype2").html('');
 				$("#tvehiclecapacity2").html('');
-				$("#goodbyWin").dialog("close");
 			}
-			
 			
 			//双击
 			$("#list").datagrid({   
@@ -422,7 +424,9 @@ body{margin:0px;padding:0px;}
 					},"json");
 			    }
 			});
+			
 			function chakan(index){
+				qingkong();
 				$("#cname").html(index.thelibrary.customer.cname);
 				$("#ccompany").html(index.thelibrary.customer.ccompany);
 				$("#gname").html(index.thelibrary.goods.gname);
@@ -451,13 +455,13 @@ body{margin:0px;padding:0px;}
 				
 				$("#tcount2").html(index.thelibrary.tcount);
 				$("#ttype3").html(index.thelibrary.ttype);
-				$("#ttime2").html(formatDateTime(new Date(index.thelibrary.ttime)));
+				$("#ttime2").html(index.thelibrary.ttime);
 				
 				$("#tdrivername2").html(index.thelibrary.transport.tdrivername);
 				$("#tdriverphone2").html(index.thelibrary.transport.tdriverphone);
 				$("#tvehicletype2").html(index.thelibrary.transport.tvehicletype);
 				$("#tvehiclecapacity2").html(index.thelibrary.transport.tvehiclecapacity);
-				$("#goodbyWin").dialog("open").dialog("setTitle", "客户订单详情");
+				$("#goodbyWin").dialog("open").dialog("setTitle", "客户货物流转明细详情");
 			}
 			function gettdrivername(value){
 				if(value.trid==-1){

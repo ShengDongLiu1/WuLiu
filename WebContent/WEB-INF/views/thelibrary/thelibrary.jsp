@@ -57,6 +57,16 @@ body{margin:0px;padding:0px;}
 	<!-- 菜单 -->
 	<div id="tb" style="padding: 2px;">
 		<a href="javascript:tongguo()" class="easyui-linkbutton" data-options="iconCls:'icon-sum'" >通过审批</a>
+		货物名称：<input id="sgname2" class="easyui-validatebox easyui-textbox" name="gname" data-options="required:false" />&nbsp;
+		出货类型：<select class="easyui-combobox"  style="width: 150px;" name="ttype" id="ttype2" data-options="required:true" >
+                    <option draggable="false" value="">请选择类型</option>
+                     <option value="预定出库">预定出库</option>
+                     <option value="销售出库">销售出库</option>
+                     <option value="退货出库">退货出库</option>
+                     <option value="报废出库">报废出库</option>
+                     <option value="调整出库">调整出库</option>
+              	 </select>&nbsp;
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
 	</div>
 
 	<script type="text/javascript">
@@ -131,6 +141,17 @@ body{margin:0px;padding:0px;}
 					return "<span class='shen'>未审批</span>";
 				}
 				return "<span class='yishen'>已审批</span>";
+			}
+			
+			
+			/* 搜索 */
+			function seachs(){
+				var gname = $('#sgname2').textbox('getValue');
+				var ttype = $('#ttype2').combobox('getValue');
+				$('#list').datagrid('load',{  
+					gname:gname,
+					ttype:ttype
+				}); 
 			}
 	</script>
 </body>

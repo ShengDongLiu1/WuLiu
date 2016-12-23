@@ -27,39 +27,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
  <body class="content1">
-		<div class="header">
-			<h1 class="page-title"> 
-				主页
-			</h1>
-		</div>
-		<ul class="breadcrumb">
-			
-			<li class="active">
-				Home
-			</li>
-		</ul>
 		<div class="container-fluid">
 			<div class="row-fluid">
-				
-
-				
 					<div class="span12">
 							<div class="hero-unit" style="margin-top:10px;">
-							
 							<h1 style="padding-left:100px;">
 								欢迎使用后台管理系统！
-								
 							</h1>
 					
 							</div>
 							<div id="zzsc">
 
-  								<canvas id="canvas" width="920" height="400"></canvas>
+  								<canvas id="canvas" width="920" height="1000"></canvas>
 								
 							</div>
 					</div>
-				
-				
 			</div>
 		</div>
 	</body>
