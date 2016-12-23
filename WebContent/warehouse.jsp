@@ -8,7 +8,7 @@
 			+ path + "/";
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 
 <html>
@@ -104,6 +104,86 @@ var formatDateTime = function (date) {
     minute = minute < 10 ? ('0' + minute) : minute;  
     return y + '-' + m + '-' + d+' '+h+':'+minute;  
 };
+
+function getValues(){
+	var message="*请输入值";
+	var gname=$("#gname").val();
+	var gcount=$("#gcount").val();
+	var gunit=$("#gunit option:selected").val();
+	var gweight=$("#gweight").val();
+	var gvolume=$("#gvolume").val();
+	var gsize=$("#gsize").val();
+	var ggrade=$("#ggrade option:selected").val();
+	var gconsignee=$("#gconsignee").val();
+	var greaddress=$("#greaddress").val();
+	var grephone=$("#grephone").val();
+	var gorigin=$("#gorigin").val();
+	var gendpoint=$("#gendpoint").val();
+	var gdescribe=$("#gdescribe").val();
+	 var reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
+	if(gname == ''){
+		$('.error1').html(message);
+		return false;
+	}else if(gcount == ''){
+		$('.error2').html(message);
+		return false;
+	}else if(gcount < 1){
+		$('.error2').html('*数值有误');
+		return false;
+	}else if(gunit == ''){
+		$('.error3').html(message);
+		return false;
+	}else if(gweight == ''){
+		$('.error4').html(message);
+		return false;
+	}else if(gweight <= 0){
+		$('.error4').html('*数值有误');
+		return false;
+	}else if(gvolume == ''){
+		$('.error5').html(message);
+		return false;
+	}else if(gvolume <= 0){
+		$('.error5').html('*数值有误');
+		return false;
+	}else if(gsize == ''){
+		$('.error6').html(message);
+		return false;
+	}else if(gsize <= 0){
+		$('.error6').html('*数值有误');
+		return false;
+	}else if(ggrade == ''){
+		$('.error7').html(message);
+		return false;
+	}else if(gconsignee == ''){
+		$('.error8').html(message);
+		return false;
+	}else if(greaddress == ''){
+		$('.error9').html(message);
+		return false;
+	}else if(grephone == ''){
+		$('.error10').html(message);
+		return false;
+	}else if (!reg.test(grephone)) {
+		$('.error10').html('*号码有误');
+	}else if(gorigin == ''){
+		$('.error11').html(message);
+		return false;
+	}else if(gendpoint == ''){
+		$('.error12').html(message);
+		return false;
+	}else if(gdescribe == ''){
+		$('.error13').html(message);
+		return false;
+	}
+}
+$(document).ready(function(){
+    $("input").focus(function(){//获取焦点
+    	$('.message').html('');
+    });
+    $("input").blur(function(){//失去焦点
+    	getValues();
+    });
+});
 </script>
 <style type="text/css">
 .autoScroll{  
@@ -121,6 +201,7 @@ var formatDateTime = function (date) {
 	font-size:20px;
 	border-radius:5px;
 }
+.message{color:red;}
 </style>
 </head>
 <body>
@@ -197,15 +278,15 @@ var formatDateTime = function (date) {
 			               		<table style="width: 760px;">
 									<tr height="60">
 										<td align="right">货物名称：</td>
-										<td align="left"><input name="gname" type="text" size="30" placeholder="请输入货物名称"></td>
+										<td align="left"><input name="gname" type="text" id="gname" placeholder="请输入货物名称"><span class="message error1"></span></td>
 										<td align="right">货物数量：</td>
-										<td align="left"><input name="gcount" type="text" size="30" placeholder="请输入货物数量"></td>
+										<td align="left"><input name="gcount" type="number" id="gcount" placeholder="请输入货物数量"><span class="message error2"></span></td>
 									</tr>
 									<tr height="60">
 										<td align="right">货物单位：</td>
 										<td align="left">
-											<select name="gunit">
-												<option>- 请选择货物单位 -</option>
+											<select name="gunit" id="gunit">
+												<option value="">- 请选择货物单位 -</option>
 												<option value="箱">箱</option>
 												<option value="个">个</option>
 												<option value="条">条</option>
@@ -221,51 +302,54 @@ var formatDateTime = function (date) {
 												<option value="块">块</option>
 												<option value="其它">其它</option>
 											</select>
+											<span class="message  error3"></span>
 										</td>
 										<td align="right">货物重量：</td>
-										<td align="left"><input name="gweight" type="text" size="30" placeholder="请输入货物重量"></td>
+										<td align="left"><input name="gweight" type="number" id="gweight" placeholder="请输入货物重量"><span class="message error4"></span></td>
 									</tr>
 									<tr height="60">
 										<td align="right">货物体积：</td>
-										<td align="left"><input name="gvolume" type="text" size="20" placeholder="请输入货物体积"></td>
+										<td align="left"><input name="gvolume" type="number" id="gvolume" placeholder="请输入货物体积"><span class="message error5"></span></td>
 										<td align="right">货物尺寸：</td>
-										<td align="left"><input name="gsize" type="text" size="30" placeholder="请输入货物尺寸"></td>
+										<td align="left"><input name="gsize" type="number" id="gsize" placeholder="请输入货物尺寸"><span class="message error6"></span></td>
 									</tr>
 									<tr height="60">
 										<td align="right">货物等级：</td>
 										<td align="left">
-											<select name="ggrade">
-												<option>- 请选择货物等级 -</option>
+											<select name="ggrade" id="ggrade">
+												<option value="">- 请选择货物等级 -</option>
 												<option value="1">等级 1</option>
 												<option value="2">等级 2</option>
 												<option value="3">等级 3</option>
 												<option value="4">等级 4</option>
 												<option value="5">等级 5</option>
 											</select>
+											<span class="message error7"></span>
 										</td>
 										<td align="right">收货人：</td>
-										<td align="left"><input name="gconsignee" type="text" size="30" placeholder="请输入收货人"></td>
+										<td align="left"><input name="gconsignee" type="text" id="gconsignee" placeholder="请输入收货人"><span class="message error8"></span></td>
 									</tr>
 									<tr height="60">
 										<td align="right">收货地址：</td>
-										<td align="left"><input name="greaddress" type="text" size="30" placeholder="请输入收货地址"></td>
+										<td align="left"><input name="greaddress" type="text" id="greaddress" placeholder="请输入收货地址"><span class="message error9"></span></td>
 										<td align="right">收货电话：</td>
-										<td align="left"><input name="grephone" type="text" size="30" placeholder="请输入收货电话"></td>
+										<td align="left"><input name="grephone" type="text" id="grephone" placeholder="请输入收货电话"><span class="message error10"></span></td>
 									</tr>
 									<tr height="60">
 										<td align="right">起始地点：</td>
-										<td align="left"><input name="gorigin" type="text" size="30" placeholder="请输入起始地点"></td>
+										<td align="left"><input name="gorigin" type="text" id="gorigin" placeholder="请输入起始地点"><span class="message error11"></span></td>
 										<td align="right">到达地点：</td>
-										<td align="left"><input name="gendpoint" type="text" size="30" placeholder="请输入到达地点"></td>
+										<td align="left"><input name="gendpoint" type="text" id="gendpoint" placeholder="请输入到达地点"><span class="message error12"></span></td>
 									</tr>
 									<tr height="60">
 										<td align="right">货物描述：</td>
 										<td align="left" colspan=3>
-											<textarea name="gdescribe" cols=97 rows=4 style="border:0px;"></textarea>
+											<textarea name="gdescribe" id="gdescribe" cols=97 rows=4 style="border:0px;"></textarea>
+											<span class="message error13"></span>
 										</td>
 									</tr>
 									<tr align="center">
-										<td colspan=4 align="center"><input type="submit" value="添    加" class="subpage"/></td>
+										<td colspan=4 align="center"><input type="submit" value="添    加" class="subpage" onclick="return getValues();"/></td>
 									</tr>
 			               		</table>
 		               		</form>
