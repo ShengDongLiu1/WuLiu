@@ -60,6 +60,18 @@
 				}
 				return status;
 			}
+			
+			/* 搜索 */
+			function seachs(){
+				var gname = $('#gnameSearch').textbox('getValue');
+				var usertruename = $('#usernameSearch').textbox('getValue');
+				var rstart = $('#rstartSearch').combobox('getValue');
+				$('#dg').datagrid('load',{  
+					gname:gname,
+					usertruename:usertruename,
+					rstart:rstart
+				}); 
+			}
 		</script>
 	</head>
 	<body>
@@ -88,10 +100,17 @@
 	</table>
 	<!-- 菜单 -->
 	<div id="kj" style="padding: 2px;">
-		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-export'" onclick="location.href='<%=path %>/export/qualityExcel'">导出</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="window.print();">打印</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="location.href='<%=path %>/export/qualityExcel'">导出</a>
 		<a href="javascript:deleteTest()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
-		订单号：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />
-		员工：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />
+		货物：<input id="gnameSearch" class="easyui-validatebox easyui-textbox" name="gname1" data-options="required:false" />
+		员工：<input id="usernameSearch" class="easyui-validatebox easyui-textbox" name="usertruename1" data-options="required:false" />
+		状态：<select id="rstartSearch" class="easyui-combobox" name="rstart1" data-options="editable:false" style="width:10%">
+				<option  draggable="false" value="">请选择状态</option>
+				<option value="1">待检验</option>
+				<option value="2">检验通过</option>
+				<option value="4">检验失败</option>
+			  </select>&nbsp;
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
 	</div>
 	<div id="dlg-buttons1">
@@ -275,7 +294,7 @@
 			var selectedRows = $("#dg").datagrid("getSelections");
 			var row = selectedRows[0];
 			row.edate = getNowFormatDate(row.edate);
-			row.eresult = $("#eresult").val()
+			row.euserid = $("#euserid").val();
 			$("#openTrueWin").dialog("open").dialog("setTitle", "验证通过");
 			$("#fm").form("load", row);
 			url = "${pageContext.request.contextPath}/quality/save.do?eid=" + row.eid +"&rid="+row.receipt.rid +"&rstart="+2+"&euserid="+row.euserid;
@@ -287,7 +306,6 @@
 			var row = selectedRows[0];
 			row.edate = getNowFormatDate(row.edate);
 			row.euserid = $("#euserid").val();
-			row.eresult = $("#eresult").val()
 			$("#openTrueWin").dialog("open").dialog("setTitle", "验证失败");
 			$("#fm").form("load", row);
 			url = "${pageContext.request.contextPath}/quality/save.do?eid=" + row.eid +"&rid="+row.receipt.rid +"&rstart="+4+"&euserid="+row.euserid;

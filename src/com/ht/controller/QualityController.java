@@ -73,7 +73,7 @@ public class QualityController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/queryAll",method=RequestMethod.GET)
-	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,HttpSession session,String USERTRUENAME,String gordernumber,String eresult,String edate) throws Exception{
+	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,HttpSession session,String usertruename,String gname,String rstart,String edate) throws Exception{
 		PageBean pageBean=null;
 		if(page == null && rows == null){
 			pageBean=new PageBean(1,10);
@@ -81,9 +81,10 @@ public class QualityController {
 			pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
 		}
 		Map<String, Object> map= new HashMap<>();
-		map.put("USERTRUENAME", StringUtil.formatLike(USERTRUENAME));
-		map.put("gordernumber", StringUtil.formatLike(gordernumber));
-		map.put("eresult", StringUtil.formatLike(eresult));
+		System.out.println("******************="+usertruename);
+		map.put("usertruename", StringUtil.formatLike(usertruename));
+		map.put("gname", StringUtil.formatLike(gname));
+		map.put("rstart", StringUtil.formatLike(rstart));
 		map.put("edate", StringUtil.formatLike(edate));
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
@@ -114,7 +115,6 @@ public class QualityController {
 		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		format.format(date);
 		quality.setEdate(date);
-		System.out.println(quality.getEdate());
 		int resultObj = 0;
 		if(quality.getEid() != null){
 			resultObj = qualityService.qualityUpdate(quality);
@@ -132,11 +132,9 @@ public class QualityController {
 	
 	@RequestMapping("/delete")
 	public String qualityDalete(@RequestParam(value="ids") String ids,HttpServletResponse res) throws Exception{
-		System.out.println("***************删除");
 		String[] idStr = ids.split(",");
         JSONObject jsonObject = new JSONObject();
         for (String id : idStr) {
-        	System.out.println("id="+id);
         	qualityService.qualityDelete(Integer.parseInt(id));
         }
         jsonObject.put("success", true);

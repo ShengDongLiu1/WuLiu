@@ -20,7 +20,7 @@
 			<result property="userid" column="USERID"/>
 			<result property="username" column="USERNAME"/>
 			<result property="uposition" column="uposition"/>
-			<result property="usertruename" column="usertruename"/>
+			<result property="usertruename" column="USERTRUENAME"/>
 			<result property="userstate" column="USERSTATE"/>
 		</association>
 		
@@ -147,11 +147,8 @@
 			<if test="gname!=null and gname!='' ">
 				and go.gname like #{gname}
 			</if>
-			<if test="USERTRUENAME!=null and USERTRUENAME!='' ">
-				and sys.USERTRUENAME like #{USERTRUENAME}
-			</if>
-			<if test="eresult!=null and eresult!='' ">
-				and exa.eresult like #{eresult}
+			<if test="usertruename!=null and usertruename!='' ">
+				and sys.USERTRUENAME like #{usertruename}
 			</if>
 			<if test="rstart!=null and rstart!='' ">
 				and rec.rstart like #{rstart}
@@ -176,12 +173,9 @@
 				and go.gname like #{gname}
 			</if>
 			<if test="USERTRUENAME!=null and USERTRUENAME!='' ">
-				and sys.USERTRUENAME like #{USERTRUENAME}
+				and sys.USERTRUENAME like #{usertruename}
 			</if>
 			<if test="eresult!=null and eresult!='' ">
-				and exa.eresult like #{eresult}
-			</if>
-			<if test="rstart!=null and rstart!='' ">
 				and rec.rstart like #{rstart}
 			</if>
 			<if test="edate!=null and edate!='' ">
