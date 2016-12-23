@@ -73,7 +73,7 @@
 					<td><a href="<%=basePath%>message.jsp" class="nav" >客户留言</a></td>
 					<td>&nbsp;</td>
 		
-					<td><a href="<%=basePath%>warehouse.jsp" class="nav" >我的仓储</a></td>
+					<td><a href="<%=basePath%>warehouse.jsp" class="nav" >我的货物</a></td>
 					<td>&nbsp;</td>
 		<td width="10" bgcolor="#FFFFFF">&nbsp;</td>
 	</tr>

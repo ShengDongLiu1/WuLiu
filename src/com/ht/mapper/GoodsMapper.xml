@@ -253,6 +253,9 @@
    		select * from customer cu,goods go 
 		<where>
 			go.gcid=cu.cid
+			<if test="cid!=null and cid!='' ">
+				and cu.cid = #{cid}
+			</if>
 			<if test="cname!=null and cname!='' ">
 				and cu.cname like #{cname}
 			</if>
@@ -278,6 +281,9 @@
  		select count(*) from customer cu,goods go 
 		<where>
 			go.gcid=cu.cid
+			<if test="cid!=null and cid!='' ">
+				and cu.cid = #{cid}
+			</if>
 			<if test="cname!=null and cname!='' ">
 				and cu.cname like #{cname}
 			</if>

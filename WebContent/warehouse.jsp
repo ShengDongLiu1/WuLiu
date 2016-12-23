@@ -7,6 +7,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 
@@ -14,13 +15,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <title>宏图物流有限公司</title>
-<link href="style/css.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="warehouse/js/jquery-1.8.3.min.js"></script>
-<link rel="stylesheet" type="text/css" href="warehouse/css/index.css"/>
+<link href="<%=path %>/style/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<%=path %>/warehouse/js/jquery-1.8.3.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=path %>/warehouse/css/index.css"/>
 <link rel="stylesheet" type="text/css"
 	href="<%=basePath%>assets/css/theme.css">
 <link rel="stylesheet"
-	href="<%=basePath%>assets/jslib/font-awesome/css/font-awesome.css"></script>
+	href="<%=basePath%>assets/jslib/font-awesome/css/font-awesome.css">
 <script type="text/javascript">
 $(function(){
 	$(".tabBox .tabNav li").click(function(){
@@ -32,7 +33,95 @@ $(function(){
 		//console.log(i);
 	});
 })
+
+/**
+ * 我的所有订单
+ */
+function mygoods(pa){
+	var page=1;
+	var addpage=0;
+	if(pa == 2){//上一页
+		addpage=$("#page").html();
+		page=parseInt(addpage)-1;
+		if(page == 0){
+			page=1;
+			alert("当前页已经是第一页");
+		}
+	}else if(pa == 3){//下一页
+		addpage=$("#page").html();
+		page+=parseInt(addpage);
+		if(parseInt($("#count").html())<page){
+			page=parseInt($("#count").html());
+			alert("当前页已经是最后一页");
+		}
+	}
+	$(".addtr").remove();
+	$.post("<%=path%>/goods/myGoods",{'page':page,'rows':4},function(index){
+		 var tbody = ""; 
+		$.each(index.listGoods,function(n,value){
+	        var trs = "";  
+            trs += " <tr class='addtr'> "+
+            "<td class='td'> " +value.gordernumber+ " </td> "+
+            "<td class='td'>" + value.gname +"</td> "+
+            "<td class='td'>" + value.gcount +"</td> "+
+            "<td class='td'>" + value.gunit +"</td> "+
+            "<td class='td'>" + value.gweight +"</td> "+
+            "<td class='td'>" + value.gvolume +"</td> "+
+            "<td class='td'>" + value.gsize +"</td > "+
+            "<td class='td'>" + value.ggrade +"</td > "+
+            "<td class='td'>" + value.gdescribe +"</td> "+
+            "<td class='td'>" + doodsState(value.gstate) +"</td> "+
+            "<td class='td'> "+formatDateTime(new Date(value.gorderstime))+" </td>"+
+            " </tr>";  
+            tbody += trs;         
+        });  
+        $(".mygoods").append(tbody);  
+	    $("#page").html(index.page);
+	    $("#count").html(index.count);
+	    $("#total").html(index.total);
+	},"json");
+}
+
+function doodsState(state){
+	if(state == '1'){
+		return '待揽收';
+	}else if(state == '2'){
+		return '已揽收';
+	}else if(state == '3'){
+		return '已拒收';
+	}
+}
+
+/* 将Thu Mar 19 2015 12:00:00 GMT+0800 (中国标准时间)转换为2015-3-19 12:00:00 */
+var formatDateTime = function (date) {  
+    var y = date.getFullYear();  
+    var m = date.getMonth() + 1;  
+    m = m < 10 ? ('0' + m) : m;  
+    var d = date.getDate();  
+    d = d < 10 ? ('0' + d) : d;  
+    var h = date.getHours();  
+    var minute = date.getMinutes();  
+    minute = minute < 10 ? ('0' + minute) : minute;  
+    return y + '-' + m + '-' + d+' '+h+':'+minute;  
+};
 </script>
+<style type="text/css">
+.autoScroll{  
+   width:98%;  
+   height:130px;  
+   overflow:auto;
+   overflow-x:hidden;         
+} 
+.td{border:solid #add9c0; border-width:0px 0px 1px 0px; padding:10px 0px;text-align:center;}
+.table{border:solid #add9c0; border-width:1px 0px 0px 1px; font-size:13px;}
+
+.subpage{
+	background:#224762;
+	color:white;
+	font-size:20px;
+	border-radius:5px;
+}
+</style>
 </head>
 <body>
 <jsp:include flush="true" page="top.jsp"></jsp:include>
@@ -50,7 +139,7 @@ $(function(){
 	<tr height="35">
 		<td width="10">&nbsp;</td>
 		<td width="900">
-			<img src="image/icon_1.gif" width="10" height="9">&nbsp;&nbsp;<a href="">首页</a> &gt; <a href="">我的仓储</a>
+			<img src="image/icon_1.gif" width="10" height="9">&nbsp;&nbsp;<a href="">首页</a> &gt; <a href="">我的订单</a>
 		</td>
 		<td width="10">&nbsp;</td>
 	</tr>
@@ -63,52 +152,48 @@ $(function(){
 		<td align="center" valign="top">
 			<table width="90%" border="0" cellspacing="0" cellpadding="0">
 				<tr height="35">
-					<td align="center" class="title1">我的仓储</td>
+					<td align="center" class="title1">我的货物订单</td>
 				</tr>
 			</table><br></br>
 			<!-- jsp代码写在这里 -->
-		<div class="box_2" style="height: 430px;">
+		<div class="box_2 autoScroll" style="height: 430px;">
 		   	<div class="tabBox_t" >
 		           <div class="tabBox">
 		             <ul class="tabNav">
-		               <li>我的仓储</li>
-		               <li class="now">添加仓储</li>
+		               <li onclick="mygoods(1)">我的订单</li>
+		               <li class="now">添加订单</li>
 		             </ul>
 		             <div class="tabCont">
 		               <div class="ctn">
-							<table class="table table-hover" style="width: 760px;">
-								<tr>
-									<th>货物编号</th>
-									<th>货物订单号</th>
-									<th>货物名称</th>
-									<th>货物数量</th>
-									<th>货物单位</th>
-									<th>货物重量</th>
-									<th>货物体积</th>
-									<th>货物尺寸</th>
-									<th>货物等级</th>
-									<th>货物描述</th>
-									<th>货物状态</th>
-								</tr>
-								<tr>
-									<td>1111</td>
-									<td>1111</td>
-									<td>1111</td>
-									<td>1111</td>
-									<td>1111</td>
-									<td>1111</td>
-									<td>1111</td>
-									<td>1111</td>
-									<td>1111</td>
-									<td>1111</td>
-									<td>1111</td>
-								</tr>
+							<table class="table table-hover mygoods" style="width:100%;">
+								<thead>
+									<tr>
+										<th class='td'>货物订单号</th>
+										<th class='td'>货物名称</th>
+										<th class='td'>货物数量</th>
+										<th class='td'>货物单位</th>
+										<th class='td'>货物重量</th>
+										<th class='td'>货物体积</th>
+										<th class='td'>货物尺寸</th>
+										<th class='td'>货物等级</th>
+										<th class='td'>货物描述</th>
+										<th class='td'>货物状态</th>
+										<th class='td'>下单时间</th>
+									</tr>
+								</thead>
 							</table>
+							<div>
+								<a href="javacscript:void(0)" onclick="mygoods(2)" style="background:#224762;color:white;font-size:15px;border-radius:5px;text-decoration:none;">上一页</a>&nbsp;&nbsp;
+								<a href="javacscript:void(0)" onclick="mygoods(3)" style="background:#224762;color:white;font-size:15px;border-radius:5px;text-decoration:none;">下一页</a>&nbsp;&nbsp;
+								当前页 第<span id="page"></span>页&nbsp;&nbsp;
+								共<span id="count"></span>页&nbsp;&nbsp;
+								共<span id="total"></span>条数据&nbsp;&nbsp;
+							</div>
 		               </div>
 		             </div>
 		             <div class="tabCont" style="display:block;">
 		               <div class="ctn">
-		               		<form action="" method="post">
+		               		<form action="<%=path %>/goods/add" method="post">
 			               		<table style="width: 760px;">
 									<tr height="60">
 										<td align="right">货物名称：</td>
@@ -121,6 +206,20 @@ $(function(){
 										<td align="left">
 											<select name="gunit">
 												<option>- 请选择货物单位 -</option>
+												<option value="箱">箱</option>
+												<option value="个">个</option>
+												<option value="条">条</option>
+												<option value="袋">袋</option>
+												<option value="盒">盒</option>
+												<option value="包">包</option>
+												<option value="瓶">瓶</option>
+												<option value="罐">罐</option>
+												<option value="辆">辆</option>
+												<option value="只">只</option>
+												<option value="套">套</option>
+												<option value="尊">尊</option>
+												<option value="块">块</option>
+												<option value="其它">其它</option>
 											</select>
 										</td>
 										<td align="right">货物重量：</td>
@@ -137,21 +236,36 @@ $(function(){
 										<td align="left">
 											<select name="ggrade">
 												<option>- 请选择货物等级 -</option>
+												<option value="1">等级 1</option>
+												<option value="2">等级 2</option>
+												<option value="3">等级 3</option>
+												<option value="4">等级 4</option>
+												<option value="5">等级 5</option>
 											</select>
 										</td>
-										<td align="right">货物描述：</td>
-										<td align="left"><input name="gdescribe" type="text" size="30" placeholder="请输入货物描述"></td>
+										<td align="right">收货人：</td>
+										<td align="left"><input name="gconsignee" type="text" size="30" placeholder="请输入收货人"></td>
 									</tr>
 									<tr height="60">
-										<td align="right">货物状态：</td>
-										<td align="left">
-											<select name="gstate">
-												<option>- 请选择货物状态 -</option>
-											</select>
+										<td align="right">收货地址：</td>
+										<td align="left"><input name="greaddress" type="text" size="30" placeholder="请输入收货地址"></td>
+										<td align="right">收货电话：</td>
+										<td align="left"><input name="grephone" type="text" size="30" placeholder="请输入收货电话"></td>
+									</tr>
+									<tr height="60">
+										<td align="right">起始地点：</td>
+										<td align="left"><input name="gorigin" type="text" size="30" placeholder="请输入起始地点"></td>
+										<td align="right">到达地点：</td>
+										<td align="left"><input name="gendpoint" type="text" size="30" placeholder="请输入到达地点"></td>
+									</tr>
+									<tr height="60">
+										<td align="right">货物描述：</td>
+										<td align="left" colspan=3>
+											<textarea name="gdescribe" cols=97 rows=4 style="border:0px;"></textarea>
 										</td>
 									</tr>
 									<tr align="center">
-										<td colspan=4 align="center"><a href="#">添加</a></td>
+										<td colspan=4 align="center"><input type="submit" value="添    加" class="subpage"/></td>
 									</tr>
 			               		</table>
 		               		</form>

@@ -115,7 +115,9 @@ public class Customerller {
 			map.put("cpassword", customer.getCpassword());
 			try{
 				sysuser existsysuser = userService.login(customer.getCemail(),customer.getCpassword());
+				Customer customer2=customerService.klogin1(map);//客户登录
 				session.setAttribute("user", existsysuser);
+				session.setAttribute("customer", customer2);
 				return "redirect:/user/index";
 			}catch(Exception e){
 				session.setAttribute("LoginError", "账号或密码有误~");
