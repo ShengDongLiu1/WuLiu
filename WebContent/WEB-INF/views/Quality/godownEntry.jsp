@@ -88,6 +88,7 @@
 	</table>
 	<!-- 菜单 -->
 	<div id="kj" style="padding: 2px;">
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-export'" onclick="location.href='<%=path %>/export/qualityExcel'">导出</a>
 		<a href="javascript:deleteTest()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
 		订单号：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />
 		员工：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />
@@ -277,7 +278,7 @@
 			row.eresult = $("#eresult").val()
 			$("#openTrueWin").dialog("open").dialog("setTitle", "验证通过");
 			$("#fm").form("load", row);
-			url = "${pageContext.request.contextPath}/quality/save.do?eid=" + row.eid +"&rid="+row.receipt.rid +"&rstart="+2+"&euserid="+row.euserid+"&eresult"+row.eresult;
+			url = "${pageContext.request.contextPath}/quality/save.do?eid=" + row.eid +"&rid="+row.receipt.rid +"&rstart="+2+"&euserid="+row.euserid;
 		}
 		
 		/* 验证失败 */
@@ -289,7 +290,7 @@
 			row.eresult = $("#eresult").val()
 			$("#openTrueWin").dialog("open").dialog("setTitle", "验证失败");
 			$("#fm").form("load", row);
-			url = "${pageContext.request.contextPath}/quality/save.do?eid=" + row.eid +"&rid="+row.receipt.rid +"&rstart="+4+"&euserid="+row.euserid+"&eresult"+row.eresult;
+			url = "${pageContext.request.contextPath}/quality/save.do?eid=" + row.eid +"&rid="+row.receipt.rid +"&rstart="+4+"&euserid="+row.euserid;
 		}
 		
 		function saveQuality() {

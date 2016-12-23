@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ht.dto.PathService;
 import com.ht.dto.TheDate;
 import com.ht.entity.Goods;
+import com.ht.entity.Quality;
 import com.ht.entity.Receipt;
 import com.ht.entity.Storage;
 import com.ht.entity.Thelibrary;
@@ -457,6 +458,102 @@ public class ExportExcel {
 		    //将图片使用字节流的形式写给客户机  
 		    @SuppressWarnings("resource")
 			InputStream is = new FileInputStream(PathService.Path(request)+"/"+"thelibrary.xls"); //从这个路径下读取文件 
+		    OutputStream out = response.getOutputStream();  
+		    byte[] buffer = new byte[1024];  
+		    int len = 0;  
+		    while((len=is.read(buffer))!=-1){  
+		        out.write(buffer, 0, len);  
+		    } 
+        }  
+        catch (Exception e)  
+        {  
+            e.printStackTrace(); 
+        }
+	}
+	
+	
+	/**
+	 * 导出质检表
+	 * @param session
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value="/qualityExcel")
+	public void exportQuality(HttpSession session,HttpServletRequest request,HttpServletResponse response){
+		 // 第一步，创建一个webbook，对应一个Excel文件  
+        HSSFWorkbook wb = new HSSFWorkbook();  
+        // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet  
+        HSSFSheet sheet = wb.createSheet("质检表");  
+        // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short  
+        HSSFRow row = sheet.createRow(0);
+        // 第四步，创建单元格，并设置值表头 设置表头居中  
+        HSSFCellStyle style = wb.createCellStyle();  
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式  
+  
+        HSSFCell cell = row.createCell(0);  
+        cell.setCellValue("编号");  
+        cell.setCellStyle(style);
+        
+        cell = row.createCell(1);  
+        cell.setCellValue("货物名称");  
+        cell.setCellStyle(style);  
+        
+        cell = row.createCell(2);  
+        cell.setCellValue("质检员工");  
+        cell.setCellStyle(style);
+        
+        cell = row.createCell(3);  
+        cell.setCellValue("检验结果");  
+        cell.setCellStyle(style);
+        
+        cell = row.createCell(4);  
+        cell.setCellValue("货物状态");  
+        cell.setCellStyle(style);
+        
+        cell = row.createCell(5);  
+        cell.setCellValue("检验时间");  
+        cell.setCellStyle(style);
+        
+        @SuppressWarnings("unchecked")
+		List<Quality> list=(List<Quality>)session.getAttribute("qualitylist");
+        
+        for (int i = 0; i < list.size(); i++)  
+        {  
+            row = sheet.createRow((int) i + 1);  
+            // 第四步，创建单元格，并设置值  
+            row.createCell(0).setCellValue(i+1);  
+            row.createCell(1).setCellValue(list.get(i).getGoods().getGname());
+            row.createCell(2).setCellValue(list.get(i).getSysusers().getUsertruename());
+            row.createCell(3).setCellValue(list.get(i).getEresult()); 
+            Integer state=list.get(i).getReceipt().getRstart();
+            String string="";
+            if(state ==1){
+            	string="待检验";
+            }else if(state ==2){
+            	string="检验通过";
+            }else if(state ==4){
+            	string="检验失败";
+            }
+            row.createCell(4).setCellValue(string); 
+            row.createCell(5).setCellValue(TheDate.datetoString(list.get(i).getEdate())); 
+        }  
+        // 第六步，将文件存到指定位置  
+        try{  
+        	FileOutputStream fout = new FileOutputStream(PathService.Path(request)+"/"+"quality.xls");  
+            wb.write(fout);  
+            fout.close();  
+            ServletContext context = request.getSession().getServletContext();  
+		    //通过context方式直接获取文件的路径  
+		    String path = context.getRealPath("/质检表.xls");  
+		    //获取文件名  
+		    String filename = path.substring(path.lastIndexOf("\\")+1);  
+		    //将文件名进行URL编码  
+		    filename = URLEncoder.encode(filename,"utf-8");  
+		    //告诉浏览器用下载的方式打开图片  
+		    response.setHeader("content-disposition", "attachment;filename="+filename);  
+		    //将图片使用字节流的形式写给客户机  
+		    @SuppressWarnings("resource")
+			InputStream is = new FileInputStream(PathService.Path(request)+"/"+"quality.xls"); //从这个路径下读取文件 
 		    OutputStream out = response.getOutputStream();  
 		    byte[] buffer = new byte[1024];  
 		    int len = 0;  

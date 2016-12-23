@@ -73,7 +73,7 @@ public class QualityController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/queryAll",method=RequestMethod.GET)
-	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,String USERTRUENAME,String gordernumber,String eresult,String edate) throws Exception{
+	public String queryAll(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,HttpSession session,String USERTRUENAME,String gordernumber,String eresult,String edate) throws Exception{
 		PageBean pageBean=null;
 		if(page == null && rows == null){
 			pageBean=new PageBean(1,10);
@@ -88,6 +88,7 @@ public class QualityController {
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
 		List<Quality> list=qualityService.qualitySelectAll(map);
+		session.setAttribute("qualitylist", list);
 		Long total=qualityService.getTotal(map);	//查询总条数
 		JSONObject result = new JSONObject();
 		JSONArray jsonArray = JSONArray.fromObject(list);
