@@ -218,7 +218,11 @@ function subRece(){
 	var gcount=$("#lgcount").val();
 	var lrdamagedcount = $('#lrdamagedcount').numberbox('getValue');
 	var lrshelvecount = $('#lrshelvecount').numberbox('getValue');
-	if(gcount<(parseInt(lrdamagedcount)+parseInt(lrshelvecount))){
+	if(lrdamagedcount < 0){
+		$.messager.alert('系统提示','破损数量不能为负！','info');
+	}else if(lrshelvecount < 0){
+		$.messager.alert('系统提示','搁置数量不能为负！','info');
+	}else if(gcount<(parseInt(lrdamagedcount)+parseInt(lrshelvecount))){
 		$.messager.alert('系统提示','破损和搁置数量超过了货物数量！','info');
 	}else{
 		if(lrdamagedcount==''){

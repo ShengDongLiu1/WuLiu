@@ -215,6 +215,7 @@ public class ReceiptController {
 		String[] gidStr = rgids.split(",");
 		String[] count = rreceivecounts.split(",");
 		for (int i = 0; i < count.length; i++) {
+			receipt.setRid(null);
 			receipt.setRcid(Integer.parseInt(cidStr[i]));//客户id
 			receipt.setRgid(Integer.parseInt(gidStr[i]));//货物id
 			receipt.setReid(user.getUserid());//员工id
