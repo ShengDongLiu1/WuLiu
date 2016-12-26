@@ -222,7 +222,7 @@
 
 		/* 将{"date":14,"day":3,"hours":19,"minutes"……}转换为Thu Mar 19 2015 12:00:00 GMT+0800 (中国标准时间) */
 		function toDate(obj){
-			if(obj == null){return;}
+			if(obj == null){return '暂无';}
 			var date = new Date();
 			 date.setTime(obj.time);
 			 date.setHours(obj.hours);

@@ -18,6 +18,11 @@ import org.jbarcode.paint.WideRatioCodedPainter;
 import org.jbarcode.paint.WidthCodedPainter;
 import org.jbarcode.util.ImageUtil;
 
+/**
+ * 条形码生成
+ * @author Crazy
+ *
+ */
 public class Barcode {
 	
 	public String createCode(HttpServletRequest request){

@@ -1,5 +1,10 @@
 package com.ht.dto;
 
+/**
+ * 分页
+ * @author Crazy
+ *
+ */
 public class PageBean {
 	private int page; // 第几页
 	private int pageSize; // 每页记录数
