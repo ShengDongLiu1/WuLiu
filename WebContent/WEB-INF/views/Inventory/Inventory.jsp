@@ -65,6 +65,8 @@ a:hover {color:#54287C}
 		<a href="javascript:openInventoryAddDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >添加</a>
 		<a href="javascript:openInventoryModifyDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" >编辑</a>
 		<a href="javascript:deleteInventory()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="window.print();">打印</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-export1'" onclick="location.href='<%=path %>/export/inventoryExcel'">导出</a>
 		
 		<!-- 筛选 -->
 		货物名称：<input id="gname" class="easyui-validatebox easyui-textbox" style="width:100px;"/>

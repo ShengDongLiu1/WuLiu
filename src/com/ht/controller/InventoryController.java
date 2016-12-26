@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +35,7 @@ public class InventoryController {
 	}
 	
 	@RequestMapping(value="/allInve",method=RequestMethod.GET)
-	public String select(@RequestParam(value="gname",required=false)String gname,@RequestParam(value="loname",required=false)String loname,@RequestParam(value="lolevel",required=false)String lolevel,@RequestParam(value="lostate",required=false)String lostate,@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response) throws Exception{
+	public String select(@RequestParam(value="gname",required=false)String gname,@RequestParam(value="loname",required=false)String loname,@RequestParam(value="lolevel",required=false)String lolevel,@RequestParam(value="lostate",required=false)String lostate,@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,HttpSession session) throws Exception{
 		PageBean pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
 		Map<String, Object> map= new HashMap<>();
 		map.put("gname", StringUtil.formatLike(gname));
@@ -44,6 +45,7 @@ public class InventoryController {
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
 		List<Inventory> list=inventoryService.select(map);//查询所有数据
+		session.setAttribute("inventoryList", list);
 		Long total=inventoryService.queryAllCount(map);	//查询总条数
 		JSONObject result = new JSONObject();
 		JSONArray jsonArray = JSONArray.fromObject(list);
