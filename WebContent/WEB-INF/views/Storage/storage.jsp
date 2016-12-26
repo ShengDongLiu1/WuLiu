@@ -267,7 +267,7 @@ function chuku() {
 function doAdd() {
 	var kucun = $("#sstock").val();
 	var chuku = $("#tcount").val();
-	if(kucun >= chuku){
+	if(parseInt(kucun) >= parseInt(chuku)){
         $("#addForm").form("submit", {
             url :"${pageContext.request.contextPath}/thelibrary/add",
             success : function(result) {
