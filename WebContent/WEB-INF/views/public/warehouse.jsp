@@ -136,19 +136,28 @@ function getValues(){
 	}else if(gweight == ''){
 		$('.error4').html(message);
 		return false;
-	}else if(gweight <= 0){
+	}else if(isNaN(gweight)){
+		$('.error4').html('*需为数字');
+		return false;
+	}else if(parseInt(gweight) <= 0){
 		$('.error4').html('*数值有误');
 		return false;
 	}else if(gvolume == ''){
 		$('.error5').html(message);
 		return false;
-	}else if(gvolume <= 0){
+	}else if(isNaN(gvolume)){
+		$('.error5').html('*需为数字');
+		return false;
+	}else if(parseInt(gvolume) <= 0){
 		$('.error5').html('*数值有误');
 		return false;
 	}else if(gsize == ''){
 		$('.error6').html(message);
 		return false;
-	}else if(gsize <= 0){
+	}else if(isNaN(gsize)){
+		$('.error6').html('*需为数字');
+		return false;
+	}else if(parseInt(gsize) <= 0){
 		$('.error6').html('*数值有误');
 		return false;
 	}else if(ggrade == ''){
@@ -183,7 +192,16 @@ $(document).ready(function(){
     $("input").blur(function(){//失去焦点
     	getValues();
     });
+
+	var message='${result}';
+	if(message != ''){
+		$('.title1').html("<span style='color:red;font-size:20px;'>"+message+"</span>");
+		window.setInterval(showalert, 3000);
+	}
 });
+function showalert(){ 
+	$('.title1').html('我的货物订单');
+}
 </script>
 <style type="text/css">
 .autoScroll{  
@@ -305,13 +323,13 @@ $(document).ready(function(){
 											<span class="message  error3"></span>
 										</td>
 										<td align="right">货物重量：</td>
-										<td align="left"><input name="gweight" type="number" id="gweight" placeholder="请输入货物重量"><span class="message error4"></span></td>
+										<td align="left"><input name="gweight" type="text" id="gweight" placeholder="请输入货物重量(t)"><span class="message error4"></span></td>
 									</tr>
 									<tr height="60">
 										<td align="right">货物体积：</td>
-										<td align="left"><input name="gvolume" type="number" id="gvolume" placeholder="请输入货物体积"><span class="message error5"></span></td>
+										<td align="left"><input name="gvolume" type="text" id="gvolume" placeholder="请输入货物体积(m³)"><span class="message error5"></span></td>
 										<td align="right">货物尺寸：</td>
-										<td align="left"><input name="gsize" type="number" id="gsize" placeholder="请输入货物尺寸"><span class="message error6"></span></td>
+										<td align="left"><input name="gsize" type="text" id="gsize" placeholder="请输入货物尺寸(m)"><span class="message error6"></span></td>
 									</tr>
 									<tr height="60">
 										<td align="right">货物等级：</td>

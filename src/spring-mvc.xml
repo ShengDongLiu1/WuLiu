@@ -41,6 +41,7 @@
     	<mvc:interceptor>
     		<mvc:mapping path="/*/*"/>
     		<mvc:exclude-mapping path="/user/login"/>
+    		<mvc:exclude-mapping path="/customer/login"/>
     		<mvc:exclude-mapping path="/customer/index"/>
     		<mvc:exclude-mapping path="/customer/info"/>
     		<mvc:exclude-mapping path="/customer/management"/>
@@ -52,8 +53,9 @@
     		<mvc:exclude-mapping path="/front/list"/>
     		<mvc:exclude-mapping path="/customer/customerLogin"/>
     		<mvc:exclude-mapping path="/customer/zc"/>
-    		<mvc:exclude-mapping path="/customer/login"/>
     		<mvc:exclude-mapping path="/yzm/code"/>
+    		<mvc:exclude-mapping path="/goods/myGoods"/>
+    		<mvc:exclude-mapping path="/goods/add"/>
     		<mvc:exclude-mapping path="/image/*.jpg"/>
     		<mvc:exclude-mapping path="/image/*.gif"/>
     		<mvc:exclude-mapping path="/image/*.swf"/>

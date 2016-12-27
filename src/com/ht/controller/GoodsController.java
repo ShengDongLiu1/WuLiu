@@ -126,17 +126,18 @@ public class GoodsController {
 		goods.setGorderstime(new Date());
 		int resultcount=goodsService.insertSelective(goods);
 		if(resultcount>0){
-			request.setAttribute("result", "订单添加成功！");
+			request.setAttribute("result", "✔订单添加成功！");
 		}else{
-			request.setAttribute("result", "订单添加失败！");
+			request.setAttribute("result", "✘订单添加失败！");
 		}
-		return "redirect:/warehouse.jsp";
+		return "public/warehouse";
 	}
 	
 	@RequestMapping(value="/myGoods",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> myGoods(HttpSession session,Integer page,Integer rows){
 		Customer customer=(Customer) session.getAttribute("customer");
+		if(customer == null){return null;}
 		Map<String, Object> map= new HashMap<>();
 		PageBean pageBean=null;
 		if(page == null && rows == null){

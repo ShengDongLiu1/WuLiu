@@ -106,8 +106,13 @@ public class Customerller {
 	 * @return
 	 */
 	@RequestMapping(value="/warehouse",method=RequestMethod.GET)
-	public String towarehouse(){
-		return "public/warehouse";
+	public String towarehouse(HttpSession session){
+		Customer customer=(Customer) session.getAttribute("customer");
+		if(customer == null){
+			return "public/login";
+		}else{
+			return "public/warehouse";
+		}
 	}
 	
 	
@@ -159,7 +164,6 @@ public class Customerller {
 	@ResponseBody
 	public Map<String, Object> login(Customer customer,String code, HttpServletRequest request,HttpSession session) throws Exception{
 		Map<String, Object> map=new HashMap<>();
-		System.out.println(customer.getCemail()+"****"+customer.getCpassword()+"验证码："+code.toLowerCase());
 		if(code.equals(session.getAttribute("code").toString())){
 			//密码加密
 			customer.setCpassword(AES.getInstance().encrypt(customer.getCpassword()));
