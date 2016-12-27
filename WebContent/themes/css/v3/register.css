@@ -7,15 +7,15 @@ input[type="text"]:focus,input[type="password"]:focus{
   box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 4px rgba(82,168,236,0.8)
 }
 
-.header a{position:absolute; top:60px; right:50px; font-size:12px; color:#666; height:20px; line-height:20px;background:url(../../images/v3/iPhone.png) -25px -290px no-repeat; text-indent:20px;}
+.header a{position:absolute; top:60px; right:50px; font-size:12px; color:#666; height:20px; line-height:20px;background:url(../../images/v3/iphone.png) -25px -290px no-repeat; text-indent:20px;}
 .header a:hover{color:#009fe3;}
 .header h3{position:absolute; top:56px; left:214px; height:24px; font:18px/24px 'Microsoft YaHei'; border-left:1px solid #afafaf; padding:0 12px;}
 
 .register_content{width:1200px; margin:0 auto; position:relative;}
 .bg{height:34px;background:url(../../images/v3/aaa.png) left 0 repeat-x;}
-.step_ul{padding:0 40px; margin-top:32px; height:64px; background:url(../../images/v3/iPhone.png) 0 -314px no-repeat;}
-.step1{padding:0 40px; height:64px; background:url(../../images/v3/iPhone.png) center -381px no-repeat;}
-.step2{padding:0 40px; height:64px; background:url(../../images/v3/iPhone.png) center -314px no-repeat;}
+.step_ul{padding:0 40px; margin-top:32px; height:64px; background:url(../../images/v3/iphone.png) 0 -314px no-repeat;}
+.step1{padding:0 40px; height:64px; background:url(../../images/v3/iphone.png) center -381px no-repeat;}
+.step2{padding:0 40px; height:64px; background:url(../../images/v3/iphone.png) center -314px no-repeat;}
 .step_ul li{float:left; width:540px; height:64px; text-align:center; font:bold 16px/64px '宋体'; color:#fff;}
 .step1 .li1{background:#009fe3;}
 .step1 .li2{background:#d1d1d1; margin-left:40px;}
@@ -51,13 +51,13 @@ input[type="text"]:focus,input[type="password"]:focus{
 .login_bg{width:100%; min-width:1200px; height:600px; background:url(../../images/v3/login_banner.png) center center no-repeat #00a0e9;}
 .form{width:1200px; margin:0 auto;position:relative;}
 #login_form{width:350px; position:absolute; top:130px; right:70px;}
-#login_form h2{background:url(../../images/v3/iPhone.png) left -452px no-repeat; padding-left:46px; color:#009fe3; font-size:16px; font-weight:bold; height:20px; line-height:20px; margin-bottom:24px;}
+#login_form h2{background:url(../../images/v3/iphone.png) left -452px no-repeat; padding-left:46px; color:#009fe3; font-size:16px; font-weight:bold; height:20px; line-height:20px; margin-bottom:24px;}
 
-.username, .pw{width:290px; padding:10px 5px 10px 45px; border:1px solid #009fe3; height:30px; line-height:30px; margin-bottom:10px; border-radius:4px; color:#666;}
-/*验证码*/
-.checkcode{width:100px; padding:10px 5px 10px 0px; border:1px solid #009fe3; height:30px; line-height:30px; margin-bottom:10px; border-radius:4px; color:#666;}
+#codeimg{width:40%;height:35px;border-radius:5px;border:none;cursor:pointer;vertical-align:middle}
+.code{width:40%;border:1px solid #009fe3; height:35px; line-height:35px; margin-bottom:0px; border-radius:4px; color:#666;font-size:20px;vertical-align:middle;}
+.username, .pw{width:82%; padding:10px 5px 10px 45px; border:1px solid #009fe3; height:20px; line-height:20px; margin-bottom:10px; border-radius:4px; color:#666;font-size:20px;}
 .div_user, .div_pw{position:relative;}
-.div_user span, .div_pw span{position:absolute; left:15px; top:12px; width:16px; height:18px; background:url(../../images/v3/iPhone.png) 0 -480px no-repeat; z-index:1;}
+.div_user span, .div_pw span{position:absolute; left:15px; top:12px; width:16px; height:18px; background:url(../../images/v3/iphone.png) 0 -480px no-repeat; z-index:1;}
 .div_pw span{background-position:0 -506px;}
 
 .div_box{margin-top:5px; height:20px; line-height:20px; position:relative;}

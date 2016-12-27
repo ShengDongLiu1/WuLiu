@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -9,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
 <title>宏图物流有限公司</title>
-<link href="style/css.css" rel="stylesheet" type="text/css" />
+<link href="<%=path %>/style/css.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -24,31 +25,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<td width="80">&nbsp;</td>
 
 		
-					<td><a href="<%=basePath %>index.jsp" class="footer1" >网站首页</a></td>
+					<td><a href="<%=path %>/customer/index" class="footer1" >网站首页</a></td>
 		
 					<td>|</td>
 		
-					<td><a href="<%=basePath %>info.jsp" class="footer1" >企业介绍</a></td>
+					<td><a href="<%=path %>/customer/info" class="footer1" >企业介绍</a></td>
 		
 					<td>|</td>
 		
-					<td><a href="<%=basePath %>management.jsp" class="footer1" >经营范围</a></td>
+					<td><a href="<%=path %>/customer/management" class="footer1" >经营范围</a></td>
 		
 					<td>|</td>
 		
-					<td><a href="<%=basePath %>network.jsp" class="footer1" >服务网络</a></td>
+					<td><a href="<%=path %>/customer/network" >服务网络</a></td>
 		
 					<td>|</td>
 		
-					<td><a href="<%=basePath %>flow.jsp" class="footer1" >业务流程</a></td>
+					<td><a href="<%=path %>/customer/flow" class="footer1" >业务流程</a></td>
 		
 					<td>|</td>
-		
-					<td><a href="<%=basePath %>message.jsp" class="footer1" >客户留言</a></td>
-		
-					<td>|</td>
-		
-					<td><a href="<%=basePath %>contact.jsp" class="footer1" >联系我们</a></td>
+					<c:if test="${customer != null}">
+						<td><a href="<%=basePath %>message.jsp" class="footer1" >客户留言</a></td>
+						<td>|</td>
+					</c:if>
+					<td><a href="#" class="footer1" >联系我们</a></td>
 		
 
 		<td width="80">&nbsp;</td>

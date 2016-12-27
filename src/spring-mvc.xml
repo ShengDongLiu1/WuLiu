@@ -41,12 +41,18 @@
     	<mvc:interceptor>
     		<mvc:mapping path="/*/*"/>
     		<mvc:exclude-mapping path="/user/login"/>
+    		<mvc:exclude-mapping path="/customer/index"/>
+    		<mvc:exclude-mapping path="/customer/info"/>
+    		<mvc:exclude-mapping path="/customer/management"/>
+    		<mvc:exclude-mapping path="/customer/network"/>
+    		<mvc:exclude-mapping path="/customer/flow"/>
+    		<mvc:exclude-mapping path="/customer/message"/>
+    		<mvc:exclude-mapping path="/customer/warehouse"/>
+    		<mvc:exclude-mapping path="/customer/klogout"/>
     		<mvc:exclude-mapping path="/front/list"/>
-    		<mvc:exclude-mapping path="/customer/khlogin"/>
+    		<mvc:exclude-mapping path="/customer/customerLogin"/>
     		<mvc:exclude-mapping path="/customer/zc"/>
     		<mvc:exclude-mapping path="/customer/login"/>
-    		<mvc:exclude-mapping path="/index.jsp"/>
-    		<mvc:exclude-mapping path="/top.jsp"/>
     		<mvc:exclude-mapping path="/yzm/code"/>
     		<mvc:exclude-mapping path="/image/*.jpg"/>
     		<mvc:exclude-mapping path="/image/*.gif"/>
@@ -56,8 +62,6 @@
     		<mvc:exclude-mapping path="/warehouse/css/index.css"/>
     		<bean class="com.ht.interceptors.BackInterceptor"/>
     	</mvc:interceptor>
-    
-    
     </mvc:interceptors>
     
     <!-- 返回json -->

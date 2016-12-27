@@ -20,7 +20,6 @@ import com.ht.service.interfaces.RoleService;
 import com.ht.service.interfaces.SysfunctionService;
 import com.ht.service.interfaces.UserService;
 import com.ht.ssm.util.Createstring;
-import com.ht.ssm.util.CurrentTime;
 import com.ht.vo.Reg;
 
 /**
@@ -51,18 +50,18 @@ public class UserController {
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String tologin(){
 		
-		return "index2";
+		return "public/login";
 	}
 	
 	/**
-	 * frame中加载main的部分
+	 * 后台管理欢迎页
 	 * @return
 	 */
 	@RequestMapping(value="/welcome",method=RequestMethod.GET)
-	public String welcome(){
-		
+	public String toWelcome(){
 		return "welcome";
 	}
+	
 	/**
 	 * 用户登录，并查处该用户拥有的权限功能
 	 * @param sysuser
@@ -97,7 +96,7 @@ public class UserController {
 		session.removeAttribute("user");
 		session.removeAttribute("initfun");
 		
-		return "index2";
+		return "public/index";
 	}
 	
 	/**
@@ -111,7 +110,7 @@ public class UserController {
 		
 		if(sysuser.getRoleid() == -2){
 			System.out.println("客户登入");
-			return "redirect:/index.jsp";
+			return "redirect:/customer/index";
 		}
 		
 		List<Sysfunction> funlist=sysfunctionService.initfunction(sysuser);

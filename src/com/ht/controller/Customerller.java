@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ht.dto.DateUtil;
 import com.ht.dto.PageBean;
@@ -21,7 +22,6 @@ import com.ht.entity.AES;
 import com.ht.entity.Customer;
 import com.ht.entity.sysuser;
 import com.ht.service.interfaces.CustomerService;
-import com.ht.service.interfaces.SysfunctionService;
 import com.ht.service.interfaces.UserService;
 import com.ht.ssm.util.ResponseUtil;
 
@@ -31,8 +31,6 @@ import net.sf.json.JSONObject;
 @Controller
 @RequestMapping("/customer")
 public class Customerller {
-	@Autowired
-	private SysfunctionService sysfunctionService;
 
 	@Autowired
 	private CustomerService customerService;
@@ -46,26 +44,80 @@ public class Customerller {
 	 */
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String tologin(){
-		
-		return "index2";
+		return "public/login";
 	}
+	
+	/**
+	 * 跳转到主页
+	 * @return
+	 */
+	@RequestMapping(value="/index",method=RequestMethod.GET)
+	public String toindex(){
+		return "public/index";
+	}
+	
+	/**
+	 * 跳转到企业介绍
+	 * @return
+	 */
+	@RequestMapping(value="/info",method=RequestMethod.GET)
+	public String toinfo(){
+		return "public/info";
+	}
+	
+	/**
+	 * 跳转到经营范围
+	 * @return
+	 */
+	@RequestMapping(value="/management",method=RequestMethod.GET)
+	public String tomanagement(){
+		return "public/management";
+	}
+	
+	/**
+	 * 跳转到服务网络
+	 * @return
+	 */
+	@RequestMapping(value="/network",method=RequestMethod.GET)
+	public String tonetwork(){
+		return "public/network";
+	}
+	
+	/**
+	 * 跳转到业务流程
+	 * @return
+	 */
+	@RequestMapping(value="/flow",method=RequestMethod.GET)
+	public String toflow(){
+		return "public/flow";
+	}
+	
+	/**
+	 * 客户留言
+	 * @return
+	 */
+	@RequestMapping(value="/message",method=RequestMethod.GET)
+	public String tomessage(){
+		return "public/message";
+	}
+	
+	/**
+	 * 跳转到我的货物
+	 * @return
+	 */
+	@RequestMapping(value="/warehouse",method=RequestMethod.GET)
+	public String towarehouse(){
+		return "public/warehouse";
+	}
+	
+	
 	/**
 	 * 跳转到注册界面
 	 * @return
 	 */
 	@RequestMapping(value="/zc",method=RequestMethod.GET)
 	public String welcome2(){
-		
 		return "register";
-	}
-	/**
-	 * frame中加载main的部分
-	 * @return
-	 */
-	@RequestMapping(value="/welcome",method=RequestMethod.GET)
-	public String welcome(){
-		
-		return "index2";
 	}
 	
 	/**
@@ -75,11 +127,8 @@ public class Customerller {
 	 */
 	@RequestMapping(value="/klogout",method=RequestMethod.GET)
 	public String logout(HttpSession session){
-		
-		session.removeAttribute("user");
-		session.removeAttribute("initfun");
-		
-		return "index2";
+		session.removeAttribute("customer");
+		return "public/index";
 	}
 	/**
 	 * 转到子界面
@@ -106,27 +155,34 @@ public class Customerller {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/khlogin")
-	public String login(Customer customer,String code, HttpServletRequest req,HttpSession session) throws Exception{
-		if(code.equals(session.getAttribute("code"))){
+	@RequestMapping("/customerLogin")
+	@ResponseBody
+	public Map<String, Object> login(Customer customer,String code, HttpServletRequest request,HttpSession session) throws Exception{
+		Map<String, Object> map=new HashMap<>();
+		System.out.println(customer.getCemail()+"****"+customer.getCpassword()+"验证码："+code.toLowerCase());
+		if(code.equals(session.getAttribute("code").toString())){
+			//密码加密
 			customer.setCpassword(AES.getInstance().encrypt(customer.getCpassword()));
-			Map<String, Object> map = new HashMap<>();
 			map.put("cemail", customer.getCemail());
 			map.put("cpassword", customer.getCpassword());
-			try{
+			
+			Customer customer2=customerService.klogin1(map);//客户登录
+			if(customer2 == null){
 				sysuser existsysuser = userService.login(customer.getCemail(),customer.getCpassword());
-				Customer customer2=customerService.klogin1(map);//客户登录
 				session.setAttribute("user", existsysuser);
+				if(existsysuser == null){
+					map.put("result", "账号或密码错误!");
+				}else{
+					map.put("success", "admin");
+				}
+			}else{
 				session.setAttribute("customer", customer2);
-				return "redirect:/user/index";
-			}catch(Exception e){
-				session.setAttribute("LoginError", "账号或密码有误~");
-				return "index2";
+				map.put("success", "customer");
 			}
 		}else{
-				session.setAttribute("LoginError", "验证码有误~");
-			 	return "index2";
+				map.put("result", "验证码输入错误!");
 		}
+		return map;
 	}
 	/**
 	 * 分页条件查询客户

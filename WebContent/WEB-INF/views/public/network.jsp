@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
-    
+    <%String path=request.getContextPath(); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 
@@ -12,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <title>宏图物流有限公司</title>
-<link href="style/css.css" rel="stylesheet" type="text/css" />
+<link href="<%=path %>style/css.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
@@ -29,7 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<tr height="35">
 		<td width="10">&nbsp;</td>
 		<td width="900">
-			<img src="<%=basePath %>image/icon_1.gif" width="10" height="9">&nbsp;&nbsp;<a href="">首页</a> &gt; <a href="">业务流程</a> &gt; <a href="">业务流程</a>
+			<img src="image/icon_1.gif" width="10" height="9">&nbsp;&nbsp;<a href="">首页</a> &gt; <a href="">服务网络</a> &gt; <a href="">服务网络</a>
 			
 		</td>
 		<td width="10">&nbsp;</td>
@@ -44,8 +40,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr height="20">
-		<td width="80" align="center" class="font1">业务流程</td>
-		<td width="80" align="center" class="font2">Business process</td>
+		<td width="80" align="center" class="font1">服务网络</td>
+		<td width="80" align="center" class="font2">Network</td>
 		<td class="line1">&nbsp;</td>
 	</tr>
 </table>
@@ -60,7 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		<table width="227" border="0" cellspacing="0" cellpadding="0">
 			<tr>
-				<td align="center"><a href="" class="menu01">业务流程</a></td>
+				<td align="center"><a href="" class="menu01">服务网络</a></td>
 			</tr>
 			<tr height="8">
 				<td></td>
@@ -91,10 +87,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</tr>
 	<tr style="line-height:22px;font-family:Arial;">
 		<td><P>公司名称：<FONT face=Verdana>宏图物流有限公司</FONT> <BR>
-			 联系电话：110&nbsp; 119 &nbsp;120<BR>
-			 总部地址：赣州技师学院小红楼2单元302-1</P>
-             <P>Q&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Q：3838438</P>
-             <P>手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 机：13838384384</P></td>
+			联系电话：110&nbsp; 119 &nbsp;120<BR>
+			总部地址：赣州技师学院小红楼2单元302-1</P>
+			<P>Q&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Q：3838438</P>
+			<P>手&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 机：13838384384</P></td>
 	</tr>
 	<tr height="20">
 		<td></td>
@@ -106,7 +102,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			<table width="97%" border="0" cellspacing="0" cellpadding="0">
 				<tr height="35">
-					<td align="center" class="title1">业务流程</td>
+					<td align="center" class="title1">服务网络</td>
 				</tr>
 			</table>
 
@@ -118,16 +114,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<td></td>
 					</tr>
 					
-					<tr>
-						<td class="content1">
-							
-									<table align="center" width="0" border="0" cellspacing="5" cellpadding="">
-										<tr>
-											<td><img src="<%=basePath %>image/200712855189361.gif"  onload="if (this.width > 600) this.width = 600;"></td>
-										</tr>
-									</table>
-							
-						</td>
+					<tr align="left">
+					  <td class="content1">
+							<P>&nbsp;&nbsp;&nbsp;天津、北京、河北省、东北三省、济南、郑州、西安、内蒙、湖南、湖北、广东省、江苏省、浙江省、整车、零担、往返、货物运输。</P>
+                            <p> &nbsp;&nbsp;全国各地整车零担货物运输业务。为客户提供快捷、准确的货运信息，根据所需车型合理配置，大大降低企业运输成本。欢迎各地新、旧车辆转入我公司挂户。</p>
+                            <P>&nbsp;</P>
+<P>&nbsp;</P>
+					  </td>
 					</tr>
 					<tr height="30">
 						<td></td>
@@ -144,10 +137,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<td align="right" valign="top">
 			<table width="97%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td height="1" background="<%=basePath %>images/line_point2.gif"></td>
+					<td height="1" background="images/line_point2.gif"></td>
 				</tr>
 				<tr>
-					<td height="30" align="right"><a href="#"><img src="<%=basePath %>image/bt_up.gif" width="27" height="11" border="0"></a></td>
+					<td height="30" align="right"><a href="#"><img src="image/bt_up.gif" width="27" height="11" border="0"></a></td>
 				</tr>
 				<tr>
 					<td align="right">&nbsp;</td>
@@ -157,7 +150,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<td>&nbsp;</td>
 	</tr>
 </table>
-
 <jsp:include flush="true" page="bottom.jsp"></jsp:include>
 </body>
 </html>

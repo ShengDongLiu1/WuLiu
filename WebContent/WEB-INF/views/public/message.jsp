@@ -14,7 +14,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <title>宏图物流有限公司</title>
-<link href="style/css.css" rel="stylesheet" type="text/css" />
+<link href="<%=path %>/style/css.css" rel="stylesheet" type="text/css" />
 <script language="javascript">
 	function check(form)
 	{

@@ -28,14 +28,14 @@
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr height="16">
 					<c:choose>
-						<c:when test="${empty user}">
-							<td width="70" align="center" class="td1"><a href="<%=basePath %>customer/login" onClick="this.style.behavior='url(#default#homepage)';this.setHomePage(window.location.href);return(false);" style="BEHAVIOR: url(#default#homepage)"><img src="<%=basePath %>image/bt_top2.gif" width="70" height="22" border="0"></a></td>
+						<c:when test="${empty customer}">
+							<td width="70" align="center" class="td1"><a href="<%=basePath %>customer/login""><img src="<%=basePath %>image/bt_top2.gif" width="70" height="22" border="0"></a></td>
 							<td width="8">&nbsp;</td>
-							<td width="70" align="center" class="td2"><a href="javascript:window.external.AddFavorite(window.location.href, document.title)"><img src="<%=basePath %>/image/bt_top1.gif" width="70" height="22" border="0"></a></td>
+							<td width="70" align="center" class="td2"><a href="<%=basePath %>customer/zc"><img src="<%=basePath %>image/bt_top1.gif" width="70" height="22" border="0"></a></td>
 						</c:when>
 						<c:otherwise>
-							<td width="300" height="20" align="center" ><font size="6">欢迎<font color="red">${user.usertruename }</font>登录</font></td>
-							<td width="160" height="20" align="center" ><font size="6"><a tabindex="-1" href="<%=basePath%>customer/klogout" target="_top">Logout</a></font></td>
+							<td width="300" height="20" align="center" ><font size="5">欢迎<font color="red">${customer.cemail }</font>登录</font></td>
+							<td width="160" height="20" align="center" ><font size="5"><a tabindex="-1" href="<%=path %>/customer/klogout" target="_top">Logout</a></font></td>
 						</c:otherwise>
 					</c:choose>
 				</tr>
@@ -55,26 +55,28 @@
 	<tr height="32" align="center">
 		<td width="10" bgcolor="#FFFFFF">&nbsp;</td>
 		<td>&nbsp;</td>
-					<td><a href="<%=basePath%>index.jsp" class="nav2" >网站首页</a></td>
-					<td>&nbsp;</td>
-		
-					<td><a href="<%=basePath%>info.jsp" class="nav" >企业介绍</a></td>
-					<td>&nbsp;</td>
-		
-					<td><a href="<%=basePath%>management.jsp" class="nav" >经营范围</a></td>
-					<td>&nbsp;</td>
-		
-					<td><a href="<%=basePath%>network.jsp" class="nav" >服务网络</a></td>
-					<td>&nbsp;</td>
-		
-					<td><a href="<%=basePath%>flow.jsp" class="nav">业务流程</a></td>
-					<td>&nbsp;</td>
-		
-					<td><a href="<%=basePath%>message.jsp" class="nav" >客户留言</a></td>
-					<td>&nbsp;</td>
-		
-					<td><a href="<%=basePath%>warehouse.jsp" class="nav" >我的货物</a></td>
-					<td>&nbsp;</td>
+			<td><a href="<%=path %>/customer/index" class="nav2" >网站首页</a></td>
+			<td>&nbsp;</td>
+
+			<td><a href="<%=path %>/customer/info" class="nav" >企业介绍</a></td>
+			<td>&nbsp;</td>
+
+			<td><a href="<%=path %>/customer/management" class="nav" >经营范围</a></td>
+			<td>&nbsp;</td>
+
+			<td><a href="<%=path %>/customer/network" class="nav" >服务网络</a></td>
+			<td>&nbsp;</td>
+
+			<td><a href="<%=path %>/customer/flow" class="nav">业务流程</a></td>
+			<td>&nbsp;</td>
+			
+			<c:if test="${customer != null}">
+				<td><a href="<%=path %>/customer/message" class="nav" >客户留言</a></td>
+				<td>&nbsp;</td>
+	
+				<td><a href="<%=path %>/customer/warehouse" class="nav" >我的货物</a></td>
+				<td>&nbsp;</td>
+			</c:if>
 		<td width="10" bgcolor="#FFFFFF">&nbsp;</td>
 	</tr>
 </table>
