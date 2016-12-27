@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="utf-8"%>
-    
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -223,10 +223,73 @@ function showalert(){
 </style>
 </head>
 <body>
-<jsp:include flush="true" page="top.jsp"></jsp:include>
-
-
 <!-- Copyright ?2005. Spidersoft Ltd --><!-- /Copyright ?2005. Spidersoft Ltd -->
+<table width="920" border="0" align="center" cellpadding="0" cellspacing="0">
+	<tr>
+		<td height="28"></td>
+	</tr>
+</table>
+<table width="920" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+	<tr height="74">
+		<td width="10">&nbsp;</td>
+		<td valign="bottom"><img src="<%=basePath %>/image/logo.jpg" width="483" height="65"></td>
+		<td align="right" valign="bottom">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr height="16">
+					<c:choose>
+						<c:when test="${empty customer}">
+							<td width="70" align="center" class="td1"><a href="<%=basePath %>customer/login""><img src="<%=basePath %>image/bt_top2.gif" width="70" height="22" border="0"></a></td>
+							<td width="8">&nbsp;</td>
+							<td width="70" align="center" class="td2"><a href="<%=basePath %>customer/zc"><img src="<%=basePath %>image/bt_top1.gif" width="70" height="22" border="0"></a></td>
+						</c:when>
+						<c:otherwise>
+							<td width="300" height="20" align="center" ><font size="5">欢迎<font color="red">${customer.cemail }</font>登录</font></td>
+							<td width="160" height="20" align="center" ><font size="5"><a tabindex="-1" href="<%=path %>/customer/klogout" target="_top">Logout</a></font></td>
+						</c:otherwise>
+					</c:choose>
+				</tr>
+			</table>
+		</td>
+		<td width="10">&nbsp;</td>
+	</tr>
+</table>
+
+<table width="920" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+	<tr>
+		<td height="11"></td>
+	</tr>
+</table>
+
+<table width="920" border="0" align="center" cellpadding="0" cellspacing="0" class="td1">
+	<tr height="32" align="center">
+		<td width="10" bgcolor="#FFFFFF">&nbsp;</td>
+		<td>&nbsp;</td>
+			<td><a href="<%=path %>/customer/index" class="nav2" >网站首页</a></td>
+			<td>&nbsp;</td>
+
+			<td><a href="<%=path %>/customer/info" class="nav" >企业介绍</a></td>
+			<td>&nbsp;</td>
+
+			<td><a href="<%=path %>/customer/management" class="nav" >经营范围</a></td>
+			<td>&nbsp;</td>
+
+			<td><a href="<%=path %>/customer/network" class="nav" >服务网络</a></td>
+			<td>&nbsp;</td>
+
+			<td><a href="<%=path %>/customer/flow" class="nav">业务流程</a></td>
+			<td>&nbsp;</td>
+			
+			<c:if test="${customer != null}">
+				<td><a href="<%=path %>/customer/message" class="nav" >客户留言</a></td>
+				<td>&nbsp;</td>
+	
+				<td><a href="<%=path %>/customer/warehouse" class="nav" >我的货物</a></td>
+				<td>&nbsp;</td>
+			</c:if>
+		<td width="10" bgcolor="#FFFFFF">&nbsp;</td>
+	</tr>
+</table>
+
 <table width="920" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
 	<tr>
 		<td height="3"></td>
