@@ -1,12 +1,12 @@
-package com.ht.dao;
+package com.ht.service.interfaces;
 
 import java.util.List;
 import java.util.Map;
 
 import com.ht.entity.Costtype;
 
-public interface CosttypeMapper {
-    int deleteByPrimaryKey(Integer cid);
+public interface CosttypeService {
+	int deleteByPrimaryKey(Integer cid);
 
     int insert(Costtype record);
 

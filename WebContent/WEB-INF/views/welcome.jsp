@@ -36,11 +36,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</h1>
 					
 							</div>
-							<div id="zzsc">
+							<!-- <div id="zzsc">
 
   								<canvas id="canvas" width="920" height="1000"></canvas>
 								
-							</div>
+							</div> -->
 					</div>
 			</div>
 		</div>

@@ -104,7 +104,7 @@
 					</ul>
 				</c:if>
 			</c:forEach>
- 			<object type="application/x-shockwave-flash" style="outline:none;" data="<%=path %>/image/hamster.swf" width="240" height="240"><param name="wmode" value="opaque"></param></object>
+ 			<%-- <object type="application/x-shockwave-flash" style="outline:none;" data="<%=path %>/image/hamster.swf" width="240" height="240"><param name="wmode" value="opaque"></param></object> --%>
 
 		</div> 
 	 	<div class="content">
