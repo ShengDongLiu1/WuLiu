@@ -289,7 +289,10 @@ $(window).load(function(){
                           <img border="0" src="http://wpa.qq.com/pa?p=2:1532722446:41" alt="点击这里给我发消息" title="点击这里给我发消息">
                           <span>建叼</span>
                     	</a>
-                    </p>             
+                    </p>
+                     <p>
+                    <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=43d842e0b7e25be0fc911c5e86365dd107d12bb2ced595e4371a7943b9341279"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="人多人少气势不倒" title="人多人少气势不倒"></a>            
+              		</p>
                 </div>               
                 <hr>
                 <div class="phoneserver">
