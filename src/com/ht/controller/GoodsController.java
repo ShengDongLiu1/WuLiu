@@ -113,6 +113,13 @@ public class GoodsController {
 		return map;
 	}
 	
+	/**
+	 * 添加订单
+	 * @param goods
+	 * @param request
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value="/add")
 	public String addGoods(Goods goods,HttpServletRequest request,HttpSession session){
 		DateFormat format=new SimpleDateFormat("MMddHHmm");
@@ -133,6 +140,13 @@ public class GoodsController {
 		return "public/warehouse";
 	}
 	
+	/**
+	 * 某个客户的所有订单
+	 * @param session
+	 * @param page
+	 * @param rows
+	 * @return
+	 */
 	@RequestMapping(value="/myGoods",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> myGoods(HttpSession session,Integer page,Integer rows){
@@ -157,6 +171,22 @@ public class GoodsController {
 		map.put("pageSize", pageBean.getPageSize());//一页显示多少行
 		map.put("listGoods", list);
 		return map;
+	}
+	
+	/**
+	 * 修改货物信息
+	 * @param goods
+	 */
+	@RequestMapping(value="/updateGood")
+	@ResponseBody
+	public void updateGood(Goods goods){
+		System.out.println("****");
+		if(goods.getGid() != null){
+			int resultcount=goodsService.updateByPrimaryKeySelective(goods);
+			if(resultcount>0){
+				System.out.println("修改成功");
+			}
+		}
 	}
 	
 }

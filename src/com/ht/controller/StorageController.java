@@ -111,7 +111,7 @@ public class StorageController {
 			inventory.setLogid(storage.getSgid());//货物编号
 			inventoryService.inventoryupdate(inventory);//给库位添加一个货物id
 			//一次性入库修改状态
-			if(receipt.getRreceivecount()==storage.getStoragecount()){
+			if(receipt.getRreceivecount().equals(storage.getStoragecount())){
 				receipt.setRstart(5);
 				receipt.setRreceivecount(receipt.getRreceivecount()-storage.getStoragecount());
 				receiptService.updateByPrimaryKeySelective(receipt);

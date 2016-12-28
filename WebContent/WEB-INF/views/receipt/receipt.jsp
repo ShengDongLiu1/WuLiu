@@ -74,7 +74,13 @@ $(function(){
 				left:e.pageX,
 				top:e.pageY	
 			});
-		}
+		},
+		rowStyler: function(index,row){
+        	if(index%2==1){
+        	    return 'background-color:#F4F4F4;color:#000;';
+        	    //这就是1,3,5行一个颜色了
+        	}
+       	}
 	});
 	
 });
@@ -131,7 +137,7 @@ function toSub(value,obj){
 	}else if(obj.rstart == 2){
 		btn="<a href='javascript:openNumWin("+obj.rid+","+obj.rcid+","+obj.rgid+","+obj.rreceivecount+")'>入库</a>";
 	}else if(obj.rstart == 3){
-		btn="<a href='javascript:openNumWin("+obj.rid+","+obj.rcid+","+obj.rgid+","+obj.rreceivecount+")' style='color:orange'>继续入库</a>";
+		btn="<a href='javascript:openNextWin("+obj.rid+","+obj.rcid+","+obj.rgid+","+obj.rreceivecount+")' style='color:orange'>继续入库</a>";
 	}else if(obj.rstart == 4){
 		btn="<span class='failure'>质检失败</span>";
 	}else if(obj.rstart == 5){
@@ -152,9 +158,9 @@ function fuzhi(index){
 	$("#gname").html(index.goods.gname);
 	$("#gordernumber").html(index.goods.gordernumber);
 	$("#gcount").html(index.goods.gcount + " "+index.goods.gunit);
-	$("#gweight").html(index.goods.gweight + " 吨");
-	$("#gvolume").html(index.goods.gvolume + " m<sup>3</sup>");
-	$("#gsize").html(index.goods.gsize + " m");
+	$("#gweight").html(isNull(index.goods.gweight) + " 吨");
+	$("#gvolume").html(isNull(index.goods.gvolume) + " m<sup>3</sup>");
+	$("#gsize").html(isNull(index.goods.gsize) + " m");
 	$("#ggrade").html(index.goods.ggrade);
 	$("#gconsignee").html(index.goods.gconsignee);
 	$("#greaddress").html(index.goods.greaddress);
@@ -167,11 +173,21 @@ function fuzhi(index){
 	$("#goodbyWin").dialog("open").dialog("setTitle", "客户订单详情");
 }
 
+/* 如果为空 */
+function isNull(val){
+	if(val == '' || val == null){
+		return '未知';
+	}else{
+		return val;
+	}
+}
+
 /* 关闭窗口 */
 function closeGoodWin(){
 	$("#goodbyWin").dialog("close");
 	$("#receKuWin").dialog("close");
 	$("#rkTypeWin").dialog("close");
+	$("#good_xinxi").dialog("close");
 }
 
 /* 搜索 */
@@ -202,6 +218,19 @@ function lanshou(state){
 
 /* 打开选择入库方式窗口 */
 function openNumWin(rid,cid,gid,count){
+	$('#srid').val(rid);
+	$('#srcid').val(cid);
+	$('#srgid').val(gid);
+	$('#xgid').val(gid);
+	$('#rreceivecount').val(count);
+	$('#storagecount').numberbox('setValue',count);
+	$("#good_xinxi").dialog("open").dialog("setTitle", "货物占用信息");
+}
+
+/**
+ * 继续入库
+ */
+function openNextWin(rid,cid,gid,count){
 	$('#srid').val(rid);
 	$('#srcid').val(cid);
 	$('#srgid').val(gid);
@@ -262,6 +291,7 @@ function openKuWeiWin(){
 	$('#kuwei').datagrid('load'); 
 }
 
+/* 提交信息 */
 function subRece(){
 	var row=$("#kuwei").datagrid("getSelected");	//获取datagrid中选中的行
 	if(row){
@@ -273,6 +303,28 @@ function subRece(){
 		
 	}else{
 		$.messager.alert('提示','请选择需要库位','info');	//messager消息控件
+	}
+}
+
+function addGoodSize(){
+	var gid=$('#xgid').val();
+	var gweight=$('#xgweight').numberbox('getValue');
+	var gvolume=$('#xgvolume').numberbox('getValue');
+	var gsize=$('#xgsize').numberbox('getValue');
+	if(gweight == ''){
+		$.messager.alert('提示','请填写货物重量！','info');
+		return false;
+	}else if(gvolume == ''){
+		$.messager.alert('提示','请填写货物体积！','info');
+		return false;
+	}else if(gsize == ''){
+		$.messager.alert('提示','请填写货物尺寸！','info');
+		return false;
+	}else{
+		$.post("<%=path%>/goods/updateGood",{'gid':gid,'gweight':gweight,'gvolume':gvolume,'gsize':gsize},function(index){},"json");
+		$("#good_xinxi").dialog("close");
+		getCheckVal();
+		$("#rkTypeWin").dialog("open").dialog("setTitle", "入库类型");
 	}
 }
 </script>
@@ -287,7 +339,7 @@ function subRece(){
 		autoRowHeight:true,
 		pagination:true,
 		border:false,
-		pageSize:10,
+		pageSize:20,
 		fit:true
 	">
 		<thead data-options="frozen:true">
@@ -432,6 +484,21 @@ function subRece(){
 		入库方式：<input type="radio" name="storagemode" checked="checked" value="一次性入库" onclick="getCheckVal()"/>一次性
                <input type="radio" name="storagemode" value="分批入库" onclick="getCheckVal()"/>分批<br /><br />
 		入库数量：<input id="storagecount" class="easyui-validatebox easyui-numberbox" name="storagecount" data-options="required:false" />
+	</div>
+	
+	<!-- 自定义窗口按钮 -->
+	<div id="good-buttons">
+		<a href="javascript:addGoodSize()" class="easyui-linkbutton" iconCls="icon-ok">确认</a>
+	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
+	
+	<!-- 货物占用信息 -->
+	<div id="good_xinxi" class="easyui-dialog"  buttons="#good-buttons" data-options="closable:true, closed:true"  style="width:30%;height:200px;padding:5px;text-align:center;">
+		<input type="hidden" id="xgid" />
+		<br />
+		货物重量：<input id="xgweight" class="easyui-validatebox easyui-numberbox" data-options="required:true"/><br /><br />
+		货物体积：<input id="xgvolume" class="easyui-validatebox easyui-numberbox" data-options="required:true" /><br /><br />
+		货物尺寸：<input id="xgsize" class="easyui-validatebox easyui-numberbox" data-options="required:true" /><br />
 	</div>
 </body>
 </html>

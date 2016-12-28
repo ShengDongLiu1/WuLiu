@@ -118,11 +118,16 @@ $(function(){
                 	 $('#list').datagrid('unselectRow', index - 1); 
                  } 
              }) 
-         }
+         },
+         rowStyler: function(index,row){
+        	if(index%2==1){
+        	    return 'background-color:#F4F4F4;color:#000;';
+        	    //这就是1,3,5行一个颜色了
+        	}
+       	}
 	});
 	
 });
-
 
 /* 客户姓名 */
 function customerName(value){
@@ -266,9 +271,9 @@ function fuzhi(index){
 	$(".gname").html(index.goods.gname);
 	$(".gordernumber").html(index.goods.gordernumber);
 	$(".gcount").html(index.goods.gcount + " "+index.goods.gunit);
-	$(".gweight").html(index.goods.gweight + " 吨");
-	$(".gvolume").html(index.goods.gvolume + " m<sup>3</sup>");
-	$(".gsize").html(index.goods.gsize + " m");
+	$(".gweight").html(isNull(index.goods.gweight) + " 吨");
+	$(".gvolume").html(isNull(index.goods.gvolume) + " m<sup>3</sup>");
+	$(".gsize").html(isNull(index.goods.gsize) + " m");
 	$(".ggrade").html(index.goods.ggrade);
 	$(".gconsignee").html(index.goods.gconsignee);
 	$(".greaddress").html(index.goods.greaddress);
@@ -280,6 +285,15 @@ function fuzhi(index){
 	$(".gdescribe").html(index.goods.gdescribe);
 	$(".gocause").html(index.goods.gocause);
 	$("#goodbyWin").dialog("open").dialog("setTitle", "客户订单详情");
+}
+
+/* 如果为空 */
+function isNull(val){
+	if(val == '' || val == null){
+		return '未知';
+	}else{
+		return val;
+	}
 }
 
 
@@ -352,7 +366,7 @@ function getVal(){
 		autoRowHeight:true,
 		pagination:true,
 		border:false,
-		pageSize:10,
+		pageSize:20,
 		fit:true
 	">
 		<thead data-options="frozen:true">
