@@ -61,6 +61,8 @@
     		<mvc:exclude-mapping path="/image/*.swf"/>
     		<mvc:exclude-mapping path="/assets/css/*.css"/>
     		<mvc:exclude-mapping path="/style/*.css"/>
+    		<mvc:exclude-mapping path="/css/*.css"/>
+    		<mvc:exclude-mapping path="/js/*.js"/>
     		<mvc:exclude-mapping path="/warehouse/css/index.css"/>
     		<bean class="com.ht.interceptors.BackInterceptor"/>
     	</mvc:interceptor>
