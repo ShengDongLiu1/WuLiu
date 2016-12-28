@@ -128,17 +128,6 @@
     </set>
     where cid = #{cid,jdbcType=INTEGER}
   </update>
-  <update id="update" parameterType="com.ht.entity.Customer">
-    update customer
-    set cname = #{cname,jdbcType=VARCHAR},
-      ccompany = #{ccompany,jdbcType=VARCHAR},
-      cphone = #{cphone,jdbcType=VARCHAR},
-      cemail = #{cemail,jdbcType=VARCHAR},
-      cpassword = #{cpassword,jdbcType=VARCHAR},
-      ccredit = #{ccredit,jdbcType=VARCHAR},
-      caddress = #{caddress,jdbcType=VARCHAR}
-    where cid = #{cid,jdbcType=INTEGER}
-  </update>
   <!-- 条件查询 -->
   <select id="find" parameterType="Map" resultMap="BaseResultMap">
 		select * from customer
