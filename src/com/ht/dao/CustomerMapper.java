@@ -61,6 +61,13 @@ public interface CustomerMapper {
 	 * @return
 	 */
 	public int delete(Integer id);
+
+	/**
+	 * 修改客户更新客户资料
+	 * @param cid
+	 * @return
+	 */
+	Customer select(int cid);
 	
 	
 }

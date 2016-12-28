@@ -91,4 +91,12 @@ public class Customer {
     public void setCaddress(String caddress) {
         this.caddress = caddress == null ? null : caddress.trim();
     }
+
+	@Override
+	public String toString() {
+		return "Customer [cid=" + cid + ", ckhno=" + ckhno + ", cname=" + cname + ", ccompany=" + ccompany + ", cphone="
+				+ cphone + ", cemail=" + cemail + ", cpassword=" + cpassword + ", ccredit=" + ccredit + ", caddress="
+				+ caddress + "]";
+	}
+    
 }

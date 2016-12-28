@@ -117,6 +117,19 @@ public class Customerller {
 	
 	
 	/**
+	 * 跳转到我的资料
+	 * @return
+	 */
+	@RequestMapping(value="/personal",method=RequestMethod.GET)
+	public String personal(HttpSession session){
+		Customer customer=(Customer) session.getAttribute("customer");
+		if(customer == null){
+			return "public/login";
+		}else{
+			return "public/personalData";
+		}
+	}
+	/**
 	 * 跳转到注册界面
 	 * @return
 	 */
@@ -258,5 +271,28 @@ public class Customerller {
 		result.put("success", true);
 		ResponseUtil.write(response, result);
 		return null;
+	}
+	
+	/**
+	 * 修改客户
+	 * @param ids
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/update")
+	public String update(Customer customer,HttpServletResponse response,HttpSession session)throws Exception{
+		int resultTotal = 0;
+            resultTotal = customerService.update(customer);
+            
+        if(resultTotal > 0){   //说明修改或添加成功
+        	int cid=customer.getCid();
+        	Customer cus= customerService.select(cid);
+        	System.out.println(cus);
+        	session.setAttribute("customer", cus);
+        	return "public/personalData";
+        }else{
+        	return "public/personalData";
+        }
 	}
 }

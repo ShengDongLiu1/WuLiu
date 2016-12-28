@@ -34,7 +34,7 @@
 				<th data-options="field:'tvehicleid',width:100" align="center">车牌号码</th>
 				<th data-options="field:'tvehicletype',width:100" align="center">车辆类型</th>
 				<th data-options="field:'tvehiclecapacity',width:100" align="center">车牌号码</th>
-				<th data-options="field:'idcard',width:100" align="center">身份证号码</th>
+				<th data-options="field:'idcard',width:150" align="center">身份证号码</th>
 			</tr>
 		</thead>
 	</table>

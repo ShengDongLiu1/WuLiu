@@ -37,12 +37,17 @@ public class CustomerServiceImpl implements CustomerService{
 	public int add(Customer customer) {
 		return customerMapper.add(customer);
 	}
+
+	@Override
+	public int delete(Integer id) {
+		return customerMapper.delete(id);
+	}
 	@Override
 	public int update(Customer customer) {
 		return customerMapper.update(customer);
 	}
 	@Override
-	public int delete(Integer id) {
-		return customerMapper.delete(id);
+	public Customer select(int cid) {
+		return customerMapper.select(cid);
 	}
 }

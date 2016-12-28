@@ -57,4 +57,7 @@ public interface CustomerService {
 	 * @return
 	 */
 	public int delete(Integer id);
+
+	public Customer select(int cid);
+
 }
