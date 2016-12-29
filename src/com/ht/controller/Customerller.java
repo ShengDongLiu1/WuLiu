@@ -156,15 +156,6 @@ public class Customerller {
 		return "customer/customerManage";
 	}
 	/**
-	 * 注册
-	 */
-	@RequestMapping("/zhuce")
-	public String save(@RequestParam(value="cpassword2",required=false)String cpassword2,@RequestParam(value="cemail",required=false)String cemail,HttpServletResponse res) throws Exception{
-		
-		return null;
-		
-	}
-	/**
 	 * 登录验证
 	 * @param customer
 	 * @param code
@@ -236,10 +227,12 @@ public class Customerller {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/save")
+	@RequestMapping(value="/save",method=RequestMethod.POST)
+	@ResponseBody
 	public String save(Customer customer,HttpServletResponse response)throws Exception{
 		int resultTotal=0; // 操作的记录条数
 		if(customer.getCid()==null){
+			customer.setCpassword(AES.getInstance().encrypt(customer.getCpassword()));
 			customer.setCkhno("KH"+DateUtil.getCurrentDateStr()); // 动态生成客户编号
 			resultTotal=customerService.add(customer);
 		}else{
