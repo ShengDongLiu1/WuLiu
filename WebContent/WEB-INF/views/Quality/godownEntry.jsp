@@ -338,7 +338,6 @@
 
 		/* 给弹出的窗口赋值 */
 		function fuzhi(index){
-			alert(index.quality.receipt.rshelvecount);
 			$(".gordernumber1").html(index.quality.goods.gordernumber);//订单号
 			$(".gname1").html(index.quality.goods.gname);//货物名称
 			$(".ggrade1").html(index.quality.goods.ggrade);//货物等级

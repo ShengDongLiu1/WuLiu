@@ -44,6 +44,8 @@ public interface sysuserMapper {
 	 * @return
 	 */
 	List<sysuser> searchbyusername(String username);
+	
+	int updateUserPwd(sysuser record);
     
     
     

@@ -182,4 +182,7 @@
 		USERSTATE = #{userstate,jdbcType=INTEGER}
 		where USERID = #{userid,jdbcType=INTEGER}
 	</update>
+	<update id="updateUserPwd" parameterType="com.ht.entity.sysuser">
+		update sysuser set USERPWD = #{userpwd,jdbcType=VARCHAR} where USERID = #{userid,jdbcType=INTEGER}
+	</update>
 </mapper>

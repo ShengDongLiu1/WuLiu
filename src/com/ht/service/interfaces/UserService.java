@@ -50,8 +50,8 @@ public interface UserService {
 	 */
 	List<sysuser> searchbyusername(String username);
 
-	
-
+	//修改密码
+	int updateUserPwd(sysuser record);
 	
 
 }

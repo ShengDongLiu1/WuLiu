@@ -32,6 +32,8 @@
 							<td width="70" align="center" class="td1"><a href="<%=basePath %>customer/login""><img src="<%=basePath %>image/bt_top2.gif" width="70" height="22" border="0"></a></td>
 							<td width="8">&nbsp;</td>
 							<td width="70" align="center" class="td2"><a href="<%=basePath %>customer/zc"><img src="<%=basePath %>image/bt_top1.gif" width="70" height="22" border="0"></a></td>
+							<td width="8">&nbsp;</td>
+							<td width="70" align="center" class="td2"><a href="<%=basePath %>customer/revise">修改密码</a></td>
 						</c:when>
 						<c:otherwise>
 							<td width="300" height="20" align="center" ><a href="<%=path%>/customer/personal"><font size="5">欢迎<font color="red">${customer.cemail }</font></a>登录</font></td>

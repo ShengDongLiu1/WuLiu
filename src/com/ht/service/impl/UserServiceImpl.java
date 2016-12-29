@@ -62,5 +62,10 @@ public class UserServiceImpl implements UserService{
 		return sysuserMapper.searchbyusername(username);
 	}
 
+	@Override
+	public int updateUserPwd(sysuser record) {
+		return sysuserMapper.updateUserPwd(record);
+	}
+
 	
 }
