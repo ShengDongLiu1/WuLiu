@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -231,14 +232,19 @@ public class Customerller {
 	@ResponseBody
 	public String save(Customer customer,HttpServletResponse response)throws Exception{
 		int resultTotal=0; // 操作的记录条数
+		JSONObject result=new JSONObject();
 		if(customer.getCid()==null){
 			customer.setCpassword(AES.getInstance().encrypt(customer.getCpassword()));
 			customer.setCkhno("KH"+DateUtil.getCurrentDateStr()); // 动态生成客户编号
-			resultTotal=customerService.add(customer);
+			try{
+				resultTotal=customerService.add(customer);
+			}catch(DuplicateKeyException d){
+				result.put("result", "err");
+			}
 		}else{
 			resultTotal=customerService.update(customer);
 		}
-		JSONObject result=new JSONObject();
+	
 		if(resultTotal>0){
 			result.put("success", true);
 		}else{

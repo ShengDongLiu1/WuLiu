@@ -114,6 +114,9 @@
 		    		if(index.success ){
 		         	  alert("添加成功！");
 		         	  window.location.href="<%=path%>/customer/login";
+		    		}else{
+		    			$("#loginTips").html("该用户已存在!").fadeIn();
+						$("#loginBtn").val('登录').removeAttr('disabled');
 		    		}
 		   		},"json");
 			}
