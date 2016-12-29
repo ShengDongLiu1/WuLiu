@@ -31,6 +31,10 @@
 			document.getElementById("msg2").innerText="请输入新密码~";
 			return false;
 		}
+		if(newUserpwd.length < 4){
+			document.getElementById("msg2").innerText="新密码的长度不能小于四位~";
+			return false;
+		}
 		if(newUserpwd1 == "" || newUserpwd1 == null){
 			document.getElementById("msg3").innerText="请确认新密码~";
 			return false;
