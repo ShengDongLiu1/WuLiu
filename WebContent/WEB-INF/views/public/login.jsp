@@ -80,7 +80,7 @@ if(top.location!=self.location)top.location=self.location;
 				</div>
 				<div><input class="login_btn" id="loginBtn" type="button" value="登录" /></div>
                 <div style="line-height:30px; text-indent:5px;color:#F30" id="loginTips">&nbsp;</div>
-				<h4>可以使用下面方式登录<a class="#" href="register">立即注册</a></h4>
+				<h4>可以使用下面方式登录<a class="#" href="<%=path %>/customer/zc">立即注册</a></h4>
 			</form>
 		</div>
 	</div>

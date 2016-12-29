@@ -35,8 +35,7 @@
     </div>
 
     <div class="form-div">
-        <form id="reg-form" action="<%=path %>/customer/zhuce" method="post">
-
+        <form id="reg-form"  method="post">
             <table>
                 <tr>
                     <td>用户名</td>
@@ -54,13 +53,13 @@
                 </tr>
                 <tr>
                     <td>确认密码</td>
-                    <td><input name="cpassword2" type="password" id="psw2" data-easyform="length:6 16;equal:#psw1;"
+                    <td><input name="cpassword2" type="password" id="psw2" data-easyform="length:4 12;equal:#psw1;"
                                data-message="两次密码输入要一致" data-easytip="class:easy-blue;"></td>
                 </tr>
             </table>
 
             <div class="buttons" style="margin-top: 50px;">
-                <input value="注 册" type="submit" style="margin-right:150px; margin-top:6px;">
+                <input value="注 册" onclick="doadd()" type="button" style="margin-right:150px; margin-top:6px;">
             </div>
 
             <br class="clear">
@@ -110,7 +109,19 @@
     {
         $("#uid").trigger("easyform-ajax", true);
     }
-
+    
+   function doadd(){
+	    	var cemail = $("#uid").val()
+	    	var cpassword = $("#psw1").val()
+	    	alert(cemail+"--- "+cpassword)
+	    	$.post("<%=path%>/customer/save",{'cemail':cemail,'cpassword':cpassword},function(index){
+	    		if(index.success ){
+	         	  alert("添加成功！");
+	         	  window.location.href="<%=path%>/customer/login";
+	    		}
+	   		},"json");
+   }
+    
 
 </script>
 
