@@ -16,8 +16,15 @@ public class Inventory {
     private Integer lolevel;
 
     private Integer lostate;
+    
+    private Double losizes;
 
-    private Goods goods;	//货物
+    private Double lovolumes;
+
+    private Double loweights;
+
+   
+	private Goods goods;	//货物
     
     public Goods getGoods() {
 		return goods;
@@ -90,4 +97,28 @@ public class Inventory {
     public void setLostate(Integer lostate) {
         this.lostate = lostate;
     }
+    public Double getLosizes() {
+		return losizes;
+	}
+
+	public void setLosizes(Double losizes) {
+		this.losizes = losizes;
+	}
+
+	public Double getLovolumes() {
+		return lovolumes;
+	}
+
+	public void setLovolumes(Double lovolumes) {
+		this.lovolumes = lovolumes;
+	}
+
+	public Double getLoweights() {
+		return loweights;
+	}
+
+	public void setLoweights(Double loweights) {
+		this.loweights = loweights;
+	}
+
 }

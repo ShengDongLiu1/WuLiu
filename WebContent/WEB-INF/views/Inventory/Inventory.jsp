@@ -46,14 +46,23 @@ a:hover {color:#54287C}
 		pageSize:10,
 		fit:true
 	">
-		<thead data-options="frozen:true">
+	<thead data-options="frozen:true">
 			<tr>
 				<th field="loid" checkbox="true">编号</th>
-				<th field="goods" width="10%" formatter="goodsName">货物名称</th>
-				<th field="loname" width="10%">库位名称</th>
-				<th field="losize" width="10%">库位尺寸(m)</th>
-				<th field="lovolume" width="10%">库位体积(m³)</th>
-				<th field="loweight" width="10%">承受重量(t)</th>
+				<th field="goods" width="8%" formatter="goodsName">货物名称</th>
+				<th field="loname" width="8%">库位名称</th>
+		</tr>
+	<thead data-options="frozen:true">
+			
+		<thead>
+			<tr>
+			
+				<th field="losize" width="8%">库位尺寸(m)</th>
+				<th field="lovolume" width="8%">库位体积(m³)</th>
+				<th field="loweight" width="8%">承受重量(t)</th>
+				<th field="losizes" width="10%">剩余库位尺寸(m)</th>
+				<th field="lovolumes" width="10%">剩余库位体积(m³)</th>
+				<th field="loweights" width="10%">剩余承受重量(t)</th>
 				<th field="lolevel" width="15%">库位等级(数字越大等级越高)</th>
 				<th field="lostate" width="15%">库位状态(0/开启,1关闭)</th>
 				<th field="null" width="18%" align="center" formatter="toSub">操作</th>

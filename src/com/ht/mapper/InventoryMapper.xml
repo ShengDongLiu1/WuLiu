@@ -10,6 +10,9 @@
     <result column="loweight" jdbcType="DOUBLE" property="loweight" />
     <result column="lolevel" jdbcType="INTEGER" property="lolevel" />
     <result column="lostate" jdbcType="INTEGER" property="lostate" />
+   	<result column="losizes" jdbcType="DOUBLE" property="losizes" />
+    <result column="lovolumes" jdbcType="DOUBLE" property="lovolumes" />
+    <result column="loweights" jdbcType="DOUBLE" property="loweights" />
   </resultMap>
   
   <resultMap id="SelectBaseResultMap" type="com.ht.entity.Inventory">
@@ -21,6 +24,9 @@
     <result column="loweight" jdbcType="DOUBLE" property="loweight" />
     <result column="lolevel" jdbcType="INTEGER" property="lolevel" />
     <result column="lostate" jdbcType="INTEGER" property="lostate" />
+    <result column="losizes" jdbcType="DOUBLE" property="losizes" />
+    <result column="lovolumes" jdbcType="DOUBLE" property="lovolumes" />
+    <result column="loweights" jdbcType="DOUBLE" property="loweights" />
     
     <association property="goods" javaType="com.ht.entity.Goods">
 	    <result property="gid" column="gid"/>
@@ -31,7 +37,7 @@
   </resultMap>
   
   <sql id="Base_Column_List">
-    loid, logid, loname, losize, lovolume, loweight, lolevel, lostate
+    loid, logid, loname, losize, lovolume, loweight, lolevel, lostate,losizes, lovolumes, loweights
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -46,10 +52,10 @@
   <insert id="insert" parameterType="com.ht.entity.Inventory">
     insert into inventory (loid, logid, loname, 
       losize, lovolume, loweight, 
-      lolevel, lostate)
+      lolevel, lostate ,losizes, lovolumes, loweights )
     values (#{loid,jdbcType=INTEGER}, #{logid,jdbcType=INTEGER}, #{loname,jdbcType=VARCHAR}, 
       #{losize,jdbcType=DOUBLE}, #{lovolume,jdbcType=DOUBLE}, #{loweight,jdbcType=DOUBLE}, 
-      #{lolevel,jdbcType=INTEGER}, #{lostate,jdbcType=INTEGER})
+      #{lolevel,jdbcType=INTEGER}, #{lostate,jdbcType=INTEGER},#{losize,jdbcType=DOUBLE}, #{lovolume,jdbcType=DOUBLE}, #{loweight,jdbcType=DOUBLE})
   </insert>
   <insert id="inventoryAdd" parameterType="com.ht.entity.Inventory">
     insert into inventory
@@ -78,6 +84,15 @@
       <if test="lostate != null">
         lostate,
       </if>
+      <if test="losizes != null">
+        losizes,
+      </if>
+      <if test="lovolumes != null">
+        lovolumes,
+      </if>
+      <if test="loweights != null">
+        loweights,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="loid != null">
@@ -103,6 +118,15 @@
       </if>
       <if test="lostate != null">
         #{lostate,jdbcType=INTEGER},
+      </if>
+      <if test="losizes != null">
+        #{losizes,jdbcType=DOUBLE},
+      </if>
+      <if test="lovolumes != null">
+        #{lovolumes,jdbcType=DOUBLE},
+      </if>
+      <if test="loweights != null">
+        #{loweights,jdbcType=DOUBLE},
       </if>
     </trim>
   </insert>
@@ -147,7 +171,8 @@
    <!-- 查询所有库位列表 -->
   <select id="select" parameterType="java.util.Map" resultMap="SelectBaseResultMap">
     select lo.loid, lo.logid, lo.loname, lo.losize, lo.lovolume, 
-  	 lo.loweight, lo.lolevel, lo.lostate,go.gid,go.gname
+  	 lo.loweight,lo.losizes, lo.lovolumes, 
+  	 lo.loweights, lo.lolevel, lo.lostate,go.gid,go.gname
     from inventory lo,goods go
     <where>
     		lo.logid=go.gid

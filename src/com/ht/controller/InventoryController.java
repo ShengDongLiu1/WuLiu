@@ -61,6 +61,9 @@ public class InventoryController {
 	public String save(Inventory inventory,HttpServletResponse res) throws Exception{
 		int resultTotal = 0;
         if (inventory.getLoid() == null) {
+        	inventory.setLosizes(inventory.getLosize());
+        	inventory.setLovolumes(inventory.getLovolume());
+        	inventory.setLoweights(inventory.getLoweight());
             resultTotal = inventoryService.inventoryAdd(inventory);
         }else{
             resultTotal = inventoryService.inventoryupdate(inventory);
