@@ -19,6 +19,8 @@
 			href="<%=basePath%>assets/css/theme.css">
 		<link rel="stylesheet"
 			href="<%=basePath%>assets/jslib/font-awesome/css/font-awesome.css">
+		<link rel="stylesheet" href="<%=basePath%>style/lock.css">
+		
 		<script src="<%=basePath%>assets/jslib/jquery-1.7.2.min.js"
 			type="text/javascript"></script>
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>js/jquery-easyui/themes/default/easyui.css">
@@ -61,6 +63,18 @@
 	<!--[if IE 9 ]> <body class="ie ie9 "> <![endif]-->
 	<!--[if (gt IE 9)|!(IE)]><!-->
 	<body class="easyui-layout">
+		<div id="hidebg" oncontextmenu="return false"></div>
+		<div id="hidebox" oncontextmenu="return false">
+			<div id="loac_title">解锁系统</div>
+			<div id="mass">
+				<p>系统已锁定,请输入用户密码进行解密</p>
+				<input type="password" id="lock_inp" placeholder="输入密码" onfocus="clearErr()">&nbsp;
+				<a href="javascript:void(0)" onClick="hide();">
+					<img src="<%=path%>/images/unlocked.png" alt="解锁" style="width:30px;height:30px;vertical-align:middle"/>
+				</a><br />
+				<span id="error" style="font-size:18px;color:red;font-weight:bold;"></span>
+			</div>
+		</div>
 		<div class="navbar">
 			<div class="navbar-inner">
 				<ul class="nav pull-right">
@@ -77,6 +91,7 @@
 							<li class="divider visible-phone"></li>
 							<li>
 								<a tabindex="-1" href="<%=basePath%>user/logout" target="_top">Logout</a>
+								<a tabindex="-1" href="javascript:void(0)" onclick="show()" target="_top">锁屏</a>
 								<a tabindex="-1" href="<%=basePath%>QRcode.jsp?user=${user.username}">生成二维码</a>
 							</li>
 						</ul>
@@ -120,7 +135,17 @@
 		
 		<script src="<%=basePath%>assets/jslib/bootstrap/js/bootstrap.js"></script>
 		<script type="text/javascript">
+		var lockUser='${lockUser}';
+		if(lockUser != ''){
+			show();
+		}
+		
 		function addTab(title, url){
+			var lockUser='${lockUser}';
+			if(lockUser != ''){
+				location.reload([true]);
+				return false;
+			}
 			if($("#tabs").tabs("exists",title)){//exists:表示去判断指定的title的tab选项卡是否已经打开
 			 $("#tabs").tabs("select",title);//如果tab选项卡已经打开过，则直接显示该选项卡			
 			}else {
@@ -135,6 +160,45 @@
 		
 		function tabContent(url) {
 			return '<iframe scrolling="true"  name="main" frameborder="0" src="' + url + '" style="width:100%;height:100%;"></iframe>';
+		}
+		
+		function show()  //显示隐藏层和弹出层
+		{
+			$('#lock_inp').val('');
+		   var hideobj=document.getElementById("hidebg");
+		   hidebg.style.display="block";  //显示隐藏层
+		   hidebg.style.height=document.body.clientHeight+"px";  //设置隐藏层的高度为当前页面高度
+		   document.getElementById("hidebox").style.display="block";  //显示弹出层
+		   $.post("<%=path%>/user/lock",function(index){},"json");
+		}
+		
+		function hide()  //去除隐藏层和弹出层
+		{
+			var pwd=$('#lock_inp').val();
+			if(pwd == ''){
+				$('#error').html('请输入解锁密码！');
+				return false;
+			}else{
+				$.post("<%=path%>/user/unlock",{'pwd':pwd},function(index){
+					if(index.result == 'success'){
+						document.getElementById("hidebg").style.display="none";
+						document.getElementById("hidebox").style.display="none";
+					}else{
+						$('#error').html(index.result);
+					}
+				},"json");
+			}
+		}
+		
+		function clearErr(){
+			$('#error').html('');
+		}
+		
+		document.onkeydown = function(e){
+			if(window.event && window.event.keyCode == 123) {
+				window.event.cancelBubble = true;
+	            window.event.returnValue = false;
+			}
 		}
 		</script>
 	</body>

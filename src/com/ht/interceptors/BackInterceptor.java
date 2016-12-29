@@ -16,14 +16,19 @@ public class BackInterceptor implements HandlerInterceptor {
 		HttpSession session = request.getSession();
 		
 		sysuser sysuser = (sysuser) session.getAttribute("user");
-		
 		if(sysuser==null){
 			
 			request.setAttribute("msg", "请登录");
 			request.getRequestDispatcher("/user/login").forward(request, response);
 			
 			return false;
-		}
+		}/*else{
+			String lock=(String) session.getAttribute("lockUser");
+			if(lock != null){
+				request.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
+				return false;
+			}
+		}*/
 		return true;
 	}
 

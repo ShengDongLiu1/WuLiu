@@ -1,7 +1,9 @@
 package com.ht.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ht.entity.AES;
 import com.ht.entity.Sysfunction;
 import com.ht.entity.Sysrole;
 import com.ht.entity.sysuser;
@@ -92,7 +95,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/logout",method=RequestMethod.GET)
 	public String logout(HttpSession session){
-		
+		session.removeAttribute("lockUser");
 		session.removeAttribute("user");
 		session.removeAttribute("initfun");
 		
@@ -128,6 +131,7 @@ public class UserController {
 		
 		return "index";
 	}
+	
 	
 	/**列出所有的用户，除了超级管理员
 	 * @param model
@@ -267,6 +271,36 @@ public class UserController {
 		model.addAttribute("listuser", searchlist);
 		
 		return "sysuser/list";
+	}
+	
+	/**
+	 * 用户锁屏
+	 * @param session
+	 */
+	@RequestMapping(value="/lock")
+	public void lockUser(HttpSession session){
+		session.setAttribute("lockUser", "lock");
+	}
+	
+	/**
+	 * 解锁
+	 * @param session
+	 * @param pwd
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/unlock")
+	@ResponseBody
+	public Map<String, Object> unlockUser(HttpSession session,String pwd) throws Exception{
+		Map<String, Object> map=new HashMap<>();
+		sysuser sysuser = (sysuser) session.getAttribute("user");
+		if(pwd != null && AES.getInstance().encrypt(pwd).equals(sysuser.getUserpwd())){
+			session.removeAttribute("lockUser");
+			map.put("result", "success");
+		}else{
+			map.put("result", "密码输入错误，解锁失败！");
+		}
+		return map;
 	}
 
 }
