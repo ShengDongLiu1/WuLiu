@@ -40,7 +40,7 @@
 			return false;
 		}
 		if(newUserpwd == "${user.userpwd}"){
-			document.getElementById("msg2").innerText="新密码与旧密码不能相同~";
+			document.getElementById("msg2").innerText="新密码与原密码不能相同~";
 			return false;
 		}
 		if(newUserpwd != newUserpwd1){
