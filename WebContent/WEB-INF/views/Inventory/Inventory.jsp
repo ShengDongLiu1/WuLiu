@@ -107,20 +107,20 @@ a:hover {color:#54287C}
                         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         <td>库位尺寸 ：</td>
                         <td><input type="text" id="losize" name="losize"
-                            class="easyui-validatebox easyui-textbox" required="true" />&nbsp;<span
+                            class="easyui-validatebox easyui-numberbox"  precision="2" max="99999.99" size="14" maxlength="8" required="true" />&nbsp;<span
                             style="color: red">*</span>
                         </td>
                     </tr>
                     <tr>
                         <td>库位体积 ：</td>
                         <td><input type="text" id="lovolume" name="lovolume"
-                            class="easyui-validatebox easyui-textbox" required="true" />&nbsp;<span
+                            class="easyui-validatebox easyui-numberbox"  precision="2" max="99999.99" size="14" maxlength="8" required="true" />&nbsp;<span
                             style="color: red">*</span>
                         </td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         <td>承受重量：</td>
                         <td><input type="text" id="loweight" name="loweight"
-                            class="easyui-validatebox easyui-textbox" required="true" />&nbsp;<span
+                            class="easyui-validatebox easyui-numberbox"  precision="2" max="99999.99" size="14" maxlength="8" required="true" />&nbsp;<span
                             style="color: red">*</span>
                         </td>
                     </tr>
