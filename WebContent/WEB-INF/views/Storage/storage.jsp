@@ -332,7 +332,7 @@ function doUpdate() {
 	</table>
 	<div id="kj" style="padding: 2px;">
 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="window.print();">打印</a>&nbsp;
-		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="location.href='<%=path %>/export/storageExcel'">导出</a>&nbsp;
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-export1'" onclick="location.href='<%=path %>/export/storageExcel'">导出</a>&nbsp;
 		客户：<input id="scname" class="easyui-validatebox easyui-textbox" name="cname" data-options="required:false" />&nbsp;
 		货物：<input id="sgname" class="easyui-validatebox easyui-textbox" name="gname" data-options="required:false" />&nbsp;
 		库位：<input id="sloname" class="easyui-validatebox easyui-textbox" name="loname" data-options="required:false" />&nbsp;

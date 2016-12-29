@@ -32,6 +32,8 @@ a:visited{color:#54287C}
 a:active{color:yellow}
 a:hover {color:#54287C} 
 .easyui-textbox{width:10%;}
+.openSta{color:green;}
+.closeSta{color:red;}
 </style>
 </head>
 <body>
@@ -64,7 +66,7 @@ a:hover {color:#54287C}
 				<th field="lovolumes" width="10%">剩余库位体积(m³)</th>
 				<th field="loweights" width="10%">剩余承受重量(t)</th>
 				<th field="lolevel" width="15%">库位等级(数字越大等级越高)</th>
-				<th field="lostate" width="15%">库位状态(0/开启,1关闭)</th>
+				<th field="lostate" width="7%" align="center" formatter="invenState">库位状态</th>
 				<th field="null" width="18%" align="center" formatter="toSub">操作</th>
 			</tr>
 		</thead>
@@ -249,6 +251,19 @@ function selectfiltrate(){
 	        $("#lostate").textbox('setValue',"");
 	    
 }
+
+function invenState(value,rec){
+	var btn='';
+	if(rec.lostate == 0){
+		btn="<span class='openSta'>已开启</span>";
+	}else if(rec.lostate == 1){
+		btn="<span class='closeSta'>已关闭</span>";
+	}else{
+		btn=rec.lostate;
+	}
+	return btn;
+}
+
 
 /* 表格按钮 */
 function toSub(value,rec){
