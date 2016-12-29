@@ -178,6 +178,7 @@ public class Customerller {
 			Customer customer2=customerService.klogin1(map);//客户登录
 			if(customer2 == null){
 				sysuser existsysuser = userService.login(customer.getCemail(),customer.getCpassword());
+				existsysuser.setUserpwd(AES.getInstance().decrypt(customer.getCpassword()));
 				session.setAttribute("user", existsysuser);
 				if(existsysuser == null){
 					map.put("result", "账号或密码错误!");
