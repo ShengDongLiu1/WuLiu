@@ -57,11 +57,10 @@
                                data-message="两次密码输入要一致" data-easytip="class:easy-blue;"></td>
                 </tr>
             </table>
-
+			<div  style="line-height:30px; margin-left:40px;  text-indent:5px;color:#F30" id="loginTips">&nbsp;</div>
             <div class="buttons" style="margin-top: 50px;">
                 <input value="注 册" onclick="doadd()" type="button" style="margin-right:150px; margin-top:6px;">
             </div>
-
             <br class="clear">
         </form>
     </div>
@@ -74,52 +73,50 @@
 
 <script>
 
-    $(document).ready(function ()
-    {
-        var v = $('#reg-form').easyform();
-
-        $('#demo-form').easyform();
-
-        v.is_submit = false;
-
-        v.error = function (ef, i, r)
-        {
-            //console.log("Error事件：" + i.id + "对象的值不符合" + r + "规则");
-        };
-
-        v.success = function (ef)
-        {
-            //console.log("成功");
-        };
-
-        v.complete = function (ef)
-        {
-            console.log("完成");
-        };
-
-        $('#tip-test1').easytip();
-        $('#tip-test2').easytip();
-        $('#tip-test3').easytip();
-        $('#tip-test4').easytip();
-
-
-    });
-
-    function ajax_demo(p)
-    {
-        $("#uid").trigger("easyform-ajax", true);
-    }
-    
    function doadd(){
-	    	var cemail = $("#uid").val()
-	    	var cpassword = $("#psw1").val()
-	    	alert(cemail+"--- "+cpassword)
-	    	$.post("<%=path%>/customer/save",{'cemail':cemail,'cpassword':cpassword},function(index){
-	    		if(index.success ){
-	         	  alert("添加成功！");
-	         	  window.location.href="<%=path%>/customer/login";
-	    		}
-	   		},"json");
+		   var cemail = $("#uid").val()
+	    	var cpassword1 = $("#psw1").val()
+	    	var cpassword2 = $("#psw2").val()
+			cemail = $.trim(cemail);
+		   	cpassword1 = $.trim(cpassword1);
+		   	cpassword2 = $.trim(cpassword2);
+			$("#loginTips").css({display:"none"});	
+			if(cemail == ""){
+				$("#loginTips").html("请输用户名!").fadeIn();
+				$("#loginBtn").val('登录').removeAttr('disabled');
+				return false;
+			}else if(cemail.length <4){
+				$("#loginTips").html("请输入不小于四位数用户名!").fadeIn();
+				$("#loginBtn").val('登录').removeAttr('disabled');
+				return false;
+			}else if(cpassword1 == ''){
+				$("#loginTips").html("请输入密码!").fadeIn();
+				$("#loginBtn").val('登录').removeAttr('disabled');
+				return false;
+			}else if(cpassword1.length <4){
+				$("#loginTips").html("请输入不小于四位数的密码!").fadeIn();
+				$("#loginBtn").val('登录').removeAttr('disabled');
+				return false;
+			}else if(cpassword2 == ''){
+				$("#loginTips").html("请再次输入密码!").fadeIn();
+				$("#loginBtn").val('登录').removeAttr('disabled');
+				return false;
+			}else if(cpassword2.length <4){
+				$("#loginTips").html("请输入不小于四位数的密码!").fadeIn();
+				$("#loginBtn").val('登录').removeAttr('disabled');
+				return false;
+			}else if(cpassword1!=cpassword2){
+				$("#loginTips").html("两次密码不一致!").fadeIn();
+				$("#loginBtn").val('登录').removeAttr('disabled');
+				return false;
+			}else{
+		    	$.post("<%=path%>/customer/save",{'cemail':cemail,'cpassword':cpassword1},function(index){
+		    		if(index.success ){
+		         	  alert("添加成功！");
+		         	  window.location.href="<%=path%>/customer/login";
+		    		}
+		   		},"json");
+			}
    }
     
 
