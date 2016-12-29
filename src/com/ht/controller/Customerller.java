@@ -294,4 +294,25 @@ public class Customerller {
         	return "public/personalData";
         }
 	}
+	
+	//转到修改密码界面
+	@RequestMapping("/revise")
+	public String revise(HttpSession session){
+		session.getAttribute("user");
+		return "public/revise";
+	}
+	
+	//修改密码
+	@RequestMapping(value="/updatePwd", method=RequestMethod.POST)
+	public String userRevise(@RequestParam("userid") String userid,@RequestParam("newUserpwd") String newpassword, HttpServletRequest req){
+		try {
+			sysuser sysusers = new sysuser();
+			sysusers.setUserid(Integer.valueOf(userid));
+			sysusers.setUserpwd(AES.getInstance().encrypt(newpassword));
+			userService.updateUserPwd(sysusers);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "public/login";
+	}
 }
