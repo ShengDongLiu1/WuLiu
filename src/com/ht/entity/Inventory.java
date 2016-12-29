@@ -121,4 +121,12 @@ public class Inventory {
 		this.loweights = loweights;
 	}
 
+	@Override
+	public String toString() {
+		return "Inventory [loid=" + loid + ", logid=" + logid + ", loname=" + loname + ", losize=" + losize
+				+ ", lovolume=" + lovolume + ", loweight=" + loweight + ", lolevel=" + lolevel + ", lostate=" + lostate
+				+ ", losizes=" + losizes + ", lovolumes=" + lovolumes + ", loweights=" + loweights + ", goods=" + goods
+				+ "]";
+	}
+
 }

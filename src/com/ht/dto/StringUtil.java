@@ -47,9 +47,27 @@ public class StringUtil {
 		}
 	}
 	
+	/**
+	 * 算出每个货物需要的空间再乘以入库数量
+	 * @param bing
+	 * @param in
+	 * @param count
+	 * @return
+	 */
 	public static float jiSuan(float bing,Integer in,Integer count){
 		float f1=(bing/in)*count;
 		BigDecimal b = new BigDecimal(f1);
+		float result = b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+		return result;
+	}
+	
+	/**
+	 * 保留两位小数
+	 * @param num
+	 * @return
+	 */
+	public static double keepNum(double num){
+		BigDecimal b = new BigDecimal(num);
 		float result = b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
 		return result;
 	}

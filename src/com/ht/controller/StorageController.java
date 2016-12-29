@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.ht.dto.Barcode;
 import com.ht.dto.PageBean;
 import com.ht.dto.StringUtil;
+import com.ht.entity.Goods;
 import com.ht.entity.Inventory;
 import com.ht.entity.Receipt;
 import com.ht.entity.Storage;
@@ -100,6 +101,7 @@ public class StorageController {
 		String string=barcode.createCode(request);//条形码生成
 		Receipt receipt=(Receipt) session.getAttribute("queryReceipt");
 		Storage storage=(Storage) session.getAttribute("queryStorage");
+		Goods goods=(Goods) session.getAttribute("queryGoods");
 		storage.setSstock(storage.getStoragecount());
 		storage.setSsbid(ssbid);//库位编号
 		storage.setStoragebarcode(string+".png");//条形码
@@ -107,8 +109,12 @@ public class StorageController {
 		storage.setStoragetime(new Date());
 		int resultcount=storageService.insertSelective(storage);
 		if(resultcount>0){
+			Inventory inventory2=inventoryService.selectByPrimaryKey(storage.getSsbid());
 			inventory.setLoid(storage.getSsbid());//库位编号
 			inventory.setLogid(storage.getSgid());//货物编号
+			inventory.setLosizes(StringUtil.keepNum(inventory2.getLosizes()-goods.getGsize()));//剩余尺寸
+			inventory.setLovolumes(StringUtil.keepNum(inventory2.getLovolumes()-goods.getGvolume()));//剩余体积
+			inventory.setLoweights(StringUtil.keepNum(inventory2.getLoweights()-goods.getGweight()));//剩余承受重量
 			inventoryService.inventoryupdate(inventory);//给库位添加一个货物id
 			//一次性入库修改状态
 			if(receipt.getRreceivecount().equals(storage.getStoragecount())){

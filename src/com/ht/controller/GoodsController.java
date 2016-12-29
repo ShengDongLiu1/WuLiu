@@ -180,7 +180,6 @@ public class GoodsController {
 	@RequestMapping(value="/updateGood")
 	@ResponseBody
 	public void updateGood(Goods goods){
-		System.out.println("****");
 		if(goods.getGid() != null){
 			int resultcount=goodsService.updateByPrimaryKeySelective(goods);
 			if(resultcount>0){

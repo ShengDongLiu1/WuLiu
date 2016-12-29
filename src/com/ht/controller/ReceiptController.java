@@ -179,9 +179,9 @@ public class ReceiptController {
 			return null;
 		}
 		map.put("logid", -1);
-		map.put("losize", goods.getGsize());
-		map.put("lovolume", goods.getGvolume());
-		map.put("loweight", goods.getGweight());
+		map.put("losizes", goods.getGsize());
+		map.put("lovolumes", goods.getGvolume());
+		map.put("loweights", goods.getGweight());
 		map.put("lolevel", goods.getGgrade());
 		map.put("lostate", 0);
 		map.put("start", pageBean.getStart());
@@ -235,6 +235,7 @@ public class ReceiptController {
 				quality.setEgid(receipt.getRgid());//货物id
 				quality.setErid(receipt.getRid());//收货单id
 				quality.setEresult("待审核");
+				qualityService.qualityAdd(quality);
 			}
 		}
 		map.put("result", "货物揽收成功");

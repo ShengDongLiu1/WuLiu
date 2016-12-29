@@ -130,6 +130,7 @@
       </if>
     </trim>
   </insert>
+  
   <update id="inventoryupdate" parameterType="com.ht.entity.Inventory">
     update inventory
     <set>
@@ -154,9 +155,19 @@
       <if test="lostate != null">
         lostate = #{lostate,jdbcType=INTEGER},
       </if>
+      <if test="losizes != null">
+        losizes = #{losizes,jdbcType=DOUBLE},
+      </if>
+      <if test="lovolumes != null">
+        lovolumes = #{lovolumes,jdbcType=DOUBLE},
+      </if>
+      <if test="loweights != null">
+        loweights = #{loweights,jdbcType=DOUBLE},
+      </if>
     </set>
     where loid = #{loid,jdbcType=INTEGER}
   </update>
+  
   <update id="updateByPrimaryKey" parameterType="com.ht.entity.Inventory">
     update inventory
     set logid = #{logid,jdbcType=INTEGER},
@@ -245,14 +256,14 @@
   		<if test="logid != null">
 	        logid = #{logid}
 	      </if>
-  		 <if test="losize != null">
-	        and losize >= #{losize}
+  		 <if test="losizes != null">
+	        and losizes >= #{losizes}
 	      </if>
-	      <if test="lovolume != null">
-	        and lovolume >= #{lovolume}
+	      <if test="lovolumes != null">
+	        and lovolumes >= #{lovolumes}
 	      </if>
-	      <if test="loweight != null">
-	        and loweight >= #{loweight}
+	      <if test="loweights != null">
+	        and loweights >= #{loweights}
 	      </if>
 	      <if test="lolevel != null">
 	        and lolevel >= #{lolevel}
@@ -272,14 +283,14 @@
   		<if test="logid != null">
 	        logid = #{logid}
 	      </if>
-  		 <if test="losize != null">
-	        and losize >= #{losize}
+  		 <if test="losizes != null">
+	        and losizes >= #{losizes}
 	      </if>
-	      <if test="lovolume != null">
-	        and lovolume >= #{lovolume}
+	      <if test="lovolumes != null">
+	        and lovolumes >= #{lovolumes}
 	      </if>
-	      <if test="loweight != null">
-	        and loweight >= #{loweight}
+	      <if test="loweights != null">
+	        and loweights >= #{loweights}
 	      </if>
 	      <if test="lolevel != null">
 	        and lolevel >= #{lolevel}
