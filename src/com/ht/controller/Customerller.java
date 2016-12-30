@@ -229,23 +229,16 @@ public class Customerller {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/save",method=RequestMethod.POST)
-	@ResponseBody
+	@RequestMapping("/save")
 	public String save(Customer customer,HttpServletResponse response)throws Exception{
 		int resultTotal=0; // 操作的记录条数
-		JSONObject result=new JSONObject();
 		if(customer.getCid()==null){
-			customer.setCpassword(AES.getInstance().encrypt(customer.getCpassword()));
 			customer.setCkhno("KH"+DateUtil.getCurrentDateStr()); // 动态生成客户编号
-			try{
-				resultTotal=customerService.add(customer);
-			}catch(DuplicateKeyException d){
-				result.put("result", "err");
-			}
+			resultTotal=customerService.add(customer);
 		}else{
 			resultTotal=customerService.update(customer);
 		}
-	
+		JSONObject result=new JSONObject();
 		if(resultTotal>0){
 			result.put("success", true);
 		}else{
