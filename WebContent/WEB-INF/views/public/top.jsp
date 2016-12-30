@@ -36,7 +36,7 @@
 						<c:otherwise>
 							<td width="300" height="20" align="center" ><a href="<%=path%>/customer/personal"><font size="5">欢迎<font color="red">${customer.cemail }</font></a>登录</font></td>
 							<td width="160" height="20" align="center" ><font size="5"><a tabindex="-1" href="<%=path %>/customer/klogout" target="_top">Logout</a></font></td>
-							<td width="70" align="center" class="td2"><a href="<%=basePath %>customer/revise">修改密码</a></td>
+							<td width="100" height="20" align="center" ><font size="3"><a href="<%=basePath %>customer/revise">修改密码</a></font></td>
 						</c:otherwise>
 					</c:choose>
 				</tr>
