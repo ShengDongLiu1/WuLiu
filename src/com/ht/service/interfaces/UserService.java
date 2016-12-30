@@ -49,9 +49,4 @@ public interface UserService {
 	 * @return
 	 */
 	List<sysuser> searchbyusername(String username);
-
-	//修改密码
-	int updateUserPwd(sysuser record);
-	
-
 }

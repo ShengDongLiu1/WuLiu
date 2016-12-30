@@ -165,4 +165,7 @@
 					#{cemail},#{cpassword},#{ccredit},#{caddress});
 	</insert>
 	
+	<update id="updateUserPwd" parameterType="com.ht.entity.Customer">
+		update customer set cpassword = #{cpassword,jdbcType=VARCHAR} where cid = #{cid,jdbcType=INTEGER}
+	</update>
 </mapper>

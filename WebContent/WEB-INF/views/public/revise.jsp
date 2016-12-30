@@ -16,14 +16,14 @@
 		document.getElementById("msg1").innerText="";
 		document.getElementById("msg2").innerText="";
 		document.getElementById("msg3").innerText="";
-		var userpwd=document.getElementById("userpwd").value;
+		var cpassword=document.getElementById("cpassword").value;
 		var newUserpwd=document.getElementById("newuserpwd").value;
 		var newUserpwd1=document.getElementById("newuserpwd1").value;
-		if(userpwd == "" || userpwd == null){
+		if(cpassword == "" || cpassword == null){
 			document.getElementById("msg1").innerText="请输入原密码~";
 			return false;
 		}
-		if(userpwd != "${user.userpwd}"){
+		if(cpassword != "${customer.cpassword}"){
 			document.getElementById("msg1").innerText="原密码错误~";
 			return false;
 		}
@@ -39,7 +39,7 @@
 			document.getElementById("msg3").innerText="请确认新密码~";
 			return false;
 		}
-		if(newUserpwd == "${user.userpwd}"){
+		if(newUserpwd == "${customer.cpassword}"){
 			document.getElementById("msg2").innerText="新密码与原密码不能相同~";
 			return false;
 		}
@@ -60,9 +60,9 @@
     <div class="login">
       <h1>客户密码修改</h1>
       <form id="update_form" method="post" action="<%=path %>/customer/updatePwd">
-      	<input type="hidden" name="userid" value="${user.userid}" readonly="readonly">
-        <p><input type="text" name="username" id="username" value="${user.username}" readonly="readonly"></p>
-        <p><input type="password" name="userpwd" id="userpwd" value="" placeholder="请输入原密码"></p>
+      	<input type="hidden" name="cid" value="${customer.cid}" readonly="readonly">
+        <p><input type="text" name="cemail" id="cemail" value="${customer.cemail}" readonly="readonly"></p>
+        <p><input type="password" name="cpassword" id="cpassword" value="" placeholder="请输入原密码"></p>
 		<div style="height:10px; font-size:18px ; text-align:center"><font id="msg1" color="red"></font></div>
 		
 		<p><input type="password" name="newUserpwd" id="newuserpwd" value="" placeholder="请输入新密码"></p>
@@ -71,7 +71,7 @@
 		<p><input type="password" name="newUserpwd1" id="newuserpwd1" value="" placeholder="请确认新密码"></p>
         <div style="height:10px; font-size:18px ; text-align:center"><font id="msg3" color="red"></font></div>
         
-        <p class="submit"><input type="submit" id="btn5" name="commit" value="确认修改" onclick="return UpdatePwd();"></p>
+        <p class="submit"><input type="submit" name="commit" value="确认修改" onclick="return UpdatePwd();"></p>
       </form>
     </div>
   </div>

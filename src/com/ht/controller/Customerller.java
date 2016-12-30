@@ -185,6 +185,7 @@ public class Customerller {
 					map.put("success", "admin");
 				}
 			}else{
+				customer2.setCpassword(AES.getInstance().decrypt(customer2.getCpassword()));
 				session.setAttribute("customer", customer2);
 				map.put("success", "customer");
 			}
@@ -297,22 +298,31 @@ public class Customerller {
 	
 	//转到修改密码界面
 	@RequestMapping("/revise")
-	public String revise(HttpSession session){
-		session.getAttribute("user");
+	public String revise() throws Exception{
+		System.out.println("00000001");
 		return "public/revise";
 	}
 	
 	//修改密码
-	@RequestMapping(value="/updatePwd", method=RequestMethod.POST)
-	public String userRevise(@RequestParam("userid") String userid,@RequestParam("newUserpwd") String newpassword, HttpServletRequest req){
+	@RequestMapping("/updatePwd")
+	public String userRevise(Customer customer3, @RequestParam("cid")String cid, @RequestParam("newUserpwd")String newUserpwd){
 		try {
-			sysuser sysusers = new sysuser();
-			sysusers.setUserid(Integer.valueOf(userid));
-			sysusers.setUserpwd(AES.getInstance().encrypt(newpassword));
-			userService.updateUserPwd(sysusers);
+			System.out.println(cid+"=++++++++++++++="+newUserpwd);
+			customer3.setCid(Integer.valueOf(cid));
+			customer3.setCpassword(AES.getInstance().encrypt(newUserpwd));
+			customerService.updateUserPwd(customer3);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return "public/login";
+	}
+	
+	//修改密码
+	@RequestMapping(value="/updatePwd1", method=RequestMethod.GET)
+	public String userRevise1(Customer customer3, @RequestParam("cid")String cid, @RequestParam("newUserpwd")String newUserpwd) throws Exception{
+		customer3.setCid(Integer.valueOf(cid));
+		customer3.setCpassword(AES.getInstance().encrypt(newUserpwd));
+		customerService.updateUserPwd(customer3);
 		return "public/login";
 	}
 }

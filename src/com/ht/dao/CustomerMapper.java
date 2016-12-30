@@ -69,5 +69,7 @@ public interface CustomerMapper {
 	 */
 	Customer select(int cid);
 	
+	int updateUserPwd(Customer customer);
+	
 	
 }

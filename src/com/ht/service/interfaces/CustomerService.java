@@ -59,5 +59,7 @@ public interface CustomerService {
 	public int delete(Integer id);
 
 	public Customer select(int cid);
+	
+	int updateUserPwd(Customer customer);
 
 }

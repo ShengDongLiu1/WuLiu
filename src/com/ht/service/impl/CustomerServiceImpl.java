@@ -50,4 +50,8 @@ public class CustomerServiceImpl implements CustomerService{
 	public Customer select(int cid) {
 		return customerMapper.select(cid);
 	}
+	@Override
+	public int updateUserPwd(Customer customer) {
+		return customerMapper.updateUserPwd(customer);
+	}
 }
