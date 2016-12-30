@@ -51,6 +51,7 @@
 	color: #fff;
 	font-weight: bold;
 }
+.limg{backgroung-color:red;}
 </style>
 		<!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -134,6 +135,7 @@
 		</div> 	
 		
 		<script src="<%=basePath%>assets/jslib/bootstrap/js/bootstrap.js"></script>
+		<script src="<%=basePath%>js/Bubbles.js"></script>
 		<script type="text/javascript">
 		var lockUser='${lockUser}';
 		if(lockUser != ''){
@@ -163,7 +165,7 @@
 		}
 		
 		function show()  //显示隐藏层和弹出层
-		{
+		{	lockUser='lockUser';
 			$('#lock_inp').val('');
 		   var hideobj=document.getElementById("hidebg");
 		   hidebg.style.display="block";  //显示隐藏层
@@ -181,6 +183,7 @@
 			}else{
 				$.post("<%=path%>/user/unlock",{'pwd':pwd},function(index){
 					if(index.result == 'success'){
+						lockUser='';
 						document.getElementById("hidebg").style.display="none";
 						document.getElementById("hidebox").style.display="none";
 					}else{
@@ -200,6 +203,65 @@
 	            window.event.returnValue = false;
 			}
 		}
+		
+		var sta=1;
+		// 移动了就更新最近一次移动的时间。 
+		document.onmousemove = function(){ 
+			if(lockUser != ''){
+				document.getElementById("hidebox").style.display="block";
+				noneImg();
+			}
+			window.lastMove = new Date().getTime();
+		}; 
+		window.lastMove = new Date().getTime();//最近一次移动时间 
+		window.setInterval(function(){//每1秒钟检查一次。 
+			var now = new Date().getTime();
+			// 如果超时了 
+			if( now - lastMove > 5000 ){ 
+				// 自己写了撒。 
+				if(lockUser != ''){
+					document.getElementById("hidebox").style.display="none";
+					if(sta == 1){
+						Demo();
+						sta=0;
+					}else{
+						lookImg();
+					}
+				}
+			} 
+		}, 1000);
+		
+		function noneImg(){
+			$(".boxImg").css("display","none");//隐藏
+		}
+		
+		function lookImg(){
+			$(".boxImg").css("display","block");//显示
+		}
+		
+		//按下回车键登录
+		$(function(){
+			document.onkeydown = function(e){ 
+			    var ev = document.all ? window.event : e;
+			    if(ev.keyCode==13) {
+
+			    	hide();
+
+			     }
+			}
+		}); 
+		</script>
+		<script>
+			var MAX = 5;
+			var i = 0;
+			
+			function Demo()
+			{
+				CreateBubble();
+			
+				if(++i < MAX)
+					setTimeout(Demo, 1000);
+			}
 		</script>
 	</body>
 </html>

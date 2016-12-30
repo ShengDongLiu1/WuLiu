@@ -24,24 +24,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="<%=basePath%>assets/jslib/jquery-sj.js"></script>
 
 <script type="text/javascript" src="<%=basePath%>assets/jslib/zzsc.js"></script>
-  </head>
+<script type="text/javascript" src="<%=path %>/js/getCNdate.js"></script>
+<script type="text/javascript">showCal();</script>
+<style type="text/css">
+	.yinli{color:green;font-size:14px;font-weight:bold;float:right;padding-right:13%;}
+</style>
+</head>
   
  <body class="content1">
 		<div class="container-fluid">
 			<div class="row-fluid">
-					<div class="span12">
-							<div class="hero-unit" style="margin-top:10px;">
-							<h1 style="padding-left:100px;">
-								欢迎使用后台管理系统！
-							</h1>
-					
-							</div>
-							<!-- <div id="zzsc">
-
-  								<canvas id="canvas" width="920" height="1000"></canvas>
-								
-							</div> -->
+				<div class="span12">
+					<div style="text-align:right;">
+						<iframe name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=1" width="360" height="35" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 					</div>
+					<div class="hero-unit" style="padding-top:100px;">
+						<h1 style="padding-left:100px;">
+							欢迎使用后台管理系统！
+						</h1>
+			
+					</div>
+					<!-- <div id="zzsc">
+
+								<canvas id="canvas" width="920" height="1000"></canvas>
+						
+					</div> -->
+				</div>
 			</div>
 		</div>
 	</body>

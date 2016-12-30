@@ -171,7 +171,7 @@ if(top.location!=self.location)top.location=self.location;
 	function changeImg() {  
 		var code=document.getElementById("codeimg");
 		code.src="<%=path%>/yzm/code?"+Math.random();
-    }   
+    }
 </script>
 </body>
 </html>
