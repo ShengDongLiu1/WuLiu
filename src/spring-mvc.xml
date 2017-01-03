@@ -54,6 +54,7 @@
     		<mvc:exclude-mapping path="/customer/customerLogin"/>
     		<mvc:exclude-mapping path="/customer/zc"/>
     		<mvc:exclude-mapping path="/customer/save"/>
+    		<mvc:exclude-mapping path="/customer/save2"/>
     		<mvc:exclude-mapping path="/customer/update"/>
   			<mvc:exclude-mapping path="/customer/personal"/>
     		<mvc:exclude-mapping path="/yzm/code"/>

@@ -70,9 +70,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									职位
 								</th>
 								<th>
-									用户密码
-								</th>
-								<th>
 									用户状态
 								</th>
 								<th style="width: 90px;text-align: center">
@@ -106,9 +103,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									<td>
 										${item.uposition}
 									</td>
-									<td>
-										${item.userpwd}
-									</td>									
 									<td>
 										<c:choose>
 											<c:when test="${item.userstate==\"1\"}">

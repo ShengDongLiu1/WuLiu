@@ -154,11 +154,13 @@ public class UserController {
 	 * @param sysuser
 	 * @param model
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value="/update",method=RequestMethod.GET)
-	public String toupdate(sysuser sysuser,Model model){
+	public String toupdate(sysuser sysuser,Model model) throws Exception{
 		
 		sysuser existuser = userService.selectByPrimaryKey(sysuser.getUserid());
+		existuser.setUserpwd(AES.getInstance().decrypt(existuser.getUserpwd()));
 		model.addAttribute("item", existuser);
 		
 		return "sysuser/edit";
@@ -167,10 +169,11 @@ public class UserController {
 	/**更新用户信息
 	 * @param sysuser
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public String Update(sysuser sysuser){
-		
+	public String Update(sysuser sysuser) throws Exception{
+		sysuser.setUserpwd(AES.getInstance().encrypt(sysuser.getUserpwd()));
 		int count = userService.updateUser(sysuser);
 		
 		if(count<=0){
@@ -203,10 +206,12 @@ public class UserController {
 	/**增加用户
 	 * @param sysuser
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String add(sysuser sysuser){
+	public String add(sysuser sysuser) throws Exception{
 		sysuser.setUjobnumber("HTWL-"+Createstring.random());
+		sysuser.setUserpwd(AES.getInstance().encrypt(sysuser.getUserpwd()));
 		int count = userService.saveuser(sysuser);
 		
 		if(count<0){

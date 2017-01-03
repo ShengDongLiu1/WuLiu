@@ -131,10 +131,9 @@ public class RoleController {
 	 */
 	@RequestMapping(value="/saveright",method=RequestMethod.POST)
 	public String saveright(@RequestParam("roleid")int roleid,
-			@RequestParam("ckrr")Integer[] funids,Model model){
+			@RequestParam(value="ckrr", required=false)Integer[] funids,Model model){
 		
 		Integer rtn = roleService.saveright(roleid,funids);
-		
 		if(rtn>0){
 			return "redirect:/role/list";
 		}else{

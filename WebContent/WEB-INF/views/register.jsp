@@ -23,7 +23,6 @@
     <link rel="stylesheet" href="<%=path %>/register/css/tab.css">
 
     <script src="<%=path %>/register/js/jquery-2.1.0.min.js"></script>
-    <script src="<%=path %>/register/js/easyform/easyform.js"></script>
 </head>
 <body>
 
@@ -68,7 +67,7 @@
     <div class="footer">
                      立即注册个新用户吧！
     </div>
-
+	
 </div>
 
 <script>
@@ -110,7 +109,7 @@
 				$("#loginBtn").val('登录').removeAttr('disabled');
 				return false;
 			}else{
-		    	$.post("<%=path%>/customer/save",{'cemail':cemail,'cpassword':cpassword1},function(index){
+		    	$.post("<%=path %>/customer/save2",{'cemail':cemail,'cpassword':cpassword1},function(index){
 		    		if(index.success ){
 		         	  alert("添加成功！");
 		         	  window.location.href="<%=path%>/customer/login";

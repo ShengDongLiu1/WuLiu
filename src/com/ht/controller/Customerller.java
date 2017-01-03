@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -239,6 +240,30 @@ public class Customerller {
 			resultTotal=customerService.update(customer);
 		}
 		JSONObject result=new JSONObject();
+		if(resultTotal>0){
+			result.put("success", true);
+		}else{
+			result.put("success", false);
+		}
+		ResponseUtil.write(response, result);
+		return null;
+	}
+	
+	
+	@RequestMapping("/save2")
+	@ResponseBody
+	public String save2(Customer customer,HttpServletResponse response)throws Exception{
+		int resultTotal=0; // 操作的记录条数
+		JSONObject result=new JSONObject();
+		if(customer.getCid()==null){
+			customer.setCpassword(AES.getInstance().encrypt(customer.getCpassword()));
+			customer.setCkhno("KH"+DateUtil.getCurrentDateStr()); // 动态生成客户编号
+			try{
+				resultTotal=customerService.add(customer);
+			}catch(DuplicateKeyException d){
+				result.put("result", "err");
+			}
+		}
 		if(resultTotal>0){
 			result.put("success", true);
 		}else{
