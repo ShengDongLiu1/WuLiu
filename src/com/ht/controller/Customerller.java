@@ -131,6 +131,15 @@ public class Customerller {
 			return "public/personalData";
 		}
 	}
+	
+	/**
+	 * 转到我的资料
+	 */
+	@RequestMapping(value="/personalDataupdate")
+	public String personalDataupdate(){
+		return "public/personalData";
+	}
+	
 	/**
 	 * 跳转到注册界面
 	 * @return
@@ -306,11 +315,10 @@ public class Customerller {
         if(resultTotal > 0){   //说明修改或添加成功
         	int cid=customer.getCid();
         	Customer cus= customerService.select(cid);
-        	System.out.println(cus);
         	session.setAttribute("customer", cus);
-        	return "public/personalData";
+        	return "redirect:/customer/personalDataupdate";
         }else{
-        	return "public/personalData";
+        	return "redirect:/customer/personalDataupdate";
         }
 	}
 	

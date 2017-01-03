@@ -78,7 +78,6 @@ a:hover {color:#54287C}
 		<a href="javascript:deleteInventory()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="window.print();">打印</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-export1'" onclick="location.href='<%=path %>/export/inventoryExcel'">导出</a>
-		
 		<!-- 筛选 -->
 		货物名称：<input id="gname" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
 		库位名称：<input id="loname" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
@@ -144,7 +143,7 @@ a:hover {color:#54287C}
 				<td class="gxiangq"><input type="text" id="loname1" style="border: 0px;" readonly="readonly" /></td>
 				<td class="tdwidth">货物名称:</td>
 				<td class="gxiangq"><input id="gname1" type="text" style="border: 0px;" readonly="readonly" ></input></td>
-			</tr>	
+			</tr>
 			<tr>
 				<td class="tdwidth">货物订单号:</td>
 				<td class="gxiangq"><input id="gordernumber1" type="text" style="border: 0px;" readonly="readonly"></input></td>
