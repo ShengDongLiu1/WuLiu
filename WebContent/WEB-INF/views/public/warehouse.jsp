@@ -65,12 +65,12 @@ function mygoods(pa){
             "<td class='td'>" + value.gname +"</td> "+
             "<td class='td'>" + value.gcount +"</td> "+
             "<td class='td'>" + value.gunit +"</td> "+
-            "<td class='td'>" + value.gweight +"</td> "+
-            "<td class='td'>" + value.gvolume +"</td> "+
-            "<td class='td'>" + value.gsize +"</td > "+
+            "<td class='td'>" + isNull(value.gweight) +"</td> "+
+            "<td class='td'>" + isNull(value.gvolume) +"</td> "+
+            "<td class='td'>" + isNull(value.gsize) +"</td > "+
             "<td class='td'>" + value.ggrade +"</td > "+
             "<td class='td'>" + value.gdescribe +"</td> "+
-            "<td class='td'>" + doodsState(value.gstate) +"</td> "+
+            "<td class='td'>" + goodsState(value.gstate) +"</td> "+
             "<td class='td'> "+formatDateTime(new Date(value.gorderstime))+" </td>"+
             " </tr>";  
             tbody += trs;         
@@ -82,13 +82,22 @@ function mygoods(pa){
 	},"json");
 }
 
-function doodsState(state){
+/* 如果为空 */
+function isNull(val){
+	if(val == '' || val == null){
+		return '未知';
+	}else{
+		return val;
+	}
+}
+
+function goodsState(state){
 	if(state == '1'){
-		return '待揽收';
+		return "<span class='dai'>待揽收</span>";
 	}else if(state == '2'){
-		return '已揽收';
+		return "<span class='yi'>已揽收</span>";
 	}else if(state == '3'){
-		return '已拒收';
+		return "<span class='ju'>已拒收</span>";
 	}
 }
 
@@ -110,9 +119,6 @@ function getValues(){
 	var gname=$("#gname").val();
 	var gcount=$("#gcount").val();
 	var gunit=$("#gunit option:selected").val();
-	var gweight=$("#gweight").val();
-	var gvolume=$("#gvolume").val();
-	var gsize=$("#gsize").val();
 	var ggrade=$("#ggrade option:selected").val();
 	var gconsignee=$("#gconsignee").val();
 	var greaddress=$("#greaddress").val();
@@ -132,33 +138,6 @@ function getValues(){
 		return false;
 	}else if(gunit == ''){
 		$('.error3').html(message);
-		return false;
-	}else if(gweight == ''){
-		$('.error4').html(message);
-		return false;
-	}else if(isNaN(gweight)){
-		$('.error4').html('*需为数字');
-		return false;
-	}else if(parseInt(gweight) <= 0){
-		$('.error4').html('*数值有误');
-		return false;
-	}else if(gvolume == ''){
-		$('.error5').html(message);
-		return false;
-	}else if(isNaN(gvolume)){
-		$('.error5').html('*需为数字');
-		return false;
-	}else if(parseInt(gvolume) <= 0){
-		$('.error5').html('*数值有误');
-		return false;
-	}else if(gsize == ''){
-		$('.error6').html(message);
-		return false;
-	}else if(isNaN(gsize)){
-		$('.error6').html('*需为数字');
-		return false;
-	}else if(parseInt(gsize) <= 0){
-		$('.error6').html('*数值有误');
 		return false;
 	}else if(ggrade == ''){
 		$('.error7').html(message);
@@ -220,6 +199,12 @@ function showalert(){
 	border-radius:5px;
 }
 .message{color:red;}
+
+.dai{color:orange;}
+
+.yi{color:green;}
+
+.ju{color:red;}
 </style>
 </head>
 <body>
@@ -243,8 +228,9 @@ function showalert(){
 							<td width="70" align="center" class="td2"><a href="<%=basePath %>customer/zc"><img src="<%=basePath %>image/bt_top1.gif" width="70" height="22" border="0"></a></td>
 						</c:when>
 						<c:otherwise>
-							<td width="300" height="20" align="center" ><font size="5">欢迎<a href="<%=path %>/admin/adminSeleTea"><font color="red">${customer.cemail }</font></a>登录</font></td>
+							<td width="300" height="20" align="center" ><a href="<%=path%>/customer/personal"><font size="5">欢迎<font color="red">${customer.cemail }</font></a>登录</font></td>
 							<td width="160" height="20" align="center" ><font size="5"><a tabindex="-1" href="<%=path %>/customer/klogout" target="_top">Logout</a></font></td>
+							<td width="100" height="20" align="center" ><font size="3"><a href="<%=basePath %>customer/revise">修改密码</a></font></td>
 						</c:otherwise>
 					</c:choose>
 				</tr>
@@ -385,16 +371,6 @@ function showalert(){
 											</select>
 											<span class="message  error3"></span>
 										</td>
-										<td align="right">货物重量：</td>
-										<td align="left"><input name="gweight" type="text" id="gweight" placeholder="请输入货物重量(t)"><span class="message error4"></span></td>
-									</tr>
-									<tr height="60">
-										<td align="right">货物体积：</td>
-										<td align="left"><input name="gvolume" type="text" id="gvolume" placeholder="请输入货物体积(m³)"><span class="message error5"></span></td>
-										<td align="right">货物尺寸：</td>
-										<td align="left"><input name="gsize" type="text" id="gsize" placeholder="请输入货物尺寸(m)"><span class="message error6"></span></td>
-									</tr>
-									<tr height="60">
 										<td align="right">货物等级：</td>
 										<td align="left">
 											<select name="ggrade" id="ggrade">
@@ -407,18 +383,20 @@ function showalert(){
 											</select>
 											<span class="message error7"></span>
 										</td>
+									</tr>
+									<tr height="60">
 										<td align="right">收货人：</td>
 										<td align="left"><input name="gconsignee" type="text" id="gconsignee" placeholder="请输入收货人"><span class="message error8"></span></td>
-									</tr>
-									<tr height="60">
 										<td align="right">收货地址：</td>
 										<td align="left"><input name="greaddress" type="text" id="greaddress" placeholder="请输入收货地址"><span class="message error9"></span></td>
-										<td align="right">收货电话：</td>
-										<td align="left"><input name="grephone" type="text" id="grephone" placeholder="请输入收货电话"><span class="message error10"></span></td>
 									</tr>
 									<tr height="60">
+										<td align="right">收货电话：</td>
+										<td align="left"><input name="grephone" type="text" id="grephone" placeholder="请输入收货电话"><span class="message error10"></span></td>
 										<td align="right">起始地点：</td>
 										<td align="left"><input name="gorigin" type="text" id="gorigin" placeholder="请输入起始地点"><span class="message error11"></span></td>
+									</tr>
+									<tr height="60">
 										<td align="right">到达地点：</td>
 										<td align="left"><input name="gendpoint" type="text" id="gendpoint" placeholder="请输入到达地点"><span class="message error12"></span></td>
 									</tr>

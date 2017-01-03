@@ -302,6 +302,7 @@ a.block-heading:hover,
   margin-bottom: 0px;
   text-shadow: none;
   text-transform: none;
+  font-weight:bold;
   /*Change the arrow direction if the item is collapsed*/
 
 }
@@ -340,7 +341,7 @@ a.block-heading:hover,
   background: #f6f6f6;
 }
 .sidebar-nav .nav-list  > li > a:hover {
-  background: #e0e0e8;
+  background: #54627D;color:white;font-weight:bold;
 }
 .sidebar-nav .nav-list  > .active > a,
 .sidebar-nav .nav-list  > .active > a:hover {
@@ -354,8 +355,10 @@ a.block-heading:hover,
 .sidebar-nav .nav-list  > li > a {
   color: #444;
   padding: .5em 1em;
+  border-bottom: 1px dotted #ffffff;
 }
 .sidebar-nav .nav-list.collapse.in {
+  background: #DFDFDF;
   border-bottom: 1px solid #ccc;
 }
 /*Buttons*/

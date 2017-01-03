@@ -52,6 +52,10 @@
 	font-weight: bold;
 }
 .limg{backgroung-color:red;}
+
+.ali:hover{
+	color:red;
+}
 </style>
 		<!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -113,7 +117,7 @@
 						<c:forEach items="${initfun}" var="child">
 							<c:if test="${child.funpid==top.funid}">
 								<li>
-									<a href="javascript:;" onclick="addTab('${child.funname}','<%=basePath%>${child.funurl}')">${child.funname}</a>
+									<a href="javascript:void(0);" class="ali" onclick="addTab('${child.funname}','<%=basePath%>${child.funurl}')">${child.funname}</a>
 								</li>
 							</c:if>
 						</c:forEach>
@@ -228,7 +232,11 @@
 						lookImg();
 					}
 				}
-			} 
+			}
+			//5分钟无操作自动锁屏
+			if( now - lastMove > 500000 ){
+				show();
+			}
 		}, 1000);
 		
 		function noneImg(){
@@ -239,7 +247,7 @@
 			$(".boxImg").css("display","block");//显示
 		}
 		
-		//按下回车键登录
+		//按下回车键解锁
 		$(function(){
 			document.onkeydown = function(e){ 
 			    var ev = document.all ? window.event : e;
