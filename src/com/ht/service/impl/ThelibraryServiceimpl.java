@@ -83,6 +83,12 @@ public class ThelibraryServiceimpl implements ThelibraryService{
 		return thelibraryMapper.queryById(tid);
 	}
 
+
+	@Override
+	public List<Thelibrary> queryTrack(Map<String, Object> map) {
+		return thelibraryMapper.queryTrack(map);
+	}
+
 	
 	
 	

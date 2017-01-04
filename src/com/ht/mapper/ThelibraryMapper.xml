@@ -9,6 +9,7 @@
     <result column="ttype" jdbcType="VARCHAR" property="ttype" />
     <result column="tstate" jdbcType="VARCHAR" property="tstate" />
      <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+     <result column="tnumber" jdbcType="VARCHAR" property="tnumber" />
     <result column="ttime" jdbcType="TIMESTAMP" property="ttime" />
   </resultMap>
   <resultMap id="BaseResultMap1" type="com.ht.entity.Thelibrary">
@@ -19,6 +20,7 @@
     <result column="ttype" jdbcType="VARCHAR" property="ttype" />
      <result column="tstate" jdbcType="VARCHAR" property="tstate" />
      <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+     <result column="tnumber" jdbcType="VARCHAR" property="tnumber" />
     <result column="ttime" jdbcType="TIMESTAMP" property="ttime" />
   
    <association property="goods" javaType="com.ht.entity.Goods">
@@ -97,11 +99,10 @@
   <insert id="insert" parameterType="com.ht.entity.Thelibrary">
     insert into thelibrary (tid, tgid, 
       ttid, tcount,tstate,remarks,ttype, 
-      ttime)
+     tnumber,ttime)
     values (#{tid,jdbcType=INTEGER}, #{tgid,jdbcType=INTEGER}, 
       #{ttid,jdbcType=INTEGER}, #{tcount,jdbcType=INTEGER},#{tstate,jdbcType=VARCHAR},
-      #{remarks,jdbcType=VARCHAR},#{ttype,jdbcType=VARCHAR},  
-    #{ttime,jdbcType=TIMESTAMP})
+      #{remarks,jdbcType=VARCHAR},#{ttype,jdbcType=VARCHAR}, #{tnumber,jdbcType=VARCHAR},#{ttime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ht.entity.Thelibrary">
     insert into thelibrary
@@ -126,6 +127,9 @@
       </if>
         <if test="remarks != null">
         remarks,
+      </if>
+        <if test="tnumber != null">
+        tnumber,
       </if>
       <if test="ttime != null">
         ttime,
@@ -152,6 +156,9 @@
       </if>
         <if test="remarks != null">
         #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="tnumber != null">
+        #{tnumber,jdbcType=VARCHAR},
       </if>
       <if test="ttime != null">
         #{ttime,jdbcType=TIMESTAMP},
@@ -232,6 +239,27 @@
 			and th.ttid=t.trid and st.ssbid = inv.loid and tid = #{tid,jdbcType=INTEGER}
  </select>
  
+ <select id="queryTrack" parameterType="java.util.Map" resultMap="BaseResultMap1">
+ 	select c.cname,go.gid,go.gunit,go.gorderstime,go.gname,go.gstate,t.tnumber,t.tcount,t.ttype,re.rreceivecount from customer c,receipt re, thelibrary t, goods go 
+ 	<where>
+ 		 re.rgid = go.gid and c.cid = re.rcid and t.tstate = 3 and t.tgid = go.gid 
+ 		 <if test="gname!=null and gname!='' ">
+				and go.gname like #{gname}
+		</if>
+		<if test="cname!=null and cname!='' ">
+			and c.cname like #{cname}
+		</if>
+		<if test="tnumber!=null and tnumber!='' ">
+			and tnumber like #{tnumber}
+		</if>
+		<if test="gorderstime!=null and gorderstime!='' ">
+			and go.gorderstime like #{gorderstime}
+		</if>
+ 	</where>
+	<if test="start!=null and size!=null">
+		limit #{start},#{size}
+	</if>
+ </select>
  
   <select id="queryAll2" parameterType="java.util.Map" resultMap="BaseResultMap1">
  	select go.gid,go.gname,t.trid,t.tdrivername, th.tid, th.tgid, th.ttid, th.tcount,th.tstate, th.ttype, th.remarks, th.ttime from goods go,transport t ,thelibrary th 

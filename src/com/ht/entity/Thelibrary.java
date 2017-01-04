@@ -18,6 +18,11 @@ public class Thelibrary {
     private String ttype;//出库类型
    
     private String remarks;//出库备注
+    
+    private String tnumber;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd mm ss")  
+    private Date gorderstime1;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")  
     private Date ttime;//出库时间
@@ -157,4 +162,22 @@ public class Thelibrary {
     public void setTstate(Integer tstate) {
 		this.tstate = tstate;
 	}
+    
+    public String getTnumber() {
+		return tnumber;
+	}
+    
+    public void setTnumber(String tnumber) {
+		this.tnumber = tnumber;
+	}
+    
+    public Date getGorderstime1() {
+		return gorderstime1;
+	}
+    
+    public void setGorderstime1(Date gorderstime1) {
+		this.gorderstime1 = gorderstime1;
+	}
+    
+    
 }

@@ -35,4 +35,11 @@ public interface ThelibraryMapper {
     
     Thelibrary queryById(Integer tid);
     
+    
+    /*
+     * 出库单追踪
+     */
+    List<Thelibrary> queryTrack(Map<String, Object> map);
+    
+    
 }

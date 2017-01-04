@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.ht.dto.DateUtil;
 import com.ht.dto.PageBean;
 import com.ht.dto.StringUtil;
 import com.ht.entity.Storage;
@@ -60,11 +61,12 @@ public class ThelibraryController {
 
 	@RequestMapping(value = "/add",method=RequestMethod.POST)
 	public String add(Thelibrary thelibrary,HttpServletResponse resp,@RequestParam(value="goodscount2",required=false)String goodscount,Storage storage,
-			@RequestParam(value="tid",required=false)Integer tid,@RequestParam(value="tstate",required=false)Integer tstate,@RequestParam(value="ttid",required=false)Integer ttid){
+			@RequestParam(value="tid",required=false)Integer tid,@RequestParam(value="tstate",required=false)Integer tstate,@RequestParam(value="ttid",required=false)Integer ttid) throws Exception{
 		int resultTotal = 0;
 		if (thelibrary.getTid() == null) {
         	thelibrary.setTstate(1);
         	thelibrary.setTtid(-1);
+        	thelibrary.setTnumber("DH"+DateUtil.getCurrentDateStr());
         	storage.setSstock((storage.getSstock() - (thelibrary.getTcount())));
         	storage.setSid(storage.getSid());
         	StorageService.updateByPrimaryKeySelective(storage);
