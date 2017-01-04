@@ -70,7 +70,7 @@ function mygoods(pa){
             "<td class='td'>" + isNull(value.gvolume) +"</td> "+
             "<td class='td'>" + isNull(value.gsize) +"</td > "+
             "<td class='td'>" + value.ggrade +"</td > "+
-            "<td class='td'>" + value.gdescribe +"</td> "+
+            "<td class='td'> <p style='width:65px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;' title="+value.gdescribe+">" + value.gdescribe +"</p></td> "+
             "<td class='td'>" + goodsState(value.gstate) +"</td> "+
             "<td class='td'> "+formatDateTime(new Date(value.gorderstime))+" </td>"+
             " </tr>";  

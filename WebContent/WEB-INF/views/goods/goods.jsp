@@ -338,7 +338,7 @@ function updatefuzhi(index){
 	$("#gunit ").combobox('select',index.goods.gunit);
 	$("#gweight").val(isHave(index.goods.gweight));
 	$("#gvolume").val(isHave(index.goods.gvolume));
-	$("#gsize").val(isNull(index.goods.gsize));
+	$("#gsize").val(isHave(index.goods.gsize));
 	$("#ggrade").combobox('select',index.goods.ggrade);
 	$("#gconsignee").val(index.goods.gconsignee);
 	$("#greaddress").val(index.goods.greaddress);
