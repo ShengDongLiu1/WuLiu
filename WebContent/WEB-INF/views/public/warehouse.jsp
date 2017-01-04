@@ -177,6 +177,7 @@ $(document).ready(function(){
 function showalert(){ 
 	$('.title1').html('我的货物订单');
 }
+mygoods(1);
 </script>
 <style type="text/css">
 .autoScroll{  
@@ -310,10 +311,10 @@ function showalert(){
 		   	<div class="tabBox_t" >
 		           <div class="tabBox">
 		             <ul class="tabNav">
-		               <li onclick="mygoods(1)">我的订单</li>
-		               <li class="now">添加订单</li>
+		               <li class="now" onclick="mygoods(1)">我的订单</li>
+		               <li>添加订单</li>
 		             </ul>
-		             <div class="tabCont">
+		             <div class="tabCont" style="display:block;">
 		               <div class="ctn">
 							<table class="table table-hover mygoods" style="width:100%;">
 								<thead>
@@ -341,7 +342,7 @@ function showalert(){
 							</div>
 		               </div>
 		             </div>
-		             <div class="tabCont" style="display:block;">
+		             <div class="tabCont">
 		               <div class="ctn">
 		               		<form action="<%=path %>/goods/add" method="post">
 			               		<table style="width: 760px;">
