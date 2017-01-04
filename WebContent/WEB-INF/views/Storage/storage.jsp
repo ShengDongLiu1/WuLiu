@@ -74,10 +74,20 @@ $(function(){
 });
 
 
+/* 客户姓名 */
 function customerName(value){
-	return value.cname;
+	var btn="<a href='javascript:onCustomer("+value.cid+")'>"+value.cname+"</a>";
+	return btn;
 }
 
+/* 点击客户姓名查看货物信息 */
+function onCustomer(cid){
+	$(".gxiangq").css('border-bottom','1px dashed #5F6D88');
+	$.post("<%=path%>/customer/cusByid",{'cid':cid},function(index){
+		cusfuzhi(index);
+		$("#cusbyWin").dialog("open").dialog("setTitle", "客户信息");
+	},"json");
+}
 /* 货物名称 */
 function goodsName(value){
 	var btn="<a href='javascript:openGoodWin("+value.gid+")'>"+value.gname+"</a>";
@@ -142,6 +152,17 @@ function openInveWin(loid,loname,sid) {
 	$("#InvebyWin").dialog("open").dialog("setTitle", "货物移库详情");
 }
 
+/* 给客户信息窗口赋值 */
+function cusfuzhi(index){
+	$("#cname").html(index.customer.cname);
+	$("#ckhno").html(index.customer.ckhno);
+	$("#ccompany").html(index.customer.ccompany);
+	$("#cphone").html(index.customer.cphone);
+	$("#cemail").html(index.customer.cemail);
+	$("#ccredit").html(index.customer.ccredit);
+	$("#caddress").html(index.customer.caddress);
+}
+
 /* 给弹出的窗口赋值 */
 function fuzhi(index){
 	$("#gname").html(index.goods.gname);
@@ -165,6 +186,7 @@ function fuzhi(index){
 /* 关闭窗口 */
 function closeGoodWin(){
 	$("#goodbyWin").dialog("close");
+	$("#cusbyWin").dialog("close");
 }
 
 function closeInveWin(){
@@ -341,6 +363,42 @@ function doUpdate() {
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
 	
 	  <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" onclick="chuku();">出库</a>
+	</div>
+	
+	<!-- 自定义窗口按钮 -->
+	<div id="cus-buttons">
+	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
+	
+	<!-- 显示客户信息 -->
+	<div id="cusbyWin" class="easyui-dialog"  buttons="#cus-buttons" data-options="closable:true, closed:true"  style="width:60%;height:350px;padding:5px;text-align:center;">
+		<table style="width:100%;height:100%;">
+			<tr>
+				<td class="tdwidth">客户名称:</td>
+				<td class="gxiangq"><span id="cname"></span></td>
+				<td class="tdwidth">客户编号:</td>
+				<td class="gxiangq"><span id="ckhno"></span></td>
+			</tr>
+			<tr align="center">
+				<td class="tdwidth">公司名称:</td>
+				<td class="gxiangq"><span id="ccompany"></span></td>
+				<td class="tdwidth">联系电话:</td>
+				<td class="gxiangq"><span id="cphone"></span></td>
+			</tr>
+			
+			<tr align="center">
+				<td class="tdwidth">客户邮箱:</td>
+				<td class="gxiangq"><span id="cemail"></span></td>
+				<td class="tdwidth">信用度:</td>
+				<td class="gxiangq"><span id="ccredit"></span></td>
+			</tr>
+			
+			<tr align="center">
+				<td class="tdwidth">地址:</td>
+				<td class="gxiangq" colspan="3"><span id="caddress"></span></td>
+			</tr>
+			
+		</table>
 	</div>
 	
 	<!-- 自定义窗口按钮 -->

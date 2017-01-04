@@ -351,4 +351,18 @@ public class Customerller {
 		customerService.updateUserPwd(customer3);
 		return "public/login";
 	}
+	
+	/**
+	 * 根据id查看客户信息
+	 * @param cid
+	 * @return
+	 */
+	@RequestMapping(value="/cusByid",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> selectById(Integer cid){
+		Map<String, Object> map=new HashMap<>();
+		Customer customer=customerService.select(cid);
+		map.put("customer", customer);
+		return map;
+	}
 }
