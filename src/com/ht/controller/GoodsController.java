@@ -121,7 +121,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping(value="/add")
-	public String addGoods(Goods goods,HttpServletRequest request,HttpSession session){
+	public String addGoods(Goods goods,HttpServletRequest request,HttpSession session,String location_p,String location_c,String location_a,String location_p1,String location_c1,String location_a1){
 		DateFormat format=new SimpleDateFormat("MMddHHmm");
     	String time=format.format(new Date());
         Random ran=new Random();//实例化一个random的对象ne
@@ -130,6 +130,8 @@ public class GoodsController {
         goods.setGcid(customer.getCid());
 		goods.setGordernumber(four+time);//4位随机数加8位时间
 		goods.setGstate("1");
+		goods.setGorigin(location_p+" "+location_c+" "+location_a);
+		goods.setGendpoint(location_p1+" "+location_c1+" "+location_a1);
 		goods.setGorderstime(new Date());
 		int resultcount=goodsService.insertSelective(goods);
 		if(resultcount>0){
@@ -176,16 +178,22 @@ public class GoodsController {
 	/**
 	 * 修改货物信息
 	 * @param goods
+	 * @throws Exception 
 	 */
 	@RequestMapping(value="/updateGood")
-	@ResponseBody
-	public void updateGood(Goods goods){
+	public String updateGood(Goods goods,HttpServletResponse response) throws Exception{
+		JSONObject jsonObject = new JSONObject();
 		if(goods.getGid() != null){
 			int resultcount=goodsService.updateByPrimaryKeySelective(goods);
 			if(resultcount>0){
 				System.out.println("修改成功");
+				jsonObject.put("success", true);
+			}else{
+				jsonObject.put("success", false);
 			}
 		}
+		ResponseUtil.write(response, jsonObject);
+        return null;
 	}
 	
 }

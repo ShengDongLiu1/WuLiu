@@ -16,12 +16,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <title>宏图物流有限公司</title>
 <link href="<%=path %>/style/css.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="<%=path %>/warehouse/js/jquery-1.8.3.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=path %>/warehouse/css/index.css"/>
 <link rel="stylesheet" type="text/css"
 	href="<%=basePath%>assets/css/theme.css">
 <link rel="stylesheet"
 	href="<%=basePath%>assets/jslib/font-awesome/css/font-awesome.css">
+<script type="text/javascript" src="<%=path %>/js/region_select.js"></script>
+<script type="text/javascript" src="<%=path %>/warehouse/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	$(".tabBox .tabNav li").click(function(){
@@ -153,11 +154,6 @@ function getValues(){
 		return false;
 	}else if (!reg.test(grephone)) {
 		$('.error10').html('*号码有误');
-	}else if(gorigin == ''){
-		$('.error11').html(message);
-		return false;
-	}else if(gendpoint == ''){
-		$('.error12').html(message);
 		return false;
 	}else if(gdescribe == ''){
 		$('.error13').html(message);
@@ -205,6 +201,12 @@ function showalert(){
 .yi{color:green;}
 
 .ju{color:red;}
+
+#s_province,#s_city,#s_county,#location_p,#location_c,#location_a{
+	margin:0px;
+	width:70px;
+	font-size:12px;
+}
 </style>
 </head>
 <body>
@@ -393,12 +395,20 @@ function showalert(){
 									<tr height="60">
 										<td align="right">收货电话：</td>
 										<td align="left"><input name="grephone" type="text" id="grephone" placeholder="请输入收货电话"><span class="message error10"></span></td>
-										<td align="right">起始地点：</td>
-										<td align="left"><input name="gorigin" type="text" id="gorigin" placeholder="请输入起始地点"><span class="message error11"></span></td>
+										<td align="right">起始地点：</td><!-- <input name="gorigin" type="text" id="gorigin" placeholder="请输入起始地点"><span class="message error11"></span> -->
+										<td align="left">
+											<select name="location_p" id="location_p"></select>
+										    <select name="location_c" id="location_c"></select>
+										    <select name="location_a" id="location_a"></select>
+										</td>
 									</tr>
 									<tr height="60">
-										<td align="right">到达地点：</td>
-										<td align="left"><input name="gendpoint" type="text" id="gendpoint" placeholder="请输入到达地点"><span class="message error12"></span></td>
+										<td align="right">到达地点：</td><!-- <input name="gendpoint" type="text" id="gendpoint" placeholder="请输入到达地点"> -->
+										<td align="left">
+											<select id="s_province" name="location_p1"></select>
+										    <select id="s_city" name="location_c1" ></select>
+										    <select id="s_county" name="location_a1"></select>
+										</td>
 									</tr>
 									<tr height="60">
 										<td align="right">货物描述：</td>
@@ -421,5 +431,6 @@ function showalert(){
 	</tr>
 </table>
 <jsp:include flush="true" page="bottom.jsp"></jsp:include>
+<script type="text/javascript">new PCAS('location_p', 'location_c', 'location_a', '', '', '');new PCAS('location_p1', 'location_c1', 'location_a1', '上海市', '', '');</script>
 </body>
 </html>

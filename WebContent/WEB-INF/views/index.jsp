@@ -53,8 +53,8 @@
 }
 .limg{backgroung-color:red;}
 
-.ali:hover{
-	color:red;
+.nav-header{
+	
 }
 </style>
 		<!--[if lt IE 9]>
@@ -117,7 +117,7 @@
 						<c:forEach items="${initfun}" var="child">
 							<c:if test="${child.funpid==top.funid}">
 								<li>
-									<a href="javascript:void(0);" class="ali" onclick="addTab('${child.funname}','<%=basePath%>${child.funurl}')">${child.funname}</a>
+									<a href="javascript:void(0);" onclick="addTab('${child.funname}','<%=basePath%>${child.funurl}')">${child.funname}</a>
 								</li>
 							</c:if>
 						</c:forEach>
@@ -169,7 +169,8 @@
 		}
 		
 		function show()  //显示隐藏层和弹出层
-		{	lockUser='lockUser';
+		{	
+			lockUser='lockUser';
 			$('#lock_inp').val('');
 		   var hideobj=document.getElementById("hidebg");
 		   hidebg.style.display="block";  //显示隐藏层

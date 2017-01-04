@@ -27,6 +27,14 @@ body{margin:0px;padding:0px;}
 	font-size:16px;
 	color:blue;
 }
+.gxiangq input{
+	width:190px;
+	height:25px;
+	border-radius:5px;
+	border:1px #95B8E7 solid;
+	outline:none;
+	font-size:15px;
+}
 a:link {color:blue}
 a:visited{color:#54287C}
 a:active{color:yellow}
@@ -84,6 +92,7 @@ $(function(){
 	 	onDblClickRow:function(rowIndex,row){
 	 		$.post("<%=path%>/goods/goodByid",{'gid':row.gid},function(index){
 	 			fuzhi(index);
+	 			$("#goodbyWin").dialog("open").dialog("setTitle", "客户订单详情");
 			},"json");
 	    }
 	});
@@ -131,7 +140,15 @@ $(function(){
 
 /* 客户姓名 */
 function customerName(value){
-	return value.cname;
+	var btn="<a href='javascript:onCustomer("+value.cid+")'>"+value.cname+"</a>";
+	return btn;
+}
+
+/* 点击客户姓名查看货物信息 */
+function onCustomer(cid){
+	<%-- $.post("<%=path%>/customer/cusByid",{'cid':cid},function(index){
+		$("#goodbyWin").dialog("open").dialog("setTitle", "客户订单详情");
+	},"json"); --%>
 }
 
 function goState(value,obj){
@@ -192,6 +209,7 @@ function toDate(obj){
 /* 表格按钮 */
 function toSub(value,obj){
 	var btn="<a href='javascript:openGoodWin("+obj.gid+")'>详情</a>";
+	btn+="&nbsp;<a href='javascript:updateGoodWin("+obj.gid+")'>修改</a>";
 	if(obj.gstate=='1'){
 		btn+="&nbsp;<a href='javascript:openLSWin("+obj.gid+","+obj.gcid+","+obj.gcount+")'>揽收</a>";
 		btn+="&nbsp;<a href='javascript:openJSWin("+obj.gid+")'>拒收</a>";
@@ -258,10 +276,22 @@ function subGocause(){
 	}
 }
 
+/* 打开修改货物信息窗口 */
+function updateGoodWin(gid) {
+	/* 去掉下划虚线 */
+	$(".gxiangq").css('border-bottom','0px');
+	$.post("<%=path%>/goods/goodByid",{'gid':gid},function(index){
+		updatefuzhi(index);
+		$("#UpgoodbyWin").dialog("open").dialog("setTitle", "修改订单信息");
+	},"json");
+}
+
 /* 打开详情窗口 */
 function openGoodWin(gid) {
+	$(".gxiangq").css('border-bottom','1px dashed #5F6D88');
 	$.post("<%=path%>/goods/goodByid",{'gid':gid},function(index){
 		fuzhi(index);
+		$("#goodbyWin").dialog("open").dialog("setTitle", "客户订单详情");
 	},"json");
     
 }
@@ -284,7 +314,25 @@ function fuzhi(index){
 	$(".gorderstime").html(formatDateTime(new Date(index.goods.gorderstime)));
 	$(".gdescribe").html(index.goods.gdescribe);
 	$(".gocause").html(index.goods.gocause);
-	$("#goodbyWin").dialog("open").dialog("setTitle", "客户订单详情");
+}
+
+/* 给弹出的窗口赋值 */
+function updatefuzhi(index){
+	$("#hgid").val(index.goods.gid);
+	$(".gname").html(index.goods.gname);
+	$(".gordernumber").html(index.goods.gordernumber);
+	$("#gcount").val(index.goods.gcount);
+	$("#gunit ").combobox('select',index.goods.gunit);
+	$("#gweight").val(isHave(index.goods.gweight));
+	$("#gvolume").val(isHave(index.goods.gvolume));
+	$("#gsize").val(isNull(index.goods.gsize));
+	$("#ggrade").combobox('select',index.goods.ggrade);
+	$("#gconsignee").val(index.goods.gconsignee);
+	$("#greaddress").val(index.goods.greaddress);
+	$("#grephone").val(index.goods.grephone);
+	$("#gorigin").val(index.goods.gorigin);
+	$("#gendpoint").val(index.goods.gendpoint);
+	$("#gdescribe").val(index.goods.gdescribe);
 }
 
 /* 如果为空 */
@@ -296,12 +344,22 @@ function isNull(val){
 	}
 }
 
+/* 如果为空 */
+function isHave(val){
+	if(val == '' || val == null){
+		return 0;
+	}else{
+		return val;
+	}
+}
+
 
 /* 关闭窗口 */
 function closeGoodWin(){
 	$("#goodbyWin").dialog("close");
 	$("#goodLSWin").dialog("close");
 	$("#goodJSWin").dialog("close");
+	$("#UpgoodbyWin").dialog("close");
 }
 
 /* 搜索 */
@@ -355,6 +413,79 @@ function getVal(){
 	
 }
 
+/* 提交前检验信息 */
+function checkSubGoods(){
+	var gcount=$("#gcount").val();
+	var gweight=$("#gweight").val();
+	var gvolume=$("#gvolume").val();
+	var gsize=$("#gsize").val();
+	var gconsignee=$("#gconsignee").val();
+	var greaddress=$("#greaddress").val();
+	var grephone=$("#grephone").val();
+	var gorigin=$("#gorigin").val();
+	var gendpoint=$("#gendpoint").val();
+	var re=/^(13[0-9]{9})|(15[89][0-9]{8})$/;
+	if(gcount == ''){
+		 $.messager.alert("系统提示", "请填写货物数量！",'info');
+		 return false;
+	}else if(gweight == ''){
+		 $.messager.alert("系统提示", "请填写货物重量！",'info');
+		 return false;
+	}else if(parseInt(gweight)<0){
+		 $.messager.alert("系统提示", "货物重量有误！",'info');
+		 return false;
+	}else if(gvolume == ''){
+		 $.messager.alert("系统提示", "请填写货物体积！",'info');
+		 return false;
+	}else if(parseInt(gvolume)<0){
+		 $.messager.alert("系统提示", "货物体积有误！",'info');
+		 return false;
+	}else if(parseInt(gsize)<0){
+		 $.messager.alert("系统提示", "货物尺寸有误！",'info');
+		 return false;
+	}else if(gsize == ''){
+		 $.messager.alert("系统提示", "请填写货物尺寸！",'info');
+		 return false;
+	}else if(gconsignee == ''){
+		 $.messager.alert("系统提示", "请填写收货人！",'info');
+		 return false;
+	}else if(greaddress == ''){
+		 $.messager.alert("系统提示", "请填写收货地址！",'info');
+		 return false;
+	}else if(grephone == ''){
+		 $.messager.alert("系统提示", "请填写收货电话！",'info');
+		 return false;
+	}else if(!re.test(grephone)){
+		 $.messager.alert("系统提示", "电话号码有误！",'info');
+		 return false;
+	}else if(gorigin == ''){
+		 $.messager.alert("系统提示", "请填写起始地点！",'info');
+		 return false;
+	}else if(gendpoint == ''){
+		 $.messager.alert("系统提示", "请填写到达地点！",'info');
+		 return false;
+	}else{
+		saveGoods();
+	}
+}
+
+/* 提交修改的信息 */
+function saveGoods() {
+    $("#subGoods").form("submit", {
+        url : '<%=path%>/goods/updateGood',
+        success : function(result) {
+        	var result = eval('(' + result + ')');
+        	if (result.success) {
+                $.messager.alert("系统提示", "修改成功！",'info');
+                $("#UpgoodbyWin").dialog("close");
+            } else {
+                $.messager.alert("系统提示", "修改失败！",'info');
+                return;
+            }
+        }
+    });
+}
+
 </script>
 </head>
 <body>
@@ -380,7 +511,7 @@ function getVal(){
 				<th field="ggrade" width="8%" align="center">货物等级</th>
 				<th field="gstate" width="12%" align="center" formatter="goState">货物状态</th>
 				<th field="gorderstime" width="12%" align="center" formatter="toDate">下单时间</th>
-				<th field="null" width="13%" align="center" formatter="toSub">操作</th>
+				<th field="null" width="15%" align="center" formatter="toSub">操作</th>
 			</tr>
 		</thead>
 	</table>
@@ -435,6 +566,7 @@ function getVal(){
 	<div id="dlg-buttons">
 	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
+	<!-- 显示货物信息 -->
 	<div id="goodbyWin" class="easyui-dialog"  buttons="#dlg-buttons" data-options="closable:true, closed:true"  style="width:70%;height:420px;padding:5px;text-align:center;">
 		<table style="width:100%;height:100%;" id="gooded">
 			<tr>
@@ -474,7 +606,7 @@ function getVal(){
 			<tr align="center">
 				<td class="tdwidth">起始地点:</td>
 				<td class="gxiangq"><span class="gorigin"></span></td>
-				<td class="tdwidth">到达地址:</td>
+				<td class="tdwidth">到达地点:</td>
 				<td class="gxiangq"><span class="gendpoint"></span></td>
 			</tr>
 			
@@ -490,6 +622,84 @@ function getVal(){
 				<td class="gxiangq" colspan="3"><span class="gdescribe"></span></td>
 			</tr>
 		</table>
+	</div>
+	
+	<!-- 自定义窗口按钮 -->
+	<div id="update-buttons">
+		<a href="javascript:checkSubGoods()" class="easyui-linkbutton" iconCls="icon-ok">保存</a>	
+	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
+	<!-- 修改货物信息 -->
+	<div id="UpgoodbyWin" class="easyui-dialog"  buttons="#update-buttons" data-options="closable:true, closed:true"  style="width:70%;height:400px;padding:5px;text-align:center;">
+		<form action="" method="post" id="subGoods">
+			<input type="hidden" id="hgid" name="gid">
+			<table style="width:100%;height:300px;" id="gooded">
+				<tr>
+					<td class="tdwidth">货物名称:</td>
+					<td class="gxiangq"><span class="gname"></span></td>
+					<td class="tdwidth">货物订单号:</td>
+					<td class="gxiangq"><span class="gordernumber"></span></td>
+				</tr>
+				<tr align="center">
+					<td class="tdwidth">货物数量:</td>
+					<td class="gxiangq"><input type="number" id="gcount" name="gcount" maxlength="7" style="width:60px;"/>&nbsp;
+						单位：<select id="gunit" class="easyui-combobox" name="gunit" data-options="editable:false" style="width:60px;height:30px;">
+						<option value="箱">箱</option>
+						<option value="个">个</option>
+						<option value="条">条</option>
+						<option value="袋">袋</option>
+						<option value="盒">盒</option>
+						<option value="包">包</option>
+						<option value="瓶">瓶</option>
+						<option value="罐">罐</option>
+						<option value="辆">辆</option>
+						<option value="只">只</option>
+						<option value="套">套</option>
+						<option value="尊">尊</option>
+						<option value="块">块</option>
+						<option value="其它">其它</option>
+					</select></td>
+					<td class="tdwidth">货物重量:</td>
+					<td class="gxiangq"><input type="number" id="gweight" name="gweight"/> 吨</td>
+				</tr>
+				
+				<tr align="center">
+					<td class="tdwidth">货物体积:</td>
+					<td class="gxiangq"><input type="number" id="gvolume" name="gvolume"/> m³</td>
+					<td class="tdwidth">货物尺寸:</td>
+					<td class="gxiangq"><input type="number" id="gsize" name="gsize"/> m</td>
+				</tr>
+				
+				<tr align="center">
+					<td class="tdwidth">货物等级:</td>
+					<td class="gxiangq">
+						<select id="ggrade" class="easyui-combobox" name="ggrade" data-options="editable:false" style="width:190px;height:30px;">
+							<option value="1">等级 1</option>
+							<option value="2">等级 2</option>
+							<option value="3">等级 3</option>
+							<option value="4">等级 4</option>
+							<option value="5">等级 5</option>
+						</select>
+					</td>
+					<td class="tdwidth">收货人:</td>
+					<td class="gxiangq"><input type="text" id="gconsignee" name="gconsignee"/></td>
+				</tr>
+				
+				<tr align="center">
+					<td class="tdwidth">收货地址:</td>
+					<td class="gxiangq"><input type="text" id="greaddress" name="greaddress"/></td>
+					<td class="tdwidth">收货电话:</td>
+					<td class="gxiangq"><input type="text" id="grephone" name="grephone"/></td>
+				</tr>
+				
+				<tr align="center">
+					<td class="tdwidth">起始地点:</td>
+					<td class="gxiangq"><input type="text" id="gorigin" name="gorigin"/></td>
+					<td class="tdwidth">到达地点:</td>
+					<td class="gxiangq"><input type="text" id="gendpoint" name="gendpoint"/></td>
+				</tr>
+			</table>
+		</form>
 	</div>
 	
 </body>

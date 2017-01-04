@@ -299,7 +299,9 @@ public class UserController {
 	public Map<String, Object> unlockUser(HttpSession session,String pwd) throws Exception{
 		Map<String, Object> map=new HashMap<>();
 		sysuser sysuser = (sysuser) session.getAttribute("user");
-		if(pwd != null && AES.getInstance().encrypt(pwd).equals(sysuser.getUserpwd())){
+		if(sysuser == null){
+			map.put("result", "会话已失效，请重新登录！"); 
+		}else if(pwd != null && AES.getInstance().encrypt(pwd).equals(sysuser.getUserpwd())){
 			session.removeAttribute("lockUser");
 			map.put("result", "success");
 		}else{
