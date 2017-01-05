@@ -198,6 +198,11 @@ public class GoodsController {
         return null;
 	}
 	
+	/**
+	 * 查询订单视图
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/view")
 	public String selectView(HttpServletRequest request){
 		Calendar calendar=Calendar.getInstance();
@@ -216,6 +221,29 @@ public class GoodsController {
 		request.setAttribute("yi", list);
 		request.setAttribute("ju", list1);
 		return "goods/goodsView";
+	}
+	
+	/**
+	 * 查询是否有未揽收的货物
+	 * @return
+	 */
+	@RequestMapping(value="/isGoods")
+	@ResponseBody
+	public Map<String, Object> oneMessage(){
+		Map<String, Object> map=new HashMap<>();
+		Calendar calendar=Calendar.getInstance();
+		int month=calendar.get(Calendar.MONTH)+1;
+		map.put("gstate", 1);
+		map.put("month", month);
+		Long resultcount=goodsService.monthGoodCount(map);
+		if(resultcount>0){
+			map.put("isOrnull", true);
+			map.put("countNum", "系统还有 "+resultcount+" 笔订单未处理，请尽快安排揽收！");
+		}else{
+			map.put("isOrnull", false);
+		}
+		
+		return map;
 	}
 	
 }

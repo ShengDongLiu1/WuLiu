@@ -241,5 +241,25 @@ public class ReceiptController {
 		map.put("result", "货物揽收成功");
 		return map;
 	}
+	
+	/**
+	 * 查询是否有未检验的货物
+	 * @return
+	 */
+	@RequestMapping(value="/isReceipt")
+	@ResponseBody
+	public Map<String, Object> oneMessage(){
+		Map<String, Object> map=new HashMap<>();
+		map.put("rstart", 1);
+		Long resultcount=receiptService.queryAllCount(map);
+		if(resultcount>0){
+			map.put("isOrnull", true);
+			map.put("countNum", "系统还有 "+resultcount+" 批货物未质检，请尽快安排质检，以方便入库！");
+		}else{
+			map.put("isOrnull", false);
+		}
+		
+		return map;
+	}
 
 }

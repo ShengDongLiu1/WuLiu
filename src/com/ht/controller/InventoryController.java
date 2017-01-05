@@ -117,4 +117,29 @@ public class InventoryController {
 			return "关闭失败，库位有货物";
 		}
 	}
+	
+	/**
+	 * 查询库位是否充足
+	 * @return
+	 */
+	@RequestMapping(value="/isInventory")
+	@ResponseBody
+	public Map<String, Object> oneMessage(){
+		Map<String, Object> map=new HashMap<>();
+		map.put("logid", -1);
+		map.put("lostate", 0);
+		Long resultcount=inventoryService.queryAllCount(map);	//查询总条数
+		if(resultcount<2){
+			map.put("isOrnull", true);
+			map.put("countNum", "警告： "+resultcount+" 库位即将用尽，请尽快安排货物出库!");
+		}else{
+			map.put("isOrnull", false);
+		}
+		if(resultcount == 0){
+			map.put("isOrnull", true);
+			map.put("countNum", "警告： "+resultcount+" 已无空闲库位，请尽快安排货物出库!");
+		}
+		
+		return map;
+	}
 }

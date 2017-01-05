@@ -53,9 +53,24 @@
 }
 .limg{backgroung-color:red;}
 
-.nav-header{
-	
+.alt{
+	width:60%;
+	height:41px;
+	color:white;
+	margin:0 auto;
+	line-height:41px;
+	font-size:15px;
 }
+#gundong{
+	height:41px;
+	width:90%;
+	scrollamount:5;
+	scrolldelay:10;
+	direction:left; 
+	hspace:0;
+	vspace:0;
+}
+.look{color:yellow}
 </style>
 		<!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -103,8 +118,16 @@
 					</li>
 
 				</ul>
-				<a class="brand" href="#"><span class="first">欢迎使用</span> <span
-					class="second">宏图物流仓库管理系统</span> </a>
+				<a class="brand" href="#">
+					<span class="first">欢迎使用</span> 
+					<span class="second">宏图物流仓库管理系统</span>
+				</a>
+				<div class="alt">
+					<!-- 文本滚动 -->
+					<marquee id="gundong" loop=0 behavior=scroll onmouseover="this.stop()" onmouseout="this.start()">
+					 	<span id="mess"></span>
+					</marquee>
+				</div>
 			</div>
 		</div>
 		<div class="sidebar-nav">
@@ -259,17 +282,41 @@
 			     }
 			}
 		}); 
+		var MAX = 5;
+		var i = 0;
+		
+		function Demo()
+		{
+			CreateBubble();
+		
+			if(++i < MAX){
+				setTimeout(Demo, 1000);
+			}
+		}
 		</script>
 		<script>
-			var MAX = 5;
-			var i = 0;
-			
-			function Demo()
-			{
-				CreateBubble();
-			
-				if(++i < MAX)
-					setTimeout(Demo, 1000);
+			window.setTimeout("message()",5000);
+			window.setInterval("message()",300000); 
+			function message(){
+				$.post("<%=path%>/goods/isGoods",function(index){
+					if(index.isOrnull){
+						$('#mess').html("<img src='<%=path%>/images/notice/new1.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('客户订单','<%=path%>/goods/allGood')\">[查看]</a>");
+					}
+				},"json");
+				$.post("<%=path%>/receipt/isReceipt",function(index){
+					if(index.isOrnull){
+						$('#mess').append("&nbsp;&nbsp;<img src='<%=path%>/images/notice/new2.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('质检','<%=path%>/quality/godownEntry')\">[查看]</a>");
+					}
+				},"json");
+				$.post("<%=path%>/inventory/isInventory",function(index){
+					if(index.isOrnull){
+						$('#mess').append("&nbsp;&nbsp;<img src='<%=path%>/images/notice/new3.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('质检','<%=path%>/quality/godownEntry')\">[查看]</a>");
+					}
+				},"json");
+				setTimeout("clearMess()",60000);
+			}
+			function clearMess(){
+				$('#mess').html('');
 			}
 		</script>
 	</body>
