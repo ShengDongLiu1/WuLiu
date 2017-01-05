@@ -299,4 +299,9 @@
 			and go.gid !=-1
 		</where>
  	</select>
+ 	
+ 	<!-- 查询每月货物揽收数量 -->
+	<select id="monthGoodCount" parameterType="java.util.Map" resultType="Long">
+		select count(*) from goods where month(gorderstime)=#{month} and gstate = #{gstate}
+	</select>
 </mapper>

@@ -2,6 +2,8 @@ package com.ht.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -194,6 +196,26 @@ public class GoodsController {
 		}
 		ResponseUtil.write(response, jsonObject);
         return null;
+	}
+	
+	@RequestMapping(value="/view")
+	public String selectView(HttpServletRequest request){
+		Calendar calendar=Calendar.getInstance();
+		//获得当前时间的月份，月份从0开始所以结果要加1
+		int month=calendar.get(Calendar.MONTH)+1;
+		List<Long> list=new ArrayList<>();
+		List<Long> list1=new ArrayList<>();
+		Map<String, Object> map=new HashMap<>();
+		for (int i = 1; i <= month; i++) {
+			map.put("gstate", 2);
+			map.put("month", i);
+			list.add(goodsService.monthGoodCount(map));
+			map.put("gstate", 3);
+			list1.add(goodsService.monthGoodCount(map));
+		}
+		request.setAttribute("yi", list);
+		request.setAttribute("ju", list1);
+		return "goods/goodsView";
 	}
 	
 }

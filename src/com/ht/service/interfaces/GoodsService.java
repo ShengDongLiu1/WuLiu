@@ -47,4 +47,11 @@ public interface GoodsService {
      * @return
      */
     Long queryAllCount(Map<String, Object> map);
+    
+    /**
+     * 每月的货物揽收量
+     * @param map
+     * @return
+     */
+    Long monthGoodCount(Map<String, Object> map);
 }

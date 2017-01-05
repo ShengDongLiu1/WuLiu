@@ -46,4 +46,9 @@ public class GoodsServiceImpl implements GoodsService{
 		return goods.queryAllCount(map);
 	}
 
+	@Override
+	public Long monthGoodCount(Map<String, Object> map) {
+		return goods.monthGoodCount(map);
+	}
+
 }
