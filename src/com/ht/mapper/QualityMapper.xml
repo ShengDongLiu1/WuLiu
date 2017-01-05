@@ -4,6 +4,8 @@
 	<resultMap type="com.ht.entity.Quality" id="QualityResultMap">
 		<id column="eid" property="eid" jdbcType="INTEGER"/>
 		<result column="egid" property="egid" jdbcType="INTEGER"/>
+		<result column="erid" property="erid" jdbcType="INTEGER"/>
+		<result column="etid" property="etid" jdbcType="INTEGER"/>
 		<result column="euserid" property="euserid" jdbcType="INTEGER"/>
 		<result column="eresult" property="eresult" jdbcType="VARCHAR"/>
 		<result column="edate" property="edate" jdbcType="TIMESTAMP"/>
@@ -11,6 +13,8 @@
 	<resultMap type="com.ht.entity.Quality" id="QualityResultMaps">
 		<id column="eid" property="eid" jdbcType="INTEGER"/>
 		<result column="egid" property="egid" jdbcType="INTEGER"/>
+		<result column="erid" property="erid" jdbcType="INTEGER"/>
+		<result column="etid" property="etid" jdbcType="INTEGER"/>
 		<result column="euserid" property="euserid" jdbcType="INTEGER"/>
 		<result column="eresult" property="eresult" jdbcType="VARCHAR"/>
 		<result column="edate" property="edate" jdbcType="TIMESTAMP"/>
@@ -44,17 +48,24 @@
 			<result property="rstart" column="rstart"/>
 		</association>
 		
+		<!-- 出库 -->
+		<association property="thelibrary" javaType="com.ht.entity.Thelibrary">
+			<result property="tid" column="tid"/>
+			<result property="tgid" column="tgid"/>
+			<result property="tstate" column="tstate"/>
+		</association>
+		
 	</resultMap>
 	
 	<sql id="Quality_Column_List">
-		eid, erid, egid, euserid, eresult, edate
+		eid, erid, etid, egid, euserid, eresult, edate
 	</sql>
 	
 	<!-- 根据id查询质检记录 -->
 	<select id="qualitySelect" parameterType="java.lang.Integer" resultMap="QualityResultMaps">
 	  select 
 	  *
-	  from examine exa, sysuser sys, goods go, receipt rec
+	  from examine exa, sysuser sys, goods go, receipt rec, thelibrary the
 	  where exa.eid = #{eid,jdbcType=INTEGER}
 	</select>
 	
@@ -73,6 +84,9 @@
 	    	</if>
 	    	<if test="erid != null">
 	    		erid,
+	    	</if>
+	    	<if test="etid != null">
+	    		etid,
 	    	</if>
 	    	<if test="egid != null">
 	    		egid,
@@ -93,6 +107,9 @@
 	    	</if>
 	    	<if test="erid != null">
 	    		#{erid,jdbcType=INTEGER},
+	    	</if>
+	    	<if test="etid != null">
+	    		#{etid,jdbcType=INTEGER},
 	    	</if>
 	    	<if test="egid != null">
 	    		#{egid,jdbcType=INTEGER},
@@ -177,6 +194,60 @@
 			</if>
 			<if test="eresult!=null and eresult!='' ">
 				and rec.rstart like #{rstart}
+			</if>
+			<if test="edate!=null and edate!='' ">
+				and exa.edate like #{edate}
+			</if>
+		</where>
+ 	</select>
+ 	
+ 	<!-- 查询出刚最新添加的出库表的数据的id -->
+ 	<select id="queryByTid" resultType="int">
+ 		SELECT tid FROM thelibrary ORDER BY tid DESC LIMIT 1
+ 	</select>
+ 	
+ 	<!-- 查询所有质检记录并分页 -->
+	<select id="qualitySelectAll2" parameterType="java.util.Map" resultMap="QualityResultMaps">
+   		select * from examine exa, sysuser sys, goods go, thelibrary the
+		<where>
+			exa.etid = the.tid and
+			exa.euserid = sys.USERID and 
+			exa.egid = go.gid and
+			exa.etid > 0
+			<if test="gname!=null and gname!='' ">
+				and go.gname like #{gname}
+			</if>
+			<if test="USERTRUENAME!=null and USERTRUENAME!='' ">
+				and sys.USERTRUENAME like #{usertruename}
+			</if>
+			<if test="tstate!=null and tstate!='' ">
+				and the.tstate like #{tstate}
+			</if>
+			<if test="edate!=null and edate!='' ">
+				and exa.edate like #{edate}
+			</if>
+		</where>
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+    </select>
+    
+    <!-- 查询质检记录条数 -->
+ 	<select id="getTotal2" parameterType="java.util.Map" resultType="Long">
+ 		select count(*) from examine exa, sysuser sys, goods go, thelibrary the
+		<where>
+			exa.etid = the.tid and
+			exa.euserid = sys.USERID and 
+			exa.egid = go.gid and
+			exa.etid > 0
+			<if test="gname!=null and gname!='' ">
+				and go.gname like #{gname}
+			</if>
+			<if test="USERTRUENAME!=null and USERTRUENAME!='' ">
+				and sys.USERTRUENAME like #{usertruename}
+			</if>
+			<if test="tstate!=null and tstate!='' ">
+				and the.tstate like #{tstate}
 			</if>
 			<if test="edate!=null and edate!='' ">
 				and exa.edate like #{edate}

@@ -81,7 +81,6 @@ public class QualityController {
 			pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
 		}
 		Map<String, Object> map= new HashMap<>();
-		System.out.println("******************="+usertruename);
 		map.put("usertruename", StringUtil.formatLike(usertruename));
 		map.put("gname", StringUtil.formatLike(gname));
 		map.put("rstart", StringUtil.formatLike(rstart));
@@ -89,6 +88,7 @@ public class QualityController {
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
 		List<Quality> list=qualityService.qualitySelectAll(map);
+		System.out.println(list);
 		session.setAttribute("qualitylist", list);
 		Long total=qualityService.getTotal(map);	//查询总条数
 		JSONObject result = new JSONObject();
@@ -142,4 +142,34 @@ public class QualityController {
 		return null;
 	}
 	
+	
+	/************* 出库质检 *************/
+	@RequestMapping(value="/queryAll2",method=RequestMethod.GET)
+	public String queryAll2(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,HttpSession session,String usertruename,String gname,String tstate,String edate) throws Exception{
+		PageBean pageBean=null;
+		if(page == null && rows == null){
+			pageBean=new PageBean(1,10);
+		}else{
+			pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
+		}
+		Map<String, Object> map= new HashMap<>();
+		map.put("usertruename", StringUtil.formatLike(usertruename));
+		map.put("gname", StringUtil.formatLike(gname));
+		map.put("tstate", StringUtil.formatLike(tstate));
+		map.put("edate", StringUtil.formatLike(edate));
+		map.put("start", pageBean.getStart());
+		map.put("size", pageBean.getPageSize());
+		List<Quality> list=qualityService.qualitySelectAll2(map);
+		session.setAttribute("qualitylist", list);
+		System.out.println(list);
+		Long total=qualityService.getTotal2(map);	//查询总条数
+		System.out.println("totle"+total);
+		JSONObject result = new JSONObject();
+		JSONArray jsonArray = JSONArray.fromObject(list);
+		result.put("rows", jsonArray);
+		result.put("total", total);
+		ResponseUtil.write(response, result);
+		System.out.println("list:"+jsonArray);
+		return null;
+	}
 }

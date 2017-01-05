@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ht.dao.QualityMapper;
 import com.ht.entity.Quality;
 import com.ht.entity.Receipt;
+import com.ht.entity.Thelibrary;
 import com.ht.service.interfaces.QualityService;
 
 /**
@@ -62,6 +63,23 @@ public class QualityServiceImpl implements QualityService {
 	@Override
 	public Integer receiptUpdate(Receipt receipt) {
 		return qualityMapper.receiptUpdate(receipt);
+	}
+
+	@Override
+	public int queryByTid() {
+		return qualityMapper.queryByTid();
+	}
+
+	@Override
+	public List<Quality> qualitySelectAll2(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return qualityMapper.qualitySelectAll2(map);
+	}
+
+	@Override
+	public Long getTotal2(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return qualityMapper.getTotal2(map);
 	}
 
 }

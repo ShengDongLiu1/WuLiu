@@ -14,6 +14,7 @@ public class Quality {
 	private Integer eid;
 	private Integer erid;
 	private Integer egid;
+	private Integer etid;
 	private Integer euserid;
 	private String eresult;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -24,6 +25,8 @@ public class Quality {
 	private Goods goods;//货物
 	
 	private Receipt receipt;
+	
+	private Thelibrary thelibrary;
 
 	public Integer getEid() {
 		return eid;
@@ -43,6 +46,14 @@ public class Quality {
 
 	public Integer getEgid() {
 		return egid;
+	}
+
+	public Integer getEtid() {
+		return etid;
+	}
+
+	public void setEtid(Integer etid) {
+		this.etid = etid;
 	}
 
 	public void setEgid(Integer egid) {
@@ -97,11 +108,19 @@ public class Quality {
 		this.receipt = receipt;
 	}
 
+	public Thelibrary getThelibrary() {
+		return thelibrary;
+	}
+
+	public void setThelibrary(Thelibrary thelibrary) {
+		this.thelibrary = thelibrary;
+	}
+
 	@Override
 	public String toString() {
-		return "Quality [eid=" + eid + ", erid=" + erid + ", egid=" + egid + ", euserid=" + euserid + ", eresult="
-				+ eresult + ", edate=" + edate + ", sysusers=" + sysusers + ", goods=" + goods + ", receipt=" + receipt
-				+ "]";
+		return "Quality [eid=" + eid + ", erid=" + erid + ", egid=" + egid + ", etid=" + etid + ", euserid=" + euserid
+				+ ", eresult=" + eresult + ", edate=" + edate + ", sysusers=" + sysusers + ", goods=" + goods
+				+ ", receipt=" + receipt + ", thelibrary=" + thelibrary + "]";
 	}
 	
 }
