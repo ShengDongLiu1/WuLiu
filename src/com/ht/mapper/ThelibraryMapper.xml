@@ -240,7 +240,7 @@
  </select>
  
  <select id="queryTrack" parameterType="java.util.Map" resultMap="BaseResultMap1">
- 	select c.cname,go.gid,go.gunit,go.gorderstime,go.gname,go.gstate,t.tnumber,t.tcount,t.ttype,re.rreceivecount from customer c,receipt re, thelibrary t, goods go 
+ 	select c.cname,go.gid,go.gunit,go.gorderstime,go.gname,go.gstate,go.gstate,t.tnumber,t.tcount,t.ttype,re.rreceivecount from customer c,receipt re, thelibrary t, goods go 
  	<where>
  		 re.rgid = go.gid and c.cid = re.rcid and t.tstate = 3 and t.tgid = go.gid 
  		 <if test="gname!=null and gname!='' ">

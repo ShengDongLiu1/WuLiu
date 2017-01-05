@@ -47,6 +47,7 @@ public class TrackController {
 		List<Thelibrary> thelibrarylist =thelibraryService.queryTrack(map);
 		for(Thelibrary t : thelibrarylist){
 			t.setGorderstime1(t.getGoods().getGorderstime());
+			t.setGstate1(t.getGoods().getGstate());
 		}
 		Long total=thelibraryService.queryAllCount2(map);
 		JSONObject result=new JSONObject();

@@ -27,6 +27,7 @@ public class Thelibrary {
     @DateTimeFormat(pattern = "yyyy-MM-dd")  
     private Date ttime;//出库时间
     
+    private String gstate1;
     
     private Goods goods;//货物
     
@@ -40,6 +41,13 @@ public class Thelibrary {
     
     private Inventory inventory;
     
+    
+    public String getGstate1() {
+		return gstate1;
+	}
+    public void setGstate1(String gstate1) {
+		this.gstate1 = gstate1;
+	}
     
     public Receipt getReceipt() {
 		return receipt;

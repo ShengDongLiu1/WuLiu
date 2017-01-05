@@ -76,7 +76,7 @@ body{margin:0px;padding:0px;}
 		        <th data-options="field:'goods',width:100" align="center" formatter="goodsName">货物名称</th>
 		        <th data-options="field:'tcount',width:100" align="center">实际送货量</th>
 		        <th data-options="field:'receipt',width:100" align="center" formatter="getrreceivecount">收货数据量</th>
-		        <th data-options="field:'tvehiclecapacity',width:100" align="center">状态</th>	
+		        <th data-options="field:'gstate1',width:100" align="center" formatter="getgstate">状态</th>	
 			</tr>
 		</thead>
 	</table>
@@ -116,6 +116,15 @@ body{margin:0px;padding:0px;}
 		return value.gname;
 	}
 	
+	function getgstate(value){
+		if(value==1){
+			return "<span class='shen'>未发货</span>";
+		}else if(value==2){
+			return "<span class='yishen'>已发货</span>";
+		}else{
+			return "<span class='yichu'>已签收</span>"
+		}
+	}
 		var url;
 		$(function() {
 			setPagination("list");
@@ -161,33 +170,6 @@ body{margin:0px;padding:0px;}
 			}
 			
 			
-			
-			/* 关闭窗口 */
-			function closeGoodWin(){
-				$("#goodbyWin").dialog("close");
-			}
-			
-			
-			<%-- //双击
-			$("#list").datagrid({   
-				//rowIndex 是序号 row是json数据
-			 	onDblClickRow:function(rowIndex,row){
-			 		$.post("<%=path%>/thelibrary/thelibraryByid",{'tid':row.tid},function(index){
-			 			chakan(index);
-					},"json");
-			    }
-			}); --%>
-			
-			
-			
-		/* 	 function closeUserDialog() {
-				    $("#addChuku").dialog("close");
-				    $("#list").datagrid("reload");
-				}
-			  */
-			 
-			 
-			
 			/* 搜索 */
 			function seachs(){
 				var cname = $('#cname1').textbox('getValue');
@@ -199,12 +181,6 @@ body{margin:0px;padding:0px;}
 					tnumber:tnumber
 				}); 
 			}
-			
-		
-			
 	</script>
-	
-	
-	
 </body>
 </html>
