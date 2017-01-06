@@ -28,6 +28,7 @@ import com.ht.dto.PageBean;
 import com.ht.entity.Goods;
 import com.ht.entity.Quality;
 import com.ht.entity.Receipt;
+import com.ht.entity.Thelibrary;
 import com.ht.entity.sysuser;
 
 /**
@@ -170,6 +171,37 @@ public class QualityController {
 		result.put("total", total);
 		ResponseUtil.write(response, result);
 		System.out.println("list:"+jsonArray);
+		return null;
+	}
+	
+	@RequestMapping(value="/qualityByid2",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> selectByid2(Integer eid,HttpServletResponse response){
+		Map<String, Object> map=new HashMap<>();
+		Quality quality=qualityService.qualitySelect2(eid);
+		System.out.println("tstate="+quality);
+		map.put("quality2", quality);
+		return map;
+	}
+	
+	@RequestMapping("/save2")
+	public String save2(Quality quality, Thelibrary thelibrary, HttpServletResponse resp) throws Exception{
+		Date date=new Date();
+		DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		format.format(date);
+		quality.setEdate(date);
+		int resultObj = 0;
+		if(quality.getEid() != null){
+			resultObj = qualityService.qualityUpdate(quality);
+			resultObj = qualityService.thelibraryUpdate(thelibrary);
+		}
+		JSONObject jsonObject = new JSONObject();
+		if(resultObj > 0){
+			jsonObject.put("success", true);
+		}else{
+			jsonObject.put("success", false);
+		}
+		ResponseUtil.write(resp, jsonObject);
 		return null;
 	}
 }

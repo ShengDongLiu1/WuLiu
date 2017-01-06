@@ -53,7 +53,7 @@
 				var status='';
 				if(value.tstate=='4'){
 					status="<span class='dai'>待检验</span>"
-				}else if(value.tstate=='1'){
+				}else if(value.tstate=='1' || value.tstate=='2' || value.tstate=='3'){
 					status="<span class='yi'>检验通过</span>"
 				}else if(value.tstate=='5'){
 					status="<span class='ju'>检验失败</span>"
@@ -98,6 +98,85 @@
 			</tr>
 		</thead>
 	</table>
+	<div id="goodRemovalWin" class="easyui-dialog"  buttons="#dlg-buttons" data-options="closable:true, closed:true"  style="width:70%;height:420px;padding:5px;text-align:center;">
+        	<table style="width:100%;height:100%;" id="gooded">
+        		<tr align="center">
+        			<td class="tdwidth">质检编号：</td>
+        			<td class="gxiangq"><span class="eid1"></span></td>
+        			<td class="tdwidth">货物编号：</td>
+        			<td class="gxiangq"><span class="egid1"></span></td>
+        		</tr>
+        		<tr align="center">
+        			<td class="tdwidth">订单号：</td>
+        			<td class="gxiangq"><span class="gordernumber1"></span></td>
+        			<td class="tdwidth">货物名称：</td>
+        			<td class="gxiangq"><span class="gname1"></span></td>
+        		</tr>
+        		<tr align="center">
+        			<td class="tdwidth">货物等级：</td>
+        			<td class="gxiangq"><span class="ggrade1"></span></td>
+        			<td class="tdwidth">货物描述：</td>
+        			<td class="gxiangq"><span class="gdescribe1"></span></td>
+        		</tr>
+        		<tr align="center">
+        			<td class="tdwidth">货物状态：</td>
+        			<td class="gxiangq"><span class="gstate1"></span></td>
+        			<td class="tdwidth">货物数量：</td>
+        			<td class="gxiangq"><span class="gcount1"></span></td>
+        		</tr>
+        		<tr align="center">
+        			<td class="tdwidth">出库数量：</td>
+        			<td class="gxiangq"><span class="tcount1"></span></td>
+        			<td class="tdwidth">出库类型：</td>
+        			<td class="gxiangq"><span class="ttype1"></span></td>
+        		</tr>
+        		<tr align="center">
+        			<td class="tdwidth">出库时间：</td>
+        			<td class="gxiangq"><span class="ttime1"></span></td>
+        			<td class="tdwidth">员工姓名：</td>
+        			<td class="gxiangq"><span class="ename1"></span></td>
+        		</tr>
+        		<tr align="center">
+        			<td class="tdwidth">检验结果：</td>
+        			<td class="gxiangq"><span class="eresult1"></span></td>
+        			<td class="tdwidth">检验时间：</td>
+        			<td class="gxiangq"><span class="edate1"></span></td>
+        		</tr>
+        	</table>
+        </div>
+       <div id="dlg-buttons1">
+	    <a href="javascript:saveQuality()" class="easyui-linkbutton"
+	        iconCls="icon-ok">保存</a> <a href="javascript:closeQualityDialog()"
+	        class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+		</div>
+       <!-- 验证通过 -->
+        <div id="openTrueWin1" class="easyui-dialog"  buttons="#dlg-buttons1" data-options="closable:true, closed:true"  style="width:30%;height:200px;padding:5px;text-align:center;">
+        	<form method="post" id="fm">
+                <table cellspacing="8px;" align="center">
+                    <tr>
+                    	<td>质检员工：</td>
+                        <td>
+                        	<input type="hidden" id="egid" name="egid">
+                        	<input type="hidden" id="etid" name="etid">
+                        	<input type="hidden" id="euserid" value="${user.userid}">
+                        	<input type="text" id="username" value="${user.usertruename}"
+                            class="easyui-validatebox" style="border:0px" readonly="readonly"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>检验结果：</td>
+                        <td height="80">
+                            <input id="eresult" name="eresult" class="easyui-textbox" data-options="multiline:true" style="width:100%;height:70%" value="请填写检验结果">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        	<input type="hidden" id="edate" name="edate" required="true" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
 	</body>
 	<script>
 	var url;
@@ -145,9 +224,11 @@
 		
 		/* 表格按钮 */
 		function toSub(value,obj){
-			var btn="&nbsp;<a href='javascript:openGoodWin()'>详情</a>"
-			btn+="&nbsp;<a href='javascript:openTrueWin()'>通过</a>";
-			btn+="&nbsp;<a href='javascript:openFalseWin()'>失败</a>"
+			var btn="&nbsp;<a href='javascript:openGoodWin("+obj.eid+")'>详情</a>"
+			if(obj.thelibrary.tstate == '4'){
+				btn+="&nbsp;<a href='javascript:openTrueWin1()'>通过</a>";
+				btn+="&nbsp;<a href='javascript:openFalseWin1()'>失败</a>"
+			}
 			return btn;
 		}
 		
@@ -172,10 +253,90 @@
 		
 		/* 打开详情窗口 */
 		function openGoodWin(eid) {
-			$.post("<%=path%>/quality/qualityByid",{'eid':eid},function(index){
+			$.post("<%=path%>/quality/qualityByid2",{'eid':eid},function(index){
 				fuzhi(index);
 			},"json");
-		    
+		}
+		
+		/* 给弹出的窗口赋值 */
+		function fuzhi(index){
+			$(".eid1").html(index.quality2.eid);//质检编号
+			$(".egid1").html(index.quality2.egid);//货物编号
+			$(".gordernumber1").html(index.quality2.goods.gordernumber);//订单号
+			$(".gname1").html(index.quality2.goods.gname);//货物名称
+			$(".ggrade1").html(index.quality2.goods.ggrade);//货物等级
+			$(".gdescribe1").html(index.quality2.goods.gdescribe);//货物描述
+			$(".gstate1").html(index.quality2.goods.gstate);//货物状态
+			$(".gcount1").html(index.quality2.goods.gcount);//货物数量
+			$(".tcount1").html(index.quality2.thelibrary.tcount);//出库数量
+			$(".ttype1").html(index.quality2.thelibrary.ttype);//出库类型
+			if(index.quality2.thelibrary.tstate == 4){
+				$(".ttime1").html('货物尚未出库~');
+			}else{
+				$(".ttime1").html(getNowFormatDate(index.quality2.thelibrary.ttime));
+			}
+			if(index.quality2.thelibrary.tstate == 4){
+				$(".ename1").html('货物尚无员工参与质检~');
+			}else{
+				$(".ename1").html(index.quality2.sysusers.usertruename);//员工姓名
+			}
+			$(".eresult1").html(index.quality2.eresult);//检验结果
+			if(index.quality2.thelibrary.tstate == 4){
+				$(".edate1").html('货物尚未质检~');
+			}else{
+				$(".edate1").html(getNowFormatDate(index.quality2.edate));//检验时间
+			}
+			$("#goodRemovalWin").dialog("open").dialog("setTitle", "出库质检详情");
+		}
+		
+		/* 验证通过 */
+		function openTrueWin1() {
+			var selectedRows = $("#dg").datagrid("getSelections");
+			var row = selectedRows[0];
+			row.edate = getNowFormatDate(row.edate);
+			row.euserid = $("#euserid").val();
+			$("#openTrueWin1").dialog("open").dialog("setTitle", "验证通过");
+			$("#fm").form("load", row);
+			url = "${pageContext.request.contextPath}/quality/save2.do?eid=" + row.eid +"&tid="+row.thelibrary.tid +"&tstate="+1+"&euserid="+row.euserid;
+		}
+		
+		/* 验证失败 */
+		function openFalseWin1(rid, euserid) {
+			var selectedRows = $("#dg").datagrid("getSelections");
+			var row = selectedRows[0];
+			row.edate = getNowFormatDate(row.edate);
+			row.euserid = $("#euserid").val();
+			$("#openTrueWin1").dialog("open").dialog("setTitle", "验证失败");
+			$("#fm").form("load", row);
+			url = "${pageContext.request.contextPath}/quality/save2.do?eid=" + row.eid +"&tid="+row.thelibrary.tid +"&tstate="+5+"&euserid="+row.euserid;
+		}
+		
+		function saveQuality() {
+		    $("#fm").form("submit", {
+		        url : url,
+		        success : function(result) {
+		            var result = eval('(' + result + ')');
+		            if (result.success) {
+		                $.messager.alert("系统提示", "保存成功！");
+		                $("#openTrueWin1").dialog("close");
+		                $("#dg").datagrid("load");
+		            } else {
+		                $.messager.alert("系统提示", "保存失败！");
+		                return;
+		            }
+		        }
+		    });
+		}
+		
+		function closeQualityDialog() {	
+		    $("#openTrueWin1").dialog("close");
+		    cleanQualityDialog();
+		}
+		
+		function cleanQualityDialog(){
+			$("euserid").val("");
+			$("eresult").val("");
+			$("edate").datebox("setValue", "");
 		}
 
 		</script>

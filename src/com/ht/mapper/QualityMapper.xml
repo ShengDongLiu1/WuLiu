@@ -52,6 +52,9 @@
 		<association property="thelibrary" javaType="com.ht.entity.Thelibrary">
 			<result property="tid" column="tid"/>
 			<result property="tgid" column="tgid"/>
+			<result property="tcount" column="tcount"/>
+			<result property="ttype" column="ttype"/>
+			<result property="ttime" column="ttime"/>
 			<result property="tstate" column="tstate"/>
 		</association>
 		
@@ -65,7 +68,7 @@
 	<select id="qualitySelect" parameterType="java.lang.Integer" resultMap="QualityResultMaps">
 	  select 
 	  *
-	  from examine exa, sysuser sys, goods go, receipt rec, thelibrary the
+	  from examine exa, sysuser sys, goods go, receipt rec
 	  where exa.eid = #{eid,jdbcType=INTEGER}
 	</select>
 	
@@ -254,4 +257,43 @@
 			</if>
 		</where>
  	</select>
+ 	
+ 	<!-- 根据id查询质检记录 -->
+	<select id="qualitySelect2" parameterType="java.lang.Integer" resultMap="QualityResultMaps">
+	  select 
+	  *
+	  from examine exa, sysuser sys, goods go, thelibrary the
+	  where exa.eid = #{eid,jdbcType=INTEGER} and
+	  exa.etid = the.tid and
+	  exa.euserid = sys.USERID and 
+	  exa.egid = go.gid
+	</select>
+	
+	<!-- 根据id修改质检记录 -->
+	<update id="thelibraryUpdate" parameterType="com.ht.entity.Thelibrary">
+	    update thelibrary
+	    <set>
+	    	<if test="tstate != null">
+	    		tstate = #{tstate,jdbcType=VARCHAR},
+	    	</if>
+	    </set>
+	    where tid = #{tid,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 根据id修改质检记录 -->
+	<update id="qualityUpdate2" parameterType="com.ht.entity.Quality">
+	    update examine exa
+	    <set>
+	    	<if test="euserid != null">
+	    		exa.euserid = #{euserid,jdbcType=VARCHAR},
+	    	</if>
+	    	<if test="eresult != null">
+	    		exa.eresult = #{eresult,jdbcType=VARCHAR},
+	    	</if>
+	    	<if test="edate != null">
+	    		exa.edate = #{edate,jdbcType=TIMESTAMP},
+	    	</if>
+	    </set>
+	    where exa.eid = #{eid,jdbcType=INTEGER}
+	</update>
 </mapper>

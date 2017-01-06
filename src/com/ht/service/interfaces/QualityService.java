@@ -31,4 +31,10 @@ public interface QualityService {
 	
 	//总质检记录条数
 	Long getTotal2(Map<String, Object> map);
+	
+	//根据id查询质检记录
+	Quality qualitySelect2(int eid);
+	
+	//根据id修改出库表记录
+	Integer thelibraryUpdate(Thelibrary thelibrary);
 }

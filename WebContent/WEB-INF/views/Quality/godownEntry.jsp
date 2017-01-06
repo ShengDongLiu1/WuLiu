@@ -149,6 +149,12 @@
         <div id="goodQualityWin" class="easyui-dialog"  buttons="#dlg-buttons" data-options="closable:true, closed:true"  style="width:70%;height:420px;padding:5px;text-align:center;">
         	<table style="width:100%;height:100%;" id="gooded">
         		<tr align="center">
+        			<td class="tdwidth">质检编号：</td>
+        			<td class="gxiangq"><span class="eid1"></span></td>
+        			<td class="tdwidth">货物编号：</td>
+        			<td class="gxiangq"><span class="egid1"></span></td>
+        		</tr>
+        		<tr align="center">
         			<td class="tdwidth">订单号：</td>
         			<td class="gxiangq"><span class="gordernumber1"></span></td>
         			<td class="tdwidth">货物名称：</td>
@@ -338,6 +344,8 @@
 
 		/* 给弹出的窗口赋值 */
 		function fuzhi(index){
+			$(".eid1").html(index.quality.eid);//质检编号
+			$(".egid1").html(index.quality.egid);//货物编号
 			$(".gordernumber1").html(index.quality.goods.gordernumber);//订单号
 			$(".gname1").html(index.quality.goods.gname);//货物名称
 			$(".ggrade1").html(index.quality.goods.ggrade);//货物等级
@@ -354,10 +362,6 @@
 		}
 		
 		function closeQualityDialog() {	
-		    $("#openTrueWin").dialog("close");
-		    cleanQualityDialog();
-		}
-		function closeQualityDialog1() {	
 		    $("#openTrueWin").dialog("close");
 		    cleanQualityDialog();
 		}

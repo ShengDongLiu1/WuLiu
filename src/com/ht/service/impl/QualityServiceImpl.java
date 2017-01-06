@@ -82,4 +82,15 @@ public class QualityServiceImpl implements QualityService {
 		return qualityMapper.getTotal2(map);
 	}
 
+	@Override
+	public Quality qualitySelect2(int eid) {
+		return qualityMapper.qualitySelect2(eid);
+	}
+
+	@Override
+	public Integer thelibraryUpdate(Thelibrary thelibrary) {
+		// TODO Auto-generated method stub
+		return qualityMapper.thelibraryUpdate(thelibrary);
+	}
+
 }
