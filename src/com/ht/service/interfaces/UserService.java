@@ -49,4 +49,10 @@ public interface UserService {
 	 * @return
 	 */
 	List<sysuser> searchbyusername(String username);
+	
+	/** 根据用户员工编码查看是否存在这个用户
+	 * @param ujobnumber 员工编码
+	 * @return
+	 */
+	sysuser selectujobnumber(String ujobnumber);
 }

@@ -269,7 +269,7 @@ mygoods(1);
 			<td>&nbsp;</td>
 			
 			<c:if test="${customer != null}">
-				<td><a href="<%=path %>/customer/message" class="nav" >客户留言</a></td>
+				<td><a href="<%=path %>/customer/message" class="nav" >客户反馈</a></td>
 				<td>&nbsp;</td>
 	
 				<td><a href="<%=path %>/customer/warehouse" class="nav" >我的货物</a></td>

@@ -44,6 +44,12 @@ public interface sysuserMapper {
 	 * @return
 	 */
 	List<sysuser> searchbyusername(String username);
+
+	/** 根据用户编码查看是否存在用户
+	 * @param ujobnumber 用户
+	 * @return
+	 */
+	sysuser selectujobnumber(String ujobnumber);
 	
     
 }

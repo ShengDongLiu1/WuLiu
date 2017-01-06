@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht.dao.ComplaintsMapper">
+  <resultMap id="BaseResultMap" type="com.ht.entity.Complaints">
+    <id column="comid" jdbcType="INTEGER" property="comid" />
+    <result column="comtype" jdbcType="VARCHAR" property="comtype" />
+    <result column="comcusid" jdbcType="VARCHAR" property="comcusid" />
+    <result column="comtitle" jdbcType="VARCHAR" property="comtitle" />
+    <result column="comtime" jdbcType="TIMESTAMP" property="comtime" />
+    <result column="comlevel" jdbcType="VARCHAR" property="comlevel" />
+    <result column="comsysuser" jdbcType="VARCHAR" property="comsysuser" />
+    <result column="comcontent" jdbcType="VARCHAR" property="comcontent" />
+    <result column="comexpect" jdbcType="VARCHAR" property="comexpect" />
+    <result column="comdescr" jdbcType="VARCHAR" property="comdescr" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    comid, comtype, comcusid, comtitle, comtime, comlevel, comsysuser, comcontent, 
+    comexpect, comdescr
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from complaints
+    where comid = #{comid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from complaints
+    where comid = #{comid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ht.entity.Complaints">
+    insert into complaints (comid, comtype, 
+      comcusid, comtitle, comtime, 
+      comlevel, comsysuser, comcontent, 
+      comexpect, comdescr)
+    values (#{comid,jdbcType=INTEGER}, #{comtype,jdbcType=VARCHAR}, 
+      #{comcusid,jdbcType=VARCHAR}, #{comtitle,jdbcType=VARCHAR}, #{comtime,jdbcType=TIMESTAMP}, 
+      #{comlevel,jdbcType=VARCHAR}, #{comsysuser,jdbcType=VARCHAR}, #{comcontent,jdbcType=VARCHAR}, 
+      #{comexpect,jdbcType=VARCHAR}, #{comdescr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ht.entity.Complaints">
+    insert into complaints
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="comid != null">
+        comid,
+      </if>
+      <if test="comtype != null">
+        comtype,
+      </if>
+      <if test="comcusid != null">
+        comcusid,
+      </if>
+      <if test="comtitle != null">
+        comtitle,
+      </if>
+      <if test="comtime != null">
+        comtime,
+      </if>
+      <if test="comlevel != null">
+        comlevel,
+      </if>
+      <if test="comsysuser != null">
+        comsysuser,
+      </if>
+      <if test="comcontent != null">
+        comcontent,
+      </if>
+      <if test="comexpect != null">
+        comexpect,
+      </if>
+      <if test="comdescr != null">
+        comdescr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="comid != null">
+        #{comid,jdbcType=INTEGER},
+      </if>
+      <if test="comtype != null">
+        #{comtype,jdbcType=VARCHAR},
+      </if>
+      <if test="comcusid != null">
+        #{comcusid,jdbcType=VARCHAR},
+      </if>
+      <if test="comtitle != null">
+        #{comtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="comtime != null">
+        #{comtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comlevel != null">
+        #{comlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="comsysuser != null">
+        #{comsysuser,jdbcType=VARCHAR},
+      </if>
+      <if test="comcontent != null">
+        #{comcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="comexpect != null">
+        #{comexpect,jdbcType=VARCHAR},
+      </if>
+      <if test="comdescr != null">
+        #{comdescr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Complaints">
+    update complaints
+    <set>
+      <if test="comtype != null">
+        comtype = #{comtype,jdbcType=VARCHAR},
+      </if>
+      <if test="comcusid != null">
+        comcusid = #{comcusid,jdbcType=VARCHAR},
+      </if>
+      <if test="comtitle != null">
+        comtitle = #{comtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="comtime != null">
+        comtime = #{comtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comlevel != null">
+        comlevel = #{comlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="comsysuser != null">
+        comsysuser = #{comsysuser,jdbcType=VARCHAR},
+      </if>
+      <if test="comcontent != null">
+        comcontent = #{comcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="comexpect != null">
+        comexpect = #{comexpect,jdbcType=VARCHAR},
+      </if>
+      <if test="comdescr != null">
+        comdescr = #{comdescr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where comid = #{comid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ht.entity.Complaints">
+    update complaints
+    set
+      comtype = #{comtype,jdbcType=VARCHAR},
+      comcusid = #{comcusid,jdbcType=VARCHAR},
+      comtitle = #{comtitle,jdbcType=VARCHAR},
+      comtime = #{comtime,jdbcType=TIMESTAMP},
+      comlevel = #{comlevel,jdbcType=VARCHAR},
+      comsysuser = #{comsysuser,jdbcType=VARCHAR},
+      comcontent = #{comcontent,jdbcType=VARCHAR},
+      comexpect = #{comexpect,jdbcType=VARCHAR},
+      comdescr = #{comdescr,jdbcType=VARCHAR}
+    where comid = #{comid,jdbcType=INTEGER}
+  </update>
+</mapper>

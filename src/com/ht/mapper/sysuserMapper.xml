@@ -181,5 +181,11 @@
 		USERTRUENAME = #{usertruename,jdbcType=VARCHAR},
 		USERSTATE = #{userstate,jdbcType=INTEGER}
 		where USERID = #{userid,jdbcType=INTEGER}
-	</update>
+	</update> 
+	 <select id="selectujobnumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+ 	ujobnumber
+    from sysuser
+    where ujobnumber = #{ujobnumber,jdbcType=VARCHAR}
+  </select>
 </mapper>

@@ -24,7 +24,6 @@
 	href="<%=basePath%>assets/jslib/font-awesome/css/font-awesome.css">
 <script type="text/javascript">
 $(function(){
-	alert('${customer.cemail}');
 	$(".tabBox .tabNav li").click(function(){
 		$(this).siblings("li").removeClass("now");
 		$(this).addClass("now");
@@ -119,7 +118,7 @@ function showalert(){
 							<td width="70" align="center" class="td2"><a href="<%=basePath %>customer/zc"><img src="<%=basePath %>image/bt_top1.gif" width="70" height="22" border="0"></a></td>
 						</c:when>
 						<c:otherwise>
-							<td width="300" height="20" align="center" ><font size="5">欢迎<a href="<%=path %>/admin/adminSeleTea"><font color="red">${customer.cemail }</font></a>登录</font></td>
+							<td width="300" height="20" align="center" ><font size="5">欢迎<a href="<%=path %>/customer/personal"><font color="red">${customer.cemail }</font></a>登录</font></td>
 							<td width="160" height="20" align="center" ><font size="5"><a tabindex="-1" href="<%=path %>/customer/klogout" target="_top">Logout</a></font></td>
 						</c:otherwise>
 					</c:choose>
@@ -198,10 +197,10 @@ function showalert(){
 		   	<div class="tabBox_t" >
 		           <div class="tabBox">
 		             <ul class="tabNav">
-		               <li onclick="mygoods(1)">我的资料</li>
-		               <li class="now">修改资料</li>
+		               <li class="now" >我的资料</li>
+		               <li onclick="mygoods(1)">修改资料</li>
 		             </ul>
-		             <div class="tabCont">
+		             <div class="tabCont" style="display:block;">
 		               <div class="ctn">
 			               		<table style="width: 760px;">
 									<tr height="60">
@@ -230,7 +229,7 @@ function showalert(){
 							
 		               </div>
 		             </div>
-		             <div class="tabCont" style="display:block;">
+		             <div class="tabCont" >
 		               <div class="ctn">
 		               		<form action="<%=path %>/customer/update" method="post">
 			               		<table style="width: 760px;">
