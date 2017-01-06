@@ -390,8 +390,8 @@ function addGoodSize(){
 			<option value=""></option>
 			<option value="1">待检验</option>
 			<option value="2">未入库</option>
-			<option value="3">检验失败</option>
-			<option value="4">部分入库</option>
+			<option value="3">部分入库</option>
+			<option value="4">检验失败</option>
 			<option value="5">已入库</option>
 		</select>&nbsp;
 		订单号：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />&nbsp;

@@ -74,18 +74,21 @@ public class CosttypeController {
 	public Map<String, Object> addCosttype(Costtype costtype){
 		Map<String, Object> map= new HashMap<>();
 		if(costtype.getCid() == null || costtype.getCid().equals("")){
+			if(costtype.getCcid() == null || costtype.getCcid() == 0){//ccid为空表示添加父节点
+				costtype.setCcid(-1);
+			}
 			int resultcount=costtypeService.insert(costtype);
 			if(resultcount>0){
-				map.put("result", "费用类型添加成功！");
+				map.put("result", "类型添加成功！");
 			}else{
-				map.put("result", "费用类型添加失败，请重试！");
+				map.put("result", "类型添加失败，请重试！");
 			}
 		}else{
 			int resultcount=costtypeService.updateByPrimaryKey(costtype);
 			if(resultcount>0){
-				map.put("result", "费用类型修改成功！");
+				map.put("result", "类型修改成功！");
 			}else{
-				map.put("result", "费用类型修改失败，请重试！");
+				map.put("result", "类型修改失败，请重试！");
 			}
 		}
 		return map;
@@ -97,15 +100,16 @@ public class CosttypeController {
 	 * @return
 	 */
 	@RequestMapping(value="/deleteCost",method=RequestMethod.POST)
+	@ResponseBody
 	public Map<String, Object> deleteCosttype(Integer cid){
 		Map<String, Object> map= new HashMap<>();
 		int resultcount=costtypeService.deleteByPrimaryKey(cid);
 		if(resultcount>0){
-			map.put("result", "费用类型删除成功！");
-			System.out.println("费用类型删除成功！");
+			map.put("result", "类型删除成功！");
+			System.out.println("类型删除成功！");
 		}else{
-			map.put("result", "费用类型删除失败，请重试！");
-			System.out.println("费用类型删除失败，请重试！");
+			map.put("result", "类型删除失败，请重试！");
+			System.out.println("类型删除失败，请重试！");
 		}
 		return map;
 	}

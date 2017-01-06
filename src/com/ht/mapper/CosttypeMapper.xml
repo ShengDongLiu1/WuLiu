@@ -5,9 +5,10 @@
     <id column="cid" jdbcType="INTEGER" property="cid" />
     <result column="cname" jdbcType="VARCHAR" property="cname" />
     <result column="cprice" jdbcType="DECIMAL" property="cprice" />
+    <result column="ccid" jdbcType="INTEGER" property="ccid" />
   </resultMap>
   <sql id="Base_Column_List">
-    cid, cname, cprice
+    cid, cname, cprice, ccid
   </sql>
   <!-- 根据id查询费用信息 -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -25,9 +26,9 @@
   
   <!-- 添加费用类型 -->
   <insert id="insert" parameterType="com.ht.entity.Costtype">
-    insert into costtype (cid, cname, cprice
+    insert into costtype (cid, cname, cprice, ccid
       )
-    values (#{cid,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR}, #{cprice,jdbcType=DECIMAL}
+    values (#{cid,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR}, #{cprice,jdbcType=DECIMAL}, #{ccid,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ht.entity.Costtype">
@@ -42,6 +43,9 @@
       <if test="cprice != null">
         cprice,
       </if>
+      <if test="ccid != null">
+        ccid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="cid != null">
@@ -52,6 +56,9 @@
       </if>
       <if test="cprice != null">
         #{cprice,jdbcType=DECIMAL},
+      </if>
+      <if test="ccid != null">
+        #{ccid,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -87,7 +94,6 @@
 				and cprice = #{cprice}
 			</if>
 		</where>
-		order by cid desc
 		<if test="start!=null and size!=null">
 			limit #{start},#{size}
 		</if>

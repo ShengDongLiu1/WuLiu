@@ -1,11 +1,15 @@
 package com.ht.entity;
 
+import java.math.BigDecimal;
+
 public class Costtype {
     private Integer cid;
 
     private String cname;
 
-    private Long cprice;
+    private BigDecimal cprice;
+    
+    private Integer ccid;
 
     public Integer getCid() {
         return cid;
@@ -23,11 +27,20 @@ public class Costtype {
         this.cname = cname == null ? null : cname.trim();
     }
 
-    public Long getCprice() {
+    public BigDecimal getCprice() {
         return cprice;
     }
 
-    public void setCprice(Long cprice) {
+    public void setCprice(BigDecimal cprice) {
         this.cprice = cprice;
     }
+
+	public Integer getCcid() {
+		return ccid;
+	}
+
+	public void setCcid(Integer ccid) {
+		this.ccid = ccid;
+	}
+    
 }

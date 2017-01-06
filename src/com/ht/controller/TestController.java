@@ -84,6 +84,7 @@ public class TestController {
 		map.put("tid", test.getTid());
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
+		System.out.println(map.get("tname"));
 		List<Test> testList=testService.testSelectAll(map);
 		Long total=testService.getTotal(map);
 		JSONObject result=new JSONObject();
