@@ -114,6 +114,7 @@
 								<a tabindex="-1" href="<%=basePath%>user/logout" target="_top">Logout</a>
 								<a tabindex="-1" href="javascript:void(0)" onclick="show()" target="_top">锁屏</a>
 								<a tabindex="-1" href="<%=basePath%>QRcode.jsp?user=${user.username}">生成二维码</a>
+								<a tabindex="-1" href='javascript:void(0)' onclick="openditu()">百度地图名片</a>
 							</li>
 						</ul>
 					</li>
@@ -162,6 +163,12 @@
 			</div>
 			<input type="hidden" id="refreshed" value="no">
 		</div> 	
+		
+		 <div id="addWin" class="easyui-window" title="地图名片"
+             data-options="iconCls:'icon-edit', closable:true, closed:true"
+             style="width: 545px; height: 700px; padding: 5px;">
+             	<iframe width="504" height="731" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://j.map.baidu.com/4Cmgj"></iframe>
+        </div>
 		
 		<script src="<%=basePath%>assets/jslib/bootstrap/js/bootstrap.js"></script>
 		<script src="<%=basePath%>js/Bubbles.js"></script>
@@ -329,6 +336,11 @@
 		}
 		function clearMess(){
 			$('#mess').html('');
+		}
+		
+		
+		function openditu(){
+			   $("#addWin").window("open");
 		}
 		</script>
 	</body>

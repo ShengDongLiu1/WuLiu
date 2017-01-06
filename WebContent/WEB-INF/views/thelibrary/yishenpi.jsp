@@ -559,19 +559,19 @@ body{margin:0px;padding:0px;}
 			
 			
 			function doAdd(){
-					var tid = $("#tid2").val();
-					var ttid =  $("#addtransport").combobox('getValue');
-					  $.post("${pageContext.request.contextPath}/thelibrary/add", {
-		                    tid : tid,ttid : ttid
-		                }, function(result) {
-		                    if (result.success) {
-		                        $.messager.alert("系统提示", "出货成功！");
-		                        $("#addChuku").dialog("close");
-		                        $("#list").datagrid("reload");
-		                    } else {
-		                        $.messager.alert("系统提示", "出货失败！");
-		                    }
-		                }, "json");
+				var tid = $("#tid2").val();
+				var ttid =  $("#addtransport").combobox('getValue');
+				  $.post("${pageContext.request.contextPath}/thelibrary/add", {
+	                    tid : tid,ttid : ttid
+	                }, function(result) {
+	                    if (result.success) {
+	                        $.messager.alert("系统提示", "出货成功！");
+	                        $("#addChuku").dialog("close");
+	                        $("#list").datagrid("reload");
+	                    } else {
+	                        $.messager.alert("系统提示" , "出货失败！");
+	                    }
+	                }, "json");
 			}
 	</script>
 	
