@@ -81,10 +81,18 @@ body{margin:0px;padding:0px;}
 		</thead>
 	</table>
 	
-		<div id="dlg-buttons">
-	    <a href="javascript:doAdd()" class="easyui-linkbutton"
-	        iconCls="icon-ok">保存</a> <a href="javascript:closeUserDialog()"
-	        class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	
+	
+	<!-- 自定义窗口按钮 -->
+	<div id="dlg-buttons">
+	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
+	<div id="wuliu" class="easyui-dialog"  buttons="#dlg-buttons" data-options="closable:true, closed:true"  style="width:50%;height:500px;padding:5px;text-align:center;">
+		<table style="width: 500px;  border-collapse:eparate;border-spacing:20px;   ">
+			<tr>
+				<td class="gxiangq"><span id="cname">暂无物流信息</span></td>
+			</tr>
+		</table>
 	</div>
 	
 	
@@ -120,10 +128,18 @@ body{margin:0px;padding:0px;}
 		if(value==1){
 			return "<span class='shen'>未发货</span>";
 		}else if(value==2){
-			return "<span class='yishen'>已发货</span>";
+			return "<a href='javascript:void(0)' onclick='openwuliu()'><span class='yishen'>已发货</span></a>";
 		}else{
 			return "<span class='yichu'>已签收</span>"
 		}
+	}
+	
+	/* 关闭窗口 */
+	function closeGoodWin(){
+		$("#goodbyWin").dialog("close");
+	}
+	function openwuliu(){
+		$("#wuliu").dialog("open").dialog("setTitle", "货物物流信息");
 	}
 		var url;
 		$(function() {
@@ -144,6 +160,7 @@ body{margin:0px;padding:0px;}
 				}
 			});
 		}
+		
 		
 			/* 将Thu Mar 19 2015 12:00:00 GMT+0800 (中国标准时间)转换为2015-3-19 12:00:00 */
 			var formatDateTime = function (date) {  

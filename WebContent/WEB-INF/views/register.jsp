@@ -29,7 +29,7 @@
 <div class="page">
 
     <div class="header">
-        <a class="link title-ani"  data-letters="物流注册">物流注册</a>
+        <a class="link title-ani"  data-letters="用户注册">用户注册</a>
         <br>
     </div>
 
