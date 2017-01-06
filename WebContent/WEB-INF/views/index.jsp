@@ -88,7 +88,8 @@
 			<div id="loac_title">解锁系统</div>
 			<div id="mass">
 				<p>系统已锁定,请输入用户密码进行解密</p>
-				<input type="password" id="lock_inp" placeholder="输入密码" onfocus="clearErr()">&nbsp;
+				<input type="password" name="old_password" style="display: none">
+				<input type="password" name="old_password" id="lock_inp" placeholder="输入密码" onfocus="clearErr()">&nbsp;
 				<a href="javascript:void(0)" onClick="hide();">
 					<img src="<%=path%>/images/unlocked.png" alt="解锁" style="width:30px;height:30px;vertical-align:middle"/>
 				</a><br />
@@ -159,6 +160,7 @@
 				</iframe>
 				</div>
 			</div>
+			<input type="hidden" id="refreshed" value="no">
 		</div> 	
 		
 		<script src="<%=basePath%>assets/jslib/bootstrap/js/bootstrap.js"></script>
@@ -167,28 +169,6 @@
 		var lockUser='${lockUser}';
 		if(lockUser != ''){
 			show();
-		}
-		
-		function addTab(title, url){
-			var lockUser='${lockUser}';
-			if(lockUser != ''){
-				location.reload([true]);
-				return false;
-			}
-			if($("#tabs").tabs("exists",title)){//exists:表示去判断指定的title的tab选项卡是否已经打开
-			 $("#tabs").tabs("select",title);//如果tab选项卡已经打开过，则直接显示该选项卡			
-			}else {
-				$("#tabs").tabs("add",{
-					title:title, //指定标题
-					content:tabContent(url),
-					border:false,
-					closable:true //选项卡是否可以被关闭
-				});
-			}
-		}
-		
-		function tabContent(url) {
-			return '<iframe scrolling="true"  name="main" frameborder="0" src="' + url + '" style="width:100%;height:100%;"></iframe>';
 		}
 		
 		function show()  //显示隐藏层和弹出层
@@ -219,6 +199,28 @@
 					}
 				},"json");
 			}
+		}
+		
+		function addTab(title, url){
+			var lockUser='${lockUser}';
+			if(lockUser != ''){
+				location.reload([true]);
+				return false;
+			}
+			if($("#tabs").tabs("exists",title)){//exists:表示去判断指定的title的tab选项卡是否已经打开
+			 $("#tabs").tabs("select",title);//如果tab选项卡已经打开过，则直接显示该选项卡			
+			}else {
+				$("#tabs").tabs("add",{
+					title:title, //指定标题
+					content:tabContent(url),
+					border:false,
+					closable:true //选项卡是否可以被关闭
+				});
+			}
+		}
+		
+		function tabContent(url) {
+			return '<iframe scrolling="true"  name="main" frameborder="0" src="' + url + '" style="width:100%;height:100%;"></iframe>';
 		}
 		
 		function clearErr(){
@@ -293,31 +295,41 @@
 				setTimeout(Demo, 1000);
 			}
 		}
-		</script>
-		<script>
-			window.setTimeout("message()",5000);
-			window.setInterval("message()",300000); 
-			function message(){
-				$.post("<%=path%>/goods/isGoods",function(index){
-					if(index.isOrnull){
-						$('#mess').html("<img src='<%=path%>/images/notice/new1.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('客户订单','<%=path%>/goods/allGood')\">[查看]</a>");
-					}
-				},"json");
-				$.post("<%=path%>/receipt/isReceipt",function(index){
-					if(index.isOrnull){
-						$('#mess').append("&nbsp;&nbsp;<img src='<%=path%>/images/notice/new2.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('质检','<%=path%>/quality/godownEntry')\">[查看]</a>");
-					}
-				},"json");
-				$.post("<%=path%>/inventory/isInventory",function(index){
-					if(index.isOrnull){
-						$('#mess').append("&nbsp;&nbsp;<img src='<%=path%>/images/notice/new3.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('质检','<%=path%>/quality/godownEntry')\">[查看]</a>");
-					}
-				},"json");
-				setTimeout("clearMess()",60000);
+		onload=function(){
+			var e=document.getElementById("refreshed");
+			if(e.value=="no"){
+				e.value="yes";
+			}else{
+				e.value="no";
+				location.reload();
 			}
-			function clearMess(){
-				$('#mess').html('');
+		}
+		window.setTimeout("message()",5000);
+		window.setInterval("message()",300000); 
+		function message(){
+			if(lockUser != ''){
+				return false;
 			}
+			$.post("<%=path%>/goods/isGoods",function(index){
+				if(index.isOrnull){
+					$('#mess').html("<img src='<%=path%>/images/notice/new1.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('客户订单','<%=path%>/goods/allGood')\">[查看]</a>");
+				}
+			},"json");
+			$.post("<%=path%>/receipt/isReceipt",function(index){
+				if(index.isOrnull){
+					$('#mess').append("&nbsp;&nbsp;<img src='<%=path%>/images/notice/new2.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('质检','<%=path%>/quality/godownEntry')\">[查看]</a>");
+				}
+			},"json");
+			$.post("<%=path%>/inventory/isInventory",function(index){
+				if(index.isOrnull){
+					$('#mess').append("&nbsp;&nbsp;<img src='<%=path%>/images/notice/new3.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('质检','<%=path%>/quality/godownEntry')\">[查看]</a>");
+				}
+			},"json");
+			setTimeout("clearMess()",60000);
+		}
+		function clearMess(){
+			$('#mess').html('');
+		}
 		</script>
 	</body>
 </html>
