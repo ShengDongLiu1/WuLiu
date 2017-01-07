@@ -45,12 +45,12 @@ body{margin:0px;padding:0px;}
 		<thead>
 			<tr>
 				<th data-options="field:'tid',checkbox:true,width:100" align="center">出货编号</th>
-				<th data-options="field:'goods',width:100" align="center" formatter="goodsName">货物名称</th>
-				<th data-options="field:'tcount',width:100" align="center">出库数量</th>
-				<th data-options="field:'ttype',width:100" align="center">出库类型</th>
-				<th data-options="field:'tstate',width:100" align="center" formatter="state1">状态</th>
-				<th data-options="field:'remarks',width:100" align="center">备注</th>
-				<th data-options="field:'ttime',width:100" align="center" formatter="toDate">出库时间</th>
+				<th data-options="field:'goods',width:100" align="center" formatter="goodsName" width="20%">货物名称</th>
+				<th data-options="field:'tcount',width:100" align="center" width="10%">出库数量</th>
+				<th data-options="field:'ttype',width:100" align="center" width="15%">出库类型</th>
+				<th data-options="field:'tstate',width:100" align="center" formatter="state1" width="15%">状态</th>
+				<th data-options="field:'remarks',width:100" align="center" width="20%">备注</th>
+				<th data-options="field:'ttime',width:100" align="center" formatter="toDate" width="20%">出库时间</th>
 			</tr>
 		</thead>
 	</table>
