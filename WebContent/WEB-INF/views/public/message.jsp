@@ -216,7 +216,7 @@
 						<td align="left"><input name="comsysuser" id="comsysuser"  size="10" maxlength="30" class="input2"></input></td>
 					</tr>
 					<tr height="30">
-						<td align="right">留言内容：</td>
+						<td align="right">投诉内容：</td>
 						<td align="left"><textarea name="comcontent" id="comcontent"  cols="50" rows="8" class="input2"></textarea></td>
 					</tr>
 					<tr height="30">

@@ -23,7 +23,27 @@ public class Complaints {
 
     private String comdescr;
 
-    public Integer getComid() {
+    private Customer customer;
+    
+    private sysuser sysuser;
+    
+    public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public sysuser getSysuser() {
+		return sysuser;
+	}
+
+	public void setSysuser(sysuser sysuser) {
+		this.sysuser = sysuser;
+	}
+
+	public Integer getComid() {
         return comid;
     }
 

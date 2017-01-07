@@ -13,6 +13,29 @@
     <result column="comexpect" jdbcType="VARCHAR" property="comexpect" />
     <result column="comdescr" jdbcType="VARCHAR" property="comdescr" />
   </resultMap>
+  
+   <resultMap id="SelectBaseResultMap" type="com.ht.entity.Complaints">
+    <id column="comid" jdbcType="INTEGER" property="comid" />
+    <result column="comtype" jdbcType="VARCHAR" property="comtype" />
+    <result column="comcusid" jdbcType="VARCHAR" property="comcusid" />
+    <result column="comtitle" jdbcType="VARCHAR" property="comtitle" />
+    <result column="comtime" jdbcType="TIMESTAMP" property="comtime" />
+    <result column="comlevel" jdbcType="VARCHAR" property="comlevel" />
+    <result column="comsysuser" jdbcType="VARCHAR" property="comsysuser" />
+    <result column="comcontent" jdbcType="VARCHAR" property="comcontent" />
+    <result column="comexpect" jdbcType="VARCHAR" property="comexpect" />
+    <result column="comdescr" jdbcType="VARCHAR" property="comdescr" />
+    
+    <association property="customer" javaType="com.ht.entity.Customer">
+	    <result column="ckhno" property="ckhno" />
+    	<result column="cname" property="cname" />
+	</association>
+	
+	<association property="sysuser" javaType="com.ht.entity.sysuser">
+	    <result column="ujobnumber" property="ujobnumber" />
+		<result column="USERNAME" property="username" />
+	</association>
+  </resultMap>
   <sql id="Base_Column_List">
     comid, comtype, comcusid, comtitle, comtime, comlevel, comsysuser, comcontent, 
     comexpect, comdescr
@@ -151,4 +174,63 @@
       comdescr = #{comdescr,jdbcType=VARCHAR}
     where comid = #{comid,jdbcType=INTEGER}
   </update>
+  
+  
+  <select id="select" parameterType="java.util.Map" resultMap="SelectBaseResultMap">
+    select com.comid, com.comtype, com.comcusid, com.comtitle, com.comtime, com.comlevel, com.comsysuser, com.comcontent, 
+    com.comexpect, com.comdescr, cus.ckhno, cus.cname, sys.ujobnumber, sys.username
+    
+   	 from complaints com,customer cus,sysuser sys
+    <where>
+    	com.comcusid=cus.cemail and com.comsysuser=sys.ujobnumber
+    	<if test="comsysuser!=null and comsysuser!='' ">
+			and com.comsysuser like #{comsysuser}
+		</if>
+		<if test="comtype!=null and comtype!='' ">
+			and com.comtype like #{comtype}
+		</if>
+		<if test="comcusid!=null and comcusid!='' ">
+			and com.comcusid like #{comcusid}
+		</if>
+		<if test="comtitle!=null and comtitle!='' ">
+			and com.comtitle like #{comtitle}
+		</if>
+		<if test="comlevel!=null and comlevel!='' ">
+			and com.comlevel like #{comlevel}
+		</if>
+		<if test="comtime!=null and comtime!='' and comtime1!=null and comtime1!=''">
+			and com.comtime between #{comtime} and #{comtime1}
+		</if>
+    </where>
+  	 order by com.comid desc
+  	 <if test="start!=null and size!=null">
+		limit #{start},#{size}
+	</if>
+  </select>
+  
+   <!-- 查询投诉条数 -->
+   <select id="queryAllCount" parameterType="java.util.Map" resultType="Long">
+ 	select count(*) from complaints com,customer cus,sysuser sys
+		<where>
+			com.comcusid=cus.cemail and com.comsysuser=sys.ujobnumber
+    	<if test="comsysuser!=null and comsysuser!='' ">
+			and com.comsysuser like #{comsysuser}
+		</if>
+		<if test="comtype!=null and comtype!='' ">
+			and com.comtype like #{comtype}
+		</if>
+		<if test="comcusid!=null and comcusid!='' ">
+			and com.comcusid like #{comcusid}
+		</if>
+		<if test="comtitle!=null and comtitle!='' ">
+			and com.comtitle like #{comtitle}
+		</if>
+		<if test="comlevel!=null and comlevel!='' ">
+			and com.comlevel like #{comlevel}
+		</if>
+		<if test="comtime!=null and comtime!='' and comtime1!=null and comtime1!=''">
+			and com.comtime between #{comtime} and #{comtime1}
+		</if>
+		</where>
+ </select>
 </mapper>
