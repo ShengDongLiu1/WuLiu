@@ -139,8 +139,9 @@ body{margin:0px;padding:0px;}
 			function state1(value){
 				if(value==1){
 					return "<span class='shen'>未审批</span>";
+				}else if(value==2 || value==3){
+					return "<span class='yishen'>已审批</span>";
 				}
-				return "<span class='yishen'>已审批</span>";
 			}
 			
 			

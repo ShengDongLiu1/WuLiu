@@ -261,27 +261,6 @@
 	</if>
  </select>
  
-  <select id="queryAll2" parameterType="java.util.Map" resultMap="BaseResultMap1">
- 	select go.gid,go.gname,t.trid,t.tdrivername, th.tid, th.tgid, th.ttid, th.tcount,th.tstate, th.ttype, th.remarks, th.ttime from goods go,transport t ,thelibrary th 
-		<where>
-			th.tgid=go.gid
-			and th.ttid=t.trid
-			<if test="gname!=null and gname!='' ">
-				and go.gname like #{gname}
-			</if>
-			<if test="tdrivername!=null and tdrivername!='' ">
-				and t.tdrivername like #{tdrivername}
-			</if>
-			<if test="ttype!=null and ttype!='' ">
-				and ttype like #{ttype}
-			</if>
-		 and tstate != 1 
-		</where>
-		<if test="start!=null and size!=null">
-			limit #{start},#{size}
-		</if>
- </select>
- 
  <!-- 查询入库条数 -->
  <select id="queryAllCount" parameterType="java.util.Map" resultType="Long">
  	select count(*) from thelibrary th,goods go,transport t
@@ -304,6 +283,27 @@
 		</where>
  </select>
  
+ <select id="queryAll2" parameterType="java.util.Map" resultMap="BaseResultMap1">
+ 	select go.gid,go.gname,t.trid,t.tdrivername, th.tid, th.tgid, th.ttid, th.tcount,th.tstate, th.ttype, th.remarks, th.ttime from goods go,transport t ,thelibrary th 
+		<where>
+			th.tgid=go.gid
+			and th.ttid=t.trid
+			<if test="gname!=null and gname!='' ">
+				and go.gname like #{gname}
+			</if>
+			<if test="tdrivername!=null and tdrivername!='' ">
+				and t.tdrivername like #{tdrivername}
+			</if>
+			<if test="ttype!=null and ttype!='' ">
+				and ttype like #{ttype}
+			</if>
+		 and tstate between 2 and 3 
+		</where>
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+ </select>
+ 
  <!-- 查询入库条数 -->
  <select id="queryAllCount2" parameterType="java.util.Map" resultType="Long">
  	select count(*) from thelibrary th,goods go,transport t
@@ -319,7 +319,7 @@
 			<if test="ttype!=null and ttype!='' ">
 				and ttype like #{ttype}
 			</if>	
-		 	and tstate !=1
+		 	and tstate between 2 and 3
 			<if test="tstate!=null and tstate!='' ">
 				and tstate like #{tstate}
 			</if>	

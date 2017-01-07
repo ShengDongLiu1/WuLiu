@@ -53,7 +53,7 @@ body{margin:0px;padding:0px;}
 
 .yichu{color:blue;}
 
-
+.shibai{color:yellow;}
 </style>
 </head>
 <body>
@@ -368,7 +368,7 @@ body{margin:0px;padding:0px;}
 					return "<span class='shen'>未审批</span>";
 				}else if(value==2){
 					return "<span class='yishen'>已审批</span>";
-				}else{
+				}else if(value==3){
 					return "<span class='yichu'>已出货</span>"
 				}
 			}
