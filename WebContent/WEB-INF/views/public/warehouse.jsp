@@ -46,14 +46,14 @@ function mygoods(pa){
 		page=parseInt(addpage)-1;
 		if(page == 0){
 			page=1;
-			alert("当前页已经是第一页");
+			blockAlt('当前页已经是第一页！');
 		}
 	}else if(pa == 3){//下一页
 		addpage=$("#page").html();
 		page+=parseInt(addpage);
 		if(parseInt($("#count").html())<page){
 			page=parseInt($("#count").html());
-			alert("当前页已经是最后一页");
+			blockAlt('当前页已经是最后一页！');
 		}
 	}
 	$(".addtr").remove();
@@ -63,7 +63,7 @@ function mygoods(pa){
 	        var trs = "";  
             trs += " <tr class='addtr'> "+
             "<td class='td'> " +value.gordernumber+ " </td> "+
-            "<td class='td'>" + value.gname +"</td> "+
+            "<td class='td'><span onclick='getGoods("+value.gid+","+value.gstate+");' class='sp'>" + value.gname +"</span></td> "+
             "<td class='td'>" + value.gcount +"</td> "+
             "<td class='td'>" + value.gunit +"</td> "+
             "<td class='td'>" + isNull(value.gweight) +"</td> "+
@@ -115,6 +115,7 @@ var formatDateTime = function (date) {
     return y + '-' + m + '-' + d+' '+h+':'+minute;  
 };
 
+/* 提交订单前检验 */
 function getValues(){
 	var message="*请输入值";
 	var gname=$("#gname").val();
@@ -127,7 +128,7 @@ function getValues(){
 	var gorigin=$("#gorigin").val();
 	var gendpoint=$("#gendpoint").val();
 	var gdescribe=$("#gdescribe").val();
-	 var reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
+	var reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
 	if(gname == ''){
 		$('.error1').html(message);
 		return false;
@@ -166,10 +167,12 @@ $(document).ready(function(){
     });
     $("input").blur(function(){//失去焦点
     	getValues();
+    	subUpGoods(0);
     });
 
 	var message='${result}';
 	if(message != ''){
+		blockAlt(message);
 		$('.title1').html("<span style='color:red;font-size:20px;'>"+message+"</span>");
 		window.setInterval(showalert, 3000);
 	}
@@ -178,6 +181,111 @@ function showalert(){
 	$('.title1').html('我的货物订单');
 }
 mygoods(1);
+
+/* 根据货物id查询货物信息 */
+function getGoods(gid,gstate){
+	if(gstate != '1'){
+		blockAlt('请联系客服修改信息！');
+		return false;
+	}
+	$.post("<%=path%>/goods/goodByid",{'gid':gid},function(index){
+		$(".gid").val(index.goods.gid);
+		$(".gname").val(index.goods.gname);
+		$(".gcount").val(index.goods.gcount);
+		$(".gunit").val(index.goods.gunit);
+		$(".ggrade").val(index.goods.ggrade);
+		$(".gconsignee").val(index.goods.gconsignee);
+		$(".greaddress").val(index.goods.greaddress);
+		$(".grephone").val(index.goods.grephone);
+		$(".gdescribe").val(index.goods.gdescribe);
+		$("#updateGoods").show(200);
+		var gorigin = index.goods.gorigin;
+		var myarray = gorigin.split(" ");
+		var gendpoint = index.goods.gendpoint;
+		var myarray1 = gendpoint.split(" ");
+		new PCAS('location_p2', 'location_c2', 'location_a2', myarray[0], myarray[1], myarray[2]);
+		new PCAS('location_p3', 'location_c3', 'location_a3', myarray1[0], myarray1[1], myarray1[2]);
+	});
+}
+
+/* 提交修改信息 */
+function subUpGoods(sta){
+	var message='*请输入值';
+	var gid=$(".gid").val();
+	var gname=$(".gname").val();
+	var gcount=$(".gcount").val();
+	var gunit=$(".gunit").val();
+	var ggrade=$(".ggrade").val();
+	var gconsignee=$(".gconsignee").val();
+	var greaddress=$(".greaddress").val();
+	var grephone=$(".grephone").val();
+	var gdescribe=$(".gdescribe").val();
+	var gor1=$("#gor1").val();
+	var gor2=$("#gor2").val();
+	var gor3=$("#gor3").val();
+	var gen1=$("#gen1").val();
+	var gen2=$("#gen2").val();
+	var gen3=$("#gen3").val();
+	var gorigin=gor1+" "+gor2+" "+gor3;
+	var gendpoint=gen1+" "+gen2+" "+gen3;
+	var reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
+	if(gid == ''){
+		return false;
+	}else if(gname == ''){
+		$('.mess1').html(message);
+		return false;
+	}else if(gcount == ''){
+		$('.mess2').html(message);
+		return false;
+	}else if(gcount < 1){
+		$('.mess2').html('*数值有误');
+		return false;
+	}else if(gunit == ''){
+		$('.mess3').html(message);
+		return false;
+	}else if(ggrade == ''){
+		$('.mess4').html(message);
+		return false;
+	}else if(gconsignee == ''){
+		$('.mess5').html(message);
+		return false;
+	}else if(greaddress == ''){
+		$('.mess6').html(message);
+		return false;
+	}else if(grephone == ''){
+		$('.mess7').html(message);
+		return false;
+	}else if (!reg.test(grephone)) {
+		$('.mess7').html('*号码有误');
+		return false;
+	}else if(gdescribe == ''){
+		$('.mess8').html(message);
+	}else if(sta==1){
+		$.post("<%=path%>/goods/updateGood",{'gid':gid,'gname':gname,'gcount':gcount,'gunit':gunit,
+		'ggrade':ggrade,'gconsignee':gconsignee,'greaddress':greaddress,'grephone':grephone,
+		'gdescribe':gdescribe,'gorigin':gorigin,'gendpoint':gendpoint
+		},function(index){
+			blockAlt('修改成功！');
+			closeEdit();
+			mygoods(1);
+		});
+	}
+}
+
+/* 关闭编辑窗口 */
+function closeEdit(){
+	$("#updateGoods").hide(200);
+}
+
+function blockAlt(mess){
+	$('#altMess').html(mess);
+	$("#altMess").show(100);
+	setTimeout("noneAlt()",1500);  
+}
+
+function noneAlt(){
+	$("#altMess").hide(100);
+}
 </script>
 <style type="text/css">
 .autoScroll{  
@@ -203,10 +311,55 @@ mygoods(1);
 
 .ju{color:red;}
 
-#s_province,#s_city,#s_county,#location_p,#location_c,#location_a{
+.sp{color:blue;cursor:pointer;}
+
+.s_province,.s_city,.s_county,
+#s_province,#s_city,#s_county,
+#location_p,#location_c,#location_a{
 	margin:0px;
 	width:70px;
 	font-size:12px;
+}
+#updateGoods{
+	width:65%; 
+	height:450px;; 
+	border: 1px solid #D4CD49; 
+	position:fixed;
+	right:17%;
+	top:31%;
+	background:#DFDDDE;
+	display:none;
+}
+#editTitle{
+	width:100%;
+	height:25px;
+	background:#224762;
+	text-align:right;
+}
+#titmes{
+	color:white;
+	line-height:25px;
+	font-size:15px;
+	float:left;
+	font-weight:bold;
+}
+#updateGoods input,select{
+	width:70%;height:40px;border:none;
+}
+#altMess{
+	width:280px;
+	height:110px;
+	position:absolute;
+	left:41%;
+	top:45%;
+	display:none;
+	background:#82ADF6;
+	border-radius:10px;
+	text-align:center;
+	line-height:110px;
+	font-size:25px;
+	font-wieght:bold;
+	color:white;
 }
 </style>
 </head>
@@ -431,7 +584,96 @@ mygoods(1);
 		</td>
 	</tr>
 </table>
+<div id="updateGoods">
+	<div id="editTitle" title="修改订单信息">
+		<div id="titmes">修改订单信息</div>
+		<img src="<%=path %>/images/close1.png" alt="关闭" style="width:16px;margin:5px;cursor:pointer;" onclick="closeEdit();">
+	</div>
+	<input type="hidden" class="gid"/>
+	<table style="width:100%;">
+		<tr height="60">
+			<td align="right">货物名称：</td>
+			<td align="left"><input name="gname" type="text" class="gname" readonly><span class="message mess1"></span></td>
+			<td align="right">货物数量：</td>
+			<td align="left"><input name="gcount" type="number" class="gcount" placeholder="请输入货物数量"><span class="message mess2"></span></td>
+		</tr>
+		<tr height="60">
+			<td align="right">货物单位：</td>
+			<td align="left">
+				<select name="gunit" class="gunit">
+					<option value="">- 请选择货物单位 -</option>
+					<option value="箱">箱</option>
+					<option value="个">个</option>
+					<option value="条">条</option>
+					<option value="袋">袋</option>
+					<option value="盒">盒</option>
+					<option value="包">包</option>
+					<option value="瓶">瓶</option>
+					<option value="罐">罐</option>
+					<option value="辆">辆</option>
+					<option value="只">只</option>
+					<option value="套">套</option>
+					<option value="尊">尊</option>
+					<option value="块">块</option>
+					<option value="其它">其它</option>
+				</select>
+				<span class="message mess3"></span>
+			</td>
+			<td align="right">货物等级：</td>
+			<td align="left">
+				<select name="ggrade" class="ggrade">
+					<option value="">- 请选择货物等级 -</option>
+					<option value="1">等级 1</option>
+					<option value="2">等级 2</option>
+					<option value="3">等级 3</option>
+					<option value="4">等级 4</option>
+					<option value="5">等级 5</option>
+				</select>
+				<span class="message mess4"></span>
+			</td>
+		</tr>
+		<tr height="60">
+			<td align="right">收货人：</td>
+			<td align="left"><input name="gconsignee" type="text" class="gconsignee" placeholder="请输入收货人"><span class="message mess5"></span></td>
+			<td align="right">收货地址：</td>
+			<td align="left"><input name="greaddress" type="text" class="greaddress" placeholder="请输入收货地址"><span class="message mess6"></span></td>
+		</tr>
+		<tr height="60">
+			<td align="right">收货电话：</td>
+			<td align="left"><input name="grephone" type="text" class="grephone" placeholder="请输入收货电话"><span class="message mess7"></span></td>
+			<td align="right">起始地点：</td><!-- <input name="gorigin" type="text" id="gorigin" placeholder="请输入起始地点"><span class="message error11"></span> -->
+			<td align="left">
+				<select name="location_p2" class="s_province" id="gor1"></select>
+			    <select name="location_c2" class="s_city" id="gor2"></select>
+			    <select name="location_a2" class="s_county" id="gor3"></select>
+			</td>
+		</tr>
+		<tr height="60">
+			<td align="right">到达地点：</td><!-- <input name="gendpoint" type="text" id="gendpoint" placeholder="请输入到达地点"> -->
+			<td align="left">
+				<select name="location_p3" class="s_province" id="gen1"></select>
+			    <select name="location_c3" class="s_city" id="gen2"></select>
+			    <select name="location_a3" class="s_county" id="gen3"></select>
+			</td>
+		</tr>
+		<tr height="60">
+			<td align="right">货物描述：</td>
+			<td align="left" colspan=3>
+				<textarea name="gdescribe" class="gdescribe" cols=97 rows=4 style="border:0px;"></textarea>
+				<span class="message mess8"></span>
+			</td>
+		</tr>
+		<tr align="center">
+			<td colspan=2 align="center"><input type="submit" value="保存" class="subpage" onclick="return subUpGoods(1);"/></td>
+			<td colspan=2 align="center"><input type="submit" value="取消" class="subpage" onclick="closeEdit();"/></td>
+		</tr>
+	</table>
+</div>
+<div id="altMess"></div>
 <jsp:include flush="true" page="bottom.jsp"></jsp:include>
-<script type="text/javascript">new PCAS('location_p', 'location_c', 'location_a', '', '', '');new PCAS('location_p1', 'location_c1', 'location_a1', '上海市', '', '');</script>
+<script type="text/javascript">
+	new PCAS('location_p', 'location_c', 'location_a', '', '', '');
+	new PCAS('location_p1', 'location_c1', 'location_a1', '上海市', '', '');
+</script>
 </body>
 </html>
