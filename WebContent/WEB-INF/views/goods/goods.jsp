@@ -541,6 +541,7 @@ function saveGoods() {
 			<option value=""></option>
 			<option value="1">未揽收</option>
 			<option value="2">已揽收</option>
+			<option value="3">已拒收</option>
 		</select>&nbsp;
 		订单号：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>

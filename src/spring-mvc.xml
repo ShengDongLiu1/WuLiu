@@ -63,6 +63,9 @@
     		<mvc:exclude-mapping path="/yzm/code"/>
     		<mvc:exclude-mapping path="/goods/myGoods"/>
     		<mvc:exclude-mapping path="/goods/add"/>
+    		<mvc:exclude-mapping path="/goods/updateGood"/>
+    		<mvc:exclude-mapping path="/goods/goodByid"/>
+    		<mvc:exclude-mapping path="/images/*.png"/>
     		<mvc:exclude-mapping path="/image/*.jpg"/>
     		<mvc:exclude-mapping path="/image/*.gif"/>
     		<mvc:exclude-mapping path="/image/*.swf"/>

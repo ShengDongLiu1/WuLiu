@@ -187,25 +187,27 @@ function getGoods(gid,gstate){
 	if(gstate != '1'){
 		blockAlt('请联系客服修改信息！');
 		return false;
+	}else{
+		$.post("<%=path%>/goods/goodByid",{'gid':gid},function(index){
+			$(".gid").val(index.goods.gid);
+			$(".gname").val(index.goods.gname);
+			$(".gcount").val(index.goods.gcount);
+			$(".gunit").val(index.goods.gunit);
+			$(".ggrade").val(index.goods.ggrade);
+			$(".gconsignee").val(index.goods.gconsignee);
+			$(".greaddress").val(index.goods.greaddress);
+			$(".grephone").val(index.goods.grephone);
+			$(".gdescribe").val(index.goods.gdescribe);
+			$('#updateGoods').attr('style','position:fixed;right:17%;top:31%;');
+			$("#updateGoods").show(200);
+			var gorigin = index.goods.gorigin;
+			var myarray = gorigin.split(" ");
+			var gendpoint = index.goods.gendpoint;
+			var myarray1 = gendpoint.split(" ");
+			new PCAS('location_p2', 'location_c2', 'location_a2', myarray[0], myarray[1], myarray[2]);
+			new PCAS('location_p3', 'location_c3', 'location_a3', myarray1[0], myarray1[1], myarray1[2]);
+		});
 	}
-	$.post("<%=path%>/goods/goodByid",{'gid':gid},function(index){
-		$(".gid").val(index.goods.gid);
-		$(".gname").val(index.goods.gname);
-		$(".gcount").val(index.goods.gcount);
-		$(".gunit").val(index.goods.gunit);
-		$(".ggrade").val(index.goods.ggrade);
-		$(".gconsignee").val(index.goods.gconsignee);
-		$(".greaddress").val(index.goods.greaddress);
-		$(".grephone").val(index.goods.grephone);
-		$(".gdescribe").val(index.goods.gdescribe);
-		$("#updateGoods").show(200);
-		var gorigin = index.goods.gorigin;
-		var myarray = gorigin.split(" ");
-		var gendpoint = index.goods.gendpoint;
-		var myarray1 = gendpoint.split(" ");
-		new PCAS('location_p2', 'location_c2', 'location_a2', myarray[0], myarray[1], myarray[2]);
-		new PCAS('location_p3', 'location_c3', 'location_a3', myarray1[0], myarray1[1], myarray1[2]);
-	});
 }
 
 /* 提交修改信息 */
@@ -286,6 +288,28 @@ function blockAlt(mess){
 function noneAlt(){
 	$("#altMess").hide(100);
 }
+
+$(document).ready(function() {
+	$('#editTitle').mousedown(function(event) {
+		$('#editTitle').css('cursor','all-scroll');
+		var isMove = true;
+		var abs_x = event.pageX - $('div#updateGoods').offset().left;
+		var abs_y = event.pageY - $('div#updateGoods').offset().top;
+		// alert(abs_x);
+		// alert(event.pageX);
+		$(document).mousemove(function(event) {
+			// alert(555);
+			if (isMove) {
+			var obj = $('div#updateGoods');
+				// alert(obj);
+				obj.css({'left':event.pageX - abs_x, 'top':event.pageY - abs_y});
+			};
+		}).mouseup(function(event) {
+			isMove = false;
+			$('#editTitle').css('cursor','default');
+		});
+	}); 
+});
 </script>
 <style type="text/css">
 .autoScroll{  
@@ -321,7 +345,7 @@ function noneAlt(){
 	font-size:12px;
 }
 #updateGoods{
-	width:65%; 
+	width:67%; 
 	height:450px;; 
 	border: 1px solid #D4CD49; 
 	position:fixed;
