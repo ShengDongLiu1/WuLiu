@@ -62,17 +62,18 @@ function mygoods(pa){
 		$.each(index.listGoods,function(n,value){
 	        var trs = "";  
             trs += " <tr class='addtr'> "+
-            "<td class='td'> " +value.gordernumber+ " </td> "+
-            "<td class='td'><span onclick='getGoods("+value.gid+","+value.gstate+");' class='sp'>" + value.gname +"</span></td> "+
-            "<td class='td'>" + value.gcount +"</td> "+
-            "<td class='td'>" + value.gunit +"</td> "+
-            "<td class='td'>" + isNull(value.gweight) +"</td> "+
-            "<td class='td'>" + isNull(value.gvolume) +"</td> "+
-            "<td class='td'>" + isNull(value.gsize) +"</td > "+
-            "<td class='td'>" + value.ggrade +"</td > "+
-            "<td class='td'> <p style='width:65px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;' title="+value.gdescribe+">" + value.gdescribe +"</p></td> "+
-            "<td class='td'>" + goodsState(value.gstate) +"</td> "+
-            "<td class='td'> "+formatDateTime(new Date(value.gorderstime))+" </td>"+
+	            "<td class='td'> " +value.gordernumber+ " </td> "+
+	            "<td class='td'><span onclick='getGoods("+value.gid+","+value.gstate+");' class='sp'>" + value.gname +"</span></td> "+
+	            "<td class='td'>" + value.gcount +"</td> "+
+	            "<td class='td'>" + value.gunit +"</td> "+
+	            "<td class='td'>" + isNull(value.gweight) +"</td> "+
+	            "<td class='td'>" + isNull(value.gvolume) +"</td> "+
+	            "<td class='td'>" + isNull(value.gsize) +"</td > "+
+	            "<td class='td'>" + value.ggrade +"</td > "+
+	            "<td class='td'> <p style='width:65px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;' title="+value.gdescribe+">" + value.gdescribe +"</p></td> "+
+	            "<td class='td'>" + goodsState(value.gstate) +"</td> "+
+	            "<td class='td'> "+formatDateTime(new Date(value.gorderstime))+" </td>"+
+	            "<td class='td'> "+caozuo(value.gid,value.gstate)+" </td>"+
             " </tr>";  
             tbody += trs;         
         });  
@@ -81,6 +82,31 @@ function mygoods(pa){
 	    $("#count").html(index.count);
 	    $("#total").html(index.total);
 	},"json");
+}
+
+/* 操作 */
+function caozuo(gid,state){
+	if(state == '1'){
+		return "<span class='sp' onclick='cancel("+gid+")'>取消订单</span>"
+	}else{
+		return "无";
+	}
+}
+/* 取消订单 */
+function cancel(gid){
+	$("#message").html('真的要取消订单吗？');
+	$("#altYesRoNo").show(100);
+	$("#isyes").click(function(){
+		$("#altYesRoNo").hide(100);
+		$.post("<%=path%>/goods/delGoods",{'gid':gid},function(index){
+			blockAlt(index.result);
+			mygoods(1);
+		},"json");
+	});
+	$("#isno").click(function(){
+		$("#altYesRoNo").hide(100);
+		return false
+	});
 }
 
 /* 如果为空 */
@@ -99,6 +125,8 @@ function goodsState(state){
 		return "<span class='yi'>已揽收</span>";
 	}else if(state == '3'){
 		return "<span class='ju'>已拒收</span>";
+	}else if(state == '4'){
+		return "<span class='ju'>已取消</span>";
 	}
 }
 
@@ -180,6 +208,7 @@ $(document).ready(function(){
 function showalert(){ 
 	$('.title1').html('我的货物订单');
 }
+
 mygoods(1);
 
 /* 根据货物id查询货物信息 */
@@ -310,6 +339,7 @@ $(document).ready(function() {
 		});
 	}); 
 });
+
 </script>
 <style type="text/css">
 .autoScroll{  
@@ -336,6 +366,7 @@ $(document).ready(function() {
 .ju{color:red;}
 
 .sp{color:blue;cursor:pointer;}
+.sp:hover{color:red;text-decoration:underline;}
 
 .s_province,.s_city,.s_county,
 #s_province,#s_city,#s_county,
@@ -373,7 +404,7 @@ $(document).ready(function() {
 #altMess{
 	width:280px;
 	height:110px;
-	position:absolute;
+	position:fixed;
 	left:41%;
 	top:45%;
 	display:none;
@@ -384,6 +415,37 @@ $(document).ready(function() {
 	font-size:25px;
 	font-wieght:bold;
 	color:white;
+}
+
+#altYesRoNo{
+	width:290px;
+	height:120px;
+	position:fixed;
+	left:41%;
+	top:42%;
+	display:none;
+	background:#82ADF6;
+	border-radius:10px;
+	text-align:center;
+	font-size:25px;
+	font-wieght:bold;
+	color:white;
+}
+.altBtn{
+	display: block; 
+	background:#DFDDDE;
+	border-radius:5px;
+	width:60px;
+	height:35px;
+	float:left;
+	margin-left:55px;
+	line-height:35px;
+	font-size:19px;
+	
+}
+.altBtn:hover{
+	text-decoration:none;
+	color:blue
 }
 </style>
 </head>
@@ -476,22 +538,21 @@ $(document).ready(function() {
 
 <table width="920" height="500" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
 	<tr>
-		<td width="10">&nbsp;</td>
-		<td align="center" valign="top">
+		<td align="center" valign="top" width="920px">
 			<table width="90%" border="0" cellspacing="0" cellpadding="0">
 				<tr height="35">
 					<td align="center" class="title1">我的货物订单</td>
 				</tr>
 			</table><br></br>
 			<!-- jsp代码写在这里 -->
-		<div class="box_2 autoScroll" style="height: 430px;">
-		   	<div class="tabBox_t" >
+		<div class="box_2 autoScroll" style="height:430px;">
+		   	<div class="tabBox_t">
 		           <div class="tabBox">
 		             <ul class="tabNav">
 		               <li class="now" onclick="mygoods(1)">我的订单</li>
 		               <li>添加订单</li>
 		             </ul>
-		             <div class="tabCont" style="display:block;">
+		             <div class="tabCont" style="display:block;padding-left: 0px;">
 		               <div class="ctn">
 							<table class="table table-hover mygoods" style="width:100%;">
 								<thead>
@@ -507,6 +568,7 @@ $(document).ready(function() {
 										<th class='td'>货物描述</th>
 										<th class='td'>货物状态</th>
 										<th class='td'>下单时间</th>
+										<th class='td'>操作</th>
 									</tr>
 								</thead>
 							</table>
@@ -693,7 +755,16 @@ $(document).ready(function() {
 		</tr>
 	</table>
 </div>
+<!-- 消息提示框 -->
 <div id="altMess"></div>
+
+<!-- 消息选择提示框 -->
+<div id="altYesRoNo">
+	<p id="message" style="margin:30px 0px 10px;">提示内容！</p>
+	<a href="javascript:void(0)" id="isyes" class="altBtn">确认</a>  
+	<a href="javascript:void(0)" id="isno" class="altBtn">取消</a>
+</div>
+
 <jsp:include flush="true" page="bottom.jsp"></jsp:include>
 <script type="text/javascript">
 	new PCAS('location_p', 'location_c', 'location_a', '', '', '');

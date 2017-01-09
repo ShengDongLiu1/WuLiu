@@ -227,7 +227,7 @@ public class GoodsController {
 	 * 查询是否有未揽收的货物
 	 * @return
 	 */
-	@RequestMapping(value="/isGoods")
+	@RequestMapping(value="/isGoods",method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> oneMessage(){
 		Map<String, Object> map=new HashMap<>();
@@ -243,6 +243,29 @@ public class GoodsController {
 			map.put("isOrnull", false);
 		}
 		
+		return map;
+	}
+	
+	/**
+	 * 取消订单
+	 * @param gid
+	 * @return
+	 */
+	@RequestMapping(value="/delGoods",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteGoods(Goods goods){
+		Map<String, Object> map=new HashMap<>();
+		if(goods.getGid() != null){
+			goods.setGstate("4");//订单已取消
+			int resultCount=goodsService.updateByPrimaryKeySelective(goods);
+			if(resultCount > 0){
+				map.put("result", "订单已取消！");
+			}else{
+				map.put("result", "订单取消失败！");
+			}
+		}else{
+			map.put("result", "订单取消失败！");
+		}
 		return map;
 	}
 	

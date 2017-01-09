@@ -161,6 +161,8 @@ function goState(value,obj){
 		state="<span class='yi'>已揽收</span>"
 	}else if(obj.gstate=='3'){
 		state="<span class='ju'>已拒收</span>"
+	}else if(obj.gstate=='4'){
+		state="<span class='ju'>已取消</span>"
 	}
 	return state;
 }
@@ -181,7 +183,10 @@ function lanshou(state){
 			"<td class='gxiangq' colspan='3'><span class='gocause'></span></td>"+
 		"</tr>"
 		);
-	}
+	}else if(state=='4'){
+		sta='已取消'
+			$("#becase").remove();
+		}
 	return sta;
 }
 
@@ -211,10 +216,11 @@ function toDate(obj){
 /* 表格按钮 */
 function toSub(value,obj){
 	var btn="<a href='javascript:openGoodWin("+obj.gid+")'>详情</a>";
-	btn+="&nbsp;<a href='javascript:updateGoodWin("+obj.gid+")'>修改</a>";
 	if(obj.gstate=='1'){
 		btn+="&nbsp;<a href='javascript:openLSWin("+obj.gid+","+obj.gcid+","+obj.gcount+")'>揽收</a>";
 		btn+="&nbsp;<a href='javascript:openJSWin("+obj.gid+")'>拒收</a>";
+	}if(obj.gstate == '2'){
+		btn+="&nbsp;<a href='javascript:updateGoodWin("+obj.gid+")'>修改</a>";
 	}
 	return btn;
 }
@@ -542,6 +548,7 @@ function saveGoods() {
 			<option value="1">未揽收</option>
 			<option value="2">已揽收</option>
 			<option value="3">已拒收</option>
+			<option value="4">已取消</option>
 		</select>&nbsp;
 		订单号：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
