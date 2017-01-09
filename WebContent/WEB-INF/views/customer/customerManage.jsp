@@ -60,7 +60,7 @@
 				$.messager.alert("系统提示","请输入正确的邮箱！");
 				return false;
 			}
-			return $(this).form("validate");
+		 return $(this).form("validate");
 		},
 		success:function(result){
 			var result=eval('('+result+')');
@@ -75,9 +75,9 @@
 		}
 	 });
  }
- 
+ /* 清空表单输入框数据 */
  function resetValue(){
-	 $("#cname1").textbox('setValue',"");
+	 $("#cname").textbox('setValue',"");
 	 $("#ckhno").textbox("setValue",'');
 	 $("#ccompany").textbox("setValue",'');
 	 $("#cphone").textbox("setValue",'');
