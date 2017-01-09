@@ -55,6 +55,7 @@ function getValues(){
 		return false;
 	}else if (!reg.test(cphone)) {
 		$('.error3').html('*号码有误');
+		return false;
 	}else if(caddress == ''){
 		$('.error4').html(message);
 		return false;
@@ -95,6 +96,13 @@ function showalert(){
 	border-radius:5px;
 }
 .message{color:red;}
+.xinxi{
+	 font-size:20px;
+	 font-weight:bold;
+}
+#tal{
+	font-size:20px;
+}
 </style>
 </head>
 <body>
@@ -202,26 +210,26 @@ function showalert(){
 		             </ul>
 		             <div class="tabCont" style="display:block;">
 		               <div class="ctn">
-			               		<table style="width: 760px;">
+			               		<table id="tal" style="width: 760px;">
 									<tr height="60">
 										<td align="right">账号：</td>
-										<td align="left"><span class="title1">${customer.cemail}</span></td>
+										<td align="left"><span class="xinxi">${customer.cemail}</span></td>
 										<td align="right">客户名：</td>
-										<td align="left"><span class="title1">${customer.cname}</span></td>
+										<td align="left"><span class="xinxi">${customer.cname}</span></td>
 									</tr>
 									<tr height="60">
 										<td align="right">客户公司：</td>
 										<td align="left">
-											<span class="title1">${customer.ccompany}</span>
+											<span class="xinxi">${customer.ccompany}</span>
 										</td>
 										<td align="right">客户电话：</td>
-										<td align="left"><span class="title1">${customer.cphone}</span></td>
+										<td align="left"><span class="xinxi">${customer.cphone}</span></td>
 									</tr>
 									<tr height="60">
 										<td align="right">客户信用：</td>
-										<td align="left"><span class="title1">${customer.ccredit}</span></td>
+										<td align="left"><span class="xinxi">${customer.ccredit}</span></td>
 										<td align="right">客户地址：</td>
-										<td align="left"><span class="title1">${customer.caddress}</span></td>
+										<td align="left"><span class="xinxi">${customer.caddress}</span></td>
 									</tr>
 									
 			               		</table>
@@ -236,19 +244,19 @@ function showalert(){
 									<tr height="60">
 										
 										<td align="right">客户名称：</td>
-										<td align="left"><input name="cname" type="text" id="cname" placeholder="${customer.cname}" /><span class="message error1"></span></td>
+										<td align="left"><input name="cname" type="text" id="cname" value="${customer.cname}" /><span class="message error1"></span></td>
 										<td align="right">客户公司：</td>
-										<td align="left"><input name="ccompany" type="text" id="ccompany" placeholder="${customer.ccompany}" /><span class="message error2"></span></td>
+										<td align="left"><input name="ccompany" type="text" id="ccompany" value="${customer.ccompany}" /><span class="message error2"></span></td>
 									</tr>
 									<tr height="60">
 										<td align="right">客户电话：</td>
 										<td align="left">
-											<input name="cphone" type="text" id="cphone" placeholder="${customer.cphone}" />
+											<input name="cphone" type="text" id="cphone" value="${customer.cphone}" />
 											<span class="message  error3"></span>
 										</td>
 										<td align="right">客户地址：</td>
 										<td align="left">
-											<input name="caddress" type="text" id="caddress" placeholder="${customer.caddress}" />
+											<input name="caddress" type="text" id="caddress" value="${customer.caddress}" />
 											<span class="message  error4"></span>
 										</td>
 										<td align="left">
