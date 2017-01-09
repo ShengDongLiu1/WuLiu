@@ -179,7 +179,6 @@
   <select id="select" parameterType="java.util.Map" resultMap="SelectBaseResultMap">
     select com.comid, com.comtype, com.comcusid, com.comtitle, com.comtime, com.comlevel, com.comsysuser, com.comcontent, 
     com.comexpect, com.comdescr, cus.ckhno, cus.cname, sys.ujobnumber, sys.username
-    
    	 from complaints com,customer cus,sysuser sys
     <where>
     	com.comcusid=cus.cemail and com.comsysuser=sys.ujobnumber
@@ -196,7 +195,7 @@
 			and com.comtitle like #{comtitle}
 		</if>
 		<if test="comlevel!=null and comlevel!='' ">
-			and com.comlevel like #{comlevel}
+			and com.comlevel LIKE #{comlevel}
 		</if>
 		<if test="comtime!=null and comtime!='' and comtime1!=null and comtime1!=''">
 			and com.comtime between #{comtime} and #{comtime1}

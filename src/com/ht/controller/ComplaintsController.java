@@ -75,6 +75,7 @@ public class ComplaintsController {
 	public String select(@RequestParam(value="comtime1",required=false)String comtime1,@RequestParam(value="comtime",required=false)String comtime,@RequestParam(value="comsysuser",required=false)String comsysuser,@RequestParam(value="comtype",required=false)String comtype,@RequestParam(value="comcusid",required=false)String comcusid,@RequestParam(value="comtitle",required=false)String comtitle,@RequestParam(value="comlevel",required=false)String comlevel,@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,HttpSession session) throws Exception{
 		PageBean pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
 		Map<String, Object> map= new HashMap<>();
+		System.out.println(comtype+"con");
 		map.put("comsysuser", StringUtil.formatLike(comsysuser));
 		map.put("comtype", StringUtil.formatLike(comtype));
 		map.put("comcusid", StringUtil.formatLike(comcusid));
@@ -85,6 +86,7 @@ public class ComplaintsController {
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
 		List<Complaints> list=complaintsService.select(map);//查询所有数据
+		System.out.println(map.get("comtype")+"comtype");
 		Long total=complaintsService.queryAllCount(map);	//查询总条数
 		System.out.println("总条数:"+total);
 		JSONObject result = new JSONObject();
