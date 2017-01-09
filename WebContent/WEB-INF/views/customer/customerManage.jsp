@@ -18,7 +18,7 @@
  function searchCustomer(){
 	 $("#dg").datagrid('load',{
 		"ckhno":$("#s_khno").val(),
-		"cname1":$("#s_name").val()
+		"cname":$("#s_name").val()
 	 });
  }
  
@@ -146,7 +146,7 @@
    	<table cellspacing="8px">
    		<tr>
    			<td>客户名称：</td>
-   			<td><input id="cname1" name="cname" class="easyui-validatebox easyui-textbox" required="true"/>&nbsp;<font color="red">*</font></td>
+   			<td><input id="cname" name="cname" class="easyui-validatebox easyui-textbox" required="true"/>&nbsp;<font color="red">*</font></td>
    			<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
    			<td>客户信用度</td>
    			<td>
