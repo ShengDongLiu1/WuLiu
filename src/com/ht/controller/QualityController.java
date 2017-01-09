@@ -158,7 +158,7 @@ public class QualityController {
 		map.put("start", pageBean.getStart());
 		map.put("size", pageBean.getPageSize());
 		List<Quality> list=qualityService.qualitySelectAll2(map);
-		session.setAttribute("qualitylist", list);
+		session.setAttribute("qualitylist1", list);
 		System.out.println(list);
 		Long total=qualityService.getTotal2(map);	//查询总条数
 		System.out.println("totle"+total);

@@ -357,7 +357,11 @@
 			$(".rshelvecount1").html(index.quality.receipt.rshelvecount);//搁置数量
 			$(".ename1").html(index.quality.sysusers.usertruename);//员工姓名
 			$(".eresult1").html(index.quality.eresult);//检验结果
-			$(".edate1").html(getNowFormatDate(index.quality.edate));//检验时间
+			if(index.quality.receipt.rstart == 1){
+				$(".edate1").html('暂无');
+			}else{
+				$(".edate1").html(getNowFormatDate(index.quality.edate));//检验时间
+			}
 			$("#goodQualityWin").dialog("open").dialog("setTitle", "货物质检详情");
 		}
 		

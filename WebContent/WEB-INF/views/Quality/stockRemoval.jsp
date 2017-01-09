@@ -65,11 +65,11 @@
 			function seachs(){
 				var gname = $('#gnameSearch').textbox('getValue');
 				var usertruename = $('#usernameSearch').textbox('getValue');
-				var rstart = $('#rstartSearch').combobox('getValue');
+				var tstate = $('#rstartSearch').combobox('getValue');
 				$('#dg').datagrid('load',{  
 					gname:gname,
 					usertruename:usertruename,
-					rstart:rstart
+					tstate:tstate
 				}); 
 			}
 		</script>
@@ -98,6 +98,21 @@
 			</tr>
 		</thead>
 	</table>
+	<!-- 菜单 -->
+	<div id="kj" style="padding: 2px;">
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="window.print();">打印</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-export1'" onclick="location.href='<%=path %>/export/qualityExcel1'">导出</a>
+		<a href="javascript:deleteTest()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
+		货物：<input id="gnameSearch" class="easyui-validatebox easyui-textbox" name="gname1" data-options="required:false" />
+		员工：<input id="usernameSearch" class="easyui-validatebox easyui-textbox" name="usertruename1" data-options="required:false" />
+		状态：<select id="rstartSearch" class="easyui-combobox" name="rstart1" data-options="editable:false" style="width:10%">
+				<option  draggable="false" value="">请选择状态</option>
+				<option value="4">待检验</option>
+				<option value="1">检验通过</option>
+				<option value="5">检验失败</option>
+			  </select>&nbsp;
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
+	</div>
 	<div id="goodRemovalWin" class="easyui-dialog"  buttons="#dlg-buttons" data-options="closable:true, closed:true"  style="width:70%;height:420px;padding:5px;text-align:center;">
         	<table style="width:100%;height:100%;" id="gooded">
         		<tr align="center">
@@ -327,6 +342,35 @@
 		        }
 		    });
 		}
+		
+		/* 删除 */
+		function deleteTest() {
+	        var selectedRows = $("#dg").datagrid("getSelections");
+	        if (selectedRows.length == 0) {
+	            $.messager.alert("系统提示", "请选择要删除的数据！");
+	            return;
+	        }
+	        var strIds = [];
+	        for ( var i = 0; i < selectedRows.length; i++) {
+	            strIds.push(selectedRows[i].eid);
+	        }
+	        var ids = strIds.join(",");
+	        $.messager.confirm("系统提示", "您确定要删除这<font color=red>"
+	                + selectedRows.length + "</font>条数据吗？", function(r) {
+	            if (r) {
+	                $.post("${pageContext.request.contextPath}/quality/delete.do", {
+	                    ids : ids
+	                }, function(result) {
+	                    if (result.success) {
+	                        $.messager.alert("系统提示", "数据已成功删除！");
+	                        $("#dg").datagrid("reload");
+	                    } else {
+	                        $.messager.alert("系统提示", "数据删除失败，请联系系统管理员！");
+	                    }
+	                }, "json");
+	            }
+	        });
+	    }
 		
 		function closeQualityDialog() {	
 		    $("#openTrueWin1").dialog("close");
