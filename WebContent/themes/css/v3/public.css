@@ -3,7 +3,7 @@
 /*header*/
 #header,#menu{width:100%; min-width:1200px; background:#fff;}
 .header{width:1200px; margin:0 auto; height:100px; line-height:100px; padding-top:15px; position:relative;}
-.header h1{width:200px; height:40px; background:url(../../images/v3/logo.png) 0 0 no-repeat; position:absolute; left:0; top:40px; text-indent:-999em; }
+.header h1{width:200px; height:40px;  position:absolute; left:0; top:40px; text-indent:-999em; }
 .header ul{position:absolute; right:0; top:44px; width:320px;}
 .header ul li{float:left;}
 .header ul li a{display:block;height:32px; line-height:32px;}
@@ -20,7 +20,7 @@
 .menu li{float:left; width:199px; border-left:1px solid #fffefe;}
 .menu li a{display:block; line-height:20px; text-align:center; color:#fff; height:40px; padding:22px 0;}
 .menu li a strong{font-size:16px; font-weight:bold;}
-.menu li a span{font-size:14px; font-family:'Microsoft Yahei';}
+.menu li a span{font-size:14px; font-family:'Microsoft Yah ei';}
 .menu li a:hover{background:#0087c0;}
 .menu .tools{border-right:1px solid #fffefe; width:198px; position:relative;}
 .menu .tools a{background:#0087c0;}
@@ -30,7 +30,7 @@
 .tools .tool_select a:hover{background:#0c81b2;}
 
 #footer{margin:20px auto 45px; width:1170px; padding-left:30px; height:170px; background:#fff; border-bottom:1px solid #ebebeb;border-top:1px solid #ebebeb; position:relative;}
-#footer h1{width:150px; height:30px; background:url(../../images/v3/logo2.png) 0 0 no-repeat; position:absolute; left:30px; top:30px; text-indent:-999em;}
+#footer h1{width:150px; height:30px;  position:absolute; left:30px; top:30px; text-indent:-999em;}
 .friendLink{position:absolute; top:86px; left:30px; font-size:12px;}
 .friendLink a{color:#009fe3; float:left; margin-right:30px;}
 .friendLink a:hover{text-decoration:underline;}

@@ -124,13 +124,30 @@
 					<span class="first">欢迎使用</span> 
 					<span class="second">宏图物流仓库管理系统</span>
 				</a>
-				<div class="alt">
+				
+				<div class="alt" >
 					<!-- 文本滚动 -->
 					<marquee id="gundong" loop=0 behavior=scroll onmouseover="this.stop()" onmouseout="this.start()">
 					 	<span id="mess"></span>
 					</marquee>
 				</div>
+				<div  style="float: right; margin-left: 1000px;" >
+					<form action="http://www.baidu.com/baidu" target="_blank">
+						<table bgcolor="#FFFFFF">
+							<tr>
+								<td>
+									<input name=tn type=hidden value=baidu>
+									<a href="http://www.baidu.com/"><img src="https://gss0.bdstatic.com/70cFsjip0QIZ8tyhnq/img/logo-80px.gif" alt="Baidu" align="bottom" border="0"></a>
+									<input class="easyui-validatebox easyui-textbox" type=text name=word style="width: 80px;"  placeholder="百度一下">
+									<input type="submit" value="百度搜索" class="easyui-linkbutton" data-options="iconCls:'icon-search',required:false">
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			<p style="clear: both;"></p>
 			</div>
+		
 		</div>
 		<div class="sidebar-nav">
 			<c:forEach items="${initfun}" var="top">
@@ -178,7 +195,7 @@
 			show();
 		}
 		
-		function show()  //显示隐藏层和弹出层
+		function show()  //显示隐藏层和弹出层	
 		{	
 			lockUser='lockUser';
 			$('#lock_inp').val('');
@@ -229,7 +246,7 @@
 		function tabContent(url) {
 			return '<iframe scrolling="true"  name="main" frameborder="0" src="' + url + '" style="width:100%;height:100%;"></iframe>';
 		}
-		
+			
 		function clearErr(){
 			$('#error').html('');
 		}

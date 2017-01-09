@@ -63,7 +63,7 @@ if(top.location!=self.location)top.location=self.location;
             </div>
 			
 			<form name="loginForm" id="login_form" method="post" action="login/ldo">
-				<h2>登录宏图物流网</h2>
+				<h2><a href="<%=path %>/customer/index">登录宏图物流网</a></h2>
 				<div class="div_user">
 					<span></span>
 					<input name="cemail" class="username" type="text" placeholder="用户名" />
