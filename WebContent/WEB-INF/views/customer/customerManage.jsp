@@ -48,6 +48,18 @@
 				$.messager.alert("系统提示","请选择客户信用度！");
 				return false;
 			}
+			var reg=/^1[3,5,8]\d{9}$/;
+			var obj=document.getElementById("cphone");
+			if(!reg.test(obj.value)){
+				$.messager.alert("系统提示","请输入正确的手机号码！");
+				return false;
+			}
+			var reg1=/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+			var obj1=document.getElementById("cemail");
+			if(!reg1.test(obj1.value)){
+				$.messager.alert("系统提示","请输入正确的邮箱！");
+				return false;
+			}
 			return $(this).form("validate");
 		},
 		success:function(result){
@@ -102,7 +114,6 @@
 		} 
 	 });
  }
- 
 </script>
 <title>客户信息</title>
 </head>
