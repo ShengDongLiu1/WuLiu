@@ -60,8 +60,6 @@ if(top.location!=self.location)top.location=self.location;
         	<div class="loginad">
             	<div class="loginadtitle">宏图物流网在线预约API全新发布了</div>
                 <div class="loginaddes">通过提供的API实现全国范围内物流、人员信息检索，以及在线下单功能</div>
-                <div class="loginadbtn"><a  href="#" target="_blank">马上查看</a></div>
-                <div class="loginadimg" style="background:url('http://img.juhe.cn/www/news/201407/3275043504%20.png') center center no-repeat"></div>
             </div>
 			
 			<form name="loginForm" id="login_form" method="post" action="login/ldo">
@@ -80,7 +78,7 @@ if(top.location!=self.location)top.location=self.location;
 				</div>
 				<div><input class="login_btn" id="loginBtn" type="button" value="登录" /></div>
                 <div style="line-height:30px; text-indent:5px;color:#F30" id="loginTips">&nbsp;</div>
-				<h4>可以使用下面方式登录<a class="#" href="<%=path %>/customer/zc">立即注册</a></h4>
+				<h4><a class="#" href="<%=path %>/customer/zc">立即注册</a></h4>
 			</form>
 		</div>
 	</div>
@@ -97,11 +95,7 @@ if(top.location!=self.location)top.location=self.location;
         <a href="#" target="_blank" rel="nofollow">联系我们</a>
         <a href="#" target="_blank" rel="nofollow">友情链接</a>
     </div>
-    <p>上海微一科技有限公司©版权所有 沪ICP备140068998</p>
-    <div class="weixin">
-        <img src="themes/images/v3/weiyi_qr.png" alt="" />
-        <h3>关注微一科技</h3>
-    </div>
+    <p>宏图物流有限公司©版权所有 赣ICP备140068998</p>
 </div>
 <script type="text/javascript">
     var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ht.dao.sysuserMapper;
-import com.ht.entity.Complaints;
 import com.ht.entity.sysuser;
 import com.ht.service.interfaces.UserService;
 @Service

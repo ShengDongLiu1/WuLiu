@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ht.dto.PageBean;
 import com.ht.dto.StringUtil;
-import com.ht.entity.Customer;
 import com.ht.entity.Thelibrary;
 import com.ht.service.interfaces.ThelibraryService;
 import com.ht.ssm.util.ResponseUtil;

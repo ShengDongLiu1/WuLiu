@@ -17,19 +17,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ht.dto.PageBean;
+import com.ht.dto.StringUtil;
+import com.ht.entity.Quality;
+import com.ht.entity.Receipt;
+import com.ht.entity.Thelibrary;
 import com.ht.service.interfaces.QualityService;
 import com.ht.ssm.util.ResponseUtil;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-
-import com.ht.dto.StringUtil;
-import com.ht.dto.PageBean;
-import com.ht.entity.Goods;
-import com.ht.entity.Quality;
-import com.ht.entity.Receipt;
-import com.ht.entity.Thelibrary;
-import com.ht.entity.sysuser;
 
 /**
  * 质检管理Controller
