@@ -12,7 +12,7 @@
 	<head>
 		<base href="<%=basePath%>">
 		<base target="main" />
-		<title>欢迎使用XXXX系统</title>
+		<title>欢迎使用宏图物流仓库管理系统</title>
 		<link rel="stylesheet" type="text/css"
 			href="<%=basePath%>assets/jslib/bootstrap/css/bootstrap.css">
 		<link rel="stylesheet" type="text/css"
@@ -54,16 +54,17 @@
 .limg{backgroung-color:red;}
 
 .alt{
-	width:60%;
+	width:62%;
 	height:41px;
 	color:white;
 	margin:0 auto;
 	line-height:41px;
 	font-size:15px;
+	float:right;
 }
 #gundong{
 	height:41px;
-	width:90%;
+	width:100%;
 	scrollamount:5;
 	scrolldelay:10;
 	direction:left; 
@@ -127,25 +128,20 @@
 				
 				<div class="alt" >
 					<!-- 文本滚动 -->
-					<marquee id="gundong" loop=0 behavior=scroll onmouseover="this.stop()" onmouseout="this.start()">
-					 	<span id="mess"></span>
-					</marquee>
+					<div style="width:70%;float:left;height:41px;">
+						<marquee id="gundong" loop=0 behavior=scroll onmouseover="this.stop()" onmouseout="this.start()">
+						 	<span id="mess"></span>
+						</marquee>
+					</div>
+					<div style="width:28%;height:41px;float:right;">
+						<form action="http://www.baidu.com/baidu" target="_blank">
+							<a href="http://www.baidu.com/"><img src="https://gss0.bdstatic.com/70cFsjip0QIZ8tyhnq/img/logo-80px.gif" alt="Baidu" align="bottom" border="0"></a>
+							<input class="easyui-validatebox easyui-textbox" type=text name=word style="width: 80px;"  placeholder="百度一下">
+							<input type="submit" value="百度搜索" class="easyui-linkbutton" data-options="iconCls:'icon-search',required:false">
+						</form>
+					</div>
+					<p style="clear:both"></p>
 				</div>
-				<div  style="float: right; margin-left: 1000px;" >
-					<form action="http://www.baidu.com/baidu" target="_blank">
-						<table bgcolor="#FFFFFF">
-							<tr>
-								<td>
-									<input name=tn type=hidden value=baidu>
-									<a href="http://www.baidu.com/"><img src="https://gss0.bdstatic.com/70cFsjip0QIZ8tyhnq/img/logo-80px.gif" alt="Baidu" align="bottom" border="0"></a>
-									<input class="easyui-validatebox easyui-textbox" type=text name=word style="width: 80px;"  placeholder="百度一下">
-									<input type="submit" value="百度搜索" class="easyui-linkbutton" data-options="iconCls:'icon-search',required:false">
-								</td>
-							</tr>
-						</table>
-					</form>
-				</div>
-			<p style="clear: both;"></p>
 			</div>
 		
 		</div>
