@@ -28,5 +28,9 @@ public class ComplaintsServiceImpl implements ComplaintsService{
 	public Long queryAllCount(Map<String, Object> map) {
 		return complaintsMapper.queryAllCount(map);
 	}
+	@Override
+	public int updateByPrimaryKeySelective(Complaints complaints) {
+		return complaintsMapper.updateByPrimaryKeySelective(complaints);
+	}
 
 }

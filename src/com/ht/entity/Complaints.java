@@ -22,8 +22,14 @@ public class Complaints {
     private String comexpect;
 
     private String comdescr;
+    
+    private String comdisposetype;
+    
+    private String comdisposesysuser;
+    
+    private String comdisposemethod;
 
-    private Customer customer;
+	private Customer customer;
     
     private sysuser sysuser;
     
@@ -122,4 +128,29 @@ public class Complaints {
     public void setComdescr(String comdescr) {
         this.comdescr = comdescr == null ? null : comdescr.trim();
     }
+    
+    public String getComdisposetype() {
+		return comdisposetype;
+	}
+
+	public void setComdisposetype(String comdisposetype) {
+		this.comdisposetype = comdisposetype;
+	}
+
+	public String getComdisposesysuser() {
+		return comdisposesysuser;
+	}
+
+	public void setComdisposesysuser(String comdisposesysuser) {
+		this.comdisposesysuser = comdisposesysuser;
+	}
+
+	public String getComdisposemethod() {
+		return comdisposemethod;
+	}
+
+	public void setComdisposemethod(String comdisposemethod) {
+		this.comdisposemethod = comdisposemethod;
+	}
+
 }

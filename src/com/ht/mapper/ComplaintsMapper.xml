@@ -12,6 +12,9 @@
     <result column="comcontent" jdbcType="VARCHAR" property="comcontent" />
     <result column="comexpect" jdbcType="VARCHAR" property="comexpect" />
     <result column="comdescr" jdbcType="VARCHAR" property="comdescr" />
+    <result column="comdisposetype" jdbcType="VARCHAR" property="comdisposetype" />
+    <result column="comdisposesysuser" jdbcType="VARCHAR" property="comdisposesysuser" />
+    <result column="comdisposemethod" jdbcType="VARCHAR" property="comdisposemethod" />
   </resultMap>
   
    <resultMap id="SelectBaseResultMap" type="com.ht.entity.Complaints">
@@ -25,6 +28,9 @@
     <result column="comcontent" jdbcType="VARCHAR" property="comcontent" />
     <result column="comexpect" jdbcType="VARCHAR" property="comexpect" />
     <result column="comdescr" jdbcType="VARCHAR" property="comdescr" />
+    <result column="comdisposetype" jdbcType="VARCHAR" property="comdisposetype" />
+    <result column="comdisposesysuser" jdbcType="VARCHAR" property="comdisposesysuser" />
+    <result column="comdisposemethod" jdbcType="VARCHAR" property="comdisposemethod" />
     
     <association property="customer" javaType="com.ht.entity.Customer">
 	    <result column="ckhno" property="ckhno" />
@@ -38,7 +44,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     comid, comtype, comcusid, comtitle, comtime, comlevel, comsysuser, comcontent, 
-    comexpect, comdescr
+    comexpect, comdescr,comdisposetype,comdisposesysuser,comdisposemethod
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -93,6 +99,15 @@
       <if test="comdescr != null">
         comdescr,
       </if>
+       <if test="comdisposetype != null">
+        comdisposetype,
+      </if>
+       <if test="comdisposesysuser != null">
+        comdisposesysuser,
+      </if>
+       <if test="comdisposemethod != null">
+        comdisposemethod,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="comid != null">
@@ -124,6 +139,15 @@
       </if>
       <if test="comdescr != null">
         #{comdescr,jdbcType=VARCHAR},
+      </if>
+      <if test="comdisposetype != null">
+        #{comdisposetype,jdbcType=VARCHAR},
+      </if>
+      <if test="comdisposesysuser != null">
+        #{comdisposesysuser,jdbcType=VARCHAR},
+      </if>
+      <if test="comdisposemethod != null">
+        #{comdisposemethod,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -157,6 +181,15 @@
       <if test="comdescr != null">
         comdescr = #{comdescr,jdbcType=VARCHAR},
       </if>
+      <if test="comdisposetype!=null">
+			 comdisposetype = #{comdisposetype,jdbcType=VARCHAR},
+		</if>
+		<if test="comdisposesysuser!=null">
+			 comdisposesysuser = #{comdisposesysuser,jdbcType=VARCHAR},
+		</if>
+		<if test="comdisposemethod!=null">
+			 comdisposemethod = #{comdisposemethod,jdbcType=VARCHAR},
+		</if>
     </set>
     where comid = #{comid,jdbcType=INTEGER}
   </update>
@@ -178,7 +211,7 @@
   
   <select id="select" parameterType="java.util.Map" resultMap="SelectBaseResultMap">
     select com.comid, com.comtype, com.comcusid, com.comtitle, com.comtime, com.comlevel, com.comsysuser, com.comcontent, 
-    com.comexpect, com.comdescr, cus.ckhno, cus.cname, sys.ujobnumber, sys.username
+    com.comexpect, com.comdescr,com.comdisposetype,com.comdisposesysuser,com.comdisposemethod, cus.ckhno, cus.cname, sys.ujobnumber, sys.username
    	 from complaints com,customer cus,sysuser sys
     <where>
     	com.comcusid=cus.cemail and com.comsysuser=sys.ujobnumber
@@ -196,6 +229,15 @@
 		</if>
 		<if test="comlevel!=null and comlevel!='' ">
 			and com.comlevel LIKE #{comlevel}
+		</if>
+		<if test="comdisposetype!=null and comdisposetype!='' ">
+			and com.comdisposetype LIKE #{comdisposetype}
+		</if>
+		<if test="comdisposesysuser!=null and comdisposesysuser!='' ">
+			and com.comdisposesysuser LIKE #{comdisposesysuser}
+		</if>
+		<if test="comdisposemethod!=null and comdisposemethod!='' ">
+			and com.comdisposemethod LIKE #{comdisposemethod}
 		</if>
 		<if test="comtime!=null and comtime!='' and comtime1!=null and comtime1!=''">
 			and com.comtime between #{comtime} and #{comtime1}
@@ -226,6 +268,15 @@
 		</if>
 		<if test="comlevel!=null and comlevel!='' ">
 			and com.comlevel like #{comlevel}
+		</if>
+		<if test="comdisposetype!=null and comdisposetype!='' ">
+			and com.comdisposetype LIKE #{comdisposetype}
+		</if>
+		<if test="comdisposesysuser!=null and comdisposesysuser!='' ">
+			and com.comdisposesysuser LIKE #{comdisposesysuser}
+		</if>
+		<if test="comdisposemethod!=null and comdisposemethod!='' ">
+			and com.comdisposemethod LIKE #{comdisposemethod}
 		</if>
 		<if test="comtime!=null and comtime!='' and comtime1!=null and comtime1!=''">
 			and com.comtime between #{comtime} and #{comtime1}

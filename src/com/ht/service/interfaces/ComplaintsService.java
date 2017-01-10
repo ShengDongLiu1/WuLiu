@@ -27,5 +27,12 @@ public interface ComplaintsService {
      * @return
      */
 	Long queryAllCount(Map<String, Object> map);
+
+	/**
+     * 处理投诉
+     * @param map
+     * @return
+     */
+	int updateByPrimaryKeySelective(Complaints complaints);
 	
 }

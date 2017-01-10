@@ -50,14 +50,17 @@ public class ComplaintsController {
 	@RequestMapping(value="/addcomplaints",method=RequestMethod.POST)
 	@ResponseBody
 	public String addmessage(Complaints complaints,HttpServletResponse response,HttpSession session)throws Exception{
-		System.out.println("222222222");
+		
 		String sysusers=complaints.getComsysuser();
 		JSONObject result = new JSONObject();
 		sysuser resultTotal = userService.selectujobnumber(sysusers);
             //System.out.println(resultTotal);
 		if(resultTotal!=null){
 			 if(sysusers.equals(resultTotal.getUjobnumber())){   //说明员工编码正确
-				 complaints.setComtime(new Date());
+				complaints.setComtime(new Date());
+				complaints.setComdisposetype("未启动");
+				complaints.setComdisposesysuser("无");
+				complaints.setComdisposemethod("无");
 				 complaintsService.insertSelective(complaints);
 		        	System.out.println("员工编码正确");
 		    		result.put("success", "true1");
@@ -96,5 +99,24 @@ public class ComplaintsController {
 		ResponseUtil.write(response, result);
 		System.out.println("list:"+jsonArray);
 		return null;
+	}
+	@RequestMapping(value="/updatestate",method=RequestMethod.POST)
+	public String updatestate(@RequestParam(value="sta",required=false)String sta,@RequestParam(value="tsid",required=false)int tsid,@RequestParam(value="comdisposesysuserss",required=false)String comdisposesysuserss,@RequestParam(value="comdisposemethods",required=false)String comdisposemethods,HttpServletResponse res) throws Exception{
+		int resultTotal = 0;
+		Complaints complaints=new Complaints();
+		complaints.setComid(tsid);
+		complaints.setComdisposetype(sta);
+		complaints.setComdisposesysuser(comdisposesysuserss);
+		complaints.setComdisposemethod(comdisposemethods);
+		
+            resultTotal = complaintsService.updateByPrimaryKeySelective(complaints);
+        JSONObject jsonObject = new JSONObject();
+        if(resultTotal > 0){   //说明修改成功
+            jsonObject.put("success", true);
+        }else{
+            jsonObject.put("success", false);
+        }
+        ResponseUtil.write(res, jsonObject);
+        return null;
 	}
 }
