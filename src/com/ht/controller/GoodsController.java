@@ -218,6 +218,22 @@ public class GoodsController {
 			map.put("gstate", 3);
 			list1.add(goodsService.monthGoodCount(map));
 		}
+		//已揽收
+		map.put("gstate", "2");
+		float success=goodsService.queryAllCount(map);
+		//已拒收
+		map.put("gstate", "3");
+		float fial=goodsService.queryAllCount(map);
+		//已取消
+		map.put("gstate", "4");
+		float tuihui=goodsService.queryAllCount(map);
+		float count=success+fial+tuihui;
+		float succes1=StringUtil.keepNumtwo(success/count)*100;
+		float succes2=StringUtil.keepNumtwo(fial/count)*100;
+		float succes3=StringUtil.keepNumtwo(tuihui/count)*100;
+		request.setAttribute("success", succes1);
+		request.setAttribute("fial", succes2);
+		request.setAttribute("tuihui", succes3);
 		request.setAttribute("yi", list);
 		request.setAttribute("ju", list1);
 		return "goods/goodsView";

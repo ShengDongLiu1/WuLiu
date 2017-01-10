@@ -71,4 +71,15 @@ public class StringUtil {
 		float result = b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
 		return result;
 	}
+	
+	/**
+	 * 保留两位小数float
+	 * @param num
+	 * @return
+	 */
+	public static float keepNumtwo(float num){
+		BigDecimal b = new BigDecimal(num);
+		float result = b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+		return result;
+	}
 }

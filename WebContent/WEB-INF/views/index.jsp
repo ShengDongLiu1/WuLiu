@@ -54,7 +54,7 @@
 .limg{backgroung-color:red;}
 
 .alt{
-	width:62%;
+	width:50.5%;
 	height:41px;
 	color:white;
 	margin:0 auto;
@@ -72,6 +72,7 @@
 	vspace:0;
 }
 .look{color:yellow}
+
 </style>
 		<!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -128,12 +129,12 @@
 				
 				<div class="alt" >
 					<!-- 文本滚动 -->
-					<div style="width:70%;float:left;height:41px;">
+					<div style="width:54%;float:left;height:41px;">
 						<marquee id="gundong" loop=0 behavior=scroll onmouseover="this.stop()" onmouseout="this.start()">
 						 	<span id="mess"></span>
 						</marquee>
 					</div>
-					<div style="width:28%;height:41px;float:right;">
+					<div style="width:230px;height:41px;float:right;">
 						<form action="http://www.baidu.com/baidu" target="_blank">
 							<a href="http://www.baidu.com/"><img src="https://gss0.bdstatic.com/70cFsjip0QIZ8tyhnq/img/logo-80px.gif" alt="Baidu" align="bottom" border="0"></a>
 							<input class="easyui-validatebox easyui-textbox" type=text name=word style="width: 80px;"  placeholder="百度一下">
@@ -163,10 +164,9 @@
 				</c:if>
 			</c:forEach>
  			<%-- <object type="application/x-shockwave-flash" style="outline:none;" data="<%=path %>/image/hamster.swf" width="240" height="240"><param name="wmode" value="opaque"></param></object> --%>
-
 		</div> 
 	 	<div class="content">
-			<div id="tabs" class="easyui-tabs" style="height: 100%;">
+			<div id="tabs" class="easyui-tabs" style="height:100%;width:100%;">
 				<div title="主页" style="padding:10px;">
 				<iframe name="main" height="600px" width="100%" scrolling="auto"
 					frameborder="0" src="<%=basePath%>user/welcome">
@@ -282,6 +282,7 @@
 			//5分钟无操作自动锁屏
 			if( now - lastMove > 500000 ){
 				show();
+				lockUser='lockUser';
 			}
 		}, 1000);
 		
@@ -355,6 +356,7 @@
 		function openditu(){
 			   $("#addWin").window("open");
 		}
+		
 		</script>
 	</body>
 </html>
