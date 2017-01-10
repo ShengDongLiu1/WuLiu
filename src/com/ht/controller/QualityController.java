@@ -201,4 +201,29 @@ public class QualityController {
 		ResponseUtil.write(resp, jsonObject);
 		return null;
 	}
+	
+	/**
+	 * 把质检失败的货物添加到退回管理
+	 * @param quality
+	 * @param thelibrary
+	 * @param resp
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/save3")
+	public String save3(Receipt receipt, HttpServletResponse resp) throws Exception{
+		int resultObj = 0;
+		System.out.println(receipt.getRid()+", "+receipt.getRstart());
+		if(receipt.getRid() != null){
+			resultObj = qualityService.receiptUpdate(receipt);
+		}
+		JSONObject jsonObject = new JSONObject();
+		if(resultObj > 0){
+			jsonObject.put("success", true);
+		}else{
+			jsonObject.put("success", false);
+		}
+		ResponseUtil.write(resp, jsonObject);
+		return null;
+	}
 }

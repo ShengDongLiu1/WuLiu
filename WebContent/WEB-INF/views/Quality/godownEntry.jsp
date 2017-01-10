@@ -37,6 +37,8 @@
 			.yi{color:orange;}
 			
 			.ju{color:red;}
+			
+			.tui{color:grey;}
 		</style>
 		<script type="text/javascript">
 			/* 员工姓名 */
@@ -57,6 +59,8 @@
 					status="<span class='yi'>检验通过</span>"
 				}else if(value.rstart=='4'){
 					status="<span class='ju'>检验失败</span>"
+				}else if(value.rstart=='6'){
+					status="<span class='tui'>待退回</span>"
 				}
 				return status;
 			}
@@ -192,11 +196,14 @@
         		</tr>
         	</table>
         </div>
+        <div>
+        	
+        </div>
 	</body>
 	<script>
 	var url;
 	$(function() {
-		setPagination("dg");
+		setPaginat9ion("dg");
 	});
 	// 显示数据
 	function setPagination(tableId) {
@@ -272,6 +279,8 @@
 			if(obj.receipt.rstart == '1'){
 				btn+="&nbsp;<a href='javascript:openTrueWin()'>通过</a>";
 				btn+="&nbsp;<a href='javascript:openFalseWin()'>失败</a>"
+			}else if(obj.receipt.rstart == '4'){
+				btn+="&nbsp;<a href='javascript:confirm()'>退回</a>"
 			}
 			return btn;
 		}
@@ -376,5 +385,24 @@
 			$("edate").datebox("setValue", "");
 		}
 		
+		/* 货物退回 */
+		function confirm() {
+			$.messager.confirm('消息提示', '是否加入退回管理？', function(r){
+				if (r){
+					var selectedRows = $("#dg").datagrid("getSelections");
+					var row = selectedRows[0];
+					$.post("<%=path %>/quality/save3",{'rid':row.receipt.rid,'rstart':6},function(index){
+						if(index.success ){
+						  $.messager.alert('消息提示','退回成功!');
+			         	  $("#dg").datagrid("load");
+			    		}else{
+			    		  $.messager.alert('消息提示','退回失败!');
+			    		}
+			   		},"json");
+				}else{
+					return false;
+				}
+			});
+		}
 		</script>
 </html>

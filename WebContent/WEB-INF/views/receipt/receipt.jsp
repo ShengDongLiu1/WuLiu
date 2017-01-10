@@ -37,6 +37,8 @@ a:hover {color:#54287C}
 
 .success{color:green;}
 
+.tui{color:grey;}
+
 .easyui-textbox,.easyui-numberbox{width:10%;}
 </style>
 <script type="text/javascript">
@@ -153,6 +155,8 @@ function toSub(value,obj){
 		btn="<span class='failure'>质检失败</span>";
 	}else if(obj.rstart == 5){
 		btn="<span class='success'>已入库</span>";
+	}else if(obj.rstart == 6){
+		btn="<span class='退'>待退回</span>";
 	}
 	return btn;
 }
