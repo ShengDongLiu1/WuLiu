@@ -79,7 +79,8 @@ public class StringUtil {
 	 */
 	public static float keepNumtwo(float num){
 		BigDecimal b = new BigDecimal(num);
-		float result = b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+		float result = b.setScale(4, BigDecimal.ROUND_HALF_UP).floatValue();
 		return result;
 	}
+	
 }

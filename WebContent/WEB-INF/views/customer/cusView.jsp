@@ -10,7 +10,7 @@
 <script type="text/javascript" src="<%=path %>/js/jquery-1.10.2.min.js"></script>
 </head>
 <body>
-	<div id="canvasDiv" style="margin-left: 5%;"></div>
+	<div id="canvasDiv" style="margin:10% 0 0 10%;"></div>
 	<script type="text/javascript">
 	$(function(){
 		var sta1='${sta1}';
@@ -18,12 +18,20 @@
 		var sta3='${sta3}';
 		var sta4='${sta4}';
 		var sta5='${sta5}';
+		sta1 = Math.round(sta1*100)/100;
+		sta2 = Math.round(sta2*100)/100;
+		sta3 = Math.round(sta3*100)/100;
+		sta4 = Math.round(sta4*100)/100;
+		sta5 = Math.round(sta5*100)/100;
+		var other=100-(sta1+sta2+sta3+sta4+sta5);
+		other=Math.round(other*100)/100;
 		var data = [
-		        	{name : '一星级',value : sta1,color:'#4572a7'},
-		        	{name : '二星级',value : sta2,color:'#aa4643'},
-		        	{name : '三星级',value : sta3,color:'#89a54e'},
+		        	{name : '一星级',value : sta1,color:'#FFB261'},
+		        	{name : '二星级',value : sta2,color:'#18A15F'},
+		        	{name : '三星级',value : sta3,color:'#DD5347'},
 		        	{name : '四星级',value : sta4,color:'#80699b'},
-		        	{name : '五星级',value : sta5,color:'#3d96ae'}
+		        	{name : '五星级',value : sta5,color:'#53CDFD'},
+		        	{name : '其他',value : other,color:'#957F38'}
 	        	];
 
     	
@@ -31,7 +39,7 @@
 			render : 'canvasDiv',
 			data: data,
 			title : {
-				text : '客户星级分级',
+				text : '客户星级分析',
 				height:40,
 				fontsize : 30,
 				color : '#282828'
@@ -45,7 +53,7 @@
 			sub_option : {
 				mini_label_threshold_angle : 40,//迷你label的阀值,单位:角度
 				mini_label:{//迷你label配置项
-					fontsize:20,
+					fontsize:12,
 					fontweight:600,
 					color : '#ffffff'
 				},
@@ -67,7 +75,8 @@
 				},
 				listeners:{
 					parseText:function(d, t){
-						return d.get('value')+"%";//自定义label文本
+						var lab=d.get('name');
+						return lab+=d.get('value')+"%";//自定义label文本
 					}
 				} 
 			},

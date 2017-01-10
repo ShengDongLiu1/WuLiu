@@ -244,6 +244,7 @@ public class Customerller {
 		int resultTotal=0; // 操作的记录条数
 		if(customer.getCid()==null){
 			customer.setCkhno("KH"+DateUtil.getCurrentDateStr()); // 动态生成客户编号
+			customer.setCpassword(AES.getInstance().encrypt("123456"));//默认密码
 			resultTotal=customerService.add(customer);
 		}else{
 			resultTotal=customerService.update(customer);
@@ -394,7 +395,7 @@ public class Customerller {
 		float sta3=StringUtil.keepNumtwo(count3/count)*100;
 		float sta4=StringUtil.keepNumtwo(count4/count)*100;
 		float sta5=StringUtil.keepNumtwo(count5/count)*100;
-		System.out.println("count:"+count+"sta1:"+sta1+"sta2:"+sta2+"sta3:"+sta3+"sta4:"+sta4+"sta5:"+sta5);
+//		System.out.println("count:"+count+"sta1:"+sta1+"sta2:"+sta2+"sta3:"+sta3+"sta4:"+sta4+"sta5:"+sta5);
 		request.setAttribute("sta1", sta1);
 		request.setAttribute("sta2", sta2);
 		request.setAttribute("sta3", sta3);

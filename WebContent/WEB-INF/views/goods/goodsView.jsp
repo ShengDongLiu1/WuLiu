@@ -17,14 +17,14 @@ $(function(){
     ju = "${ju}".replace('[','').replace(']','').split(',');
 	var data = [
 	         	{
-	         		name : '揽收',
+	         		name : '已揽收',
 	         		value:yi,
-	         		color:'#1385a5'
+	         		color:'#38CDAE'
 	         	},
 	         	{
-	         		name : '拒收',
+	         		name : '已拒收',
 	         		value:ju,
-	         		color:'#c56966'
+	         		color:'#FFB261'
 	         	}
 	         ];
 	var chart = new iChart.ColumnMulti2D({
