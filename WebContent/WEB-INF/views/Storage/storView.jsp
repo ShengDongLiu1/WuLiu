@@ -16,7 +16,9 @@
 	<script type="text/javascript">
 		//折线图
 		var list = new Array();
+		var weekDate = new Array();
     	list = "${list}".replace('[','').replace(']','').split(',');
+    	weekDate = "${weekDate}".replace('[','').replace(']','').split(',');
 		var line = echarts.init(document.getElementById('line'));
 		line.setOption({
 		    color:["#32d2c9"],
@@ -45,7 +47,7 @@
 		    xAxis:  {
 		        type: 'category',
 		        boundaryGap: false,
-		        data: ['周一','周二','周三','周四','周五','周六','周日'],
+		        data: weekDate,
 		        axisLabel: {
 		            interval:0
 		        }

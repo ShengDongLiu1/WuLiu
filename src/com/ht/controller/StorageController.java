@@ -160,23 +160,26 @@ public class StorageController {
 	@RequestMapping(value="/storView")
 	public String lastStorage(HttpServletRequest request){
 		List<Long> list=new ArrayList<>();
+		List<String> weekDate=new ArrayList<>();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Calendar c = Calendar.getInstance();
         int day=Lastweek.weekDate();
+        String[] num = {"","周一","周二","周三","周四","周五","周六","周日"}; 
         //过去七天
-        for(int i=0;i<7;i++){
+        for(int i=1;i<=7;i++){
         	c.setTime(new Date());
 	        c.add(Calendar.DATE, -6-day+i);
 	        Date date = c.getTime();
 	        String str = format.format(date);
 	        Map<String, Object> map= new HashMap<>();
 	        map.put("storagetime", str);
-	        System.out.println(date);
 	        Long total=storageService.queryAllCount(map);	//查询总条数
 	        list.add(total);
-	        System.out.println("过去"+(7-i)+"天："+str+"\t揽收："+total+"批货物");
+	        weekDate.add(str+" "+num[i]);
+//	        System.out.println("过去"+(7-i)+"天："+str+"\t揽收："+total+"批货物");
         }
         request.setAttribute("list", list);
+        request.setAttribute("weekDate", weekDate);
 		return "Storage/storView";
 	}
 }
