@@ -247,6 +247,9 @@
 			<if test="sbarcadeid!=null and sbarcadeid!='' ">
 				and sbarcadeid like #{sbarcadeid}
 			</if>
+			<if test="storagetime!=null and storagetime!='' ">
+				and DATE(storagetime) = #{storagetime,jdbcType=TIMESTAMP}
+			</if>
 		</where>
  </select>
  

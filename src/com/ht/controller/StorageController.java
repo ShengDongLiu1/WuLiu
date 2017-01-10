@@ -1,5 +1,8 @@
 package com.ht.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ht.dto.Barcode;
+import com.ht.dto.Lastweek;
 import com.ht.dto.PageBean;
 import com.ht.dto.StringUtil;
 import com.ht.entity.Goods;
@@ -147,5 +151,32 @@ public class StorageController {
         }
         ResponseUtil.write(res, jsonObject);
         return null;
+	}
+	
+	/**
+	 * 上一周货物揽收情况
+	 * @return
+	 */
+	@RequestMapping(value="/storView")
+	public String lastStorage(HttpServletRequest request){
+		List<Long> list=new ArrayList<>();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        int day=Lastweek.weekDate();
+        //过去七天
+        for(int i=0;i<7;i++){
+        	c.setTime(new Date());
+	        c.add(Calendar.DATE, -6-day+i);
+	        Date date = c.getTime();
+	        String str = format.format(date);
+	        Map<String, Object> map= new HashMap<>();
+	        map.put("storagetime", str);
+	        System.out.println(date);
+	        Long total=storageService.queryAllCount(map);	//查询总条数
+	        list.add(total);
+	        System.out.println("过去"+(7-i)+"天："+str+"\t揽收："+total+"批货物");
+        }
+        request.setAttribute("list", list);
+		return "Storage/storView";
 	}
 }

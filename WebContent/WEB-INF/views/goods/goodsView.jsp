@@ -15,7 +15,6 @@ $(function(){
 	var ju = new Array();
     yi = "${yi}".replace('[','').replace(']','').split(',');
     ju = "${ju}".replace('[','').replace(']','').split(',');
-	var val=[0, 2, 1, 1, 1, 1];
 	var data = [
 	         	{
 	         		name : '揽收',
@@ -31,7 +30,7 @@ $(function(){
 	var chart = new iChart.ColumnMulti2D({
 			render : 'canvasDiv',
 			data: data,
-			labels:["一月","二月","三月","四月","五月","六月","七月","八月","九月"],
+			labels:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
 			title : '2017年度每月揽收情况',
 			subtitle : '',
 			footnote : '数据来源：入库管理',
