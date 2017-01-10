@@ -366,5 +366,42 @@ public class Customerller {
 		return map;
 	}
 	
+	/**
+	 * 每个星级所占有的客户
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/cusView")
+	public String cusView(HttpServletRequest request){
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("ccredit", "★☆☆☆☆");
+		float count1=customerService.getTotal(map);
+		
+		map.put("ccredit", "★★☆☆☆");
+		float count2=customerService.getTotal(map);
+		
+		map.put("ccredit", "★★★☆☆");
+		float count3=customerService.getTotal(map);
+		
+		map.put("ccredit", "★★★★☆");
+		float count4=customerService.getTotal(map);
+		
+		map.put("ccredit", "★★★★★");
+		float count5=customerService.getTotal(map);
+		float count=count1+count2+count3+count4+count5;
+		float sta1=StringUtil.keepNumtwo(count1/count)*100;
+		float sta2=StringUtil.keepNumtwo(count2/count)*100;
+		float sta3=StringUtil.keepNumtwo(count3/count)*100;
+		float sta4=StringUtil.keepNumtwo(count4/count)*100;
+		float sta5=StringUtil.keepNumtwo(count5/count)*100;
+		System.out.println("count:"+count+"sta1:"+sta1+"sta2:"+sta2+"sta3:"+sta3+"sta4:"+sta4+"sta5:"+sta5);
+		request.setAttribute("sta1", sta1);
+		request.setAttribute("sta2", sta2);
+		request.setAttribute("sta3", sta3);
+		request.setAttribute("sta4", sta4);
+		request.setAttribute("sta5", sta5);
+		return "customer/cusView";
+	}
+	
 	
 }

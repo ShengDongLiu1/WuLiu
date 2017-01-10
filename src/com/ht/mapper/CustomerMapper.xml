@@ -152,6 +152,9 @@
 			<if test="cname!=null and cname!='' ">
 				and cname like #{cname}
 			</if>
+			<if test="ccredit!=null and ccredit!='' ">
+				and ccredit = #{ccredit}
+			</if>
 		</where>
 	</select>
 	<delete id="delete" parameterType="Integer">
