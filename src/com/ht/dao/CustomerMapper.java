@@ -60,14 +60,28 @@ public interface CustomerMapper {
 	 * @param email
 	 * @return
 	 */
-	public int checkEmail(String email);
+	public int checkEmail(String cemail);
 	
 	/**
-	 * 手机号码匹配
+	 * 邮箱匹配2
 	 * @param email
 	 * @return
 	 */
+	public int checkEmail2(Customer customer);
+	
+	/**
+	 * 手机号码匹配
+	 * @param cphone
+	 * @return
+	 */
 	public int checkCphone(String cphone);
+	
+	/**
+	 * 手机号码匹配2
+	 * @param customer
+	 * @return
+	 */
+	public int checkCphone2(Customer customer);
 	
 	/**
 	 * 删除客户

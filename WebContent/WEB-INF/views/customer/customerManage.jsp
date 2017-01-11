@@ -21,7 +21,52 @@
 		"cname":$("#s_name").val()
 	 });
  }
- 
+ /* 邮箱唯一匹配验证 */
+ function check1(){
+ 	var cemail = $("#cemail").val();
+ 	var cid = $("#cid").val();
+ 	if(cid != "") {
+ 		$.post("${pageContext.request.contextPath}/customer/checkEmail2",{cemail:cemail,cid:cid},function(result1){
+ 	 		if(!result1.success){
+ 	 			$.messager.alert("系统提示","该邮箱已存在！");
+ 	 			$("#cemail").textbox("setValue",'');
+ 	 			return false;
+ 	 		}
+ 	 	},"json");
+ 	}else {
+ 		$.post("${pageContext.request.contextPath}/customer/checkEmail",{cemail:cemail},function(result1){
+ 	 		if(!result1.success){
+ 	 			$.messager.alert("系统提示","该邮箱已存在！");
+ 	 			$("#cemail").textbox("setValue",'');
+ 	 			return false;
+ 	 		}
+ 	 	},"json");
+ 	}
+ 	
+ }
+ /* 手机唯一匹配验证 */
+ function check2(){
+ 	var cphone = $("#cphone").val();
+ 	var cid = $("#cid").val();
+ 	if(cid != "") {
+ 		$.post("${pageContext.request.contextPath}/customer/checkCphone2",{cphone:cphone,cid:cid},function(result2){
+ 	 		if(!result2.success){
+ 	 			$.messager.alert("系统提示","该联系人已存在！");
+ 	 			$("#cphone").textbox("setValue",'');
+ 	 			return false;
+ 	 		}
+ 	 	},"json");
+ 	}else {
+ 		$.post("${pageContext.request.contextPath}/customer/checkCphone",{cphone:cphone},function(result2){
+ 	 		if(!result2.success){
+ 	 			$.messager.alert("系统提示","该联系人已存在！");
+ 	 			$("#cphone").textbox("setValue",'');
+ 	 			return false;
+ 	 		}
+ 	 	},"json");
+ 	}
+ 	
+ }
  function openCustomerAddDialog(){
 	 resetValue();
 	 $("#dlg").dialog("open").dialog("setTitle","添加客户信息");
@@ -121,7 +166,7 @@
 </head>
 <body style="margin: 1px">
  <table id="dg" title="客户信息查询" class="easyui-datagrid"
-    pagination="true" rownumbers="true"
+   pagination="true" rownumbers="true"
    url="${pageContext.request.contextPath}/customer/list" fit="true" toolbar="#tb">
    <thead data-options="frozen:true">
 		<tr>
@@ -188,9 +233,10 @@
    			<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
    		</tr>
    		<tr>
-   			<td>客户地址</td>
+   			<td>客户地址：</td>
    			<td colspan="4">
    				<input type="text" id="caddress" name="caddress" style="width: 400px" class="easyui-textbox" required="true"/>&nbsp;<font color="red">*</font>
+   				<input type="hidden" id="cid" name="cid"/>
    			</td>
    		</tr>
    	</table>
@@ -202,28 +248,4 @@
  	<a href="javascript:closeCustomerDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
  </div>
 </body>
-<script type="text/javascript">
-function check1(){
-	var cemail = $("#cemail").val();
-	$.post("${pageContext.request.contextPath}/customer/checkEmail",{cemail:cemail},function(result1){
-		if(!result1.success){
-			$.messager.alert("系统提示","该邮箱已存在！");
-			$("#cemail").textbox("setValue",'');
-			return false;
-		}
-	},"json");
-}
-
-/* 手机验证匹配 */
- function check2(){
-	var cphone = $("#cphone").val();
-	$.post("${pageContext.request.contextPath}/customer/checkCphone",{cphone:cphone},function(result2){
-		if(!result2.success){
-			$.messager.alert("系统提示","该联系人已存在！");
-			$("#cphone").textbox("setValue",'');
-			return false;
-		}
-	},"json");
-}
-</script>
 </html>

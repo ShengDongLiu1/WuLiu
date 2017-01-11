@@ -55,11 +55,19 @@ public class CustomerServiceImpl implements CustomerService{
 		return customerMapper.updateUserPwd(customer);
 	}
 	@Override
-	public int checkEmail(String email) {
-		return customerMapper.checkEmail(email);
+	public int checkEmail(String cemail) {
+		return customerMapper.checkEmail(cemail);
 	}
 	@Override
 	public int checkCphone(String cphone) {
 		return customerMapper.checkCphone(cphone);
+	}
+	@Override
+	public int checkEmail2(Customer customer3) {
+		return customerMapper.checkEmail2(customer3);
+	}
+	@Override
+	public int checkCphone2(Customer customer) {
+		return customerMapper.checkCphone2(customer);
 	}
 }

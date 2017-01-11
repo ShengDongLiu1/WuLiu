@@ -30,10 +30,16 @@
     select count(*) from customer where cemail = #{cemail}
   </select>
   
+  <select id="checkEmail2" resultType="java.lang.Integer" parameterType="com.ht.entity.Customer">
+    select count(*) from customer where cemail = #{cemail} and cid != #{cid,jdbcType=INTEGER}
+  </select>
+  
    <select id="checkCphone" resultType="java.lang.Integer" parameterType="String">
     select count(*) from customer where cphone = #{cphone}
   </select>
-  
+ <select id="checkCphone2" resultType="java.lang.Integer" parameterType="com.ht.entity.Customer">
+    select count(*) from customer where cphone = #{cphone} and cid != #{cid,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from customer
     where cid = #{cid,jdbcType=INTEGER}

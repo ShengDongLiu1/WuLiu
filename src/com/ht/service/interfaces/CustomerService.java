@@ -60,10 +60,17 @@ public interface CustomerService {
 	
 	/**
 	 * 手机号码匹配
-	 * @param email
+	 * @param cphone
 	 * @return
 	 */
 	public int checkCphone(String cphone);
+	
+	/**
+	 * 手机号码匹配2
+	 * @param customer
+	 * @return
+	 */
+	
 	
 	/**
 	 * 删除客户
@@ -75,5 +82,9 @@ public interface CustomerService {
 	public Customer select(int cid);
 	
 	int updateUserPwd(Customer customer);
+
+	public int checkEmail2(Customer customer3);
+	
+	public int checkCphone2(Customer customer);
 
 }

@@ -334,7 +334,6 @@ public class Customerller {
 	@RequestMapping("/updatePwd")
 	public String userRevise(Customer customer3, @RequestParam("cid")String cid, @RequestParam("newUserpwd")String newUserpwd){
 		try {
-			System.out.println(cid+"=++++++++++++++="+newUserpwd);
 			customer3.setCid(Integer.valueOf(cid));
 			customer3.setCpassword(AES.getInstance().encrypt(newUserpwd));
 			customerService.updateUserPwd(customer3);
@@ -345,19 +344,36 @@ public class Customerller {
 	}
 	
 	//判断邮箱
-		@RequestMapping("/checkEmail")
-		public String checkEmail(@RequestParam("cemail")String cemail,HttpServletResponse response) throws Exception{
-			int resultTotao = 0;
-			resultTotao = customerService.checkEmail(cemail);
-			JSONObject result1=new JSONObject();
-			if(resultTotao > 0) {
-				result1.put("success", false);
-			}else{
-				result1.put("success", true);
-			}
-			ResponseUtil.write(response, result1);
-			return "public/login";
+	@RequestMapping("/checkEmail")
+	public String checkEmail(@RequestParam("cemail")String cemail,HttpServletResponse response) throws Exception{
+		int resultTotao = 0;
+		resultTotao = customerService.checkEmail(cemail);
+		JSONObject result1=new JSONObject();
+		if(resultTotao > 0) {
+			result1.put("success", false);
+		}else{
+			result1.put("success", true);
 		}
+		ResponseUtil.write(response, result1);
+		return "public/login";
+	}
+		
+	//判断邮箱2
+	@RequestMapping("/checkEmail2")
+	public String checkEmail2(Customer customer3,@RequestParam("cemail")String cemail,@RequestParam("cid")String cid,HttpServletResponse response) throws Exception{
+		int resultTotao = 0;
+		customer3.setCid(Integer.valueOf(cid));
+		customer3.setCemail(cemail);
+		resultTotao = customerService.checkEmail2(customer3);
+		JSONObject result2=new JSONObject();
+		if(resultTotao > 0) {
+			result2.put("success", false);
+		}else{
+			result2.put("success", true);
+		}
+		ResponseUtil.write(response, result2);
+		return "public/login";
+	}
 	//判断手机号码
 	@RequestMapping("/checkCphone")
 	public String checkCphone(@RequestParam("cphone")String cphone,HttpServletResponse response) throws Exception{
@@ -370,6 +386,22 @@ public class Customerller {
 			result2.put("success", true);
 		}
 		ResponseUtil.write(response, result2);
+		return "public/login";
+	}
+	//判断手机2
+	@RequestMapping("/checkCphone2")
+	public String checkCphone2(Customer customer3,@RequestParam("cphone")String cphone,@RequestParam("cid")String cid,HttpServletResponse response) throws Exception{
+		int resultTotao = 0;
+		customer3.setCid(Integer.valueOf(cid));
+		customer3.setCphone(cphone);
+		resultTotao = customerService.checkCphone2(customer3);
+		JSONObject result1=new JSONObject();
+		if(resultTotao > 0) {
+			result1.put("success", false);
+		}else{
+			result1.put("success", true);
+		}
+		ResponseUtil.write(response, result1);
 		return "public/login";
 	}
 	//修改密码
