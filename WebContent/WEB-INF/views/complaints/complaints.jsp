@@ -34,6 +34,7 @@
 		rownumbers:true,
 		autoRowHeight: true,
 		pagination:true,
+		singleSelect:true,
 		border:false,
 		pageSize:20,
 		fit:true">
@@ -59,7 +60,7 @@
 	<div id="tb" style="padding: 2px;">
 		<!-- 筛选 -->
 		投诉人：<input id="comsysuser" name="comsysuser" class="easyui-textbox" style="width:100px;"/>
-		投诉类型：<select name="comtype" id="comtype" class="input2"  style="width:90px">
+		投诉类型：<select name="comtype" id="comtype" class="easyui-combobox" data-options="editable:false" style="width:90px">
 					<option value="" class="easyui-selectbox" selected = "selected">请选择</option>
 					<option value="生产类投诉">生产类投诉</option>
 					<option value="销售类投诉">销售类投诉</option>
@@ -70,7 +71,7 @@
 				</select>
 		投诉员工工号：<input id="comcusid" name="comcusid" class="easyui-textbox" style="width:100px;"/>
 		投诉标题：<input id="comtitle" name="comtitle" class="easyui-textbox" style="width:100px;"/>
-		投诉程度：<select name="comlevel" id="comlevel" class="input2"  style="width:90px">
+		投诉程度：<select name="comlevel" id="comlevel" class="easyui-combobox" data-options="editable:false" style="width:90px">
 					<option value="" selected = "selected">请选择</option>
 					<option value="普通">普通</option>
 					<option value="紧急">紧急</option>
@@ -78,7 +79,7 @@
 				</select>
 		投诉时间：<input id="comtime" name="comtime" class="easyui-datetimebox easyui-textbox" style="width:100px;"/>-
 				<input id="comtime1" name="comtime1" class="easyui-datetimebox easyui-textbox" style="width:100px;"/>
-		部门跟进：<select name="comdisposetype" id="comdisposetype" class="input2"  style="width:90px">
+		部门跟进：<select name="comdisposetype" id="comdisposetype" class="easyui-combobox" data-options="editable:false" style="width:90px">
 					<option value="" selected = "selected">请选择</option>
 					<option value="未启动">未启动</option>
 					<option value="已结案">已结案</option>

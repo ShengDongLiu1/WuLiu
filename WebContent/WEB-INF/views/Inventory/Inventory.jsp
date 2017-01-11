@@ -43,6 +43,7 @@ a:hover {color:#54287C}
 		method:'get', 
 		rownumbers:true,
 		autoRowHeight: true,
+		singleSelect:true,
 		pagination:true,
 		border:false,
 		pageSize:10,
@@ -81,8 +82,20 @@ a:hover {color:#54287C}
 		<!-- 筛选 -->
 		货物名称：<input id="gname" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
 		库位名称：<input id="loname" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
-		库位等级：<input id="lolevel" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
-		库位状态：<input id="lostate" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
+		库位等级：
+		<select name="lolevel" id="lolevel" class="easyui-combobox" data-options="editable:false" style="width:90px">
+					<option value="" selected = "selected">请选择</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+				</select>
+		库位状态：
+		<select name="lostate" id="lostate" class="easyui-combobox" data-options="editable:false" style="width:90px">
+					<option value="" selected = "selected">请选择</option>
+					<option value="已开启">已开启</option>
+					<option value="已关闭">已关闭</option>
+				</select>
 		<a href="javascript:selectfiltrate()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">筛选</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	</div>
 	
@@ -127,8 +140,15 @@ a:hover {color:#54287C}
                     </tr>
                     <tr>
                         <td>库位等级：</td>
-                        <td><input type="text" id="lolevel" name="lolevel"
-                            class="easyui-validatebox easyui-textbox" required="true" />&nbsp;<span
+                        <td>
+                            <select name="lolevel" id="lolevel" class="easyui-combobox" data-options="editable:false" style="width:90px">
+								<option value="" selected = "selected">请选择</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+							</select>
+                            &nbsp;<span
                             style="color: red">*</span>
                         </td>
                     </tr>

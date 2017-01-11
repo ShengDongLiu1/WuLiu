@@ -23,6 +23,7 @@
 		rownumbers:true,
 		autoRowHeight: true,
 		pagination:true,
+		singleSelect:true,
 		border:false,
 		pageSize:20,
 		fit:true">

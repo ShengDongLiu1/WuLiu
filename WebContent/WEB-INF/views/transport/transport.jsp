@@ -22,6 +22,7 @@
 		method:'get', 
 		rownumbers:true,
 		autoRowHeight: true,
+		singleSelect:true,
 		pagination:true,
 		border:false,
 		pageSize:20,
@@ -33,7 +34,7 @@
 				<th data-options="field:'tdriverphone',width:100" align="center">电话号码</th>
 				<th data-options="field:'tvehicleid',width:100" align="center">车牌号码</th>
 				<th data-options="field:'tvehicletype',width:100" align="center">车辆类型</th>
-				<th data-options="field:'tvehiclecapacity',width:100" align="center">车牌号码</th>
+				<th data-options="field:'tvehiclecapacity',width:100" align="center">车辆容量</th>
 				<th data-options="field:'idcard',width:150" align="center">身份证号码</th>
 			</tr>
 		</thead>
@@ -49,7 +50,7 @@
 		车牌号码：<input id="tvehicleid" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
 		车辆类型：<input id="tvehicletype" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
 		车辆容量：<input id="tvehiclecapacity" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
-		车辆容量：<input id="idcard" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
+		身份证号码：<input id="idcard" class="easyui-validatebox easyui-textbox" style="width:100px;"/>
 		<a href="javascript:selectfiltrateTran()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">筛选</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	</div>
 	<div id="dlg-buttons">
@@ -72,7 +73,7 @@
 
                         <td>司机电话：</td>
                         <td><input type="text" id="tdriverphone" name="tdriverphone"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            class="easyui-validatebox " data-options="required:true,validType:'mobile[this]'"/>&nbsp;<span
                             style="color: red">*</span>
                         </td>
                     </tr>
@@ -99,7 +100,7 @@
                         
                         <td>身份证：</td>
                         <td><input type="text" id="idcard" name="idcard"
-                            class="easyui-validatebox" required="true" />&nbsp;<span
+                            class="easyui-validatebox" data-options="required:true" />&nbsp;<span
                             style="color: red">*</span>
                         </td>
                     </tr>
@@ -129,7 +130,24 @@
 			});
 		}
 		
-
+		$.extend($.fn.validatebox.defaults.rules, { 
+			mobile: {// 验证手机号码
+		        validator: function (value) {
+		            return /^(13|15|18)\d{9}$/i.test(value);
+		        },
+		        message: '手机号码格式不正确'
+			},
+			 idcared: {     
+			        validator: function(value,param){    
+			            var flag= isCardID(value);  
+			            return flag==true?true:false;    
+			        },     
+			        message: '不是有效的身份证号码'    
+			    },
+		})
+		
+ 
+		
 	    function openTranAddDialog() {
 	        $("#dlg").dialog("open").dialog("setTitle", "添加承运车辆");
 	        $("#fm").form("clear");
