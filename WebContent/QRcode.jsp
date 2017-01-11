@@ -17,7 +17,7 @@
 <script>
 
 jQuery(function(){
-	jQuery('#output').qrcode("${user.username}");
+	jQuery('#output').qrcode("${user.ujobnumber}");
 
 })
 </script>

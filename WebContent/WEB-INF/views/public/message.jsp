@@ -52,16 +52,32 @@
 			alert("请输入投诉内容");
 			return false;
 		}
+		else if(comcontent.lengin>200)
+		{
+			alert("投诉内容不能大于200字");
+			return false;
+		}
 		else if(comexpect == "")
 		{
 			alert("请输入期望结果");
+			return false;
+		}
+		else if(comexpect.lengin>200)
+		{
+			alert("期望结果不能大于200字");
 			return false;
 		}
 		else if(comdescr == "")
 		{
 			alert("请输入备注说明");
 			return false;
-		}else{
+		}
+		else if(comdescr.lengin>200)
+		{
+			alert("备注说明不能大于200字");
+			return false;
+		}
+		else{
 			var comtitle = $("#comtitle").val();
 			var comtype = $("#comtype").val();
 			var comlevel = $("#comlevel").val();

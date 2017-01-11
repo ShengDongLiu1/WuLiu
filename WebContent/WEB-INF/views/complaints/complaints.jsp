@@ -78,13 +78,14 @@
 				</select>
 		投诉时间：<input id="comtime" name="comtime" class="easyui-datetimebox easyui-textbox" style="width:100px;"/>-
 				<input id="comtime1" name="comtime1" class="easyui-datetimebox easyui-textbox" style="width:100px;"/>
+		部门跟进：<select name="comdisposetype" id="comdisposetype" class="input2"  style="width:90px">
+					<option value="" selected = "selected">请选择</option>
+					<option value="未启动">未启动</option>
+					<option value="已结案">已结案</option>
+					<option value="不实施">不实施</option>
+				</select>
 		<a href="javascript:selectfiltrateComplaints()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">筛选</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<a href="javascript:handleComplaintComplaints()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">处理投诉</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	</div>
-	<div id="dlg-buttons">
-	    <a href="javascript:saveTransfer()" class="easyui-linkbutton"
-	        iconCls="icon-ok">保存</a> <a href="javascript:closeTransferDialog()"
-	        class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+		<a href="javascript:handleComplaintComplaints()" class="easyui-linkbutton">处理投诉</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	</div>
 	
 	<div id="dlg" class="easyui-dialog"
@@ -258,23 +259,7 @@
 	                }
 	            }, "json");
 	    }
-	    function saveTransfer() {
-	        $("#fm").form("submit", {
-	            url : url,
-	            success : function(result) {
-	                var result = eval('(' + result + ')');
-	                if (result.success) {
-	                    $.messager.alert("系统提示", "保存成功！");
-	                    resetValue();
-	                    $("#dlg").dialog("close");
-	                    $("#dg").datagrid("load");
-	                } else {
-	                    $.messager.alert("系统提示", "保存失败！");
-	                    return;
-	                }
-	            }
-	        });
-	    }
+
 	    
 	    function goodsName(value){
 	    	return value.gname;
@@ -283,18 +268,6 @@
 	    	return value.username;
 	    }
 	    
-	    
-		  function closeTransferDialog() {
-		        $("#dlg").dialog("close");
-		        resetValue();
-		    }
-		 
-	    function resetValue() {
-	        $("#tname").val("");
-	        $("#tsex").val("");
-	        $("#tmes").val("");
-	        
-	    }
 	    
 	    function tbsetValue() {
 	        $("#comsysuser").textbox('setValue',"");
@@ -321,7 +294,7 @@
 	    		 comtitle:comtitle,comlevel:comlevel,comtime:comtime,comtime1:comtime1});
 	    	 tbsetValue();
 	    }
-	    
+
 	    /* 将Thu Mar 19 2015 12:00:00 GMT+0800 (中国标准时间)转换为2015-3-19 12:00:00 */
 	    var formatDateTime = function (date) {  
 	        var y = date.getFullYear();  
@@ -335,6 +308,10 @@
 	        return y + '-' + m + '-' + d+' '+h+':'+minute;  
 	    };
 
+	    function toUser(value){
+	 	    	return value.sysuser.usertruename;
+	    }
+	    
 	    /* 将{"date":14,"day":3,"hours":19,"minutes"……}转换为Thu Mar 19 2015 12:00:00 GMT+0800 (中国标准时间) */
 	    function toDate(obj){
 	    	var date = new Date();
@@ -344,10 +321,7 @@
 	    	 date.setSeconds(obj.seconds);
 	    	return formatDateTime(date);
 	    }
-	    
-		function add_goods(){	
-			$("#goods_easyui_addWin").window("open");
-		}
+
 	</script>
 </body>
 </html>

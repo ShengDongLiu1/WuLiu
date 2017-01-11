@@ -40,6 +40,7 @@
 	<association property="sysuser" javaType="com.ht.entity.sysuser">
 	    <result column="ujobnumber" property="ujobnumber" />
 		<result column="USERNAME" property="username" />
+		<result column="USERTRUENAME" property="usertruename" />
 	</association>
   </resultMap>
   <sql id="Base_Column_List">
@@ -211,7 +212,7 @@
   
   <select id="select" parameterType="java.util.Map" resultMap="SelectBaseResultMap">
     select com.comid, com.comtype, com.comcusid, com.comtitle, com.comtime, com.comlevel, com.comsysuser, com.comcontent, 
-    com.comexpect, com.comdescr,com.comdisposetype,com.comdisposesysuser,com.comdisposemethod, cus.ckhno, cus.cname, sys.ujobnumber, sys.username
+    com.comexpect, com.comdescr,com.comdisposetype,com.comdisposesysuser,com.comdisposemethod, cus.ckhno, cus.cname, sys.ujobnumber, sys.username,sys.usertruename
    	 from complaints com,customer cus,sysuser sys
     <where>
     	com.comcusid=cus.cemail and com.comsysuser=sys.ujobnumber

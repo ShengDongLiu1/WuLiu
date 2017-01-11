@@ -132,7 +132,7 @@
 						<li id="xiala">
 							<a tabindex="-1" href="<%=basePath%>user/logout" target="_top">Logout</a>
 							<a tabindex="-1" href="javascript:void(0)" onclick="show()" target="_top">锁屏</a>
-							<a tabindex="-1" href="<%=basePath%>QRcode.jsp?user=${user.username}">生成二维码</a>
+							<a tabindex="-1" href="<%=basePath%>QRcode.jsp?user=${user.ujobnumber}">生成二维码</a>
 							<a tabindex="-1" href='javascript:void(0)' onclick="openditu()">百度地图名片</a>
 						</li>
 					</ul>
