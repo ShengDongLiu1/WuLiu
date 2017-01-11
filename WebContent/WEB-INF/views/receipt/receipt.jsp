@@ -382,7 +382,7 @@ function addGoodSize(){
 				<th field="rreceivecount" width="7%" align="center">剩余货物数量</th>
 				<th field="rdamagedcount" width="7%" align="center" >破损数量</th>
 				<th field="rshelvecount" width="7%" align="center">搁置数量</th>
-				<th field="rtdgoodstime" width="12%" align="center" formatter="toDate">收货时间</th>
+				<th field="rtdgoodstime" width="13%" align="center" formatter="toDate">收货时间</th>
 				<th field="user" width="10%" align="center" formatter="toUserName">收货员</th>
 				<th field="null" width="12%" align="center" formatter="toSub">操作</th>
 			</tr>

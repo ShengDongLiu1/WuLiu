@@ -25,10 +25,6 @@
 			type="text/javascript"></script>
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>js/jquery-easyui/themes/default/easyui.css">
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>js/jquery-easyui/themes/icon.css">
-		<script type="text/javascript" src="<%=basePath %>js/jquery.min.js"></script>
-		<script type="text/javascript" src="<%=basePath %>js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
-		<script type="text/javascript" src="<%=basePath %>js/jquery-easyui/jquery.easyui.min.js"></script>
-
 <style type="text/css">
 
 #line-chart {
@@ -48,7 +44,7 @@
 }
 
 .brand .second {
-	color: #fff;
+	color: #000;
 	font-weight: bold;
 }
 .limg{backgroung-color:red;}
@@ -72,6 +68,24 @@
 	vspace:0;
 }
 .look{color:yellow}
+
+.soner{height:28px;
+	line-height:28px;
+	padding-left:15px;
+	background:#EEEEEE;
+	border-bottom:1px solid white;
+}
+
+.soner:hover{
+	background:#606E89;
+	color:white;
+	cursor: pointer;
+	font-weight:bold;
+}
+
+#mess{color:#000}
+
+#xiala a:hover{background:#EEEEEE;}
 
 </style>
 		<!--[if lt IE 9]>
@@ -98,91 +112,91 @@
 				<span id="error" style="font-size:18px;color:red;font-weight:bold;"></span>
 			</div>
 		</div>
-		<div class="navbar">
-			<div class="navbar-inner">
-				<ul class="nav pull-right">
-					<li id="fat-menu" class="dropdown">
-						<a href="#" role="button" class="dropdown-toggle"
-							data-toggle="dropdown"> <i class="icon-user"></i>
-							${user.usertruename}(${user.sysrole.rolename})  <i class="icon-caret-down"></i>
-						</a>
-
-						<ul class="dropdown-menu">
-							<li>
-								<a tabindex="-1" class="visible-phone" href="#">Settings</a>
-							</li>
-							<li class="divider visible-phone"></li>
-							<li>
-								<a tabindex="-1" href="<%=basePath%>user/logout" target="_top">Logout</a>
-								<a tabindex="-1" href="javascript:void(0)" onclick="show()" target="_top">锁屏</a>
-								<a tabindex="-1" href="<%=basePath%>QRcode.jsp?user=${user.username}">生成二维码</a>
-								<a tabindex="-1" href='javascript:void(0)' onclick="openditu()">百度地图名片</a>
-							</li>
-						</ul>
-					</li>
-
-				</ul>
-				<a class="brand" href="#">
-					<span class="first">欢迎使用</span> 
-					<span class="second">宏图物流仓库管理系统</span>
-				</a>
-				
-				<div class="alt" >
-					<!-- 文本滚动 -->
-					<div style="width:54%;float:left;height:41px;">
-						<marquee id="gundong" loop=0 behavior=scroll onmouseover="this.stop()" onmouseout="this.start()">
-						 	<span id="mess"></span>
-						</marquee>
-					</div>
-					<div style="width:230px;height:41px;float:right;">
-						<form action="http://www.baidu.com/baidu" target="_blank">
-							<a href="http://www.baidu.com/"><img src="https://gss0.bdstatic.com/70cFsjip0QIZ8tyhnq/img/logo-80px.gif" alt="Baidu" align="bottom" border="0"></a>
-							<input class="easyui-validatebox easyui-textbox" type=text name=word style="width: 80px;"  placeholder="百度一下">
-							<input type="submit" value="百度搜索" class="easyui-linkbutton" data-options="iconCls:'icon-search',required:false">
-						</form>
-					</div>
-					<p style="clear:both"></p>
-				</div>
-			</div>
-		
+		<!-- 顶部div -->
+		<div data-options="region:'north',border:false" style="height:42px;background:#E0ECFF;">
 		</div>
-		<div class="sidebar-nav">
-			<c:forEach items="${initfun}" var="top">
-				<c:if test="${top.funpid==\"-1\"}">
-					<a href="#error-menu${top.funid}" class="nav-header collapsed"
-						data-toggle="collapse"><i class="icon-briefcase"></i>${top.funname}<i
-						class="icon-chevron-up"></i> </a>
-					<ul id="error-menu${top.funid}" class="nav nav-list collapse">
-						<c:forEach items="${initfun}" var="child">
-							<c:if test="${child.funpid==top.funid}">
-								<li>
-									<a href="javascript:void(0);" onclick="addTab('${child.funname}','<%=basePath%>${child.funurl}')">${child.funname}</a>
-								</li>
-							</c:if>
-						</c:forEach>
-					</ul>
-				</c:if>
-			</c:forEach>
- 			<%-- <object type="application/x-shockwave-flash" style="outline:none;" data="<%=path %>/image/hamster.swf" width="240" height="240"><param name="wmode" value="opaque"></param></object> --%>
-		</div> 
-	 	<div class="content">
-			<div id="tabs" class="easyui-tabs" style="height:100%;width:100%;">
-				<div title="主页" style="padding:10px;">
-				<iframe name="main" height="600px" width="100%" scrolling="auto"
-					frameborder="0" src="<%=basePath%>user/welcome">
+		<div class="navbar" style="background:#E0ECFF">
+			<ul class="nav pull-right">
+				<li id="fat-menu" class="dropdown">
+					<a href="#" role="button" class="dropdown-toggle"data-toggle="dropdown">
+					<i class="icon-user"></i>
+						${user.usertruename}(${user.sysrole.rolename})
+					<i class="icon-caret-down"></i>
+					</a>
 
-				</iframe>
+					<ul class="dropdown-menu">
+						<li>
+							<a tabindex="-1" class="visible-phone" href="#">Settings</a>
+						</li>
+						<li class="divider visible-phone"></li>
+						<li id="xiala">
+							<a tabindex="-1" href="<%=basePath%>user/logout" target="_top">Logout</a>
+							<a tabindex="-1" href="javascript:void(0)" onclick="show()" target="_top">锁屏</a>
+							<a tabindex="-1" href="<%=basePath%>QRcode.jsp?user=${user.username}">生成二维码</a>
+							<a tabindex="-1" href='javascript:void(0)' onclick="openditu()">百度地图名片</a>
+						</li>
+					</ul>
+				</li>
+
+			</ul>
+			<a class="brand" href="#">
+				<span class="first">欢迎使用</span> 
+				<span class="second">宏图物流仓库管理系统</span>
+			</a>
+			
+			<div class="alt" >
+				<!-- 文本滚动 -->
+				<div style="width:54%;float:left;height:41px;">
+					<marquee id="gundong" loop=0 behavior=scroll onmouseover="this.stop()" onmouseout="this.start()">
+					 	<span id="mess"></span>
+					</marquee>
+				</div>
+				<div style="width:230px;height:41px;float:right;">
+					<form action="http://www.baidu.com/baidu" target="_blank">
+						<a href="http://www.baidu.com/"><img src="https://gss0.bdstatic.com/70cFsjip0QIZ8tyhnq/img/logo-80px.gif" alt="Baidu" align="bottom" border="0"></a>
+						<input class="easyui-validatebox easyui-textbox" type=text name=word style="width: 80px;"  placeholder="百度一下">
+						<input type="submit" value="百度搜索" class="easyui-linkbutton" data-options="iconCls:'icon-search',required:false">
+					</form>
+				</div>
+				<p style="clear:both"></p>
+			</div>
+		</div>
+		<div data-options="region:'west',split:true,title:'菜单'" style="width:220px;border:0px">
+			<div class="easyui-accordion" style="width:100%;border:0px;">
+				<c:forEach items="${initfun}" var="top">
+					<c:if test="${top.funpid==\"-1\"}">
+						<div data-options="title:'${top.funname}', iconCls:'tool_box'" style="overflow:auto;border:0px;">
+							<c:forEach items="${initfun}" var="child">
+								<c:if test="${child.funpid==top.funid}">
+									<div class="soner" onclick="addTab('${child.funname}','<%=basePath%>${child.funurl}')">
+										<span>${child.funname}</span>
+									</div>
+								</c:if>
+							</c:forEach>
+						</div>
+					</c:if>
+				</c:forEach>
+			</div>
+		</div>
+		<div data-options="region:'center'" style="border:0px;">
+			<div id="tabs" class="easyui-tabs" style="height:100%;">
+				<div title="主页">
+					<iframe name="main" height="600px" width="100%" scrolling="auto"
+						frameborder="0" src="<%=basePath%>user/welcome">
+	
+					</iframe>
 				</div>
 			</div>
-			<input type="hidden" id="refreshed" value="no">
-		</div> 	
-		
+		</div>
+		<div data-options="region:'south',border:false" style="height:35px;background:#E0ECFF;text-align:center;font-size:15px;">版权&copy;</div>
 		 <div id="addWin" class="easyui-window" title="地图名片"
              data-options="iconCls:'icon-edit', closable:true, closed:true"
              style="width: 545px; height: 700px; padding: 5px;">
              	<iframe width="504" height="731" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://j.map.baidu.com/4Cmgj"></iframe>
         </div>
-		
+		<script type="text/javascript" src="<%=basePath %>js/jquery.min.js"></script>
+		<script type="text/javascript" src="<%=basePath %>js/jquery-easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="<%=basePath %>js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
 		<script src="<%=basePath%>assets/jslib/bootstrap/js/bootstrap.js"></script>
 		<script src="<%=basePath%>js/Bubbles.js"></script>
 		<script type="text/javascript">

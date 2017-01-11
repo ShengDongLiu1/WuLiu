@@ -526,11 +526,11 @@ function saveGoods() {
 				<th field="customer" width="10%" align="center" formatter="customerName">客户</th>
 				<th field="gname" width="10%" align="center">货物名称</th>
 				<th field="gordernumber" width="12%" align="center">订单号</th>
-				<th field="gcount" width="10%" align="center">货物数量</th>
-				<th field="gunit" width="8%" align="center">单位</th>
+				<th field="gcount" width="9%" align="center">货物数量</th>
+				<th field="gunit" width="7%" align="center">单位</th>
 				<th field="ggrade" width="8%" align="center">货物等级</th>
 				<th field="gstate" width="12%" align="center" formatter="goState">货物状态</th>
-				<th field="gorderstime" width="12%" align="center" formatter="toDate">下单时间</th>
+				<th field="gorderstime" width="13%" align="center" formatter="toDate">下单时间</th>
 				<th field="null" width="15%" align="center" formatter="toSub">操作</th>
 			</tr>
 		</thead>

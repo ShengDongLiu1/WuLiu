@@ -62,10 +62,10 @@ a:hover {color:#54287C}
 				<th field="losize" width="8%">库位尺寸(m)</th>
 				<th field="lovolume" width="8%">库位体积(m³)</th>
 				<th field="loweight" width="8%">承受重量(t)</th>
-				<th field="losizes" width="10%">剩余库位尺寸(m)</th>
-				<th field="lovolumes" width="10%">剩余库位体积(m³)</th>
-				<th field="loweights" width="10%">剩余承受重量(t)</th>
-				<th field="lolevel" width="15%">库位等级(数字越大等级越高)</th>
+				<th field="losizes" width="9%">剩余库位尺寸(m)</th>
+				<th field="lovolumes" width="9%">剩余库位体积(m³)</th>
+				<th field="loweights" width="9%">剩余承受重量(t)</th>
+				<th field="lolevel" width="5%">库位等级</th>
 				<th field="lostate" width="7%" align="center" formatter="invenState">库位状态</th>
 				<th field="null" width="18%" align="center" formatter="toSub">操作</th>
 			</tr>

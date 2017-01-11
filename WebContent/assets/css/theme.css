@@ -64,11 +64,11 @@ hr {
   margin-right: -1em;
 }
 .navbar .nav > li > a {
-  color: #fff;
+  color: #808000;
   text-shadow: none;
 }
 .navbar .nav > li:hover {
-  background-color: #444;
+  background-color: #8080c0;
 }
 .navbar .nav > li > a:hover {
   color: #fff;
@@ -78,7 +78,7 @@ hr {
   color: #000;
 }
 .navbar .nav li.dropdown.open > .dropdown-toggle {
-  background-color: #444;
+  background-color: #8080c0;
   color: #fff;
 }
 .content {
