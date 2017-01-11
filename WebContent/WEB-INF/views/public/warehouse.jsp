@@ -340,6 +340,13 @@ $(document).ready(function() {
 	}); 
 });
 
+function closeMess(){
+	$("#leveMess").hide(100);
+}
+
+function openMess(){
+	$("#leveMess").show(100);
+}
 </script>
 <style type="text/css">
 .autoScroll{  
@@ -446,6 +453,20 @@ $(document).ready(function() {
 .altBtn:hover{
 	text-decoration:none;
 	color:blue
+}
+
+#leveMess{
+	width:450px;
+	height:560px;
+	text-align:center;
+	border-radius:5px;
+	position:fixed;
+	left:28%;
+	top:10%;
+	background:#2F3627;
+	overflow:auto;
+    overflow-x:hidden;
+    display:none;
 }
 </style>
 </head>
@@ -621,8 +642,8 @@ $(document).ready(function() {
 												<option value="2">等级 2</option>
 												<option value="3">等级 3</option>
 												<option value="4">等级 4</option>
-												<option value="5">等级 5</option>
 											</select>
+											<span title="查看等级说明" onclick="openMess();"><img src="<%=path %>/images/question.png" style="width:20px;height:20px;cursor:pointer;"/></span>
 											<span class="message error7"></span>
 										</td>
 									</tr>
@@ -713,7 +734,6 @@ $(document).ready(function() {
 					<option value="2">等级 2</option>
 					<option value="3">等级 3</option>
 					<option value="4">等级 4</option>
-					<option value="5">等级 5</option>
 				</select>
 				<span class="message mess4"></span>
 			</td>
@@ -763,6 +783,46 @@ $(document).ready(function() {
 	<p id="message" style="margin:30px 0px 10px;">提示内容！</p>
 	<a href="javascript:void(0)" id="isyes" class="altBtn">确认</a>  
 	<a href="javascript:void(0)" id="isno" class="altBtn">取消</a>
+</div>
+
+<div id="leveMess">
+	<div id="closeMess" style="width:20px;height:20px;float:right;cursor:pointer;" onclick="closeMess();">
+		<img src="<%=path %>/images/close3.png" alt="关闭" style="width:20px;height:20px;"/>
+	</div>
+	<div style="margin-left:30px;padding-top:10px;">
+		<h1>货物等级说明</h1>
+		<div style="text-align:left;font-size:15px;color:#fff">
+			<h5>选择货物等级前请详细阅读以下说明<br />大型物件，按其外形尺寸和重量(含包装和支承架)分成四级：</h5>
+			<p>(一)一级大型物件是指达到下列标准之一者：<br />
+			　　1、长度大于14米(含14米)小于20米;<br />
+			　　2、体积大于147m³(含147m³)小于342m³;<br />
+			　　3、重量大于20吨(含20吨)小于100吨。
+			</p>
+			<br />
+			<p>(二)二级大型物件是指达到下列标准之一者：<br />
+			　　1、长度大于20米(含20米)小于30米;<br />
+			　　2、体积大于342m³(含342m³)小于726m³;<br />
+			　　3、重量大于100吨(含100吨)小于200吨。
+			</p>
+			<br />
+			<p>(三)三级大型物件是指达到下列标准之一者：<br />
+			　　1、长度大于30米(含30米)小于40米;<br />
+			　　2、宽度大于726m³(含726m³)小于1200m³;<br />
+			　　3、重量大于200吨(含200吨)小于300吨。
+			</p>
+			<br />
+			<p>(四)四级大型物件是指达到下列标准之一者：<br />
+			　　1、长度在40米及以上;<br />
+			　　2、宽度在1200m³及以上;<br />
+			　　3、重量在300吨及以上。
+			</p>
+			<br />
+			<p>大型物件的级别，按其长、体积、及重量三个条件中级别最高的确定。</p>
+			<p>
+				<span style="font-weight:bold;">保运通提示：</span>
+				大件物流一定要找具有大件物流经营资格的公司进行办理，承运大型物件的级别要与批准营运的类别相符，否则发生事故，承运人需要承担全部的责任。</p>
+		</div>
+	</div>
 </div>
 
 <jsp:include flush="true" page="bottom.jsp"></jsp:include>
