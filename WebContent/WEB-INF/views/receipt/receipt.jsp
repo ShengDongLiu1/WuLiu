@@ -148,7 +148,7 @@ function toSub(value,obj){
 	if(obj.rstart == 1){
 		btn="<span class='wait'>待检验</span>";
 	}else if(obj.rstart == 2){
-		btn="<a href='javascript:openNumWin("+obj.rid+","+obj.rcid+","+obj.rgid+","+obj.rreceivecount+")'>入库</a>";
+		btn="<a href='javascript:openNumWin("+obj.rid+","+obj.rcid+","+obj.rgid+","+obj.rreceivecount+","+obj.goods.gweight+","+obj.goods.gvolume+","+obj.goods.gsize+")'>入库</a>";
 	}else if(obj.rstart == 3){
 		btn="<a href='javascript:openNextWin("+obj.rid+","+obj.rcid+","+obj.rgid+","+obj.rreceivecount+")' style='color:orange'>继续入库</a>";
 	}else if(obj.rstart == 4){
@@ -244,14 +244,17 @@ function lanshou(state){
 }
 
 /* 打开选择入库方式窗口 */
-function openNumWin(rid,cid,gid,count){
+function openNumWin(rid,cid,gid,count,gweight,gvolume,gsize){
 	$('#srid').val(rid);
 	$('#srcid').val(cid);
 	$('#srgid').val(gid);
 	$('#xgid').val(gid);
 	$('#rreceivecount').val(count);
+	$('#xgweight').numberbox('setValue',gweight);
+	$('#xgvolume').numberbox('setValue',gvolume);
+	$('#xgsize').numberbox('setValue',gsize);
 	$('#storagecount').numberbox('setValue',count);
-	$("#good_xinxi").dialog("open").dialog("setTitle", "货物占用信息");
+	$("#good_xinxi").dialog("open").dialog("setTitle", "确认货物占用信息");
 }
 
 /**
@@ -555,7 +558,7 @@ function addGoodSize(){
 	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
 	
-	<!-- 货物占用信息 -->
+	<!-- 确认货物占用信息 -->
 	<div id="good_xinxi" class="easyui-dialog"  buttons="#good-buttons" data-options="closable:true, closed:true"  style="width:30%;height:200px;padding:5px;text-align:center;">
 		<input type="hidden" id="xgid" />
 		<br />

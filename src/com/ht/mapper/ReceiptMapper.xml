@@ -33,6 +33,9 @@
 		<result property="gcount" column="gcount"/>
 		<result property="gordernumber" column="gordernumber"/>
 		<result property="gstate" column="gstate"/>
+		<result property="gweight" column="gweight"/>
+		<result property="gvolume" column="gvolume"/>
+		<result property="gsize" column="gsize"/>
 	</association>
 	
 	<association property="user" javaType="com.ht.entity.sysuser">
@@ -152,7 +155,7 @@
   
   <!-- 分页查询所有收货单 -->
    <select id="queryAll" parameterType="java.util.Map" resultMap="AllResultMap">
-   		select cu.cid,cu.cname,go.gid,go.gname,go.gcount,go.gordernumber,go.gstate,
+   		select cu.cid,cu.cname,go.gid,go.gname,go.gcount,go.gordernumber,go.gstate,go.gweight,go.gvolume,go.gsize,
    		re.rid,re.rreceivecount,re.rdamagedcount,re.rshelvecount,re.rstart,re.rcid,re.rgid,
 		re.rtdgoodstime,sy.userid,sy.usertruename from receipt re,customer cu,goods go,sysuser sy
 		<where>
