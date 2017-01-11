@@ -344,6 +344,21 @@ public class Customerller {
 		return "public/login";
 	}
 	
+	//判断邮箱
+		@RequestMapping("/checkEmail")
+		public String checkEmail(@RequestParam("cemail")String cemail,HttpServletResponse response) throws Exception{
+			int resultTotao = 0;
+			resultTotao = customerService.checkEmail(cemail);
+			JSONObject result1=new JSONObject();
+			if(resultTotao > 0) {
+				result1.put("success", false);
+			}else{
+				result1.put("success", true);
+			}
+			ResponseUtil.write(response, result1);
+			return "public/login";
+		}
+	
 	//修改密码
 	@RequestMapping(value="/updatePwd1", method=RequestMethod.GET)
 	public String userRevise1(Customer customer3, @RequestParam("cid")String cid, @RequestParam("newUserpwd")String newUserpwd) throws Exception{

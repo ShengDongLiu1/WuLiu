@@ -19,12 +19,17 @@
     select * from customer
     where cemail = #{cemail,jdbcType=VARCHAR} and cpassword =#{cpassword,jdbcType=VARCHAR}
   </select>
-      <select id="select"  resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  <select id="select"  resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select 
      <include refid="Base_Column_List" />
      from customer
     where  cid = #{cid,jdbcType=INTEGER}
   </select>
+  
+  <select id="checkEmail" resultType="java.lang.Integer" parameterType="String">
+    select count(*) from customer where cemail = #{cemail}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from customer
     where cid = #{cid,jdbcType=INTEGER}

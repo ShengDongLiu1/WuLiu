@@ -52,6 +52,13 @@ public interface CustomerService {
 	public int update(Customer customer);
 	
 	/**
+	 * 邮箱匹配
+	 * @param cemail
+	 * @return
+	 */
+	public int checkEmail(String cemail);
+	
+	/**
 	 * 删除客户
 	 * @param id
 	 * @return

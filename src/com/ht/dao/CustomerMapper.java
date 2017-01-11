@@ -56,6 +56,13 @@ public interface CustomerMapper {
 	public int update(Customer customer);
 	
 	/**
+	 * 邮箱匹配
+	 * @param email
+	 * @return
+	 */
+	public int checkEmail(String email);
+	
+	/**
 	 * 删除客户
 	 * @param id
 	 * @return

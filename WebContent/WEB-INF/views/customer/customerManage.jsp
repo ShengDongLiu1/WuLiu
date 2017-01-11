@@ -75,6 +75,7 @@
 		}
 	 });
  }
+
  /* 清空表单输入框数据 */
  function resetValue(){
 	 $("#cname").textbox('setValue',"");
@@ -108,12 +109,13 @@
 					 $.messager.alert("系统提示","数据已成功删除！");
 					 $("#dg").datagrid("reload");
 				}else{
-					$.messager.alert("系统提示","数据删除失败，请联系系统管理员！");
+					$.messager.alert("系统提示","数据删除失败，请联系统管理员！");
 				}
 			},"json");
 		} 
 	 });
  }
+
 </script>
 <title>客户信息</title>
 </head>
@@ -125,7 +127,7 @@
 		<tr>
 			<!-- hidden="true" 隐藏域-->
 			<th field="cid" checkbox="true" align="center"></th>
-	 		<th field="ckhno" width="50" align="center">客户编号</th>
+	 		<th field="ckhno" width="150" align="center">客户编号</th>
 	 		<th field="cname" width="150" align="center">客户名称</th>
 	 		<th field="ccompany" width="200" align="center">客户公司</th>
 	 		<th field="cphone" width="100" align="center">客户电话</th>
@@ -143,13 +145,11 @@
  		<a href="javascript:deleteCustomer()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
  	</div>
  	<div>
- 		&nbsp;客户编号：&nbsp;<input type="text" class="easyui-validatebox easyui-textbox" id="s_khno" size="20" onkeydown="if(event.keyCode==13) searchCustomer()"/>
- 		&nbsp;客户名称：&nbsp;<input type="text" class="easyui-validatebox easyui-textbox" id="s_name" size="20" onkeydown="if(event.keyCode==13) searchCustomer()"/>
+ 		&nbsp;客户编号：&nbsp;<input type="text" class="easyui-textbox" id="s_khno" size="20" onkeydown="if(event.keyCode==13) searchCustomer()"/>
+ 		&nbsp;客户名称：&nbsp;<input type="text" class="easyui-textbox" id="s_name" size="20" onkeydown="if(event.keyCode==13) searchCustomer()"/>
  		<a href="javascript:searchCustomer()" class="easyui-linkbutton" iconCls="icon-search" plain="true">搜索</a>
  	</div>
  </div>
- 
- 
   <div id="dlg" class="easyui-dialog" style="width:680px;height:300px;padding: 10px 20px"
    closed="true" buttons="#dlg-buttons">
    
@@ -157,7 +157,7 @@
    	<table cellspacing="8px">
    		<tr>
    			<td>客户名称：</td>
-   			<td><input id="cname" name="cname" class="easyui-validatebox easyui-textbox" required="true"/>&nbsp;<font color="red">*</font></td>
+   			<td><input id="cname" name="cname" class="easyui-textbox" required="true"/>&nbsp;<font color="red">*</font></td>
    			<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
    			<td>客户信用度</td>
    			<td>
@@ -174,23 +174,23 @@
    		<tr>
    			<td>客户公司：</td>
    			<td>
-   				<input type="text" id="ccompany" name="ccompany" class="easyui-validatebox easyui-textbox" required="true"/>&nbsp;<font color="red">*</font></font>
+   				<input type="text" id="ccompany" name="ccompany" class="easyui-textbox" required="true"/>&nbsp;<font color="red">*</font></font>
    			</td>
    			<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
    			<td>客户电话：</td>
    			<td>
-   				<input type="text" id="cphone" name="cphone" class="easyui-validatebox easyui-textbox" required="true"/>&nbsp;<font color="red">*</font></font>
+   				<input type="text" id="cphone" name="cphone" class="easyui-textbox" required="true"/>&nbsp;<font color="red">*</font></font>
    			</td>
    		</tr>
    		<tr>
-   			<td>邮政编码：</td>
-   			<td><input type="text" id="cemail" name="cemail" class="easyui-validatebox easyui-textbox" required="true"/>&nbsp;<font color="red">*</font></td>
+   			<td>客户邮箱：</td>
+   			<td><input type="text" id="cemail" name="cemail" class="easyui-textbox"  required="true" data-options="events:{blur:check1}"/>&nbsp;<font color="red">*</font></td>
    			<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
    		</tr>
    		<tr>
    			<td>客户地址</td>
    			<td colspan="4">
-   				<input type="text" id="caddress" name="caddress" style="width: 400px" class="easyui-validatebox easyui-textbox" required="true"/>&nbsp;<font color="red">*</font>
+   				<input type="text" id="caddress" name="caddress" style="width: 400px" class="easyui-textbox" required="true"/>&nbsp;<font color="red">*</font>
    			</td>
    		</tr>
    	</table>
@@ -202,4 +202,16 @@
  	<a href="javascript:closeCustomerDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
  </div>
 </body>
+<script type="text/javascript">
+function check1(){
+	var cemail = $("#cemail").val();
+	$.post("${pageContext.request.contextPath}/customer/checkEmail",{cemail:cemail},function(result1){
+		if(!result1.success){
+			$.messager.alert("系统提示","该邮箱已存在！");
+			$("#cemail").textbox("setValue",'');
+			return false;
+		}
+	},"json");
+}
+</script>
 </html>

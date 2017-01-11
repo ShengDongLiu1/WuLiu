@@ -54,4 +54,8 @@ public class CustomerServiceImpl implements CustomerService{
 	public int updateUserPwd(Customer customer) {
 		return customerMapper.updateUserPwd(customer);
 	}
+	@Override
+	public int checkEmail(String email) {
+		return customerMapper.checkEmail(email);
+	}
 }
