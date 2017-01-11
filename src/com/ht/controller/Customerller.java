@@ -358,7 +358,20 @@ public class Customerller {
 			ResponseUtil.write(response, result1);
 			return "public/login";
 		}
-	
+	//判断手机号码
+	@RequestMapping("/checkCphone")
+	public String checkCphone(@RequestParam("cphone")String cphone,HttpServletResponse response) throws Exception{
+		int resultTotao = 0;
+		resultTotao = customerService.checkCphone(cphone);
+		JSONObject result2=new JSONObject();
+		if(resultTotao > 0) {
+			result2.put("success", false);
+		}else{
+			result2.put("success", true);
+		}
+		ResponseUtil.write(response, result2);
+		return "public/login";
+	}
 	//修改密码
 	@RequestMapping(value="/updatePwd1", method=RequestMethod.GET)
 	public String userRevise1(Customer customer3, @RequestParam("cid")String cid, @RequestParam("newUserpwd")String newUserpwd) throws Exception{

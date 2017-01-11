@@ -63,6 +63,13 @@ public interface CustomerMapper {
 	public int checkEmail(String email);
 	
 	/**
+	 * 手机号码匹配
+	 * @param email
+	 * @return
+	 */
+	public int checkCphone(String cphone);
+	
+	/**
 	 * 删除客户
 	 * @param id
 	 * @return

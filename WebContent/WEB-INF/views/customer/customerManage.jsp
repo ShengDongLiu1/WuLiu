@@ -129,11 +129,11 @@
 			<th field="cid" checkbox="true" align="center"></th>
 	 		<th field="ckhno" width="150" align="center">客户编号</th>
 	 		<th field="cname" width="150" align="center">客户名称</th>
-	 		<th field="ccompany" width="200" align="center">客户公司</th>
-	 		<th field="cphone" width="100" align="center">客户电话</th>
-	 		<th field="cemail" width="100" align="center">客户邮箱</th>
-	 		<th field="ccredit" width="100" align="center">客户等级</th>
-	 		<th field="caddress" width="100" align="center">客户地址</th>
+	 		<th field="ccompany" width="150" align="center">客户公司</th>
+	 		<th field="cphone" width="150" align="center">客户电话</th>
+	 		<th field="cemail" width="150" align="center">客户邮箱</th>
+	 		<th field="ccredit" width="150" align="center">客户等级</th>
+	 		<th field="caddress" width="150" align="center">客户地址</th>
 		</tr>
 	</thead>
  </table>
@@ -179,7 +179,7 @@
    			<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
    			<td>客户电话：</td>
    			<td>
-   				<input type="text" id="cphone" name="cphone" class="easyui-textbox" required="true"/>&nbsp;<font color="red">*</font></font>
+   				<input type="text" id="cphone" name="cphone" class="easyui-textbox" required="true" data-options="events:{blur:check2}"/>&nbsp;<font color="red">*</font></font>
    			</td>
    		</tr>
    		<tr>
@@ -209,6 +209,18 @@ function check1(){
 		if(!result1.success){
 			$.messager.alert("系统提示","该邮箱已存在！");
 			$("#cemail").textbox("setValue",'');
+			return false;
+		}
+	},"json");
+}
+
+/* 手机验证匹配 */
+ function check2(){
+	var cphone = $("#cphone").val();
+	$.post("${pageContext.request.contextPath}/customer/checkCphone",{cphone:cphone},function(result2){
+		if(!result2.success){
+			$.messager.alert("系统提示","该联系人已存在！");
+			$("#cphone").textbox("setValue",'');
 			return false;
 		}
 	},"json");

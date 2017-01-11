@@ -58,4 +58,8 @@ public class CustomerServiceImpl implements CustomerService{
 	public int checkEmail(String email) {
 		return customerMapper.checkEmail(email);
 	}
+	@Override
+	public int checkCphone(String cphone) {
+		return customerMapper.checkCphone(cphone);
+	}
 }

@@ -59,6 +59,13 @@ public interface CustomerService {
 	public int checkEmail(String cemail);
 	
 	/**
+	 * 手机号码匹配
+	 * @param email
+	 * @return
+	 */
+	public int checkCphone(String cphone);
+	
+	/**
 	 * 删除客户
 	 * @param id
 	 * @return
