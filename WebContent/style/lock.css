@@ -4,8 +4,8 @@
       filter:alpha(opacity=60);  /*设置透明度为60%*/
       opacity:0.6;  /*非IE浏览器下设置透明度为60%*/
       display:none; /* http://www.jb51.net */
-      z-Index:2;}
-#hidebox { position:absolute;width:26%;height:200px;top:200px;left:40%;background-color:#F3F3F3;display:none;cursor:pointer;z-Index:3;text-align:center;cursor:default}
+      z-Index:6;}
+#hidebox { position:absolute;width:26%;height:200px;top:200px;left:40%;background-color:#F3F3F3;display:none;cursor:pointer;z-Index:7;text-align:center;cursor:default}
 #content { text-align:center;cursor:pointer;z-Index:1;}
 #loac_title{
 	width:100%;
@@ -15,5 +15,9 @@
 	line-height:30px;
 	font-weight:bold;
 }
-#mass{margin-top:13%;}
+#mass{margin-top:11%;}
 #lock_inp{border-radius:5px;height:25px;font-size:18px;vertical-align:middle}
+
+#chong{
+	width:98%;height:20px;text-align:right;
+}

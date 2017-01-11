@@ -248,7 +248,7 @@
 			sty.position = "absolute";
 			sty.width = "222px";
 			sty.height = "222px";
-			sty.zIndex = "5";
+			sty.zIndex = "10";
 
 			oBox.appendChild(div);
 

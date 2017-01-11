@@ -21,8 +21,6 @@
 			href="<%=basePath%>assets/jslib/font-awesome/css/font-awesome.css">
 		<link rel="stylesheet" href="<%=basePath%>style/lock.css">
 		
-		<script src="<%=basePath%>assets/jslib/jquery-1.7.2.min.js"
-			type="text/javascript"></script>
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>js/jquery-easyui/themes/default/easyui.css">
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>js/jquery-easyui/themes/icon.css">
 <style type="text/css">
@@ -67,7 +65,7 @@
 	hspace:0;
 	vspace:0;
 }
-.look{color:yellow}
+.look{color:green}
 
 .soner{height:28px;
 	line-height:28px;
@@ -99,19 +97,6 @@
 	<!--[if IE 9 ]> <body class="ie ie9 "> <![endif]-->
 	<!--[if (gt IE 9)|!(IE)]><!-->
 	<body class="easyui-layout">
-		<div id="hidebg" oncontextmenu="return false"></div>
-		<div id="hidebox" oncontextmenu="return false">
-			<div id="loac_title">解锁系统</div>
-			<div id="mass">
-				<p>系统已锁定,请输入用户密码进行解密</p>
-				<input type="password" name="old_password" style="display: none">
-				<input type="password" name="old_password" id="lock_inp" placeholder="输入密码" onfocus="clearErr()">&nbsp;
-				<a href="javascript:void(0)" onClick="hide();">
-					<img src="<%=path%>/images/unlocked.png" alt="解锁" style="width:30px;height:30px;vertical-align:middle"/>
-				</a><br />
-				<span id="error" style="font-size:18px;color:red;font-weight:bold;"></span>
-			</div>
-		</div>
 		<!-- 顶部div -->
 		<div data-options="region:'north',border:false" style="height:42px;background:#E0ECFF;">
 		</div>
@@ -151,7 +136,7 @@
 					 	<span id="mess"></span>
 					</marquee>
 				</div>
-				<div style="width:230px;height:41px;float:right;">
+				<div id="baidu" style="width:230px;height:41px;float:right;">
 					<form action="http://www.baidu.com/baidu" target="_blank">
 						<a href="http://www.baidu.com/"><img src="https://gss0.bdstatic.com/70cFsjip0QIZ8tyhnq/img/logo-80px.gif" alt="Baidu" align="bottom" border="0"></a>
 						<input class="easyui-validatebox easyui-textbox" type=text name=word style="width: 80px;"  placeholder="百度一下">
@@ -194,6 +179,22 @@
              style="width: 545px; height: 700px; padding: 5px;">
              	<iframe width="504" height="731" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://j.map.baidu.com/4Cmgj"></iframe>
         </div>
+        <div id="hidebg" oncontextmenu="return false"></div>
+		<div id="hidebox" oncontextmenu="return false">
+			<div id="loac_title">解锁系统</div>
+			<div id="mass">
+				<p>系统已锁定,请输入用户密码进行解密</p>
+				<input type="password" name="old_password" style="display: none">
+				<input type="password" name="old_password" id="lock_inp" placeholder="输入密码" onfocus="clearErr()">&nbsp;
+				<a href="javascript:void(0)" onClick="hide();">
+					<img src="<%=path%>/images/unlocked.png" alt="解锁" style="width:30px;height:30px;vertical-align:middle"/>
+				</a><br />
+				<p id="error" style="font-size:18px;color:red;font-weight:bold;">&nbsp;</p>
+				<div id="chong">
+					<a href="<%=basePath%>user/logout" target="_top">退出系统</a>
+				</div>
+			</div>
+		</div>
 		<script type="text/javascript" src="<%=basePath %>js/jquery.min.js"></script>
 		<script type="text/javascript" src="<%=basePath %>js/jquery-easyui/jquery.easyui.min.js"></script>
 		<script type="text/javascript" src="<%=basePath %>js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
@@ -209,6 +210,7 @@
 		{	
 			lockUser='lockUser';
 			$('#lock_inp').val('');
+			$("#baidu").hide();
 		   var hideobj=document.getElementById("hidebg");
 		   hidebg.style.display="block";  //显示隐藏层
 		   hidebg.style.height=document.body.clientHeight+"px";  //设置隐藏层的高度为当前页面高度
@@ -228,6 +230,7 @@
 						lockUser='';
 						document.getElementById("hidebg").style.display="none";
 						document.getElementById("hidebox").style.display="none";
+						$("#baidu").show();
 					}else{
 						$('#error').html(index.result);
 					}
@@ -258,11 +261,12 @@
 		}
 			
 		function clearErr(){
-			$('#error').html('');
+			$('#error').html('&nbsp;');
 		}
-		
+		 
 		document.onkeydown = function(e){
 			if(window.event && window.event.keyCode == 123) {
+				window.event.keyCode = 505;
 				window.event.cancelBubble = true;
 	            window.event.returnValue = false;
 			}

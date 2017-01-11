@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="row-fluid">
 				<div class="span12">
 					<div style="text-align:right;">
-						<iframe name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=1" width="360" height="35" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+						<iframe name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=1" width="390" height="35" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 					</div>
 					<div class="hero-unit" style="padding-top:100px;">
 						<h1 style="padding-left:100px;">
