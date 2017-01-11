@@ -93,4 +93,16 @@ public class QualityServiceImpl implements QualityService {
 		return qualityMapper.thelibraryUpdate(thelibrary);
 	}
 
+	@Override
+	public List<Quality> qualitySelectAll3(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return qualityMapper.qualitySelectAll3(map);
+	}
+
+	@Override
+	public Long getTotal3(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return qualityMapper.getTotal3(map);
+	}
+
 }

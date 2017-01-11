@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>入库质检管理</title>
+		<title>货物退回管理</title>
 		<link rel="stylesheet" type="text/css" href="<%=path %>/js/jquery-easyui/themes/default/easyui.css">
 		<link rel="stylesheet" type="text/css" href="<%=path %>/js/jquery-easyui/themes/icon.css">
 		<script src="<%=path %>/js/jquery.min.js"></script>
@@ -32,11 +32,7 @@
 			a:hover {color:#54287C} 
 			.easyui-textbox{width:10%;}
 			
-			.dai{color:green;}
-			
-			.yi{color:orange;}
-			
-			.ju{color:red;}
+			.cheng{color:black;}
 			
 			.tui{color:grey;}
 		</style>
@@ -47,32 +43,53 @@
 			}
 			
 			/* 货物名称 */
-			function goodsName(value){
-				return value.gname;
+			function goodsName(value, exm){
+				return exm.goods.gname;
+			}
+			
+			/* 货物订单 */
+			function goodsNumber(value, exm){
+				return exm.goods.gordernumber;
+			}
+			
+			/* 货物数量 */
+			function goodsCount(value, exm){
+				return exm.goods.gcount;
+			}
+			
+			/* 货物等级 */
+			function goodsGrade(value, exm){
+				return exm.goods.ggrade;
+			}
+			
+			/* 货物描述 */
+			function goodsDescribe(value, exm){
+				return exm.goods.gdescribe;
+			}
+			
+			/* 退回时间 */
+			function receiptDate(value){
+				return value.rtbgoodstime;
 			}
 			
 			function recStatus(value){
 				var status='';
-				if(value.rstart=='1'){
-					status="<span class='dai'>待检验</span>"
-				}else if(value.rstart=='2' || value.rstart=='3' || value.rstart=='5'){
-					status="<span class='yi'>检验通过</span>"
-				}else if(value.rstart=='4'){
-					status="<span class='ju'>检验失败</span>"
-				}else if(value.rstart=='6'){
+				if(value.rstart=='6'){
 					status="<span class='tui'>待退回</span>"
 				}else if(value.rstart=='7'){
-					status="<span>已退回</span>"
+					status="<span class='cheng'>成功退回</span>"
 				}
 				return status;
 			}
 			
 			/* 搜索 */
 			function seachs(){
+				var gordernumber = $('#gordernumberSearch').textbox('getValue');
 				var gname = $('#gnameSearch').textbox('getValue');
 				var usertruename = $('#usernameSearch').textbox('getValue');
 				var rstart = $('#rstartSearch').combobox('getValue');
 				$('#dg').datagrid('load',{  
+					gordernumber:gordernumber,
 					gname:gname,
 					usertruename:usertruename,
 					rstart:rstart
@@ -82,7 +99,7 @@
 	</head>
 	<body>
 		<table id="dg" class="easyui-datagrid" toolbar="#kj" style="width:100%" data-options="
-		url:'<%=path %>/quality/queryAll',
+		url:'<%=path %>/quality/queryAll3',
 		method:'get',
 		rownumbers:true,	
 		singleSelect:false,
@@ -95,64 +112,36 @@
 		<thead data-options="frozen:true">
 			<tr>
 				<th field="eid" checkbox="true"></th>
-				<th field="goods" width="15%" align="center" formatter="goodsName">货物名称</th>
-				<th field="sysusers" width="15%" align="center" formatter="sysuserName">员工姓名</th>
-				<th field="eresult" width="25%" align="center">检验结果</th>
-				<th field="receipt" width="10%" align="center" formatter="recStatus">货物状态</th>
-				<th field="edate" width="15%" align="center" formatter="toDate">检验时间</th>
-				<th field="null" width="17%" align="center" formatter="toSub">操作</th>
+				<th field="goods" width="9%" align="center" formatter="goodsNumber">货物订单号</th>
+				<th field="goods1" width="9%" align="center" formatter="goodsName">货物名称</th>
+				<th field="goods2" width="9%" align="center" formatter="goodsCount">货物数量</th>
+				<th field="goods3" width="9%" align="center" formatter="goodsGrade">货物等级</th>
+				<th field="goods4" width="9%" align="center" formatter="goodsDescribe">货物描述</th>
+				<th field="sysusers" width="7%" align="center" formatter="sysuserName">质检员工</th>
+				<th field="eresult" width="15%" align="center">退回原因</th>
+				<th field="receipt" width="10%"  align="center" formatter="recStatus">货物状态</th>
+				<th field="edate" align="center" formatter="toDate">退回时间</th>
+				<th field="null" width="11%" align="center" formatter="toSub">操作</th>
 			</tr>
 		</thead>
 	</table>
 	<!-- 菜单 -->
 	<div id="kj" style="padding: 2px;">
+		<a href="javascript:tuihui()" class="easyui-linkbutton" data-options="iconCls:'icon-sum'" >退回货物</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="window.print();">打印</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-export1'" onclick="location.href='<%=path %>/export/qualityExcel'">导出</a>
 		<a href="javascript:deleteTest()" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" >删除</a>
+		订单号：<input id="gordernumberSearch" class="easyui-validatebox easyui-textbox" name="gordernumber1" data-options="required:false" />
 		货物：<input id="gnameSearch" class="easyui-validatebox easyui-textbox" name="gname1" data-options="required:false" />
 		员工：<input id="usernameSearch" class="easyui-validatebox easyui-textbox" name="usertruename1" data-options="required:false" />
 		状态：<select id="rstartSearch" class="easyui-combobox" name="rstart1" data-options="editable:false" style="width:10%">
 				<option  draggable="false" value="">请选择状态</option>
-				<option value="1">待检验</option>
-				<option value="2">检验通过</option>
-				<option value="4">检验失败</option>
+				<option value="6">待退回</option>
+				<option value="7">已退回</option>
 			  </select>&nbsp;
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
 	</div>
-	<div id="dlg-buttons1">
-	    <a href="javascript:saveQuality()" class="easyui-linkbutton"
-	        iconCls="icon-ok">保存</a> <a href="javascript:closeQualityDialog()"
-	        class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
-	</div>
-        <!-- 验证通过 -->
-        <div id="openTrueWin" class="easyui-dialog"  buttons="#dlg-buttons1" data-options="closable:true, closed:true"  style="width:30%;height:200px;padding:5px;text-align:center;">
-        	<form method="post" id="fm">
-                <table cellspacing="8px;" align="center">
-                    <tr>
-                    	<td>质检员工：</td>
-                        <td>
-                        	<input type="hidden" id="egid" name="egid">
-                        	<input type="hidden" id="erid" name="erid">
-                        	<input type="hidden" id="euserid" value="${user.userid}">
-                        	<input type="text" id="username" value="${user.usertruename}"
-                            class="easyui-validatebox" style="border:0px" readonly="readonly"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>检验结果：</td>
-                        <td height="80">
-                            <input id="eresult" name="eresult" class="easyui-textbox" data-options="multiline:true" style="width:100%;height:70%" value="请填写检验结果">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        	<input type="hidden" id="edate" name="edate" required="true" />
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </div>
-        <div id="goodQualityWin" class="easyui-dialog"  buttons="#dlg-buttons" data-options="closable:true, closed:true"  style="width:70%;height:420px;padding:5px;text-align:center;">
+	<div id="goodQualityWin" class="easyui-dialog"  buttons="#dlg-buttons" data-options="closable:true, closed:true"  style="width:70%;height:420px;padding:5px;text-align:center;">
         	<table style="width:100%;height:100%;" id="gooded">
         		<tr align="center">
         			<td class="tdwidth">质检编号：</td>
@@ -191,7 +180,7 @@
         			<td class="gxiangq"><span class="ename1"></span></td>
         		</tr>
         		<tr align="center">
-        			<td class="tdwidth">检验结果：</td>
+        			<td class="tdwidth">退回原因：</td>
         			<td class="gxiangq"><span class="eresult1"></span></td>
         			<td class="tdwidth">检验时间：</td>
         			<td class="gxiangq"><span class="edate1"></span></td>
@@ -243,44 +232,9 @@
 			return formatDateTime(date);
 		}
 		
-		/* 删除 */
-		function deleteTest() {
-	        var selectedRows = $("#dg").datagrid("getSelections");
-	        if (selectedRows.length == 0) {
-	            $.messager.alert("系统提示", "请选择要删除的数据！");
-	            return;
-	        }
-	        var strIds = [];
-	        for ( var i = 0; i < selectedRows.length; i++) {
-	            strIds.push(selectedRows[i].eid);
-	        }
-	        var ids = strIds.join(",");
-	        $.messager.confirm("系统提示", "您确定要删除这<font color=red>"
-	                + selectedRows.length + "</font>条数据吗？", function(r) {
-	            if (r) {
-	                $.post("${pageContext.request.contextPath}/quality/delete.do", {
-	                    ids : ids
-	                }, function(result) {
-	                    if (result.success) {
-	                        $.messager.alert("系统提示", "数据已成功删除！");
-	                        $("#dg").datagrid("reload");
-	                    } else {
-	                        $.messager.alert("系统提示", "数据删除失败，请联系系统管理员！");
-	                    }
-	                }, "json");
-	            }
-	        });
-	    }
-		
 		/* 表格按钮 */
 		function toSub(value,obj){
 			var btn="&nbsp;<a href='javascript:openGoodWin("+obj.eid+")'>详情</a>"
-			if(obj.receipt.rstart == '1'){
-				btn+="&nbsp;<a href='javascript:openTrueWin()'>通过</a>";
-				btn+="&nbsp;<a href='javascript:openFalseWin()'>失败</a>"
-			}else if(obj.receipt.rstart == '4'){
-				btn+="&nbsp;<a href='javascript:confirm()'>退回</a>"
-			}
 			return btn;
 		}
 		
@@ -302,45 +256,6 @@
 		            + seperator2 + date.getSeconds();
 		    return currentdate;
 		} 
-		
-		/* 验证通过 */
-		function openTrueWin(rid, euserid) {
-			var selectedRows = $("#dg").datagrid("getSelections");
-			var row = selectedRows[0];
-			row.edate = getNowFormatDate(row.edate);
-			row.euserid = $("#euserid").val();
-			$("#openTrueWin").dialog("open").dialog("setTitle", "验证通过");
-			$("#fm").form("load", row);
-			url = "${pageContext.request.contextPath}/quality/save.do?eid=" + row.eid +"&rid="+row.receipt.rid +"&rstart="+2+"&euserid="+row.euserid;
-		}
-		
-		/* 验证失败 */
-		function openFalseWin(rid, euserid) {
-			var selectedRows = $("#dg").datagrid("getSelections");
-			var row = selectedRows[0];
-			row.edate = getNowFormatDate(row.edate);
-			row.euserid = $("#euserid").val();
-			$("#openTrueWin").dialog("open").dialog("setTitle", "验证失败");
-			$("#fm").form("load", row);
-			url = "${pageContext.request.contextPath}/quality/save.do?eid=" + row.eid +"&rid="+row.receipt.rid +"&rstart="+4+"&euserid="+row.euserid;
-		}
-		
-		function saveQuality() {
-		    $("#fm").form("submit", {
-		        url : url,
-		        success : function(result) {
-		            var result = eval('(' + result + ')');
-		            if (result.success) {
-		                $.messager.alert("系统提示", "保存成功！");
-		                $("#openTrueWin").dialog("close");
-		                $("#dg").datagrid("load");
-		            } else {
-		                $.messager.alert("系统提示", "保存失败！");
-		                return;
-		            }
-		        }
-		    });
-		}
 		
 		/* 打开详情窗口 */
 		function openGoodWin(eid) {
@@ -364,48 +279,34 @@
 			$(".rdamagedcount1").html(index.quality.receipt.rdamagedcount);//破损数量
 			$(".rshelvecount1").html(index.quality.receipt.rshelvecount);//搁置数量
 			$(".ename1").html(index.quality.sysusers.usertruename);//员工姓名
-			if(index.quality.receipt.rstart == 6 || index.quality.receipt.rstart == 7){
-				$(".eresult1").html(index.quality.eresult+", 货物已退回");
-			}else{
-				$(".eresult1").html(index.quality.eresult);//检验结果
-			}
-			if(index.quality.receipt.rstart == 1){
-				$(".edate1").html('暂无');
-			}else{
-				$(".edate1").html(getNowFormatDate(index.quality.edate));//检验时间
-			}
+			$(".eresult1").html(index.quality.eresult);//检验结果
+			$(".edate1").html(getNowFormatDate(index.quality.edate));//检验时间
 			$("#goodQualityWin").dialog("open").dialog("setTitle", "货物质检详情");
 		}
 		
-		function closeQualityDialog() {	
-		    $("#openTrueWin").dialog("close");
-		    cleanQualityDialog();
-		}
-		
-		function cleanQualityDialog(){
-			$("euserid").val("");
-			$("eresult").val("");
-			$("edate").datebox("setValue", "");
-		}
-		
 		/* 货物退回 */
-		function confirm() {
-			$.messager.confirm('消息提示', '是否加入退回管理？', function(r){
+		function tuihui() {
+			$.messager.confirm('消息提示', '是否退回该货物？', function(r){
 				if (r){
 					var selectedRows = $("#dg").datagrid("getSelections");
 					var row = selectedRows[0];
-					$.post("<%=path %>/quality/save3",{'rid':row.receipt.rid,'rstart':6},function(index){
-						if(index.success ){
-						  $.messager.alert('消息提示','退回成功!');
-			         	  $("#dg").datagrid("load");
-			    		}else{
-			    		  $.messager.alert('消息提示','退回失败!');
-			    		}
-			   		},"json");
+					if(row.receipt.rstart = 7){
+						$.messager.alert('消息提示','退货库已无该货物或货物已退回!');
+					}else{
+						$.post("<%=path %>/quality/save3",{'rid':row.receipt.rid,'rstart':7},function(index){
+							if(index.success){
+							  $.messager.alert('消息提示','退回成功!');
+				         	  $("#dg").datagrid("load");
+				    		}else{
+				    		  $.messager.alert('消息提示','退回失败!');
+				    		}
+				   		},"json");
+					}
 				}else{
 					return false;
 				}
 			});
 		}
+		
 		</script>
 </html>

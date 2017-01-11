@@ -59,6 +59,15 @@ public class QualityController {
 	}
 	
 	/**
+	 * 转到退货管理
+	 * @return
+	 */
+	@RequestMapping("/retreatGoods")
+	public String retreatGoods(){
+		return "Quality/retreatGoods";
+	}
+	
+	/**
 	 * 分页
 	 * @param page
 	 * @param rows
@@ -224,6 +233,35 @@ public class QualityController {
 			jsonObject.put("success", false);
 		}
 		ResponseUtil.write(resp, jsonObject);
+		return null;
+	}
+	
+	@RequestMapping(value="/queryAll3",method=RequestMethod.GET)
+	public String queryAll3(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows,HttpServletResponse response,HttpSession session,String usertruename,String gname,String rstart,String gordernumber) throws Exception{
+		PageBean pageBean=null;
+		if(page == null && rows == null){
+			pageBean=new PageBean(1,10);
+		}else{
+			pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
+		}
+		Map<String, Object> map= new HashMap<>();
+		map.put("usertruename", StringUtil.formatLike(usertruename));
+		map.put("gname", StringUtil.formatLike(gname));
+		map.put("rstart", StringUtil.formatLike(rstart));
+		map.put("gordernumber", StringUtil.formatLike(gordernumber));
+		map.put("start", pageBean.getStart());
+		map.put("size", pageBean.getPageSize());
+		List<Quality> list=qualityService.qualitySelectAll3(map);
+		session.setAttribute("qualitylist2", list);
+		System.out.println(list);
+		Long total=qualityService.getTotal3(map);	//查询总条数
+		System.out.println("totle"+total);
+		JSONObject result = new JSONObject();
+		JSONArray jsonArray = JSONArray.fromObject(list);
+		result.put("rows", jsonArray);
+		result.put("total", total);
+		ResponseUtil.write(response, result);
+		System.out.println("list:"+jsonArray);
 		return null;
 	}
 }

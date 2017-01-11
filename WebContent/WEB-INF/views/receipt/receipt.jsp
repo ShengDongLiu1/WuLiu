@@ -156,7 +156,9 @@ function toSub(value,obj){
 	}else if(obj.rstart == 5){
 		btn="<span class='success'>已入库</span>";
 	}else if(obj.rstart == 6){
-		btn="<span class='退'>待退回</span>";
+		btn="<span class='tui'>待退回</span>";
+	}else if(obj.rstart == 7){
+		btn="<span>已退回</span>";
 	}
 	return btn;
 }

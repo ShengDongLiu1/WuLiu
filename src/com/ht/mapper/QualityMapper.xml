@@ -69,7 +69,10 @@
 	  select 
 	  *
 	  from examine exa, sysuser sys, goods go, receipt rec
-	  where exa.eid = #{eid,jdbcType=INTEGER}
+	  where exa.eid = #{eid,jdbcType=INTEGER} and
+	  exa.erid = rec.rid and
+	  exa.euserid = sys.USERID and 
+	  exa.egid = go.gid
 	</select>
 	
 	<!-- 根据id删除质检记录 -->
@@ -163,7 +166,8 @@
 		<where>
 			exa.erid = rec.rid and
 			exa.euserid = sys.USERID and 
-			exa.egid = go.gid
+			exa.egid = go.gid and
+			exa.erid > 0
 			<if test="gname!=null and gname!='' ">
 				and go.gname like #{gname}
 			</if>
@@ -188,11 +192,12 @@
 		<where>
 			exa.erid = rec.rid and
 			exa.euserid = sys.USERID and 
-			exa.egid = go.gid
+			exa.egid = go.gid and
+			exa.erid > 0
 			<if test="gname!=null and gname!='' ">
 				and go.gname like #{gname}
 			</if>
-			<if test="USERTRUENAME!=null and USERTRUENAME!='' ">
+			<if test="usertruename!=null and usertruename!='' ">
 				and sys.USERTRUENAME like #{usertruename}
 			</if>
 			<if test="eresult!=null and eresult!='' ">
@@ -220,7 +225,7 @@
 			<if test="gname!=null and gname!='' ">
 				and go.gname like #{gname}
 			</if>
-			<if test="USERTRUENAME!=null and USERTRUENAME!='' ">
+			<if test="usertruename!=null and usertruename!='' ">
 				and sys.USERTRUENAME like #{usertruename}
 			</if>
 			<if test="tstate!=null and tstate!='' ">
@@ -246,7 +251,7 @@
 			<if test="gname!=null and gname!='' ">
 				and go.gname like #{gname}
 			</if>
-			<if test="USERTRUENAME!=null and USERTRUENAME!='' ">
+			<if test="usertruename!=null and usertruename!='' ">
 				and sys.USERTRUENAME like #{usertruename}
 			</if>
 			<if test="tstate!=null and tstate!='' ">
@@ -296,4 +301,55 @@
 	    </set>
 	    where exa.eid = #{eid,jdbcType=INTEGER}
 	</update>
+	
+	<!-- 货物退回管理 -->
+	
+	<!-- 查询所有质检记录并分页 -->
+	<select id="qualitySelectAll3" parameterType="java.util.Map" resultMap="QualityResultMaps">
+   		select * from examine exa, sysuser sys, goods go, receipt rec
+		<where>
+			exa.erid = rec.rid and
+			exa.euserid = sys.USERID and 
+			exa.egid = go.gid and
+			rec.rstart between 6 and 7
+			<if test="gname!=null and gname!='' ">
+				and go.gname like #{gname}
+			</if>
+			<if test="gordernumber!=null and gordernumber!='' ">
+				and go.gordernumber like #{gordernumber}
+			</if>
+			<if test="usertruename!=null and usertruename!='' ">
+				and sys.USERTRUENAME like #{usertruename}
+			</if>
+			<if test="rstart!=null and rstart!='' ">
+				and rec.rstart like #{rstart}
+			</if>
+		</where>
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+    </select>
+    
+    <!-- 查询质检记录条数 -->
+ 	<select id="getTotal3" parameterType="java.util.Map" resultType="Long">
+ 		select count(*) from examine exa, sysuser sys, goods go, receipt rec
+		<where>
+			exa.erid = rec.rid and
+			exa.euserid = sys.USERID and 
+			exa.egid = go.gid and
+			rec.rstart between 6 and 7
+			<if test="gname!=null and gname!='' ">
+				and go.gname like #{gname}
+			</if>
+			<if test="gordernumber!=null and gordernumber!='' ">
+				and go.gordernumber like #{gordernumber}
+			</if>
+			<if test="usertruename!=null and usertruename!='' ">
+				and sys.USERTRUENAME like #{usertruename}
+			</if>
+			<if test="rstart!=null and rstart!='' ">
+				and rec.rstart like #{rstart}
+			</if>
+		</where>
+ 	</select>
 </mapper>

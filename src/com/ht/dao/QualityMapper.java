@@ -50,4 +50,10 @@ public interface QualityMapper {
 	//根据id修改出库表记录
 	Integer thelibraryUpdate(Thelibrary thelibrary);
 	
+	//查询所有质检记录
+	List<Quality> qualitySelectAll3(Map<String, Object> map);
+	
+	//总质检记录条数
+	Long getTotal3(Map<String, Object> map);
+	
 }
