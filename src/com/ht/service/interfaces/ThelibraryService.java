@@ -33,6 +33,7 @@ public interface ThelibraryService {
 	    Long queryAllCount2(Map<String, Object> map);
 	    
 	    
+	    
 	    Thelibrary queryById(Integer tid);
 	    
 	    /*
@@ -40,5 +41,19 @@ public interface ThelibraryService {
 	     */
 	    List<Thelibrary> queryTrack(Map<String, Object> map);
 	    
+	    
+	    List<Thelibrary> queryTrack2(Map<String, Object> map);
+	    
+	    
+	    
+	    /*
+	     *货物配送总条数 
+	     */
+	    Long queryAllCount3(Map<String, Object> map);
+	    
+	    /*
+	     *完成配送总条数 
+	     */
+	    Long queryAllCount4(Map<String, Object> map);
 	    
 }

@@ -111,7 +111,7 @@
 			}else{
 		    	$.post("<%=path %>/customer/save2",{'cemail':cemail,'cpassword':cpassword1},function(index){
 		    		if(index.success ){
-		         	  alert("添加成功！");
+		         	  alert("注册成功！");
 		         	  window.location.href="<%=path%>/customer/login";
 		    		}else{
 		    			$("#loginTips").html("该用户已存在!").fadeIn();

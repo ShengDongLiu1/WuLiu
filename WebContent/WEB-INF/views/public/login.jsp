@@ -77,16 +77,16 @@ if(top.location!=self.location)top.location=self.location;
 					<img id="codeimg" src="<%=path%>/yzm/code" onclick="changeImg()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				</div>
 				<div><input class="login_btn" id="loginBtn" type="button" value="登录" /></div>
-                <div style="line-height:30px; text-indent:5px;color:#F30" id="loginTips">&nbsp;</div>
-				<h4><a class="#" href="<%=path %>/customer/zc">立即注册</a></h4>
+                <div style="line-height:30px; text-indent:5px;color:#F30" id="loginTips">&nbsp;</div><br>
+				<h3 style="margin-left: 216px;">还没账号？<a class="#" href="<%=path %>/customer/zc">立即注册</a></h3>
 			</form>
 		</div>
 	</div>
 	
 	
 <!-- footer start -->
-<div id="footer" class="clear">
-    <h1 >宏图物流网</h1>
+<div id="footer" class="clear"><br/>
+ 	<a href="<%=path %>/customer/index"> <span style=" font-weight:bold;  color:#048DD6; font-size: 35px;font-family:STKaiti;margin-top: 40px;">宏图物流网</span></a> 
     <div class="friendLink clear">
         <a  href="#" target="_blank" title="隐私政策" rel="nofollow">隐私政策</a>
         <a href="#" target="_blank" rel="nofollow">服务条款</a>

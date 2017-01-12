@@ -28,6 +28,8 @@ public class TransferController {
 	@Autowired
 	public TransferService transferService;
 	
+	
+	
 	@RequestMapping(value="/all")
 	public String topageStorage(){
 		return "Transfer/Transfer";

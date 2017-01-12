@@ -369,7 +369,7 @@ body{margin:0px;padding:0px;}
 				}else if(value==2){
 					return "<span class='yishen'>已审批</span>";
 				}else if(value==3){
-					return "<span class='yichu'>已出货</span>"
+					return "<span class='yichu'>待运输</span>"
 				}
 			}
 			

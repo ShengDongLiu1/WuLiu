@@ -3,6 +3,7 @@
 <mapper namespace="com.ht.dao.TransportMapper">
   <resultMap id="BaseResultMap" type="com.ht.entity.Transport">
     <id column="trid" jdbcType="INTEGER" property="trid" />
+    <result column="tuid" jdbcType="INTEGER" property="tuid" />
     <result column="tdrivername" jdbcType="VARCHAR" property="tdrivername" />
     <result column="tdriverphone" jdbcType="VARCHAR" property="tdriverphone" />
     <result column="tvehicleid" jdbcType="VARCHAR" property="tvehicleid" />
@@ -11,7 +12,7 @@
     <result column="idcard" jdbcType="VARCHAR" property="idcard" />
   </resultMap>
   <sql id="Base_Column_List">
-    trid, tdrivername, tdriverphone, tvehicleid, tvehicletype, tvehiclecapacity,idcard
+    trid,tuid, tdrivername, tdriverphone, tvehicleid, tvehicletype, tvehiclecapacity,idcard
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -37,6 +38,9 @@
       <if test="trid != null">
         trid,
       </if>
+       <if test="tuid != null">
+        tuid,
+      </if>
       <if test="tdrivername != null">
         tdrivername,
       </if>
@@ -59,6 +63,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="trid != null">
         #{trid,jdbcType=INTEGER},
+      </if>
+       <if test="tuid != null">
+        #{tuid,jdbcType=INTEGER},
       </if>
       <if test="tdrivername != null">
         #{tdrivername,jdbcType=VARCHAR},

@@ -2,6 +2,8 @@ package com.ht.entity;
 
 public class Transport {
     private Integer trid;
+    
+    private Integer tuid;
 
     private String tdrivername;
 
@@ -67,5 +69,13 @@ public class Transport {
 
 	public void setIdcard(String idcard) {
 		this.idcard = idcard;
+	}
+	
+	public Integer getTuid() {
+		return tuid;
+	}
+	
+	public void setTuid(Integer tuid) {
+		this.tuid = tuid;
 	}
 }

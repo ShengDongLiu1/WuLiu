@@ -89,6 +89,23 @@ public class ThelibraryServiceimpl implements ThelibraryService{
 		return thelibraryMapper.queryTrack(map);
 	}
 
+
+	@Override
+	public List<Thelibrary> queryTrack2(Map<String, Object> map) {
+		return thelibraryMapper.queryTrack2(map);
+	}
+
+
+	@Override
+	public Long queryAllCount3(Map<String, Object> map) {
+		return thelibraryMapper.queryAllCount3(map);
+	}
+
+	@Override
+	public Long queryAllCount4(Map<String, Object> map) {
+		return thelibraryMapper.queryAllCount4(map);
+	}
+
 	
 	
 	

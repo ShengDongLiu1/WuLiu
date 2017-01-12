@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.alibaba.fastjson.JSONObject;
 import com.ht.dto.PageBean;
 import com.ht.dto.StringUtil;
+import com.ht.entity.AES;
 import com.ht.entity.Transport;
+import com.ht.entity.sysuser;
 import com.ht.service.interfaces.TransportService;
+import com.ht.service.interfaces.UserService;
+import com.ht.ssm.util.Createstring;
 import com.ht.ssm.util.ResponseUtil;
 
 import net.sf.json.JSONArray;
@@ -24,6 +28,9 @@ import net.sf.json.JSONArray;
 @RequestMapping("/transport")
 public class TransportController {
 
+	@Autowired
+	public UserService userService;
+	
 	@Autowired
 	public TransportService transportService;
 		
@@ -53,12 +60,31 @@ public class TransportController {
 		return null;
 	}
 	
+	
+	
+	
 	@RequestMapping("/save")
 	public String save(Transport transport,HttpServletResponse res) throws Exception{
 		int resultTotal = 0;
         if (transport.getTrid() == null) {
-            resultTotal = transportService.treansportAdd(transport);
-        }else{
+        	  sysuser users = new sysuser();
+              users.setUjobnumber("HTWL-"+Createstring.random());
+              users.setUsertruename((transport.getTdrivername()));
+              users.setUsername(transport.getTdriverphone());
+              users.setUserphone(transport.getTdriverphone());
+              users.setRoleid(3);
+              users.setUserpwd(AES.getInstance().encrypt("1234"));
+              users.setUposition("辅助工");
+              users.setUserstate(1);
+              userService.saveuser(users);
+              System.out.println(transport.getTdriverphone()+"------gg---------");
+              users =  userService.findbyusername(transport.getTdriverphone());
+              System.out.println(users+"000000000000000000000000000000000");
+              System.out.println(users.getUserid()+"------bbb---------");
+              transport.setTuid(users.getUserid());
+              resultTotal = transportService.treansportAdd(transport);
+          
+        }else{	
             resultTotal = transportService.treansportupdate(transport);
         }
         JSONObject jsonObject = new JSONObject();

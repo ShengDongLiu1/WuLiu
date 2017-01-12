@@ -34,9 +34,16 @@ public class TrackController {
 	}
 	
 	
+	@RequestMapping("/notshipped")
+	public String notshipped(){
+		return "rack/notsipped";  
+	}
+	
+	
 	@RequestMapping("/list")
 	public String list(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows, HttpSession session,Thelibrary thelibaray,HttpServletResponse response,String gname, String  cname,String tnumber)throws Exception{
 		PageBean pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
+	
 		Map<String,Object> map=new HashMap<String,Object>();
 		map.put("cname", StringUtil.formatLike(cname));
 		map.put("gname", StringUtil.formatLike(gname));
@@ -56,5 +63,8 @@ public class TrackController {
 		ResponseUtil.write(response, result);
 		return null;
 	}
+	
+	
+	
 
 }
