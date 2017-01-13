@@ -66,6 +66,7 @@ public class TransportController {
 	@RequestMapping("/save")
 	public String save(Transport transport,HttpServletResponse res) throws Exception{
 		int resultTotal = 0;
+		   JSONObject jsonObject = new JSONObject();
         if (transport.getTrid() == null) {
         	  sysuser users = new sysuser();
               users.setUjobnumber("HTWL-"+Createstring.random());
@@ -76,18 +77,19 @@ public class TransportController {
               users.setUserpwd(AES.getInstance().encrypt("1234"));
               users.setUposition("辅助工");
               users.setUserstate(1);
-              userService.saveuser(users);
-              System.out.println(transport.getTdriverphone()+"------gg---------");
-              users =  userService.findbyusername(transport.getTdriverphone());
-              System.out.println(users+"000000000000000000000000000000000");
-              System.out.println(users.getUserid()+"------bbb---------");
-              transport.setTuid(users.getUserid());
-              resultTotal = transportService.treansportAdd(transport);
-          
+           try{
+	              userService.saveuser(users);
+	              users =  userService.findbyusername(transport.getTdriverphone());
+	              transport.setTuid(users.getUserid());
+	              resultTotal = transportService.treansportAdd(transport);
+  			}catch(Exception d){
+  				jsonObject.put("result", "err");
+  			}
+             
         }else{	
             resultTotal = transportService.treansportupdate(transport);
         }
-        JSONObject jsonObject = new JSONObject();
+     
         if(resultTotal > 0){   //说明修改或添加成功
             jsonObject.put("success", true);
         }else{
