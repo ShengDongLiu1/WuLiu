@@ -86,7 +86,7 @@ function mygoods(pa){
 
 /* 操作 */
 function caozuo(gid,state){
-	if(state == '1'){
+	if(state == '1' || state == '5'){
 		return "<span class='sp' onclick='cancel("+gid+")'>取消订单</span>"
 	}else{
 		return "无";
@@ -127,6 +127,8 @@ function goodsState(state){
 		return "<span class='ju'>已拒收</span>";
 	}else if(state == '4'){
 		return "<span class='ju'>已取消</span>";
+	}else if(state == '5'){
+		return "<span class='ju'>已退回</span>";
 	}
 }
 

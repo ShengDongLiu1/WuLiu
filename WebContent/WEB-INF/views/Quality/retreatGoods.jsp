@@ -137,7 +137,7 @@
 		状态：<select id="rstartSearch" class="easyui-combobox" name="rstart1" data-options="editable:false" style="width:10%">
 				<option  draggable="false" value="">请选择状态</option>
 				<option value="6">待退回</option>
-				<option value="7">已退回</option>
+				<option value="7">成功退回</option>
 			  </select>&nbsp;
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
 	</div>
@@ -267,6 +267,7 @@
 
 		/* 给弹出的窗口赋值 */
 		function fuzhi(index){
+			alert(index.quality.receipt.rstart);
 			$(".eid1").html(index.quality.eid);//质检编号
 			$(".egid1").html(index.quality.egid);//货物编号
 			$(".gordernumber1").html(index.quality.goods.gordernumber);//订单号
@@ -290,10 +291,10 @@
 				if (r){
 					var selectedRows = $("#dg").datagrid("getSelections");
 					var row = selectedRows[0];
-					if(row.receipt.rstart = 7){
+					if(row.receipt.rstart == 7){
 						$.messager.alert('消息提示','退货库已无该货物或货物已退回!');
 					}else{
-						$.post("<%=path %>/quality/save3",{'rid':row.receipt.rid,'rstart':7},function(index){
+						$.post("<%=path %>/quality/save3",{'rid':row.receipt.rid,'rstart':7,'gid':row.goods.gid,'gstate':5},function(index){
 							if(index.success){
 							  $.messager.alert('消息提示','退回成功!');
 				         	  $("#dg").datagrid("load");

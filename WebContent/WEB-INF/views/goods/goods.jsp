@@ -163,6 +163,8 @@ function goState(value,obj){
 		state="<span class='ju'>已拒收</span>"
 	}else if(obj.gstate=='4'){
 		state="<span class='ju'>已取消</span>"
+	}else if(obj.gstate=='5'){
+		state="<span class='ju'>已退回</span>"
 	}
 	return state;
 }
@@ -185,8 +187,11 @@ function lanshou(state){
 		);
 	}else if(state=='4'){
 		sta='已取消'
-			$("#becase").remove();
-		}
+		$("#becase").remove();
+	}else if(state=='5'){
+		sta='已退回'
+		$("#becase").remove();
+	}
 	return sta;
 }
 
@@ -549,6 +554,7 @@ function saveGoods() {
 			<option value="2">已揽收</option>
 			<option value="3">已拒收</option>
 			<option value="4">已取消</option>
+			<option value="5">已退回</option>
 		</select>&nbsp;
 		订单号：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>

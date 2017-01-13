@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ht.dto.PageBean;
 import com.ht.dto.StringUtil;
+import com.ht.entity.Goods;
 import com.ht.entity.Quality;
 import com.ht.entity.Receipt;
 import com.ht.entity.Thelibrary;
+import com.ht.service.interfaces.GoodsService;
 import com.ht.service.interfaces.QualityService;
 import com.ht.ssm.util.ResponseUtil;
 
@@ -39,6 +41,9 @@ public class QualityController {
 	
 	@Autowired
 	private QualityService qualityService;
+	
+	@Autowired
+	private GoodsService goodsService;
 	
 	/**
 	 * 转到入库质检
@@ -220,11 +225,15 @@ public class QualityController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/save3")
-	public String save3(Receipt receipt, HttpServletResponse resp) throws Exception{
+	public String save3(Receipt receipt, Goods goods, HttpServletResponse resp) throws Exception{
 		int resultObj = 0;
 		System.out.println(receipt.getRid()+", "+receipt.getRstart());
-		if(receipt.getRid() != null){
+		if(receipt.getRid() != null && receipt.getRstart() == 6){
 			resultObj = qualityService.receiptUpdate(receipt);
+		}else if(receipt.getRid() != null && receipt.getRstart() == 7){
+			System.out.println(goods.getGstate() + ", " + goods.getGid());
+			resultObj = qualityService.receiptUpdate(receipt);
+			resultObj = goodsService.updateByPrimaryKeySelective(goods);
 		}
 		JSONObject jsonObject = new JSONObject();
 		if(resultObj > 0){

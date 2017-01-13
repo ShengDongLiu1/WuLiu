@@ -402,6 +402,8 @@ function addGoodSize(){
 			<option value="3">部分入库</option>
 			<option value="4">检验失败</option>
 			<option value="5">已入库</option>
+			<option value="6">待退回</option>
+			<option value="7">已退回</option>
 		</select>&nbsp;
 		订单号：<input id="sgordernumber" class="easyui-validatebox easyui-textbox" name="gordernumber" data-options="required:false" />&nbsp;
 		收货员：<input id="username" class="easyui-validatebox easyui-textbox" name="username" data-options="required:false" />

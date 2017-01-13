@@ -116,6 +116,8 @@
 				<option value="1">待检验</option>
 				<option value="2">检验通过</option>
 				<option value="4">检验失败</option>
+				<option value="6">待退回</option>
+				<option value="7">已退回</option>
 			  </select>&nbsp;
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
 	</div>
