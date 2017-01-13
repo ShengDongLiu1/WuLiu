@@ -365,6 +365,7 @@ function addGoodSize(){
 	}
 }
 
+/* 根据货物基本信息选择等级 */
 function checkLive(){
 	var gweight=$('#xgweight').numberbox('getValue');
 	var gvolume=$('#xgvolume').numberbox('getValue');
@@ -385,6 +386,27 @@ function checkLive(){
 		return false;
 	}
 	return true;
+}
+
+/* 打开等级说明窗口 */
+function openMess(){
+	$("#livegoodbyWin").dialog("open").dialog("setTitle", "货物等级说明");
+}
+/* 关闭等级说明窗口 */
+function closeshuming(){
+	$("#livegoodbyWin").dialog("close");
+}
+
+/* 返回到确认货物信息窗口 */
+function ruBack(){
+	$("#good_xinxi").dialog("open").dialog("setTitle", "确认货物占用信息");
+	$("#rkTypeWin").dialog("close");
+}
+
+/* 返回到选择类型 */
+function typeBack(){
+	$("#rkTypeWin").dialog("open").dialog("setTitle", "入库类型");
+	$("#receKuWin").dialog("close");
 }
 </script>
 
@@ -536,6 +558,7 @@ function checkLive(){
 	
 	<!-- 自定义窗口按钮 -->
 	<div id="ruku-buttons">
+		<a href="javascript:typeBack()" class="easyui-linkbutton" iconCls="icon-back">返回</a>
 		<a href="javascript:subRece()" class="easyui-linkbutton" iconCls="icon-ok">确认</a>
 	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
@@ -567,6 +590,7 @@ function checkLive(){
 	
 	<!-- 自定义窗口按钮 -->
 	<div id="subruku-buttons">
+		<a href="javascript:ruBack()" class="easyui-linkbutton" iconCls="icon-back">返回</a>
 		<a href="javascript:subrukuType()" class="easyui-linkbutton" iconCls="icon-ok">确认</a>
 	    <a href="javascript:closeGoodWin()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
@@ -596,14 +620,49 @@ function checkLive(){
 		货物重量：<input id="xgweight" class="easyui-validatebox easyui-numberbox" data-options="required:true" /><br /><br />
 		货物体积：<input id="xgvolume" class="easyui-validatebox easyui-numberbox" data-options="required:true" /><br /><br />
 		货物尺寸：<input id="xgsize" class="easyui-validatebox easyui-numberbox" data-options="required:true" /><br /><br />
-		货物等级：<select id="xggrade" class="easyui-combobox" name="xggrade" data-options="editable:false" style="width:29%">
-			<option value="">请选择库位等级</option>
+		货物等级：<select id="xggrade" class="easyui-combobox" name="xggrade" data-options="editable:false" style="width:19%;">
 			<option value="1">等级1</option>
 			<option value="2">等级2</option>
 			<option value="3">等级3</option>
 			<option value="4">等级4</option>
 		</select>
 		<span onclick="checkLive()" style="color:blue;cursor:pointer;">检测</span>
+		<span title="查看等级说明" onclick="openMess();"><img src="<%=path %>/images/question.png" style="width:20px;height:20px;cursor:pointer;vertical-align:middle;"/></span>
+	</div>
+	<!-- 自定义窗口按钮 -->
+	<div id="live-buttons">
+	    <a href="javascript:closeshuming()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
+	<!-- 等级说明信息 -->
+	<div id="livegoodbyWin" class="easyui-dialog"  buttons="#live-buttons" data-options="closable:true, closed:true"  style="width:40%;height:90%;padding:5px;text-align:center;">
+		<h1 style="font-weight:bold;font-size:25px">货物等级说明</h1>
+		<div style="text-align:left;font-size:20px;line-height:25px;">
+			<h5>选择货物等级前请详细阅读以下说明<br />大型物件，按其外形尺寸和重量(含包装和支承架)分成四级：</h5>
+			<p>(一)一级大型物件是指达到下列标准之一者：<br />
+			　　1、长度大于14米(含14米)小于20米;<br />
+			　　2、体积大于147m³(含147m³)小于342m³;<br />
+			　　3、重量大于20吨(含20吨)小于100吨。
+			</p>
+			<p>(二)二级大型物件是指达到下列标准之一者：<br />
+			　　1、长度大于20米(含20米)小于30米;<br />
+			　　2、体积大于342m³(含342m³)小于726m³;<br />
+			　　3、重量大于100吨(含100吨)小于200吨。
+			</p>
+			<p>(三)三级大型物件是指达到下列标准之一者：<br />
+			　　1、长度大于30米(含30米)小于40米;<br />
+			　　2、宽度大于726m³(含726m³)小于1200m³;<br />
+			　　3、重量大于200吨(含200吨)小于300吨。
+			</p>
+			<p>(四)四级大型物件是指达到下列标准之一者：<br />
+			　　1、长度在40米及以上;<br />
+			　　2、宽度在1200m³及以上;<br />
+			　　3、重量在300吨及以上。
+			</p>
+			<p>大型物件的级别，按其长、体积、及重量三个条件中级别最高的确定。</p>
+			<p>
+				<span style="font-weight:bold;">保运通提示：</span>
+				大件物流一定要找具有大件物流经营资格的公司进行办理，承运大型物件的级别要与批准营运的类别相符，否则发生事故，承运人需要承担全部的责任。</p>
+		</div>
 	</div>
 </body>
 </html>

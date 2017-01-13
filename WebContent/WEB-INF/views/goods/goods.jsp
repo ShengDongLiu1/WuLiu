@@ -342,6 +342,7 @@ function fuzhi(index){
 
 /* 给弹出的窗口赋值 */
 function updatefuzhi(index){
+	/* $("#ggrade").combobox("disable"); */
 	$("#hgid").val(index.goods.gid);
 	$(".gname").html(index.goods.gname);
 	$(".gordernumber").html(index.goods.gordernumber);
@@ -385,10 +386,6 @@ function closeGoodWin(){
 	$("#goodJSWin").dialog("close");
 	$("#UpgoodbyWin").dialog("close");
 	$("#cusbyWin").dialog("close");
-}
-
-function closeshuming(){
-	$("#livegoodbyWin").dialog("close");
 }
 
 /* 搜索 */
@@ -518,6 +515,33 @@ function saveGoods() {
 /* 打开等级说明窗口 */
 function openMess(){
 	$("#livegoodbyWin").dialog("open").dialog("setTitle", "货物等级说明");
+}
+/* 关闭等级说明窗口 */
+function closeshuming(){
+	$("#livegoodbyWin").dialog("close");
+}
+
+/* 等级选择 */
+function checkLive(){
+	var gweight=$('#gweight').val();
+	var gvolume=$('#gvolume').val();
+	var gsize=$('#gsize').val();
+	if(gweight != '' && gvolume != '' && gsize != ''){
+		if(gweight>=300 || gvolume >= 1200 || gsize >= 40){
+			$('#ggrade').combobox('setValue',4);
+		}else if((gweight>=200 && gweight < 300) || (gvolume >= 726 && gvolume < 1200) || (gsize >= 30 && gsize < 40)){
+			$('#ggrade').combobox('setValue',3);
+		}else if((gweight>=100 && gweight < 200) || (gvolume >= 342 && gvolume < 726) || (gsize >= 20 && gsize < 30)){
+			$('#ggrade').combobox('setValue',2);
+		}else if((gweight>=20 && gweight < 100) || (gvolume >= 147 && gvolume < 342) || (gsize >= 14 && gsize < 20)){
+			$('#ggrade').combobox('setValue',1);
+		}else{
+			$.messager.alert('提示','货物信息违反规定！','info');
+			return true;
+		}
+		return false;
+	}
+	return true;
 }
 </script>
 </head>
@@ -732,14 +756,14 @@ function openMess(){
 						<option value="其它">其它</option>
 					</select></td>
 					<td class="tdwidth">货物重量:</td>
-					<td class="gxiangq"><input type="number" id="gweight" name="gweight"/> 吨</td>
+					<td class="gxiangq"><input type="number" id="gweight" name="gweight" onblur="checkLive()"/> 吨</td>
 				</tr>
 				
 				<tr align="center">
 					<td class="tdwidth">货物体积:</td>
-					<td class="gxiangq"><input type="number" id="gvolume" name="gvolume"/> m³</td>
+					<td class="gxiangq"><input type="number" id="gvolume" name="gvolume" onblur="checkLive()"/> m³</td>
 					<td class="tdwidth">货物尺寸:</td>
-					<td class="gxiangq"><input type="number" id="gsize" name="gsize"/> m</td>
+					<td class="gxiangq"><input type="number" id="gsize" name="gsize" onblur="checkLive()"/> m</td>
 				</tr>
 				
 				<tr align="center">
@@ -781,7 +805,7 @@ function openMess(){
 	<!-- 等级说明信息 -->
 	<div id="livegoodbyWin" class="easyui-dialog"  buttons="#live-buttons" data-options="closable:true, closed:true"  style="width:40%;height:90%;padding:5px;text-align:center;">
 		<h1 style="font-weight:bold;font-size:25px">货物等级说明</h1>
-		<div style="text-align:left;font-size:20px;">
+		<div style="text-align:left;font-size:20px;line-height:25px;">
 			<h5>选择货物等级前请详细阅读以下说明<br />大型物件，按其外形尺寸和重量(含包装和支承架)分成四级：</h5>
 			<p>(一)一级大型物件是指达到下列标准之一者：<br />
 			　　1、长度大于14米(含14米)小于20米;<br />
