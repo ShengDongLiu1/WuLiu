@@ -46,12 +46,12 @@
 				<th field="comtitle" width="8%">投诉标题</th>
 				<th field="comtime" width="10%" formatter="toDate">投诉时间</th>
 				<th field="comlevel" width="8%">投诉程度</th>
-				<th field="comsysuser" width="8%">投诉员工工号</th>
+				<th field="comsysuser" width="8%">被投诉员工工号</th>
 				<th field="comcontent" width="8%">投诉内容</th>
 				<th field="comdescr" width="8%">期望结果</th>
 				<th field="comexpect" width="8%">备注说明</th>
 				<th field="comdisposetype" width="8%">部门跟进</th>
-				<th field="comdisposesysuser" width="8%">处理人</th>
+				<th field="comdisposesysuser" width="8%">处理人工号</th>
 				<th field="comdisposemethod" width="8%">处理方法</th>
 			</tr>
 		</thead>
