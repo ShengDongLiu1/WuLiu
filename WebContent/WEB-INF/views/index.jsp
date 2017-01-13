@@ -166,17 +166,14 @@
 		<div data-options="region:'center'" style="border:0px;">
 			<div id="tabs" class="easyui-tabs" style="height:100%;">
 				<div title="主页">
-					<iframe name="main" height="600px" width="100%" scrolling="auto"
-						frameborder="0" src="<%=basePath%>user/welcome">
-	
-					</iframe>
+					<iframe name="main" height="600px" width="100%" scrolling="auto"frameborder="0" src="<%=basePath%>user/welcome"></iframe>
 				</div>
 			</div>
 		</div>
 		<div data-options="region:'south',border:false" style="height:35px;background:#E0ECFF;text-align:center;font-size:15px;">版权&copy;</div>
 		 <div id="addWin" class="easyui-window" title="地图名片"
              data-options="iconCls:'icon-edit', closable:true, closed:true"
-             style="width: 545px; height: 700px; padding: 5px;">
+             style="width: 545px; height: 90%; padding: 5px;">
              	<iframe width="504" height="731" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://j.map.baidu.com/4Cmgj"></iframe>
         </div>
         <div id="hidebg" oncontextmenu="return false"></div>

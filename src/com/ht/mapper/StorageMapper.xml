@@ -214,6 +214,7 @@
 			<if test="sbarcadeid!=null and sbarcadeid!='' ">
 				and sbarcadeid like #{sbarcadeid}
 			</if>
+				and sstock > 0
 		</where>
 		order by st.storagetime desc
 		<if test="start!=null and size!=null">
@@ -250,6 +251,7 @@
 			<if test="storagetime!=null and storagetime!='' ">
 				and DATE(storagetime) = #{storagetime,jdbcType=TIMESTAMP}
 			</if>
+			and sstock > 0
 		</where>
  </select>
  
