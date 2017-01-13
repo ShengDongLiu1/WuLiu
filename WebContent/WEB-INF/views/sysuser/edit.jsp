@@ -169,9 +169,6 @@ awesome.css">
 
 </head>
 <body class="content1">
-	<div class="header">
-		<h1 class="page-title">编辑用户功能</h1>
-	</div>
 
 	<ul class="breadcrumb">
 		<li><a href="user/listuser">用户管理</a> <span class="divider">/</span>

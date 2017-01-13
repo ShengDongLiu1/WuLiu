@@ -146,11 +146,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </script>    
   </head>
   <body class="content1">
-		<div class="header">
-			<h1 class="page-title">
-				编辑用户功能
-			</h1>
-		</div>
 
 		<ul class="breadcrumb">
 			<li>

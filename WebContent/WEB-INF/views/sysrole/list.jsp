@@ -26,11 +26,6 @@
 	</head>
 
 	<body class="content1">
-		<div class="header">
-			<h1 class="page-title">
-				角色管理
-			</h1>
-		</div>
 		<ul class="breadcrumb">
 			<li class="active">
 				角色列表

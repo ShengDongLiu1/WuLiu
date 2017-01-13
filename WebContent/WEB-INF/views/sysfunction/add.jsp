@@ -24,12 +24,6 @@
 	</head>
 
 	<body class="content1">
-		<div class="header">
-			<h1 class="page-title">
-				新建系统功能
-			</h1>
-		</div>
-
 		<ul class="breadcrumb">
 			<li>
 				<a href="function/list">系统功能管理</a>

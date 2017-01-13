@@ -23,11 +23,6 @@
 	</head>
 
 	<body class="content1">
-		<div class="header">
-			<h1 class="page-title">
-				新增角色
-			</h1>
-		</div>
 
 		<ul class="breadcrumb">
 			<li>
