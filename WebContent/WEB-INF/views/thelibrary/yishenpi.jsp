@@ -96,18 +96,18 @@ body{margin:0px;padding:0px;}
         <table style="border: 2px;border-color: red; ">
             <tr>
                 <td>货物名称:</td>
-                <td><input class="easyui-textbox" id="goodsName2" style="width: 150px;"  
+                <td><input class="easyui-textbox" id="goodsName2" style="width: 150px;" readonly="readonly"  
                       data-options="required:true,novalidate:true" readonly="readonly"  /></td>
             </tr>
             <tr>
                 <td><br/>出库数量:</td>
-                <td><br/><input class="easyui-numberbox" id="tcount" style="width: 150px;" name="tcount"
+                <td><br/><input  class="easyui-numberbox" id="tcount" style="width: 150px;" name="tcount"
                                data-options="required:true,validType:'length[1,11]',novalidate:true"
                                 style="width:150px" readonly="readonly"></td>
             </tr>
             <tr>
                 <td><br/>出库类型:</td>
-                <td><br/><select class="easyui-combobox"  style="width: 150px;" name="ttype" id="ttype" data-options="required:true" readonly="readonly">
+                <td><br/><select class="easyui-combobox" readonly="readonly"   style="width: 150px;" name="ttype" id="ttype" data-options="required:true" readonly="readonly">
                         <option value="预定出库">预定出库</option>
                         <option value="销售出库">销售出库</option>
                         <option value="退货出库">退货出库</option>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ht.dao.TransportdetailsMapper">
+  <resultMap id="BaseResultMap" type="com.ht.entity.Transportdetails">
+    <id column="shid" jdbcType="INTEGER" property="shid" />
+    <result column="shgid" jdbcType="INTEGER" property="shgid" />
+    <result column="shtid" jdbcType="INTEGER" property="shtid" />
+    <result column="travel" jdbcType="FLOAT" property="travel" />
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="com.ht.entity.Transportdetails">
+        <id column="shid" jdbcType="INTEGER" property="shid" />
+    <result column="shgid" jdbcType="INTEGER" property="shgid" />
+    <result column="shtid" jdbcType="INTEGER" property="shtid" />
+    <result column="travel" jdbcType="FLOAT" property="travel" />
+  
+   <association property="goods" javaType="com.ht.entity.Goods">
+	    <result property="gid" column="gid"/>
+		<result property="gname" column="gname"/>
+		<result column="gordernumber" jdbcType="VARCHAR" property="gordernumber" />
+	    <result column="gcount" jdbcType="INTEGER" property="gcount" />
+	    <result column="gunit" jdbcType="VARCHAR" property="gunit" />
+	    <result column="gweight" jdbcType="REAL" property="gweight" />
+	    <result column="gvolume" jdbcType="REAL" property="gvolume" />
+	    <result column="gsize" jdbcType="REAL" property="gsize" />
+	    <result column="ggrade" jdbcType="INTEGER" property="ggrade" />
+	    <result column="gdescribe" jdbcType="VARCHAR" property="gdescribe" />
+	    <result column="gconsignee" jdbcType="VARCHAR" property="gconsignee" />
+	    <result column="greaddress" jdbcType="VARCHAR" property="greaddress" />
+	    <result column="grephone" jdbcType="VARCHAR" property="grephone" />
+	    <result column="gorigin" jdbcType="VARCHAR" property="gorigin" />
+	    <result column="gendpoint" jdbcType="VARCHAR" property="gendpoint" />
+	    <result column="gstate" jdbcType="VARCHAR" property="gstate" />
+	    <result column="gorderstime" jdbcType="TIMESTAMP" property="gorderstime" />
+  </association>
+  
+   <association property="transport" javaType="com.ht.entity.Transport">
+	    <result property="trid" column="trid"/>
+		<result property="tdrivername" column="tdrivername"/>
+		<result property="tdriverphone" column="tdriverphone"/>
+		<result property="tvehicletype" column="tvehicletype"/>
+		<result property="tvehiclecapacity" column="tvehiclecapacity"/>
+  </association>
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    shid, shgid, shtid, travel
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tansportdetails
+    where shid = #{shid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tansportdetails
+    where shid = #{shid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ht.entity.Thelibrary">
+    insert into tansportdetails (shgid, shtid,travel)
+    values (#{shgid,jdbcType=INTEGER},#{shtid,jdbcType=INTEGER},#{travel,jdbcType=FLOAT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ht.entity.Transportdetails">
+    insert into tansportdetails
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shid != null">
+        shid,
+      </if>
+      <if test="shgid != null">
+        shgid,
+      </if>
+      <if test="shtid != null">
+        shtid,
+      </if>
+      <if test="travel != null">
+        travel
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shid != null">
+        #{shid,jdbcType=INTEGER},
+      </if>
+      <if test="shgid != null">
+        #{shgid,jdbcType=INTEGER},
+      </if>
+      <if test="shtid != null">
+        #{shtid,jdbcType=INTEGER},
+      </if>
+      <if test="travel != null">
+        #{travel,jdbcType=FLOAT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ht.entity.Transportdetails">
+    update tansportdetails
+    <set>
+      <if test="shgid != null">
+        shgid = #{shgid,jdbcType=INTEGER},
+      </if>
+      <if test="shtid != null">
+        shtid = #{shtid,jdbcType=INTEGER},
+      </if>
+      <if test="travel != null">
+        travel = #{travel,jdbcType=FLOAT},
+      </if>
+    </set>
+    where shid = #{shid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ht.entity.Transportdetails">
+    update tansportdetails
+    set 
+      shgid = #{shgid,jdbcType=INTEGER},
+      shtid = #{shtid,jdbcType=INTEGER},
+      travel = #{travel,jdbcType=FLOAT},
+    where shid = #{shid,jdbcType=INTEGER}
+  </update>
+  
+ <select id="queryAll" parameterType="java.util.Map" resultMap="BaseResultMap1">
+		select * from tansportdetails where shitid in(select trid from transport) and shgid in(select gid from goods)	
+		<where>
+			<if test="gname!=null and gname!='' ">
+				and goods.gname like #{gname}
+			</if>
+			<if test="tdrivername!=null and tdrivername!='' ">
+				and transport.tdrivername like #{tdrivername}
+			</if>
+			<if test="travel!=null and travel!='' ">
+				and travel like #{travel}
+			</if>
+		</where>
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+ </select>
+ 
+ 
+ <!-- 查询运输详情条数 -->
+ <select id="queryAllCount" parameterType="java.util.Map" resultType="Long">
+	select count(*) from tansportdetails where shtid in(select trid from transport) and shgid in(select gid from goods)	
+		<where>
+			<if test="gname!=null and gname!='' ">
+				and goods.gname like #{gname}
+			</if>
+			<if test="tdrivername!=null and tdrivername!='' ">
+				and transport.tdrivername like #{tdrivername}
+			</if>
+			<if test="travel!=null and travel!='' ">
+				and travel like #{travel}
+			</if>	
+		</where>
+ </select>
+</mapper>

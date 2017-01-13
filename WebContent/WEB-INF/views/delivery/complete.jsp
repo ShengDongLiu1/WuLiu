@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>完成配送</title>
+<title>配送状态</title>
 <link rel="stylesheet" href="<%=path %>/js/jquery-easyui/themes/default/easyui.css"/>
 <link rel="stylesheet" href="<%=path %>/js/site_main.css"/>
 <link rel="stylesheet" type="text/css" href="<%=path %>/js/jquery-easyui/themes/icon.css">
@@ -72,6 +72,7 @@ body{margin:0px;padding:0px;}
 				<th data-options="field:'customer',width:100" align="center" formatter="getcname">客户名称</th>
 		        <th data-options="field:'tnumber',width:120" align="center">送货单号</th>
 		        <th data-options="field:'ttype',width:100" align="center">出货类型</th>
+		        <th data-options="field:'ttid',width:100" align="center" hidden="true">司机名称</th>
 		        <th data-options="field:'gorderstime1',width:150" align="center" formatter="toDate">下单日期</th>
 		        <th data-options="field:'goods',width:100" align="center" formatter="goodsName">货物名称</th>
 		        <th data-options="field:'tcount',width:100" align="center">实际送货量</th>
@@ -91,20 +92,47 @@ body{margin:0px;padding:0px;}
 			</tr>
 		</table>
 	</div>
-	
-	
+
+	<div id="dlg-buttons">
+	    <a href="javascript:peisong()" class="easyui-linkbutton"
+	        iconCls="icon-ok">保存</a> <a href="javascript:closeUserDialog()"
+	        class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
+	 <div id="addWin" title="填写行驶公里" class="easyui-dialog"
+            style="width: 300px;height:200px;padding:10px 10px;" closed="true"
+            buttons="#dlg-buttons">
+		   <form id="addForm"  method="post">
+    	<input type="hidden" name="shgid" id="shgid" />
+		<input type="hidden" name="shtid" id="shtid" />
+        <table style="border: 2px;border-color: red; ">
+            <tr>
+                <td><br/>行驶公里:</td>
+                <td><br/><input class="easyui-numberbox" id="travel" precision='3'  style="width: 150px;" name="travel"
+                               data-options="required:true,validType:'length[1,11]',novalidate:true"
+                                style="width:150px"></td>
+            </tr>
+        </table>
+    </form>
+     </div>
+        
+        
 	<!-- 菜单 -->
 	<div id="tb" style="padding: 2px;">
 		客户姓名：<input id="cname1" class="easyui-validatebox easyui-textbox" name="cname" data-options="required:false" />&nbsp;
 		货物名称：<input id="gname1" class="easyui-validatebox easyui-textbox" name="gname" data-options="required:false" />&nbsp;
 		出货单号：<input id="tnumber1" class="easyui-validatebox easyui-textbox" name="tnumber" data-options="required:false" />&nbsp;
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="seachs();">搜索</a>
-		<br/>
+		<br/>	
 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-print'" onclick="window.print();">打印</a>&nbsp;
-		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" onclick="peisong();">配送完成</a>&nbsp;
+		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-redo'" onclick="open1();">配送完成</a>&nbsp;
 	</div>
 	
 	<script type="text/javascript">
+	
+	
+	function getsijiName(){
+		return value.tdrivername;
+	}
 	
 	function getcname(value){
 		return value.cname;
@@ -201,14 +229,26 @@ body{margin:0px;padding:0px;}
 				}); 
 			}
 			
+			
+			function open1(){
+				 $("#addWin").dialog("open");
+			}
 			function peisong(obj){
 				 var row=$("#list").datagrid("getSelected");
 					if(row){
 						if(row.tstate!=5){
 							$.post("<%=path %>/delivery/wanchengs",{'tid':row.tid},function(index){
 					    		if(index.success ){
-					    			$.messager.alert('提示','配送成功！','info');
-					    			$("#list").datagrid("reload");
+					    			var travel = $("#travel").val();
+					    			$.post("<%=path %>/transportd/save",{'shgid':row.goods.gid,'shtid':row.ttid,'travel':travel},function(index){
+							    		if(index.success ){
+							    			$.messager.alert('提示','配送成功！','info');
+							    			closeUserDialog();
+							    			$("#list").datagrid("reload");
+							    		}else{
+							    			$.messager.alert('提示',"配送失败!",'info');
+							    		}
+							   		},"json");
 					    		}else{
 					    			$.messager.alert('提示',"配送失败!",'info');
 					    		}
@@ -220,6 +260,11 @@ body{margin:0px;padding:0px;}
 						$.messager.alert('提示','请选中需要配送的出货','info');	//messager消息控件
 					}
 			}
+			
+			 function closeUserDialog() {
+			    $("#addWin").dialog("close");
+			    $("#list").datagrid("reload");
+			 }
 	</script>
 </body>
 </html>

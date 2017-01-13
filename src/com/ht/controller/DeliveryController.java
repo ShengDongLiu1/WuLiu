@@ -74,7 +74,6 @@ public class DeliveryController {
 	public String list2(@RequestParam(value="page",required=false)String page,@RequestParam(value="rows",required=false)String rows, HttpSession session,Thelibrary thelibaray,HttpServletResponse response,String gname, String  cname,String tnumber,HttpServletRequest request)throws Exception{
 		PageBean pageBean=new PageBean(Integer.parseInt(page),Integer.parseInt(rows));
 		sysuser existsysuser = (sysuser)session.getAttribute("user");
-		System.out.println(existsysuser.getUsername()+"=======================");
 		Map<String,Object> map=new HashMap<String,Object>();
 		map.put("username",existsysuser.getUsername());
 		map.put("cname", StringUtil.formatLike(cname));

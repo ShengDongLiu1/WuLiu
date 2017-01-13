@@ -266,7 +266,7 @@
   <select id="queryTrack2" parameterType="java.util.Map" resultMap="BaseResultMap1">
  	 <choose>
 	    <when test="username!=null and username!='' and username=='admin' ">
-	        	select c.cname,go.gid,go.gunit,go.gorderstime,go.gname,go.gstate,go.gstate,t.tid,t.tnumber,t.tcount,t.ttype,t.tstate,re.rreceivecount from customer c,receipt re, thelibrary t, goods go 
+	        	select c.cname,go.gid,go.gunit,go.gorderstime,go.gname,go.gstate,go.gstate,t.tid,t.ttid,t.tnumber,t.tcount,t.ttype,t.tstate,re.rreceivecount from customer c,receipt re, thelibrary t, goods go 
 		 	<where>
 		 		 re.rgid = go.gid and c.cid = re.rcid  and t.tgid = go.gid and t.tgid = go.gid and t.tstate BETWEEN 4 and 5
 		 		 <if test="gname!=null and gname!='' ">
