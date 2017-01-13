@@ -138,11 +138,34 @@ public class StorageController {
 	}
 	
 	@RequestMapping("/updatekw")
-	public String updatekw(Storage storage,@RequestParam(value="sid",required=false)int sid,@RequestParam(value="loid",required=false)int ssbid,HttpServletResponse res) throws Exception{
+	public String updatekw(Storage storage,@RequestParam(value="sgid",required=false)int sgid,@RequestParam(value="zqkwid",required=false)int zqkwid,@RequestParam(value="sid",required=false)int sid,@RequestParam(value="loid",required=false)int ssbid,HttpServletResponse res,HttpSession session) throws Exception{
 		int resultTotal = 0;
 		storage.setSid(sid);
 		storage.setSsbid(ssbid);
+		Goods goods=(Goods) session.getAttribute("queryGoods");
+		
+		Inventory zqinv=inventoryService.selectByPrimaryKey(zqkwid);//之前库位
+		zqinv.setLosizes(zqinv.getLosizes()+goods.getGsize());
+		zqinv.setLovolumes(zqinv.getLovolumes()+goods.getGvolume());
+		zqinv.setLoweights(zqinv.getLoweights()+goods.getGweight());
+		inventoryService.inventoryupdate(zqinv);
+		
+		Inventory zhinv=inventoryService.selectByPrimaryKey(ssbid);//之后库位
+		zhinv.setLosizes(zhinv.getLosizes()-goods.getGsize());
+		zhinv.setLovolumes(zhinv.getLovolumes()-goods.getGvolume());
+		zhinv.setLoweights(zhinv.getLoweights()-goods.getGweight());
+		inventoryService.inventoryupdate(zhinv);
             resultTotal = storageService.updateByPrimaryKeySelective(storage);
+            Inventory inventory=new Inventory();//移库位之后，更改库位货物
+            System.out.println(sgid);
+            inventory.setLoid(ssbid);
+            inventory.setLogid(sgid);
+            inventoryService.inventoryupdate(inventory);
+            Inventory inventorys=new Inventory();//移库位之前，更改库位货物
+
+            inventorys.setLoid(zqkwid);
+            inventorys.setLogid(-1);
+            inventoryService.inventoryupdate(inventorys);
         JSONObject jsonObject = new JSONObject();
         if(resultTotal > 0){   //说明修改成功
             jsonObject.put("success", true);

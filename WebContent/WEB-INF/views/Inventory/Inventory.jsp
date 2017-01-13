@@ -93,8 +93,8 @@ a:hover {color:#54287C}
 		库位状态：
 		<select name="lostate" id="lostate" class="easyui-combobox" data-options="editable:false" style="width:90px">
 					<option value="" selected = "selected">请选择</option>
-					<option value="已开启">已开启</option>
-					<option value="已关闭">已关闭</option>
+					<option value="0">已开启</option>
+					<option value="1">已关闭</option>
 				</select>
 		<a href="javascript:selectfiltrate()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">筛选</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	</div>

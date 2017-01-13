@@ -95,7 +95,7 @@ function goodsName(value){
 }
 
 function inventoryName(value,obj){
-	var btn="<a href=javascript:openInveWin("+value.loid+",'"+value.loname+"',"+obj.sid+")>"+value.loname+"</a>";
+	var btn="<a href=javascript:openInveWin("+value.loid+",'"+value.loname+"',"+obj.sid+","+obj.goods.gid+")>"+value.loname+"</a>";
 	return btn;
 }
 
@@ -146,10 +146,16 @@ function openGoodWin(gid) {
 }
 
 /* 打开移库窗口 */
-function openInveWin(loid,loname,sid) {
+function openInveWin(loid,loname,sid,gid) {
 	$("#lonames").html(loname);
 	$("#sids").val(sid);
+	$("#ssbidzq").val(loid);//之前库位
+	$("#hwgid").val(gid);//之前库位
+	$.post("<%=path%>/receipt/byGood",{'sid':sid},function(index){
+		
+	},"json");
 	$("#InvebyWin").dialog("open").dialog("setTitle", "货物移库详情");
+
 }
 
 /* 给客户信息窗口赋值 */
@@ -314,8 +320,12 @@ function doAdd() {
 
 function doUpdate() {
 	var sid=$("#sids").val();
-	var loid=$("#kwids").val();
-	 $.post("<%=path%>/storage/updatekw",{'sid':sid,'loid':loid},function(index){
+	var loid=$("#kwids").val();//选择的库位id
+	var zqkwid=$("#ssbidzq").val();//没选择之前的库位id
+	alert(loid);
+	alert(zqkwid);
+	var sgid=$("#hwgid").val();
+	 $.post("<%=path%>/storage/updatekw",{'sid':sid,'loid':loid,'zqkwid':zqkwid,'sgid':sgid},function(index){
 		 $("#InvebyWin").dialog("close");
          $("#list").datagrid("reload");
          $("#lonamesok").textbox('setValue','');
@@ -466,7 +476,10 @@ function doUpdate() {
 		<table style="width:100%;height:100%;">
 			<tr align="center">
 				<td class="tdwidth">移库位之前:</td>
-				<td class="gxiangq"><span id="lonames"></span><input id="sids" type=text style="display:none"><input id="kwids" type=text style="display:none"></td>
+				<td class="gxiangq"><span id="lonames"></span><input id="sids" type=text style="display:none"><input id="kwids" type=text style="display:none">
+				<input type="hidden" name="ssbidzq" id="ssbidzq">
+				<input type="hidden" name="hwgid" id="hwgid">
+				</td>
 			</tr>
 			
 			<tr align="center">

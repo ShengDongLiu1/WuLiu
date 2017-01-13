@@ -278,21 +278,24 @@
 	        $("#comlevel").prop("selected", 'selected');
 	        $("#comtime").textbox('setValue',"");
 	        $("#comtime1").textbox('setValue',"");
-	       
+	        $("#comtime1").textbox('setValue',"");
+	        
 	    }
 	    
 	    
 	    function selectfiltrateComplaints(){
 	    	
 	    	var comsysuser=$('#comsysuser').textbox('getValue');
-	    	var comtype=$('#comtype').val();
+	    	var comtype=$('#comtype').textbox('getValue');
 	    	var comcusid=$('#comcusid').textbox('getValue');
 	    	var comtitle=$('#comtitle').textbox('getValue');
-	    	var comlevel=$('#comlevel').val();
+	    	var comlevel=$('#comlevel').textbox('getValue');
 	    	var comtime=$('#comtime').textbox('getValue');
 	    	var comtime1=$('#comtime1').textbox('getValue');
+	    	var comtime1=$('#comtime1').textbox('getValue');
+	    	var comdisposetype=$('#comdisposetype').textbox('getValue');
 	    	 $("#dg").datagrid("load",{comsysuser:comsysuser,comtype:comtype,comcusid:comcusid,
-	    		 comtitle:comtitle,comlevel:comlevel,comtime:comtime,comtime1:comtime1});
+	    		 comtitle:comtitle,comlevel:comlevel,comtime:comtime,comtime1:comtime1,comdisposetype:comdisposetype});
 	    	 tbsetValue();
 	    }
 
