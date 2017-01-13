@@ -387,6 +387,10 @@ function closeGoodWin(){
 	$("#cusbyWin").dialog("close");
 }
 
+function closeshuming(){
+	$("#livegoodbyWin").dialog("close");
+}
+
 /* 搜索 */
 function seachs(){
 	var cname = $('#scname').textbox('getValue');
@@ -449,7 +453,7 @@ function checkSubGoods(){
 	var grephone=$("#grephone").val();
 	var gorigin=$("#gorigin").val();
 	var gendpoint=$("#gendpoint").val();
-	var re=/^(13[0-9]{9})|(15[89][0-9]{8})$/;
+	var re=/^(13[0-9]{9})|(15[0-9]{9})|(18[0-9]{9})$/;
 	if(gcount == ''){
 		 $.messager.alert("系统提示", "请填写货物数量！",'info');
 		 return false;
@@ -511,6 +515,10 @@ function saveGoods() {
     });
 }
 
+/* 打开等级说明窗口 */
+function openMess(){
+	$("#livegoodbyWin").dialog("open").dialog("setTitle", "货物等级说明");
+}
 </script>
 </head>
 <body>
@@ -737,13 +745,13 @@ function saveGoods() {
 				<tr align="center">
 					<td class="tdwidth">货物等级:</td>
 					<td class="gxiangq">
-						<select id="ggrade" class="easyui-combobox" name="ggrade" data-options="editable:false" style="width:190px;height:30px;">
+						<select id="ggrade" class="easyui-combobox" name="ggrade" data-options="editable:false" style="width:160px;height:30px;vertical-align:middle;">
 							<option value="1">等级 1</option>
 							<option value="2">等级 2</option>
 							<option value="3">等级 3</option>
 							<option value="4">等级 4</option>
-							<option value="5">等级 5</option>
 						</select>
+						<span title="查看等级说明" onclick="openMess();"><img src="<%=path %>/images/question.png" style="width:30px;height:30px;cursor:pointer;vertical-align:middle;"/></span>
 					</td>
 					<td class="tdwidth">收货人:</td>
 					<td class="gxiangq"><input type="text" id="gconsignee" name="gconsignee"/></td>
@@ -766,5 +774,40 @@ function saveGoods() {
 		</form>
 	</div>
 	
+	<!-- 自定义窗口按钮 -->
+	<div id="live-buttons">
+	    <a href="javascript:closeshuming()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+	</div>
+	<!-- 等级说明信息 -->
+	<div id="livegoodbyWin" class="easyui-dialog"  buttons="#live-buttons" data-options="closable:true, closed:true"  style="width:40%;height:90%;padding:5px;text-align:center;">
+		<h1 style="font-weight:bold;font-size:25px">货物等级说明</h1>
+		<div style="text-align:left;font-size:20px;">
+			<h5>选择货物等级前请详细阅读以下说明<br />大型物件，按其外形尺寸和重量(含包装和支承架)分成四级：</h5>
+			<p>(一)一级大型物件是指达到下列标准之一者：<br />
+			　　1、长度大于14米(含14米)小于20米;<br />
+			　　2、体积大于147m³(含147m³)小于342m³;<br />
+			　　3、重量大于20吨(含20吨)小于100吨。
+			</p>
+			<p>(二)二级大型物件是指达到下列标准之一者：<br />
+			　　1、长度大于20米(含20米)小于30米;<br />
+			　　2、体积大于342m³(含342m³)小于726m³;<br />
+			　　3、重量大于100吨(含100吨)小于200吨。
+			</p>
+			<p>(三)三级大型物件是指达到下列标准之一者：<br />
+			　　1、长度大于30米(含30米)小于40米;<br />
+			　　2、宽度大于726m³(含726m³)小于1200m³;<br />
+			　　3、重量大于200吨(含200吨)小于300吨。
+			</p>
+			<p>(四)四级大型物件是指达到下列标准之一者：<br />
+			　　1、长度在40米及以上;<br />
+			　　2、宽度在1200m³及以上;<br />
+			　　3、重量在300吨及以上。
+			</p>
+			<p>大型物件的级别，按其长、体积、及重量三个条件中级别最高的确定。</p>
+			<p>
+				<span style="font-weight:bold;">保运通提示：</span>
+				大件物流一定要找具有大件物流经营资格的公司进行办理，承运大型物件的级别要与批准营运的类别相符，否则发生事故，承运人需要承担全部的责任。</p>
+		</div>
+	</div>
 </body>
 </html>

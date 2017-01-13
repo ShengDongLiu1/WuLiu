@@ -148,7 +148,7 @@ function toSub(value,obj){
 	if(obj.rstart == 1){
 		btn="<span class='wait'>待检验</span>";
 	}else if(obj.rstart == 2){
-		btn="<a href='javascript:openNumWin("+obj.rid+","+obj.rcid+","+obj.rgid+","+obj.rreceivecount+","+obj.goods.gweight+","+obj.goods.gvolume+","+obj.goods.gsize+")'>入库</a>";
+		btn="<a href='javascript:openNumWin("+obj.rid+","+obj.rcid+","+obj.rgid+","+obj.rreceivecount+","+obj.goods.gweight+","+obj.goods.gvolume+","+obj.goods.gsize+","+obj.goods.ggrade+")'>入库</a>";
 	}else if(obj.rstart == 3){
 		btn="<a href='javascript:openNextWin("+obj.rid+","+obj.rcid+","+obj.rgid+","+obj.rreceivecount+")' style='color:orange'>继续入库</a>";
 	}else if(obj.rstart == 4){
@@ -246,12 +246,13 @@ function lanshou(state){
 }
 
 /* 打开选择入库方式窗口 */
-function openNumWin(rid,cid,gid,count,gweight,gvolume,gsize){
+function openNumWin(rid,cid,gid,count,gweight,gvolume,gsize,ggrade){
 	$('#srid').val(rid);
 	$('#srcid').val(cid);
 	$('#srgid').val(gid);
 	$('#xgid').val(gid);
 	$('#rreceivecount').val(count);
+	$('#xggrade').combobox('setValue',ggrade);
 	$('#xgweight').numberbox('setValue',gweight);
 	$('#xgvolume').numberbox('setValue',gvolume);
 	$('#xgsize').numberbox('setValue',gsize);
@@ -338,6 +339,7 @@ function subRece(){
 	}
 }
 
+/* 提交货物大小 */
 function addGoodSize(){
 	var gid=$('#xgid').val();
 	var gweight=$('#xgweight').numberbox('getValue');
@@ -352,12 +354,37 @@ function addGoodSize(){
 	}else if(gsize == ''){
 		$.messager.alert('提示','请填写货物尺寸！','info');
 		return false;
+	}else if(checkLive()){
+		return false;
 	}else{
-		$.post("<%=path%>/goods/updateGood",{'gid':gid,'gweight':gweight,'gvolume':gvolume,'gsize':gsize},function(index){},"json");
+		var ggrade=$('#xggrade').combobox('getValue');
+		$.post("<%=path%>/goods/updateGood",{'gid':gid,'gweight':gweight,'gvolume':gvolume,'gsize':gsize,'ggrade':ggrade},function(index){},"json");
 		$("#good_xinxi").dialog("close");
 		getCheckVal();
 		$("#rkTypeWin").dialog("open").dialog("setTitle", "入库类型");
 	}
+}
+
+function checkLive(){
+	var gweight=$('#xgweight').numberbox('getValue');
+	var gvolume=$('#xgvolume').numberbox('getValue');
+	var gsize=$('#xgsize').numberbox('getValue');
+	if(gweight != '' && gvolume != '' && gsize != ''){
+		if(gweight>=300 || gvolume >= 1200 || gsize >= 40){
+			$('#xggrade').combobox('setValue',4);
+		}else if((gweight>=200 && gweight < 300) || (gvolume >= 726 && gvolume < 1200) || (gsize >= 30 && gsize < 40)){
+			$('#xggrade').combobox('setValue',3);
+		}else if((gweight>=100 && gweight < 200) || (gvolume >= 342 && gvolume < 726) || (gsize >= 20 && gsize < 30)){
+			$('#xggrade').combobox('setValue',2);
+		}else if((gweight>=20 && gweight < 100) || (gvolume >= 147 && gvolume < 342) || (gsize >= 14 && gsize < 20)){
+			$('#xggrade').combobox('setValue',1);
+		}else{
+			$.messager.alert('提示','货物信息违反规定！','info');
+			return true;
+		}
+		return false;
+	}
+	return true;
 }
 </script>
 
@@ -563,12 +590,20 @@ function addGoodSize(){
 	</div>
 	
 	<!-- 确认货物占用信息 -->
-	<div id="good_xinxi" class="easyui-dialog"  buttons="#good-buttons" data-options="closable:true, closed:true"  style="width:30%;height:200px;padding:5px;text-align:center;">
+	<div id="good_xinxi" class="easyui-dialog"  buttons="#good-buttons" data-options="closable:true, closed:true"  style="width:30%;height:240px;padding:5px;text-align:center;">
 		<input type="hidden" id="xgid" />
 		<br />
-		货物重量：<input id="xgweight" class="easyui-validatebox easyui-numberbox" data-options="required:true"/><br /><br />
+		货物重量：<input id="xgweight" class="easyui-validatebox easyui-numberbox" data-options="required:true" /><br /><br />
 		货物体积：<input id="xgvolume" class="easyui-validatebox easyui-numberbox" data-options="required:true" /><br /><br />
-		货物尺寸：<input id="xgsize" class="easyui-validatebox easyui-numberbox" data-options="required:true" /><br />
+		货物尺寸：<input id="xgsize" class="easyui-validatebox easyui-numberbox" data-options="required:true" /><br /><br />
+		货物等级：<select id="xggrade" class="easyui-combobox" name="xggrade" data-options="editable:false" style="width:29%">
+			<option value="">请选择库位等级</option>
+			<option value="1">等级1</option>
+			<option value="2">等级2</option>
+			<option value="3">等级3</option>
+			<option value="4">等级4</option>
+		</select>
+		<span onclick="checkLive()" style="color:blue;cursor:pointer;">检测</span>
 	</div>
 </body>
 </html>

@@ -162,6 +162,9 @@ function getValues(){
 	var gendpoint=$("#gendpoint").val();
 	var gdescribe=$("#gdescribe").val();
 	var reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
+	if(gweight != '' && gvolume != '' && gsize != ''){
+		checkLive();
+	}
 	if(gname == ''){
 		$('.error1').html(message);
 		return false;
@@ -379,6 +382,24 @@ function closeMess(){
 function openMess(){
 	$("#leveMess").show(100);
 }
+
+function checkLive(){
+	var gweight=$("#gweight").val();
+	var gvolume=$("#gvolume").val();
+	var gsize=$("#gsize").val();
+	if(gweight>=300 || gvolume >= 1200 || gsize >= 40){
+		$("#ggrade").val(4);
+	}else if((gweight>=200 && gweight < 300) || (gvolume >= 726 && gvolume < 1200) || (gsize >= 30 && gsize < 40)){
+		$("#ggrade").val(3);
+	}else if((gweight>=100 && gweight < 200) || (gvolume >= 342 && gvolume < 726) || (gsize >= 20 && gsize < 30)){
+		$("#ggrade").val(2);
+	}else if((gweight>=20 && gweight < 100) || (gvolume >= 147 && gvolume < 342) || (gsize >= 14 && gsize < 20)){
+		$("#ggrade").val(1);
+	}else{
+		$('.error7').html('违反约定');
+		return false;
+	}
+}
 </script>
 <style type="text/css">
 .autoScroll{  
@@ -493,7 +514,7 @@ function openMess(){
 	text-align:center;
 	border-radius:5px;
 	position:fixed;
-	left:28%;
+	left:30%;
 	top:10%;
 	background:#2F3627;
 	overflow:auto;
@@ -768,13 +789,14 @@ function openMess(){
 			</td>
 			<td align="right">货物等级：</td>
 			<td align="left">
-				<select name="ggrade" class="ggrade">
+				<select name="ggrade" class="ggrade" disabled="disabled">
 					<option value="">- 请选择货物等级 -</option>
 					<option value="1">等级 1</option>
 					<option value="2">等级 2</option>
 					<option value="3">等级 3</option>
 					<option value="4">等级 4</option>
 				</select>
+				<span title="查看等级说明" onclick="openMess();"><img src="<%=path %>/images/question.png" style="width:20px;height:20px;cursor:pointer;"/></span>
 				<span class="message mess4"></span>
 			</td>
 		</tr>

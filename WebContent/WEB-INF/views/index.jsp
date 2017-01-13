@@ -346,21 +346,27 @@
 			if(lockUser != ''){
 				return false;
 			}
-			$.post("<%=path%>/goods/isGoods",function(index){
-				if(index.isOrnull){
-					$('#mess').html("<img src='<%=path%>/images/notice/new1.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('客户订单','<%=path%>/goods/allGood')\">[查看]</a>");
-				}
-			},"json");
-			$.post("<%=path%>/receipt/isReceipt",function(index){
-				if(index.isOrnull){
-					$('#mess').append("&nbsp;&nbsp;<img src='<%=path%>/images/notice/new2.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('质检','<%=path%>/quality/godownEntry')\">[查看]</a>");
-				}
-			},"json");
-			$.post("<%=path%>/inventory/isInventory",function(index){
-				if(index.isOrnull){
-					$('#mess').append("&nbsp;&nbsp;<img src='<%=path%>/images/notice/new3.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('质检','<%=path%>/quality/godownEntry')\">[查看]</a>");
-				}
-			},"json");
+			if('${user.rolename}' == 3){
+				$.post("<%=path%>/goods/isGoods",function(index){
+					if(index.isOrnull){
+						$('#mess').html("<img src='<%=path%>/images/notice/new1.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('客户订单','<%=path%>/goods/allGood')\">[查看]</a>");
+					}
+				},"json");
+			}
+			if('${user.rolename}' == 2){
+				$.post("<%=path%>/receipt/isReceipt",function(index){
+					if(index.isOrnull){
+						$('#mess').append("&nbsp;&nbsp;<img src='<%=path%>/images/notice/new2.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('质检','<%=path%>/quality/godownEntry')\">[查看]</a>");
+					}
+				},"json");
+			}
+			if('${user.rolename}' == 1){
+				$.post("<%=path%>/inventory/isInventory",function(index){
+					if(index.isOrnull){
+						$('#mess').append("&nbsp;&nbsp;<img src='<%=path%>/images/notice/new3.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('质检','<%=path%>/quality/godownEntry')\">[查看]</a>");
+					}
+				},"json");
+			}
 			setTimeout("clearMess()",60000);
 		}
 		function clearMess(){
