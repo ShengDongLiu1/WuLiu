@@ -267,7 +267,6 @@
 
 		/* 给弹出的窗口赋值 */
 		function fuzhi(index){
-			alert(index.quality.receipt.rstart);
 			$(".eid1").html(index.quality.eid);//质检编号
 			$(".egid1").html(index.quality.egid);//货物编号
 			$(".gordernumber1").html(index.quality.goods.gordernumber);//订单号

@@ -143,7 +143,7 @@
                     <tr>
                         <td>检验结果：</td>
                         <td height="80">
-                            <input id="eresult" name="eresult" class="easyui-textbox" data-options="multiline:true" style="width:100%;height:70%" value="请填写检验结果">
+                            <input id="eresult" class="easyui-textbox" data-options="multiline:true" style="width:100%;height:70%">
                         </td>
                     </tr>
                     <tr>
