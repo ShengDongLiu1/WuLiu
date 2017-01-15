@@ -231,7 +231,13 @@ body{margin:0px;padding:0px;}
 			
 			
 			function open1(){
-				 $("#addWin").dialog("open");
+				var row=$("#list").datagrid("getSelected");
+				if(row.tstate!=5){
+				 	$("#addWin").dialog("open");
+				}else{
+					$.messager.alert('提示','该订单已经配送成功了','info');
+				}
+				 
 			}
 			function peisong(obj){
 				 var row=$("#list").datagrid("getSelected");

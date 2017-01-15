@@ -193,7 +193,7 @@
 	                    $("#dlg").dialog("close");
 	                    $("#dg").datagrid("load");
 	                } else {
-	                    $.messager.alert("系统提示", "保存失败！");
+	                    $.messager.alert("系统提示", "该手机号码已经被注册，保存失败！");
 	                    return;
 	                }
 	            }
