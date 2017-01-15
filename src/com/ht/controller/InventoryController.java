@@ -56,16 +56,21 @@ public class InventoryController {
 		return null;
 	}
 	
-	
+	//losizesy之前库位尺寸
+	//losizess剩余库位尺寸
 	@RequestMapping("/save")
-	public String save(Inventory inventory,HttpServletResponse res) throws Exception{
+	public String save(int losizess,int losizesy,int lovolumesy,int lovolumess,int loweightsy,int loweightss,Inventory inventory,HttpServletResponse res) throws Exception{
 		int resultTotal = 0;
         if (inventory.getLoid() == null) {
+        	
         	inventory.setLosizes(inventory.getLosize());
         	inventory.setLovolumes(inventory.getLovolume());
         	inventory.setLoweights(inventory.getLoweight());
             resultTotal = inventoryService.inventoryAdd(inventory);
         }else{
+        	inventory.setLosizes(losizess+inventory.getLosize()-losizesy);
+        	inventory.setLovolumes(lovolumess+inventory.getLovolume()-lovolumesy);
+        	inventory.setLoweights(loweightss+inventory.getLoweight()-loweightsy);
             resultTotal = inventoryService.inventoryupdate(inventory);
         }
         JSONObject jsonObject = new JSONObject();

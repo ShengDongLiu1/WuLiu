@@ -248,7 +248,9 @@ function openInventoryModifyDialog() {
     var row = selectedRows[0];
     $("#dlg").dialog("open").dialog("setTitle", "编辑用户信息");
     $("#fm").form("load", row);
-    url = "${pageContext.request.contextPath}/inventory/save.do?loid=" + row.loid;
+    url = "${pageContext.request.contextPath}/inventory/save.do?loid=" + row.loid + "&losizesy="+ row.losize + "&losizess="+ row.losizes
+    		+ "&lovolumesy="+ row.lovolume+ "&lovolumess="+ row.lovolumes
+    		+ "&loweightsy="+ row.loweight+ "&loweightss="+ row.loweights;
 }
 
 function openInventoryAddDialog() {
