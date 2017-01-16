@@ -246,15 +246,13 @@ function openInventoryModifyDialog() {
         return;
     }
     var row = selectedRows[0];
-    $("#dlg").dialog("open").dialog("setTitle", "编辑用户信息");
+    $("#dlg").dialog("open").dialog("setTitle", "编辑库位信息");
     $("#fm").form("load", row);
-    url = "${pageContext.request.contextPath}/inventory/save.do?loid=" + row.loid + "&losizesy="+ row.losize + "&losizess="+ row.losizes
-    		+ "&lovolumesy="+ row.lovolume+ "&lovolumess="+ row.lovolumes
-    		+ "&loweightsy="+ row.loweight+ "&loweightss="+ row.loweights;
+    url = "${pageContext.request.contextPath}/inventory/save.do?loid=" + row.loid;
 }
 
 function openInventoryAddDialog() {
-    $("#dlg").dialog("open").dialog("setTitle", "添加用户");
+    $("#dlg").dialog("open").dialog("setTitle", "添加库位");
     $("#fm").form("clear");
     url = "${pageContext.request.contextPath}/inventory/save.do";
 }

@@ -569,6 +569,7 @@ function typeBack(){
 			url:'<%=path %>/receipt/kuweiList',
 			method:'get', 
 			rownumbers:false,
+			singleSelect:true,
 			autoRowHeight: true,
 			pagination:true,
 			border:false,

@@ -95,8 +95,7 @@ function goodsName(value){
 }
 
 function inventoryName(value,obj){
-	var btn="<a href=javascript:openInveWin("+value.loid+",'"+value.loname+"',"+obj.sid+","+obj.goods.gid+")>"+value.loname+"</a>";
-	return btn;
+	return value.loname;
 }
 
 function toUserName(value){
@@ -171,7 +170,7 @@ function cusfuzhi(index){
 
 /* 给弹出的窗口赋值 */
 function fuzhi(index){
-	$("#gname").html(index.goods.gname);
+	$("#gnames").html(index.goods.gname);
 	$("#gordernumber").html(index.goods.gordernumber);
 	$("#gcount").html(index.goods.gcount + " "+index.goods.gunit);
 	$("#gweight").html(index.goods.gweight + " 吨");
@@ -419,7 +418,7 @@ function doUpdate() {
 		<table style="width:100%;height:100%;">
 			<tr>
 				<td class="tdwidth">货物名称:</td>
-				<td class="gxiangq"><span id="gname"></span></td>
+				<td class="gxiangq"><span id="gnames"></span></td>
 				<td class="tdwidth">货物订单号:</td>
 				<td class="gxiangq"><span id="gordernumber"></span></td>
 			</tr>

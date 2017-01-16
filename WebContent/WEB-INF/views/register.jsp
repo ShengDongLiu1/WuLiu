@@ -23,6 +23,24 @@
     <link rel="stylesheet" href="<%=path %>/register/css/tab.css">
 
     <script src="<%=path %>/register/js/jquery-2.1.0.min.js"></script>
+    <style type="text/css">
+    	#altMess{
+	width:280px;
+	height:110px;
+	position:fixed;
+	left:41%;
+	top:45%;
+	display:none;
+	background:#82ADF6;
+	border-radius:10px;
+	text-align:center;
+	line-height:110px;
+	font-size:25px;
+	font-wieght:bold;
+	color:white;
+}
+    	
+    </style>
 </head>
 <body>
 
@@ -69,8 +87,18 @@
     </div>
 	
 </div>
-
+<!-- 消息提示框 -->
+<div id="altMess"></div>
 <script>
+function blockAlt(mess){
+	$('#altMess').html(mess);
+	$("#altMess").show(100);
+	setTimeout("noneAlt()",1500);  
+}
+
+function noneAlt(){
+	$("#altMess").hide(100);
+}
 
    function doadd(){
 		   var cemail = $("#uid").val()
@@ -111,7 +139,7 @@
 			}else{
 		    	$.post("<%=path %>/customer/save2",{'cemail':cemail,'cpassword':cpassword1},function(index){
 		    		if(index.success ){
-		         	  alert("注册成功！");
+		    			blockAlt("注册成功！");
 		         	  window.location.href="<%=path%>/customer/login";
 		    		}else{
 		    			$("#loginTips").html("该用户已存在!").fadeIn();

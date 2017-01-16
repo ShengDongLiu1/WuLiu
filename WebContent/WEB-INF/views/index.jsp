@@ -346,21 +346,21 @@
 			if(lockUser != ''){
 				return false;
 			}
-			if('${user.rolename}' == 3){
+			if('${user.roleid}' == 8){
 				$.post("<%=path%>/goods/isGoods",function(index){
 					if(index.isOrnull){
 						$('#mess').html("<img src='<%=path%>/images/notice/new1.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('客户订单','<%=path%>/goods/allGood')\">[查看]</a>");
 					}
 				},"json");
 			}
-			if('${user.rolename}' == 2){
+			if('${user.roleid}' == 9){
 				$.post("<%=path%>/receipt/isReceipt",function(index){
 					if(index.isOrnull){
 						$('#mess').append("&nbsp;&nbsp;<img src='<%=path%>/images/notice/new2.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('入库质检管理','<%=path%>/quality/godownEntry')\">[查看]</a>");
 					}
 				},"json");
 			}
-			if('${user.rolename}' == 1){
+			if('${user.roleid}' == 7){
 				$.post("<%=path%>/inventory/isInventory",function(index){
 					if(index.isOrnull){
 						$('#mess').append("&nbsp;&nbsp;<img src='<%=path%>/images/notice/new3.gif' width='35' alt='new'>"+index.countNum+"<a href='javascript:void(0)' class='look' onclick=\"addTab('库位管理','<%=path%>/inventory/all')\">[查看]</a>");

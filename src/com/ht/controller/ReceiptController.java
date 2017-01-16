@@ -27,7 +27,6 @@ import com.ht.service.interfaces.GoodsService;
 import com.ht.service.interfaces.InventoryService;
 import com.ht.service.interfaces.QualityService;
 import com.ht.service.interfaces.ReceiptService;
-import com.ht.service.interfaces.StorageService;
 import com.ht.ssm.util.ResponseUtil;
 
 import net.sf.json.JSONArray;
@@ -36,8 +35,8 @@ import net.sf.json.JSONArray;
 @RequestMapping("/receipt")
 public class ReceiptController {
 	
-	@Autowired
-	private StorageService storageService;
+//	@Autowired
+//	private StorageService storageService;
 	
 	@Autowired
 	private ReceiptService receiptService;//收货单
@@ -148,8 +147,8 @@ public class ReceiptController {
 	 */
 	@RequestMapping(value="/byGood")
 	public void selectGoods(Storage storage,HttpSession session){
-		storage=storageService.selectByPrimaryKey(storage.getSid());
 		sysuser user=(sysuser) session.getAttribute("user");
+		System.out.println("userid:"+user.getUserid());
 		storage.setSeid(user.getUserid());
 		session.setAttribute("queryStorage", storage);
 		Receipt receipt=receiptService.selectByPrimaryKey(storage.getSrid());
